@@ -1,0 +1,48 @@
+{
+  "name": "reset-fitness",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@formkit/nuxt": "^1.3.0",
+    "@nuxt/image": "^1.0.0",
+    "@popperjs/core": "^2.11.8",
+    "@uppy/core": "^3.7.1",
+    "@uppy/dashboard": "^3.7.1",
+    "@uppy/drag-drop": "^3.0.3",
+    "@uppy/file-input": "^3.0.4",
+    "@uppy/image-editor": "^2.4.4",
+    "@uppy/progress-bar": "^3.0.4",
+    "@uppy/vue": "^1.1.0",
+    "@uppy/webcam": "^3.3.4",
+    "@vueform/multiselect": "^2.6.6",
+    "@vueform/toggle": "^2.1.4",
+    "apexcharts": "^3.45.1",
+    "axios": "^1.6.7",
+    "bootstrap": "^5.3.0",
+    "nuxt-swiper": "^1.2.2",
+    "v-calendar": "^3.1.2",
+    "vue3-apexcharts": "^1.4.4",
+    "vue3-toastify": "^0.2.1"
+  },
+  "devDependencies": {
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
+    "@pinia/nuxt": "^0.4.11",
+    "@types/bootstrap": "^5.2.6",
+    "@vueuse/core": "^10.6.1",
+    "@vueuse/nuxt": "^10.6.1",
+    "dayjs-nuxt": "^2.1.9",
+    "nuxt": "^3.6.2",
+    "nuxt-icon": "^0.6.8",
+    "nuxt-lodash": "^2.5.3",
+    "pinia": "^2.1.4",
+    "sass": "^1.63.6",
+    "sass-loader": "^13.3.2"
+  }
+}

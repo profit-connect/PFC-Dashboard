@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11">
+  <g id="Group_2257" data-name="Group 2257" transform="translate(-628 -328)">
+    <g id="Group_1601" data-name="Group 1601">
+      <g id="Ellipse_27" data-name="Ellipse 27" transform="translate(628 328)" fill="none" stroke="red" stroke-width="1">
+        <circle cx="5.5" cy="5.5" r="5.5" stroke="none"/>
+        <circle cx="5.5" cy="5.5" r="5" fill="none"/>
+      </g>
+      <text id="_" data-name="!" transform="matrix(1, -0.017, 0.017, 1, 632, 336)" fill="red" font-size="7" font-family="Poppins-Black, Poppins" font-weight="800"><tspan x="0" y="0">!</tspan></text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,83 @@
+// Body
+$white: #ffffff;
+$body-bg: #f2faff;
+$body-color: #323a45;
+
+// New main brands color
+$main-yellow: #ffd500;
+$main-bg: #f2faff;
+$main-blue: #84ceff;
+$main-dark-blue: #002e4b;
+$dark-blue-seconadary: #00609f;
+$hover-blue :#cfecff;
+
+$main-yellow-dark: #e4be00;
+
+// Brands
+$brand-primary: #4c9e45;
+$brand-primary-hover: #388532;
+$brand-info: #8eb4cb;
+$brand-success: #41ce8e;
+$brand-warning: #cbb956;
+$brand-danger: #bf5329;
+$text-color: #323a45;
+
+// Colors:
+$secondary-color: #6c757d;
+$gray-color: #e6e6e6;
+
+// Typography
+$font-family-sans-serif: "Poppins Regular", sans-serif, Arial;
+$font-family-title: "Poppins Bold", sans-serif, Arial;
+$font-family-medium: "Poppins Medium", sans-serif, Arial;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Transitions
+$transitionSpeed: 0.35s;
+
+// Radius
+$standard-radius: 3px;
+
+// Root path
+$root-path: "/reset-fitness-dev"; // /reset-fitness-dev
+
+// MQ's
+$mq-tiny: 320px;
+$phone: 480px;
+$bs4-phone: 576px;
+$tablet: 767px;
+$desktop: 992px;
+$lg-desktop: 1200px;
+
+// Margins and Padding
+$num-of-classes: 5;
+$directions: ("top", "bottom", "left", "right");
+$types: ("margin", "padding");
+$queries: (
+  $mq-tiny: "xxs",
+  $phone: "xs",
+  $tablet: "sm",
+  $desktop: "md",
+  $lg-desktop: "lg",
+);
+
+// Buttons
+$btn-default-color: $text-color;
+
+// Border radius
+$border-radius: 5px;
+
+// Inputs
+$input-border: lighten($text-color, 40%);
+$input-border-focus: lighten($brand-primary, 25%);
+$input-color-placeholder: lighten($text-color, 30%);
+
+// Panels / Cards
+$panel-default-heading-bg: $white;
+
+// Box shadow
+$box-shadow-color: #00000021;
+
+// Border color
+$border-color: #00000017;

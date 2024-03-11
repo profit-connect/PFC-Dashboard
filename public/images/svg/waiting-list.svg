@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke: #84ceff;
+      }
+
+      .cls-1 {
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+  <g id="Group_2004" data-name="Group 2004" transform="translate(-366.5 -514.564)">
+    <g id="Icon_feather-list" data-name="Icon feather-list" transform="translate(370.096 519.141)">
+      <path id="Path_1769" data-name="Path 1769" class="cls-1" d="M12,9h8.81" transform="translate(-9.651 -9)"/>
+      <path id="Path_1770" data-name="Path 1770" class="cls-1" d="M12,18h8.81" transform="translate(-9.651 -13.934)"/>
+      <path id="Path_1771" data-name="Path 1771" class="cls-1" d="M12,27h8.81" transform="translate(-9.651 -18.868)"/>
+      <path id="Path_1772" data-name="Path 1772" class="cls-1" d="M4.5,9h0" transform="translate(-4.5 -9)"/>
+      <path id="Path_1773" data-name="Path 1773" class="cls-1" d="M4.5,18h0" transform="translate(-4.5 -13.934)"/>
+      <path id="Path_1774" data-name="Path 1774" class="cls-1" d="M4.5,27h0" transform="translate(-4.5 -18.868)"/>
+    </g>
+    <rect id="Rectangle_864" data-name="Rectangle 864" class="cls-2" width="18" height="16" rx="3" transform="translate(367 515.064)"/>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+@mixin vendor($property, $value) {
+  -moz-#{$property}: $value;
+  #{$property}: $value;
+}
+
+@mixin transitions() {
+  @include vendor(transition, all $transitionSpeed ease-in-out);
+}
+
+@mixin transitionless() {
+  @include vendor(transition, none);
+}
+
+@mixin customScrollbar() {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <style>
+      .cls-1, .cls-4 {
+        fill: none;
+      }
+
+      .cls-1 {
+        stroke: #84ceff;
+      }
+
+      .cls-2 {
+        fill: #84ceff;
+      }
+
+      .cls-3 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="Group_2005" data-name="Group 2005" transform="translate(18910 9892)">
+    <g id="Ellipse_290" data-name="Ellipse 290" class="cls-1" transform="translate(-18910 -9892)">
+      <circle class="cls-3" cx="8" cy="8" r="8"/>
+      <circle class="cls-4" cx="8" cy="8" r="7.5"/>
+    </g>
+    <path id="Icon_ionic-ios-arrow-back" data-name="Icon ionic-ios-arrow-back" class="cls-2" d="M1.454,4.188,4.645,1.021a.593.593,0,0,0,0-.846.608.608,0,0,0-.854,0L.176,3.764a.6.6,0,0,0-.018.826L3.789,8.2a.609.609,0,0,0,.854,0,.593.593,0,0,0,0-.846Z" transform="translate(-18906.189 -9881.393) rotate(-90)"/>
+  </g>
+</svg>

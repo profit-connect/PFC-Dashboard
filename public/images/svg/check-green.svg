@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="11.156" height="8.14" viewBox="0 0 11.156 8.14">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #84ceff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <path id="Icon_feather-check" data-name="Icon feather-check" class="cls-1" d="M14.328,9,8.6,14.726,6,12.123" transform="translate(-4.586 -7.586)"/>
+</svg>

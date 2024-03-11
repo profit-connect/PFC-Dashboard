@@ -1,0 +1,7 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64px" height="64px" viewBox="0,0,256,256">
+<g fill="#84ceff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+<g transform="scale(4,4)">
+<path d="M32,8c-1.104,0 -2,0.896 -2,2v28.20508l-6.58203,-6.61523c-0.779,-0.783 -2.04512,-0.78881 -2.82812,-0.00781c-0.782,0.779 -0.78681,2.04512 -0.00781,2.82813l10,10.05078c0.376,0.377 0.88597,0.58984 1.41797,0.58984c0.532,0 1.04197,-0.21184 1.41797,-0.58984l10,-10.05078c0.779,-0.783 0.77419,-2.04913 -0.00781,-2.82812c-0.783,-0.78 -2.04913,-0.77419 -2.82812,0.00781l-6.58203,6.61523v-28.20508c0,-1.104 -0.896,-2 -2,-2zM9,38c-1.104,0 -2,0.896 -2,2v8c0,3.309 2.691,6 6,6h38c3.309,0 6,-2.691 6,-6v-8c0,-1.104 -0.896,-2 -2,-2c-1.104,0 -2,0.896 -2,2v8c0,1.103 -0.897,2 -2,2h-38c-1.103,0 -2,-0.897 -2,-2v-8c0,-1.104 -0.896,-2 -2,-2z"></path>
+</g>
+</g>
+</svg>

@@ -1,0 +1,316 @@
+/***********************************
+ ********* Global CSS Code *********
+
+ 1. Global Style
+ 2. About pages style
+ **********************************/
+
+// Tools
+@import "node_modules/bootstrap/scss/bootstrap";
+
+// Fonts
+@font-face {
+  font-family: "Poppins Bold";
+  src: url("@/assets/fonts/Poppins-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Poppins Medium";
+  src: url("@/assets/fonts/Poppins-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Poppins Regular";
+  src: url("/assets/fonts/Poppins-Regular.ttf");
+}
+
+/****************************
+ ***** 1. Global Style ******
+ ***************************/
+body {
+  position: relative;
+  background: #f2faff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  margin: 0;
+  font-family: $font-family-sans-serif;
+}
+
+.card {
+  // box-shadow: 0 0 30px #0129701a;
+  border: 0;
+  transition: $transitionSpeed;
+  &.rounded-lg {
+    border-radius: 20px;
+  }
+
+  &:hover {
+    // box-shadow: 0 0 20px 4px #00000024;
+  }
+}
+
+.container {
+  @media (min-width: $lg-desktop) {
+    max-width: 1200px;
+    border-radius: 10px;
+  }
+}
+
+.content-section {
+  .content-box {
+    // width: 90%;
+    max-width: 1396px;
+    min-height: 500px;
+    background: #ffffff;
+    box-shadow: 0px 10px 20px #00000014;
+    padding: 20px;
+    margin: 0 auto;
+    border-radius: 0px 0px 10px 10px;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  transition: 300ms;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-title;
+  color: #000000;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.table th,
+.table td {
+  border: 1px solid #00000017;
+}
+
+.no-result-text {
+  margin-top: 20px;
+  margin-left: 20px;
+  font-size: 18px;
+}
+
+.content-title {
+  font-size: 22px;
+  font-weight: normal;
+  font-family: $font-family-medium;
+}
+
+.default-avatar {
+  width: 50px;
+  height: 50px;
+  background: #f2faff;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 22px "Poppins Medium", sans-serif, Arial;
+  color: #84ceff;
+}
+
+.content {
+  &__title-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 0;
+    }
+
+    .addNewBtn {
+      width: 150px;
+      height: 40px;
+      margin-top: 0;
+      margin-left: 15px;
+    }
+  }
+}
+
+.content-title-bold {
+  font-size: 22px;
+  font-family: $font-family-title;
+}
+
+.small-title-bold {
+  font-size: 14px;
+  font-family: $font-family-title;
+}
+
+.hide-for-mobile {
+  @media (max-width: $tablet) {
+    display: none !important;
+  }
+}
+
+.text-danger {
+  color: $brand-danger;
+}
+
+.text-warning {
+  color: $brand-warning;
+}
+
+.text-muted {
+  color: #00b1b1;
+}
+
+.text-green {
+  color: #41ce8e;
+}
+
+.text-larger {
+  font-size: 1.15em;
+}
+
+.link-main {
+  color: #000000;
+  text-decoration: none;
+  transition: $transitionSpeed;
+
+  &:hover {
+    color: #383838;
+    text-decoration: underline;
+  }
+}
+
+.disable-user-interaction {
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.disable-scorllbar {
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}
+
+// uppy custom style
+.uppy-Root {
+  .uppy-Dashboard-inner {
+    background: transparent;
+    border-style: dashed;
+    border-color: $main-blue;
+  }
+  .uppy-Dashboard-AddFiles-title,
+  .uppy-Root .uppy-Dashboard-Item-status,
+  .uppy-Root .uppy-DashboardContent-back,
+  .uppy-Root .uppy-DashboardContent-title {
+    font-family: "Poppins Regular", sans-serif, Arial;
+  }
+  .uppy-Dashboard-browse {
+    color: $main-blue;
+  }
+  .uppy-Dashboard-browse:hover {
+    border-bottom: none;
+  }
+  .uppy-Dashboard-AddFiles-info {
+    display: none !important;
+  }
+  .uppy-Dashboard-AddFiles-list {
+    display: none !important;
+  }
+  .uppy-Dashboard-AddFiles-title {
+    background-color: $main-bg;
+    color: #000000;
+    padding: 18px;
+    width: 90%;
+    border-radius: 10px;
+    position: relative;
+    &::before {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      content: "";
+      height: 24px;
+      width: 24px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url("/images/svg/add-icon.svg");
+    }
+  }
+
+  .uppy-Dashboard-AddFiles {
+    border: none !important;
+  }
+  .uppy-Dashboard-browse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+  }
+  .uppy-DashboardContent-bar {
+    background-color: $main-bg;
+    border-color: $main-bg;
+  }
+  .uppy-c-icon {
+    color: $main-blue;
+  }
+  .uppy-Dashboard-Item {
+    border: unset;
+  }
+}
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-5 {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.strikethrough {
+  text-decoration: line-through;
+}
+
+.group-hover {
+  .hover-show {
+    visibility: hidden;
+    pointer-events: none;
+  }
+  &:hover {
+    .hover-show {
+      visibility: visible;
+      pointer-events: unset;
+    }
+  }
+}
