@@ -29,7 +29,7 @@
         placeholder="Password"
       />
 
-      <FormKit type="submit" label="Sign In" />
+      <button class="sign-in" type="submit" label="Sign In" >Sign In </button>
       <div class="bottom-link-action d-flex justify-content-between">
         <FormKit
           type="checkbox"
@@ -144,5 +144,15 @@ form {
       font-size: 14px;
     }
   }
+}
+.sign-in {
+    background: var(--fk-bg-submit);
+    color: var(--fk-color-submit);
+    width: 368px;
+    height: 50px;
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+    border: none;
+    border-radius: 10px;
 }
 </style>
