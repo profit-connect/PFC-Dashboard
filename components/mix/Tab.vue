@@ -1,3 +1,6 @@
+
+
+
 <template>
   <div class="tab disable-scorllbar mb-4">
     <Swiper
@@ -121,7 +124,7 @@ const onClickEdit = (tab: number) => {
         content: "";
         position: absolute;
         top: 0;
-        left: -19px; // Adjust this value to move the left corner image outside the background color
+        left: -18px; // Adjust this value to move the left corner image outside the background color
         width: 20px; // Set the width of your left corner image
         height: 100%;
         background: url(~/assets/images/svg/corner/left-corner.svg) no-repeat;

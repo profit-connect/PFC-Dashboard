@@ -1,6 +1,5 @@
 <template>
-  <div class="px-5 store-form">
-    {{ computedSelectedStore.promotion_start }}
+  <div class="px-5 store-form">{{ computedSelectedStore }}
     <FormKit
       type="form"
       @submit="submitHandler"
@@ -94,8 +93,8 @@
             :value="false"
             v-model="isPromotionPriceActive"
           />
-          <FormKit
-            style="width: 125px"
+          <div style="width: 175px">
+            <FormKit
             type="number"
             outer-class="m-0"
             name="promotion_price"
@@ -103,8 +102,12 @@
             label="Promotion price"
             placeholder="Promotion price"
             :disabled="!isPromotionPriceActive"
-            :validation="isPromotionPriceActive ? 'required' : ''"
-          />
+            :validation="`${isPromotionPriceActive ? 'required|max:' + OriginalPrice : ''}`"
+            :validation-messages="{
+              max: 'Promotion price must be less than OriginalPrice',
+            }"
+             />
+          </div>
           <FormKit
             type="checkbox"
             outer-class="m-0"
@@ -120,7 +123,7 @@
             outer-class="m-0"
             label="Start date"
             name="promotion_start"
-            :min="minDate"
+            :min="effectiveMinDate"
             v-model="promotionStartDate"
             :validation="isPromotionPriceActive ? 'required' : ''"
           />
@@ -268,6 +271,12 @@ const isPromotionPriceActive = ref(
   !!computedSelectedStore.value?.promotion_price
 );
 const promotionStartDate = ref(computedSelectedStore.value?.promotion_start);
+const OriginalPrice = computed(() => {
+  if (computedSelectedStore.value && computedSelectedStore.value.price) {
+    return computedSelectedStore.value.price -1 ;
+  }
+  return 0;
+});
 // const minDate = computed(() => {
 //   return new Date().toISOString().split('T')[0]; // Today's date in YYYY-MM-DD format
 // });
@@ -278,6 +287,27 @@ const minDate = computed(() => {
   const day = String(today.getDate()).padStart(2, "0");
 
   return `${year}-${month}-${day}`; // Today's date in YYYY-MM-DD format
+});
+
+const isPromotionCurrentlyActive = computed(() => {
+    const today = new Date();
+    const startDate = new Date(promotionStartDate.value);
+    const endDate = new Date(computedSelectedStore.value?.promotion_end);
+    return startDate <= today && today <= endDate;
+});
+
+// Adjust the minimum start date for the promotion based on whether it's currently active
+const effectiveMinDate = computed(() => {
+    if (isPromotionCurrentlyActive.value && promotionStartDate.value) {
+        // If the promotion is active, allow the original start date as the minimum
+        return promotionStartDate.value;
+    }
+    return minDate.value; // Otherwise, use today's date
+});
+
+watchEffect(() => {
+    promotionStartDate.value = computedSelectedStore.value?.promotion_start;
+    isPromotionPriceActive.value = !!computedSelectedStore.value?.promotion_price;
 });
 
 const availableTags = computed(() => {

@@ -2,6 +2,7 @@ import { createInput } from "@formkit/vue";
 import Uppy from "@/components/formkit/Uppy.vue";
 import Multiselect from "@/components/formkit/Multiselect.vue";
 import Switch from "@/components/formkit/Switch.vue";
+import RichTextEditor from "@/components/formkit/RichTextEditor.vue";
 
 // When integrating tailwind add classes here
 export default {
@@ -30,6 +31,9 @@ export default {
     }),
     switch: createInput(Switch, {
       props: [],
+    }),
+    richText: createInput(RichTextEditor, {
+      props: ["modelValue"],
     }),
   },
 };

@@ -1,3 +1,4 @@
+
 <template>
   <div class="container bg-white h-full p-4">
     <div class="content__title-box">
@@ -231,6 +232,7 @@ const computedData = computed(() => {
 });
 
 const onPlanstatusChange = async (newData: any) => {
+  console.log(data)
   try {
     const { data } = await useCustomFetch<any>("/packages/update/planstatus", {
       method: "POST",

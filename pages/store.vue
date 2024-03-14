@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-white h-full">
+  <div class="container bg-white h-full"> {{ computedStores }}
     <div class="p-5">
       <div class="d-flex align-items-center justify-content-between gap-3">
         <div class="d-flex align-items-center gap-4">
@@ -27,14 +27,28 @@
           label="Add category"
         />
       </div>
-      <div class="row g-3">
+      <!-- <div class="row g-3">
         <div
           class="col-12 col-lg-4"
           v-for="store in computedStores"
           :key="store.id"
           @click="onStoreSelect(store.id)"
         >
-          <CardStore v-bind="store" />
+          <CardStore v-bind="store"  
+            />
+        </div>
+      </div> -->
+      <div class="row g-3">
+        <div
+          class="col-12 col-lg-4"
+          v-for="store in computedStores"
+          :key="store.id"
+        >
+          <CardStore v-bind="store"  
+          @onPlanSelect="onPlanSelect(store.id)"
+          @onFeaturedChange="onFeaturedChange"
+          @onPlanstatusChange="onPlanstatusChange"
+            />
         </div>
       </div>
     </div>
@@ -117,29 +131,34 @@ const getCategories = computed(() => {
 });
 
 const computedStores = computed(() => {
-  if (!data.value || !data.value.categories || !data.value.categories.length) {
+  const items = data.value?.categories?.[activeTab.value]?.items;
+
+  if (Array.isArray(items)) {
+    const lowerCaseSearchTerm = searchTerm.value.toLowerCase();
+    return items.filter(item => item)
+      .filter(item => 
+        item && typeof item === 'object' && (!searchTerm.value || item.name.toLowerCase().includes(lowerCaseSearchTerm))
+      )
+      .map(item => {
+        return {
+          id: item.id,
+        name: item.name,
+        capacity: item.capacity,
+        description: item.description,
+        image: item.img_src,
+        price: item.price,
+        promotion_price: item.promotion_price,
+        display_original_price: item.display_original_price,
+        status: item.status,
+        featured: item.featured
+        };
+      });
+  } else {
+    console.warn('Expected items to be an array, but got:', items);
     return [];
   }
-
-  const lowerCaseSearchTerm = searchTerm.value.toLowerCase();
-
-  return data.value.categories[activeTab.value].items
-    .filter(
-      (item: any) =>
-        !searchTerm.value ||
-        item.name.toLowerCase().includes(lowerCaseSearchTerm)
-    )
-    .map((item: any) => ({
-      id: item.id,
-      name: item.name,
-      capacity: item.capacity,
-      description: item.description,
-      image: item.img_src,
-      price: item.price,
-      promotion_price: item.promotion_price,
-      display_original_price: item.display_original_price,
-    }));
 });
+
 
 const computedCategories = computed(() => {
   return data.value && data.value.categories && data.value.categories.length
@@ -157,7 +176,17 @@ const getCurrentCategory = computed(() => {
     : null;
 });
 
-const onStoreSelect = (store_id: number) => {
+// const onStoreSelect = (store_id: number) => {
+//   selectedStore.value =
+//     data.value && data.value.categories && data.value.categories.length
+//       ? data.value.categories[activeTab.value].items.find(
+//           (item: any) => item && item.id === store_id.toString()
+//         )
+//       : null;
+//   showStoreForm.value = true;
+// };
+
+const onPlanSelect = (store_id: number) => {
   selectedStore.value =
     data.value && data.value.categories && data.value.categories.length
       ? data.value.categories[activeTab.value].items.find(
@@ -166,6 +195,52 @@ const onStoreSelect = (store_id: number) => {
       : null;
   showStoreForm.value = true;
 };
+
+const onPlanstatusChange = async (selectedStore: any) => {
+  console.log(selectedStore)
+  try {
+    const { data } = await useCustomFetch<any>("/store/update/itemstatus", {
+      method: "POST",
+      body: {
+        ...selectedStore,
+        facility_id: currentUserType?.id,
+      },
+    });
+    if (data.value.return) {
+      refresh();
+      $toast("store status edited successfully!");
+    } else {
+      $toast(data.value.message);
+    }
+  } catch (err) {
+    console.log("Error:/api/store/storestatus", err);
+  }
+};
+
+const onFeaturedChange = async (selectedStore: any) => {
+  try {
+    const { data } = await useCustomFetch<any>(
+      "/store/update/itemfeatured",
+      {
+        method: "POST",
+        body: {
+          ...selectedStore,
+          facility_id: currentUserType?.id,
+        },
+      }
+    );
+    if (data.value.return) {
+      refresh();
+      $toast("Store featured status edited successfully!");
+    } else {
+      $toast(data.value.message);
+    }
+  } catch (err) {
+    console.log("Error:/api/store/storefeatured", err);
+  }
+};
+
+
 
 const onSelectCategory = (tab: number) => {
   selectedCategory.value =

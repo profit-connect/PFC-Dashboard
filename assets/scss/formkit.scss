@@ -535,9 +535,10 @@ input.formkit-input[type="checkbox"]:checked ~ .formkit-decorator::before {
   width: 100%;
   border-radius: var(--fk-border-radius);
   height:50px;
-  padding-left: 8px;
+  padding-left: 10px;
   padding-top: 16px;
   padding-bottom: 16px;
+  padding-right: 10px;
 
 }
 .formkit-input[disabled] {
