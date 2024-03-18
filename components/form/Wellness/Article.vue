@@ -1,5 +1,5 @@
-<template>{{ computedSelectedArticle.src }}
-  <div class="px-5"> 
+<template>{{ computedSelectedArticle}}
+  <div class="scheduler-week-class-form px-5"> 
     <FormKit
       type="form"
       @submit="submitHandler"
@@ -27,15 +27,45 @@
           />
         </div>
         <div class="row my-4">
-        <div class="col-5 custom-multiselect-container" >
-          <FormKit
-            type="uppy"
-            label="Image or Video Link"
-            name="src"
-            :hideUploadButton="true"
-            help="Max image upload: 960x540px, 1MB, in .jpg, .png, or .gif. Max video upload: 720p resolution, 4MB."
-          />
+          <div class="col-5 custom-multiselect-container" style="position: relative;">
+            <div>
+              <div v-show="isImage || isVideo" style="display: flex; gap: 5px; font-size: 12px; position: absolute; bottom: 86%; right: 80%; cursor: pointer;" @click="isImage = false; isVideo = false">
+    <img src="~/assets/images/svg/icon-feather-arrow-left.svg" style="height: 20px; rotate: 180deg; z-index: 10;"/>
+    Back
+</div>
+            </div>
+   
+       <div class="outer-box" v-show="!isImage && !isVideo">
+        <div class="upload-box">
+        <div class="child" @click="isImage = true; isVideo = false"> 
+            <img src="~/assets/images/svg/image-box.svg" style="height: 32px; margin-left: 4px;"/>
         </div>
+        <div class="child" @click="isImage = false; isVideo = true">
+            <img src="~/assets/images/svg/video-box.svg" style="margin-top: 5px;" />
+        </div>
+        </div>
+    </div>
+ 
+    <div>
+    <FormKit
+        type="uppy"
+        label="Image or Video Link"
+        name="image"
+        :hideUploadButton="false"
+        help="Max image upload: 960x540px, 1MB, in .jpg, .png, or .gif. Max video upload: 720p resolution, 4MB."
+        v-show="isImage"
+    />
+  </div>
+    <div class="url-box"  v-show="isVideo">
+    <FormKit
+        style="width: 300px;"
+        type="text"
+        name="src"
+        placeholder="Enter the URL"
+    />
+  </div>
+</div>
+
         <div class="col-7 custom-multiselect-container">
           <FormKit
           style="height: 100px"
@@ -116,6 +146,7 @@
           type="tiny"
           name="description_html"
           label="description_html"
+          validation="required"
            />
         </div>
          
@@ -228,7 +259,8 @@ const showButton = ref(false);
 const { tags } = storeToRefs(useTagStore());
 const isPublished = ref(false);
 const { getUrl } = useBoImage();
-
+const isImage = ref(false);
+const isVideo= ref(false);
 const handlePublishClick = () => {
  
   if (computedSelectedArticle.value?.id) {
@@ -357,22 +389,13 @@ const submitHandler = async (articleData) => {
   if (!articleData.published) {
       articleData.published = 'No';
   }
-  // Check if src contains any files and determine the type
-  if (articleData.src && articleData.src.length > 0) {
-      let totalSize = 0;
-      for (const file of articleData.src) {
-          totalSize += file.size;
-      }
-
-      // Set the type based on the total size
-      if (totalSize > 1024 * 1024) { // 1MB in bytes
-          articleData.type = 'Video';
-      } else {
-          articleData.type = 'Image';
-      }
-  } else {
-      // If src is empty or not provided, default to image type
+  if (isImage.value) {
       articleData.type = 'Image';
+  } else if (isVideo.value) {
+      articleData.type = 'Video';
+  } else {
+      // Default type or you could set it based on other conditions
+      articleData.type = 'Unknown'; // Or keep it as 'Image' or 'Video' based on your application needs
   }
   computedSelectedArticle.value?.id
     ? updateArticle(articleData)
@@ -402,6 +425,44 @@ const submitHandler = async (articleData) => {
   background-color: yellow;
   width: 120px;
 }
+.outer-box{
+  width:326px; 
+  height: 204px;
+  border: 1px solid #9acbea;
+  border-style: dashed;
+  border-radius: 10px;
+  padding: 5px;
+}
 
+.upload-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  width:326px; 
+  height: 204px;
 
+  .child{
+    width: 70px;
+    height: 65px;
+    background-color: var(--fk-bg-input, #c42727);
+    padding: 15px;
+    border-radius: 10px;
+    position: relative;
+  }
+}
+.url-box{
+  width:326px; 
+  height: 204px;
+  border: 1px solid #9acbea;
+  border-style: dashed; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scheduler-week-class-form {
+  .formkit-messages {
+    display: none;
+  }
+}
 </style>

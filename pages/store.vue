@@ -146,7 +146,7 @@ const computedStores = computed(() => {
         name: item.name,
         capacity: item.capacity,
         description: item.description,
-        image: item.img_src,
+        image: `${item.img_src}?timestamp=${new Date().getTime()}`,
         price: item.price,
         promotion_price: item.promotion_price,
         display_original_price: item.display_original_price,
