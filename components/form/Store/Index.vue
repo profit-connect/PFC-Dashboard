@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5 store-form">{{ computedSelectedStore }}
+  <div class="px-5 store-form">
     <FormKit
       type="form"
       @submit="submitHandler"
@@ -264,12 +264,11 @@ const computedSelectedStore = computed(() => {
         pay_with_gift_card:
           props.storeData.pay_with_gift_card === "Yes" ? true : false,
         pay_with_card: props.storeData.pay_with_card === "Yes" ? true : false,
+        promotion_price: parseFloat(props.storeData.promotion_price) || "",
       }
     : {};
 });
-const isPromotionPriceActive = ref(
-  !!computedSelectedStore.value?.promotion_price
-);
+const isPromotionPriceActive = ref(!!computedSelectedStore.value?.promotion_price);
 const promotionStartDate = ref(computedSelectedStore.value?.promotion_start);
 const OriginalPrice = computed(() => {
   if (computedSelectedStore.value && computedSelectedStore.value.price) {
@@ -321,7 +320,13 @@ const availableTags = computed(() => {
         .map((item) => ({ label: item.name, value: item.id }))
     : [];
 });
-
+const promotion_price = ref(computedSelectedStore.promotion_price  || "");
+watch(isPromotionPriceActive, (newVal) => {
+  console.log({ isPromotionPriceActive });
+  if (!newVal) {
+    // promotion_price.value = null;
+  }
+});
 const addStore = async (storeData: any) => {
   const { data, error, execute } = useCustomFetch<any>("/store/add/item", {
     method: "POST",
@@ -353,6 +358,7 @@ const addStore = async (storeData: any) => {
 
 
 const updateStore = async (storeData: any) => {
+  console.log(storeData)
   const { data, error, execute } = useCustomFetch<any>("/store/update/item", {
     method: "POST",
     body: JSON.stringify({
@@ -389,6 +395,9 @@ const submitHandler = async (storeData) => {
     display_original_price: storeData.display_original_price ? "Yes" : "No",
     pay_with_gift_card: storeData.pay_with_gift_card ? "Yes" : "No",
     pay_with_card: storeData.pay_with_card ? "Yes" : "No",
+    promotion_price: isPromotionPriceActive.value
+      ? storeData.promotion_price ?? ""
+      : "",
   };
   computedSelectedStore.value?.id ? updateStore(data) : addStore(data);
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-white h-full"> {{ computedStores }}
+  <div class="container bg-white h-full">
     <div class="p-5">
       <div class="d-flex align-items-center justify-content-between gap-3">
         <div class="d-flex align-items-center gap-4">
@@ -82,6 +82,7 @@
 <script lang="ts" setup>
 import { useAuthStore } from "~/store/auth";
 import { useBreadcrumbStore } from "~/store/breadcrumb";
+const { $toast } = useNuxtApp();
 const breadcrumbStore = useBreadcrumbStore();
 breadcrumbStore.setBreadcrumb({
   items: [
@@ -208,12 +209,12 @@ const onPlanstatusChange = async (selectedStore: any) => {
     });
     if (data.value.return) {
       refresh();
-      $toast("store status edited successfully!");
+      $toast("Store status updated successfully!");
     } else {
       $toast(data.value.message);
     }
   } catch (err) {
-    console.log("Error:/api/store/storestatus", err);
+    console.log("Error:/store/update/itemstatus", err);
   }
 };
 
@@ -231,12 +232,12 @@ const onFeaturedChange = async (selectedStore: any) => {
     );
     if (data.value.return) {
       refresh();
-      $toast("Store featured status edited successfully!");
+      $toast("Store featured  updated successfully!");
     } else {
       $toast(data.value.message);
     }
   } catch (err) {
-    console.log("Error:/api/store/storefeatured", err);
+    console.log("Error:/store/update/itemfeatured", err);
   }
 };
 

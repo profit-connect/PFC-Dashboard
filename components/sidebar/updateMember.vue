@@ -11,10 +11,16 @@
         class="sidebar-box__title text-center"
         title="View membership"
       >
+      <div v-if="memberInfoData">
         <img
           v-if="memberInfoData && memberInfoData.member.data[0].img_src"
           :src="getImageUrl(memberInfoData.member.data[0].img_src)"
         />
+        
+        <div v-else class="avatar-initials">
+  {{ memberInfoData.member.data[0].firstname.charAt(0) }}{{ memberInfoData.member.data[0].lastname.charAt(0) }}
+</div>
+</div>
         <h2 class="content-title-bold editUserName">
           {{ getMemberInfo.firstname }} {{ getMemberInfo.lastname }}
         </h2>
@@ -877,4 +883,17 @@ watch(
   white-space: nowrap;
   margin-top: 10px;
 }
+.avatar-initials {
+  display: flex;
+  align-items: center; /* Centers the initials vertically */
+  justify-content: center; /* Centers the initials horizontally */
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* Makes the div circular */
+  background-color: #1a74cd; /* Example background color, change as needed */
+  color: white; /* Example text color, change as needed */
+  font-size: 32px; /* Adjust based on your design */
+  font-weight: bold; /* Makes the letters a bit thicker */
+}
+
 </style>

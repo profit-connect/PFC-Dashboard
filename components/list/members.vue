@@ -10,7 +10,7 @@
         <div>
           <img v-if="item && item.img_src" class="member-row__avatar avatar" :src="getImageUrl(item.img_src)" 
           >
-            <div v-else class="member-row__avatar-placeholder">
+            <div v-else class="avatar-initials">
               {{ item.firstname.charAt(0) }}{{ item.lastname.charAt(0) }}
             
             </div>
@@ -170,6 +170,18 @@ const getDaysLeft = (endDate) => {
       max-width: 200px;
     }
   }
+  .avatar-initials {
+  display: flex;
+  align-items: center; /* Centers the initials vertically */
+  justify-content: center; /* Centers the initials horizontally */
+  width: 60px;
+  height:60px;
+  border-radius: 50%; /* Makes the div circular */
+  background-color: #1a74cd; /* Example background color, change as needed */
+  color: white; /* Example text color, change as needed */
+  font-size: 22px; /* Adjust based on your design */
+  font-weight: bold; /* Makes the letters a bit thicker */
+}
 }
 
 

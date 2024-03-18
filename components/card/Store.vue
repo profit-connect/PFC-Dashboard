@@ -1,14 +1,23 @@
-<template>{{ isPublic }} {{ status }} 
+
+<template>
   <MixToggleStar
       v-model="isFeatured"
       size="24"
       class="star-toggle"
       @update:model-value="onFeaturedChange"
-      style="z-index: 10;"
     />
   <div class="card-store">
     <div class="row">
       <div class="col-6">
+        <div style=" height: 30px; width: 30px; position: absolute; background-color: white; border-radius: 50%; left: 10px; top: 10px;">
+        <NuxtImg        
+        @click="$emit('on-plan-select')"               
+        role="button"
+        src="/images/svg/edit-icon.svg"
+        style=" height: 17px; width: 17px; position: relative; left: 7px; top: 2px;"
+        provider="none"
+           />
+          </div>
         <NuxtImg
           class="h-100 w-100 object-fit-cover"
           :src="getImageUrl(image)"
@@ -17,15 +26,21 @@
       </div>
       <div class="col-6  px-4">
         <div class="name-card-right d-flex mt-2">
-      <div style=" font-size: 10px; width:40px; margin-top: 4px;position: relative; left: 60px;" > {{ isPublic ? 'Public' : 'Private' }}</div>
-          <div  style="position: relative; left: 60px;">
+          <div style="width: 50px;">
+            <div v-if="promotion_price > 0" class="custom-badge" :class="{ 'custom-badge-inactive': status === 'Inactive' }">
+              {{ `${discountInPercent}% off ` }}
+            </div>
+          </div>
+         
+      <div style=" font-size: 10px; width:40px; margin-top: 4px;position: relative; left: 10px;" > {{ isPublic ? 'Public' : 'Private' }}</div>
+          <div  style="position: relative; left: 10px;">
             <FormKit
               type="switch"
               name="is_public"
               @update:model-value="
                 $emit('on-planstatus-change', {
                   store_item_id: id,
-                  status: isPublic ? 'Public' : 'Private'
+                  status: isPublic ? 'Private' : 'Public'
                 })
               "
               v-model="isPublic"
@@ -33,18 +48,30 @@
 
       </div>
       </div>
-        <div @click="$emit('on-plan-select')"  class="title line-clamp-2" style="position: relative; bottom: 5px; ">
+        <div  class="title line-clamp-2" style="position: relative; bottom: 5px; ">
           {{ name }}
         </div>
         <p class="description line-clamp-3" style="position: relative; bottom: 5px;">
           {{ description }}
         </p>
-
+       
         <div class="price" style="position: relative; bottom: 5px;">
-            <span :class="display_original_price=='Yes'?'strikethrough':''">
+          <div v-if="display_original_price=='Yes' &&  promotion_price > 0 ">
+            <span  class="strikethrough">
                 {{ price }}AED
             </span>
-          <span class="offer" :class="display_original_price=='No'?'strikethrough':''" v-if="promotion_price">{{ promotion_price }}AED</span>
+            <span  class="offer">
+                {{ promotion_price }}AED
+            </span>
+            </div>
+           <div v-else-if="display_original_price=='No' &&  promotion_price > 0">
+            <span>
+                {{ promotion_price }}AED
+            </span>
+          </div>
+          <div v-else >
+            <span  >{{ price}}AED</span>
+          </div> 
         </div>
 
         <div class="d-flex justify-content-between footer-label"  style="position: relative; bottom: 3px;">
@@ -99,7 +126,7 @@ const props = defineProps({
     default: "No",
   },
 });
-const isPublic = ref(props.status === "Private" ?? false);
+const isPublic = ref(props.status === "Public" ?? false);
 
 const isFeatured = ref(props.featured === "Yes" ?? false);
 const emit = defineEmits([
@@ -109,10 +136,16 @@ const emit = defineEmits([
 ]);
 const onFeaturedChange = (val: boolean) => {
   emit("on-featured-change", {
-    plan_id: props.id,
+    store_item_id: props.id,
     featured: val ? "Yes" : "No",
   });
 };
+const discountInPercent = computed(() => {
+  if (!props.promotion_price) return 0;
+  return Math.ceil(
+    ((+props.price - +props.promotion_price) * 100) / +props.price
+  );
+});
 </script>
 
 <style scoped lang="scss">
@@ -148,10 +181,26 @@ const onFeaturedChange = (val: boolean) => {
       padding-left: 8px;
     }
   }
-  .star-toggle {
-    position: absolute;
-    top: -8px;
-    left: -8px;
-  }
+
 }
+.star-toggle {
+    position: relative;
+    z-index: 10;
+    bottom: -2px;
+    right: 3px;
+  }
+  .custom-badge {
+    background: red;
+    display: inline-block;
+    color: #fff;
+    font-size: 10px;
+    padding: 0 6px;
+    height: 18px;
+    align-items: center;
+    padding-top: 1px;
+    border-radius: 5px;
+    // &.custom-badge-inactive {
+    // background-color: black; 
+    // }
+  }
 </style>

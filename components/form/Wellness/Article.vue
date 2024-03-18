@@ -1,5 +1,5 @@
-<template>
-  <div class="px-5"> {{ computedSelectedArticle.description_html }}
+<template>{{ computedSelectedArticle.src }}
+  <div class="px-5"> 
     <FormKit
       type="form"
       @submit="submitHandler"
@@ -25,15 +25,10 @@
             @click="handlePublishClick"
             validation="required"
           />
-
-
-
-
         </div>
         <div class="row my-4">
         <div class="col-5 custom-multiselect-container" >
           <FormKit
-          
             type="uppy"
             label="Image or Video Link"
             name="src"
@@ -105,22 +100,25 @@
         </div>
       </div>
       <div style="width: 100%; min-height: 300px; background: var(--fk-bg-input, #c42727);
-       border-radius: 10px; padding: 10px;"> 
+       border-radius: 10px; padding: 0px;"> 
       <div>
         <FormKit
           style="background-color: var(--fk-bg-input, #c42727); border-radius: 5px; 
-          color:  #84CEFF;; width: 140px; left: 60%; position: relative; z-index: 2;
-           font-size: 14px;  height: 35px; top:67px; left: 75%;"
+          color:  #84CEFF;; width: 140px; left: 79%; position: relative; z-index: 10;
+           font-size: 14px;  height: 32px; top: -4px;"
           type="button"
           label="Add Button"
           @click="showButton=true"
           validation="required"
         />
+        <div style="position: relative; width:100%; bottom:60px;">
           <FormKit
-          type="richText"
+          type="tiny"
           name="description_html"
           label="description_html"
            />
+        </div>
+         
 
       </div>
       <div v-if="showButton" class="d-flex items-align-center">
@@ -229,6 +227,7 @@ const exceptTagsSelected = ref([]);
 const showButton = ref(false);
 const { tags } = storeToRefs(useTagStore());
 const isPublished = ref(false);
+const { getUrl } = useBoImage();
 
 const handlePublishClick = () => {
  
@@ -252,9 +251,15 @@ const exceptTags = computed(() => {
 });
 
 const computedSelectedArticle = computed(() => {
+  let articleData = props.articleData ? { ...props.articleData } : {};
+
+// Check if src is empty or not provided
+if (!articleData.src || articleData.src.length === 0) {
+  articleData.type = 'Image'; // Default type to "image" if src is empty
+}
   return props.articleData
     ? {
-        ...useOmit(props.articleData, ["src", "img_video"]),
+        ...useOmit(props.articleData, ["img_video"]),
         available_tags: props.articleData.available_tags
           .filter((item) => item)
           .map((item) => item.id),
@@ -295,23 +300,26 @@ const addArticle = async (articleData: any) => {
 
     // Check the response and handle accordingly
     if (data.value && data.value.return) {
-      $toast("Class added successfully!");
+      console.log("data",data)
+      $toast("Article added successfully!");
       emit("reload"); // Reload or refresh data
       // emit("close-canvas"); // If you have a modal or overlay to close
     } else if (data.value) {
       $toast(data.value.message); // Show error message from response
     } else if (error.value) {
-      $toast("An error occurred while adding the class.");
-      console.error("Error:/api/class/add", error.value); // Log the error
+      $toast("An error occurred while adding the article.");
+      console.error("Error:/wellness/add/article", error.value); // Log the error
     }
   } catch (err) {
-    console.log("Catch block error:/api/class/add", err);
+    console.log("Catch block error:/wellness/add/article", err);
     $toast("Failed to add class due to an exception.");
   }
 };
 
 
 const updateArticle = async (articleData: any) => {
+  console.log("articleData",articleData)
+
   const { data, error, execute } = useCustomFetch<any>("/wellness/update/article", {
     method: "POST",
     body: JSON.stringify(cleanObjectL1({ // Make sure to stringify your body if your fetch wrapper doesn't automatically do it
@@ -331,21 +339,41 @@ const updateArticle = async (articleData: any) => {
     // Since useFetch from Nuxt 3 automatically unwraps the response, you might need to adjust how you access the data
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Class edited successfully!");
+      $toast("Article edited successfully!");
       // emit("close-canvas");
     } else if (data.value) {
       $toast(data.value.message);
     } else if (error.value) {
-      $toast("An error occurred while updating the class.");
-      console.error("Error:/api/class/edit", error.value);
+      $toast("An error occurred while updating the article.");
+      console.error("Error:/wellness/update/article", error.value);
     }
   } catch (err) {
-    console.log("Catch block error:/api/class/edit", err);
+    console.log("Catch block error:/wellness/update/article", err);
     $toast("Failed to update class due to an exception.");
   }
 };
 
 const submitHandler = async (articleData) => {  
+  if (!articleData.published) {
+      articleData.published = 'No';
+  }
+  // Check if src contains any files and determine the type
+  if (articleData.src && articleData.src.length > 0) {
+      let totalSize = 0;
+      for (const file of articleData.src) {
+          totalSize += file.size;
+      }
+
+      // Set the type based on the total size
+      if (totalSize > 1024 * 1024) { // 1MB in bytes
+          articleData.type = 'Video';
+      } else {
+          articleData.type = 'Image';
+      }
+  } else {
+      // If src is empty or not provided, default to image type
+      articleData.type = 'Image';
+  }
   computedSelectedArticle.value?.id
     ? updateArticle(articleData)
     : addArticle(articleData);
@@ -374,5 +402,6 @@ const submitHandler = async (articleData) => {
   background-color: yellow;
   width: 120px;
 }
+
 
 </style>
