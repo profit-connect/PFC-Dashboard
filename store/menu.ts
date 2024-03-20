@@ -48,10 +48,10 @@ export const useMenuStore = defineStore("menu", () => {
         },
         {
           id: 5,
-          label: "Role",
+          label: "Roles",
           description:
             "Create and Manage staff roles and assign access level to roles.",
-          link: "/",
+          link: "/roles",
         },
         {
           id: 6,

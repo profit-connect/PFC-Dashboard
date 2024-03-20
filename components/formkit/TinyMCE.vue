@@ -2,21 +2,23 @@
     <div style="width: 100%;">
       <ClientOnly>
         <Editor
-          api-key="12bwrmqqt34koqswgd8ipw4w37doiig4gf4a09nm2icmvm3h"
+          api-key="qupq5d9drws8slstb6dia9ckhsajkpowu6ibsd70hyofyblk"
           v-model="editorContent"
           :init="{
-            height: 500,
-            menubar: false,
-            statusbar: false, 
-            readonly: false,
-            plugins: [
-              'advlist autolink lists link image charmap print preview anchor',
-              'searchreplace visualblocks code fullscreen',
-              'insertdatetime media table contextmenu paste code'
-            ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-            content_style: 'body { background-color: #f2faff; border: none; }'
-          }"
+                selector: 'textarea',
+                height: 500,
+                menubar: false,
+                statusbar: false,
+                editor_selector : 'mcesimple',
+                readonly: false,
+                advcode_inline: true,
+                plugins: [
+                'link', 'code' 
+                ],
+                toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat  | code | link ',
+                content_style: 'body { background-color: #f2faff; } iframe {border: none;}',
+             }"
+
           @update:modelValue="handleInput"
         />
       </ClientOnly>
@@ -44,31 +46,33 @@
     }
   }
   
-  // Inject custom styles for TinyMCE toolbar buttons on component mount
   onMounted(() => {
-    const style = document.createElement('style');
-    style.type = 'text/css';
-    style.innerHTML = `
-      .tox .tox-toolbar__primary .tox-tbtn {
-        background-color: #f2faff !important;
+  const customStyles = `
+    .tox .tox-toolbar__primary .tox-tbtn {
+      background-color: #f2faff !important; // Default state
+      color: black !important;
+    }
+    .tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled {
+         background: #84CEFF !important; 
         color: white !important;
       }
-      .tox .tox-edit-area {
-      border: none !important; /* Removes border around the edit area */
+    .tox .tox-tbtn:hover {
+      background: #84CEFF !important; 
     }
-    .tox .tox-editor-container {
-      border: none !important; /* Removes border around the editor UI */
-    }
-    `;
-    document.head.appendChild(style);
-  });
+    
+  `;
+
+  const styleTag = document.createElement('style');
+  styleTag.type = 'text/css';
+  styleTag.appendChild(document.createTextNode(customStyles));
+  document.head.appendChild(styleTag);
+});
+
+
   </script>
   
   <style lang="scss" scoped>
-.tox .tox-toolbar__primary .tox-tbtn {
-    background-color: var(--fk-bg-input, #c42727) !important;
-    color: white !important; /* Assuming you want white text */
-}
 
 
-</style>
+  </style>
+  

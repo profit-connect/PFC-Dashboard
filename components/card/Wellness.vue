@@ -8,8 +8,11 @@
           <NuxtImg src="/images/svg/time-icon.svg" width="18" loading="lazy" provider="none"/>
           <span>{{ read_time_no }} {{ read_time }}</span>
         </div>
-        <p  class="mt-4" style="color: lightgray;">
+        <p v-if="published_date"  class="mt-4" style="color: lightgray;">
         Published:  {{  dayjs(published_date).format("dddd,MMMM D") }}
+        </p>
+        <p v-else  class="mt-4" style="color: lightgray;">
+          Not Published
         </p>
       </div>
     </div>

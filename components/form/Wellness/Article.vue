@@ -1,4 +1,4 @@
-<template>{{ computedSelectedArticle}}
+<template>
   <div class="scheduler-week-class-form px-5"> 
     <FormKit
       type="form"
@@ -49,7 +49,7 @@
     <div>
     <FormKit
         type="uppy"
-        label="Image or Video Link"
+        label="Upload Image"
         name="image"
         :hideUploadButton="false"
         help="Max image upload: 960x540px, 1MB, in .jpg, .png, or .gif. Max video upload: 720p resolution, 4MB."
@@ -132,15 +132,15 @@
       <div style="width: 100%; min-height: 300px; background: var(--fk-bg-input, #c42727);
        border-radius: 10px; padding: 0px;"> 
       <div>
-        <FormKit
+        <!-- <FormKit
           style="background-color: var(--fk-bg-input, #c42727); border-radius: 5px; 
           color:  #84CEFF;; width: 140px; left: 79%; position: relative; z-index: 10;
            font-size: 14px;  height: 32px; top: -4px;"
           type="button"
           label="Add Button"
-          @click="showButton=true"
+          @click="showButton=true "
           validation="required"
-        />
+        /> -->
         <div style="position: relative; width:100%; bottom:60px;">
           <FormKit
           type="tiny"

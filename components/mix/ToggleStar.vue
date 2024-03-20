@@ -34,7 +34,7 @@ const data = useVModel(props, "modelValue", emit);
 </script>
 
 <style lang="scss" scoped>
-.star-image {
-  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, .1215686275));
-}
+// .star-image {
+//   filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, .1215686275));
+// }
 </style>

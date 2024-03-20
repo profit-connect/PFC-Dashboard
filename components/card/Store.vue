@@ -55,26 +55,26 @@
           {{ description }}
         </p>
        
-        <div class="price" style="position: relative; bottom: 5px;">
+        <div class="price" style="position: relative; bottom: 10px;">
           <div v-if="display_original_price=='Yes' &&  promotion_price > 0 ">
-            <span  class="strikethrough">
-                {{ price }}AED
-            </span>
             <span  class="offer">
-                {{ promotion_price }}AED
+              AED <b>{{ promotion_price }} </b> 
+            </span>
+            <span style="font-size: 10px; margin-left: 5px;"  class="strikethrough">
+                {{ price }}AED
             </span>
             </div>
            <div v-else-if="display_original_price=='No' &&  promotion_price > 0">
             <span>
-                {{ promotion_price }}AED
+              AED <b>{{ promotion_price }} </b> 
             </span>
           </div>
           <div v-else >
-            <span  >{{ price}}AED</span>
+            <span  >  AED <b>{{ promotion_price }} </b> </span>
           </div> 
         </div>
 
-        <div class="d-flex justify-content-between footer-label"  style="position: relative; bottom: 3px;">
+        <div class="d-flex justify-content-between footer-label"  style="position: relative; bottom: 10px;">
           <span>
             <NuxtImg src="/images/svg/tax-icon.svg" alt="Tax icon" provider="none" height="10px" />
             included
@@ -177,8 +177,8 @@ const discountInPercent = computed(() => {
   }
   .price {
     .offer {
-      font-size: 11px;
-      padding-left: 8px;
+      font-size: 14px;
+      // padding-left: 8px;
     }
   }
 
@@ -186,8 +186,9 @@ const discountInPercent = computed(() => {
 .star-toggle {
     position: relative;
     z-index: 10;
-    bottom: -2px;
+    bottom: -6px;
     right: 3px;
+    box-shadow: none;
   }
   .custom-badge {
     background: red;
@@ -203,4 +204,5 @@ const discountInPercent = computed(() => {
     // background-color: black; 
     // }
   }
+ 
 </style>

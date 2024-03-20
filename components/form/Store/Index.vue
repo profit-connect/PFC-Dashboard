@@ -13,7 +13,7 @@
             label="Upload Image"
             name="image"
             :hideUploadButton="true"
-            help="Max image upload: 5000x500px, 1MB, in .jpg and .png."
+            help="Max image upload: 500x500px, 1MB, in .jpg and .png."
           />
         </div>
         <div class="col-8">
