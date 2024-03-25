@@ -22,19 +22,19 @@
   >
     <img
       src="/images/svg/calander.svg"
-      alt="calender"
+      alt="calendar"
       style="height: 200px"
     />
     <div
       class="d-flex items-align-center scheduler-btn-text-left gap-2"
-      style="margin-left: 5px; position: absolute; top: 100px"
+      style="margin-left: 7px; position: absolute; top: 85px; rotate:180deg;"
     >
       <img
         src="/images/svg/feather-calendar.svg"
         alt="calender icon"
-        style="width: 20px; height: 15px"
+        style="width: 20px; height: 15px; rotate:270deg;"
       />
-      Calander
+      Calendar
     </div>
   </div>
   <div class="d-flex h-100 content">
@@ -98,12 +98,12 @@
     />
     <div
       class="d-flex items-align-center scheduler-btn-text-right gap-2"
-      style="margin-left: 0px; position: absolute; top: 100px"
+      style="margin-left: 0px; position: absolute; top: 90px"
     >
       <img
         src="~assets/images/svg/comment.svg"
         alt="chat icon"
-        style="width: 20px; height: 20px"
+        style="width: 20px; height: 20px; rotate:-90deg;"
       />
       Comments
     </div>

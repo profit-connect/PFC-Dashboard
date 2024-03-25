@@ -1,8 +1,10 @@
 <template>
   <div class="search-with-icon">
-    <FormKit
+    <FormKit 
+    style=" border-bottom-left-radius: 0px; border-top-left-radius: 0px; "
       type="search"
       label="FormKit Input"
+      prefix-icon="search"
       placeholder="Search..."
       @input="onSearch"
     />
@@ -20,6 +22,7 @@ const onSearch = useDebounceFn((data) => {
 <style lang="scss" scoped>
 .search-with-icon {
   position: relative;
+  
 
   input {
     padding: 16px 16px 16px 60px;

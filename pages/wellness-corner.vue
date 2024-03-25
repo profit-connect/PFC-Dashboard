@@ -76,7 +76,7 @@ const breadcrumbStore = useBreadcrumbStore();
 breadcrumbStore.setBreadcrumb({
   items: [
   //   { label: "Comms", link: "#" },
-    { label: "Wellness Corner", link: "#" },
+    { label: "Wellness Corner", link: "" },
   ],
 });
 

@@ -42,8 +42,8 @@ setBreadcrumbTab({
 const breadcrumbStore = useBreadcrumbStore();
 breadcrumbStore.setBreadcrumb({
   items: [
-    { label: "Facility", link: "/" },
-    { label: "Staff", link: "/" },
+    { label: "Facility", link: "" },
+    { label: "Staff", link: "" },
   ],
 });
 

@@ -48,14 +48,14 @@
            v-model="day.end_time"
            class="time-input"
          />
-         <div>
-           <p
+         <div style="position: relative;">
+           <p style="position: absolute;"
              ref="error"
              v-if="day.start_time >= day.end_time"
              class="custom-formkit-message"
              validation="required"
            >
-             End-time should be greater
+           Increase end-time
            </p>
          </div>
        </div>
@@ -237,7 +237,8 @@ const submitHandler = async () => {
  color: red;
  font-size: 10px;
  margin-bottom: 0px;
- margin-top: -10px;
+ margin-top: -22px;
+ width: 50px;
 }
 .time-input .formkit-input {
  border: 2px solid #007bff; /* Blue border */

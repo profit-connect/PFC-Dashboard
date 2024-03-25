@@ -195,17 +195,19 @@
             </td>
             <td>
               <div class="action-btn">
+                <div class="btn">
                 <button @click="onDeleteSlot(key, key_2)" type="button">
-                  <NuxtImg src="/images/svg/delete-icon.svg" provider="none" />
-                  Delete
+                  <NuxtImg src="/images/svg/delete-icon.svg" provider="none" style="height: 10px;"/>
                 </button>
+                <p style="position: relative; bottom: 5px; font-size: 13.5px;">Delete</p>
+                </div>
+                <div class="btn">
                 <button @click="onDuplicateSlot(key, key_2)" type="button">
                   <NuxtImg
-                    src="/images/svg/duplicate-icon.svg"
-                    provider="none"
-                  />
-                  Duplicate
+                    src="/images/svg/duplicate-icon.svg" provider="none" style="height: 12px;" />
+                    <p style="position: relative; bottom: 4px; font-size: 12.5px;">Duplicate</p>  
                 </button>
+              </div>
               </div>
             </td>
           </tr>
@@ -424,7 +426,7 @@ const computedCoachData = computed(() => {
   if (coachData.value && coachData.value.coaches.length)
     return coachData.value.coaches.map((item: any) => {
       return {
-        label: item.firstname,
+        label: formatName(item.firstname), 
         value: item.id,
       };
     });
@@ -516,7 +518,14 @@ const endTime = (start_time: string, offetInMinute: number = 0) => {
 const formatTime = (time: string) => {
   return dayjs(`2024-01-01 ${time}`).format("hh:mm A");
 };
-
+function formatName(string) {
+  if (!string) return '';
+  const words = string.split(' ');
+  const capitalizedWords = words.map(word => 
+    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  );
+  return capitalizedWords.join(' ');
+}
 watch(
   formStructure,
   (val) => {
@@ -690,11 +699,12 @@ td {
   justify-content: center;
   align-items: center;
   font-size: 11px;
+  // margin-left: 80px;
 
   button {
     border: none;
     background-color: #fff;
-    margin-bottom: 12px;
+    // margin-bottom: 12px;
 
     &:hover {
       opacity: 0.6;
@@ -728,6 +738,7 @@ td {
     left: 2px;
   }
 }
+
 </style>
 <style lang="scss">
 .scheduler-week-class-form {

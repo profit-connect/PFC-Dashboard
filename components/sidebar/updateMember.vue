@@ -12,17 +12,17 @@
         title="View membership"
       >
       <div v-if="memberInfoData">
-        <img
-          v-if="memberInfoData && memberInfoData.member.data[0].img_src"
-          :src="getImageUrl(memberInfoData.member.data[0].img_src)"
-        />
-        
-        <div v-else class="avatar-initials">
-  {{ memberInfoData.member.data[0].firstname.charAt(0) }}{{ memberInfoData.member.data[0].lastname.charAt(0) }}
-</div>
-</div>
+        <img v-if="!imageError && memberInfoData.member.data[0].img_src"
+            :src="getImageUrl(memberInfoData.member.data[0].img_src)"
+            @error="imageError = true"
+            v-show="!imageError" />
+
+        <div style="position: relative; left: 35%;" v-else class="avatar-initials content-title-bold ">
+          {{ memberInfoData.member.data[0].firstname.charAt(0) }}{{ memberInfoData.member.data[0].lastname.charAt(0) }} 
+        </div>
+      </div>
         <h2 class="content-title-bold editUserName">
-          {{ getMemberInfo.firstname }} {{ getMemberInfo.lastname }}
+          {{ formatName(getMemberInfo.firstname) }} {{ formatName(getMemberInfo.lastname) }} 
         </h2>
       </a>
       <p
@@ -163,13 +163,13 @@
             validation-visibility="live"
             placeholder="Email"
           />
-          <div class="input-label-box d-none">
+          <!-- <div class="input-label-box d-none">
             <input
               type="password"
               class="passwordInput"
               placeholder="Password"
             />
-          </div>
+          </div> -->
         </div>
 
         <div
@@ -473,8 +473,8 @@ watch(
     if (val.path === "/members") {
       setBreadcrumb({
         items: [
-          { label: "Control Panel", link: "/" },
-          { label: "Profiles", link: "/" },
+          { label: "Control Panel", link: "" },
+          { label: "Profiles", link: "" },
         ],
       });
     } else {
@@ -540,6 +540,14 @@ const toggleStates: ToggleStates = {
   isTagsEditMode: ref(false),
 };
 
+function formatName(string) {
+  if (!string) return '';
+  const words = string.split(' ');
+  const capitalizedWords = words.map(word => 
+    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  );
+  return capitalizedWords.join(' ');
+}
 const isAnyEditModeActive = computed(() => {
   const isActive = Object.values(toggleStates).some((state) => state.value);
   console.log("Edit Mode Active:", isActive);
@@ -726,6 +734,17 @@ watch(
   },
   { immediate: true }
 );
+const imageError = ref(false);
+watch(
+  () => memberInfoData.value?.member?.data[0]?.img_src,
+  (newImgSrc) => {
+    // Only reset imageError if newImgSrc is not undefined
+    if (newImgSrc !== undefined) {
+      imageError.value = false;
+    }
+  },
+  { immediate: true } // This ensures the watcher is run immediately with the current value
+);
 
 // onMounted(async () => {
 //   try {
@@ -846,6 +865,7 @@ watch(
   }
   .image-box {
     margin-bottom: 30px;
+    cursor: pointer;
   }
   .small-title-bold {
     display: flex;
@@ -890,10 +910,11 @@ watch(
   width: 100px;
   height: 100px;
   border-radius: 50%; /* Makes the div circular */
-  background-color: #1a74cd; /* Example background color, change as needed */
-  color: white; /* Example text color, change as needed */
-  font-size: 32px; /* Adjust based on your design */
+  background-color: #f2faff; /* Example background color, change as needed */
+  color: black; /* Example text color, change as needed */
+  font-size: 22px; /* Adjust based on your design */
   font-weight: bold; /* Makes the letters a bit thicker */
+  margin-bottom: 10px;
 }
 
 </style>

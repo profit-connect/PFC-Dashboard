@@ -14,7 +14,7 @@
         validation="required"
       />
       <div class="row my-4">
-        <div class="col-5 custom-multiselect-container">
+        <div class="col-6 custom-multiselect-container">
           <MixInputBox
             title="Category"
             style="height: 140px; padding-top: 20px"
@@ -31,8 +31,8 @@
             />
           </MixInputBox>
         </div>
-        <div class="col-2"></div>
-        <div class="col-5 custom-multiselect-container">
+        <!-- <div class="col-2"></div> -->
+        <div class="col-6 custom-multiselect-container">
           <MixInputBox
             title="Duration"
             style="height: 140px; padding-top: 20px"
@@ -54,7 +54,7 @@
                   validation="required"
                 />
               </div>
-              <div class="col-8">
+              <div class="col-9">
                 <FormKit
                   type="multiselect"
                   label="Class"

@@ -193,7 +193,8 @@ watch(
     background: none;
     border: none;
     border-top: 1px solid $main-yellow;
-    border-bottom: 1px solid $main-yellow;
+    border-bottom: 1px solid #FFD500;
+;
   }
   .isSameDay {
     .vc-highlight {
@@ -202,7 +203,7 @@ watch(
   }
   .vc-highlight-content-solid {
     // background: $main-blue;
-    border: 1px solid yellow;
+    border: 1px solid #FFD500;
   }
 
   .on-right {

@@ -14,7 +14,7 @@
       </div>
       <div class="tab-ite">
         <div  class="tab-content1" @click="emit('toggle-modal')">
-          <span class="rotated-text" style="font-size: 12px"
+          <span class="rotated-text" style="font-size: 16px"
             >{{ sortedTimeSlots.length ? "Update" : "Add" }} &nbsp;
             <img
               v-if="!sortedTimeSlots.length"
@@ -23,7 +23,7 @@
             />
             <img
               v-else
-              style="width: 11px; height: 11px; margin-right: 8px"
+              style="width: 16px; height: 16px; margin-right: 8px"
               src="@/assets/images/svg/edit-icon.svg"
               alt="Edit icon"
             />
@@ -87,7 +87,7 @@ const sortedTimeSlots = computed(() => {
   background: #002e4b;
   display: flex;
   flex-direction: column;
-  width: 38px;
+  width: 43px;
   padding-top: 49px;
   padding-bottom: 64px;
   height: calc(100vh - 80px);
@@ -100,7 +100,7 @@ const sortedTimeSlots = computed(() => {
 }
 .vertical-tab div {
   cursor: pointer;
-  height: 98px;
+  height: 148px;
   // border: 1px solid $main-blue;
   clip-path: polygon(
     0% 20%,
@@ -157,6 +157,7 @@ const sortedTimeSlots = computed(() => {
 }
 
 .rotated-text {
+  font-size: 16px;
   display: inline-block;
   white-space: nowrap;
   transform: rotate(270deg);

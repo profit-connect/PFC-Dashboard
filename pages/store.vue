@@ -15,13 +15,13 @@
           <SearchBar @on-search="onSearch" />
         </div>
       </div>
-      <div class="d-flex align-items-baseline">
+      <div class="d-flex align-items-baseline mt-4 ">
         <MixTab
           v-model="activeTab"
           :items="getCategories"
           @edit="onSelectCategory"
         />
-        <MixButton
+        <MixButton style="width: 210px;"
           @click="showCatrgoryForm = true"
           size="sm"
           label="Add category"
@@ -86,8 +86,8 @@ const { $toast } = useNuxtApp();
 const breadcrumbStore = useBreadcrumbStore();
 breadcrumbStore.setBreadcrumb({
   items: [
-    { label: "Manage", link: "#" },
-    { label: "Store", link: "#" },
+    { label: "Manage", link: "" },
+    { label: "Store", link: "" },
   ],
 });
 

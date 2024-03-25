@@ -32,6 +32,7 @@
             name="description"
             label="Description"
             placeholder="Description"
+            validation="required"
           />
         </div>
       </div>

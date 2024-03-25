@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5 scheduler-week-class-form"> 
+  <div class="px-5 scheduler-week-clas-form"> 
     <FormKit
       type="form"
       @submit="submitHandler"
@@ -78,14 +78,19 @@
         <h6 class="text-center" style="font-size: 22px; margin-top: 50px">
           Availability
         </h6>
+        <div class="d-flex align-items-center gap-2" >
+        <div>
         <FormKit
           type="checkbox"
           name="follow_facility_timing"
-          label="Follows Facility Timing"
+          label=""
           :value="value.follow_facility_timing"
         />
+        </div>
+        <div class="mb-3">Follows Facility Timing</div>
       </div>
-
+   
+    </div>
       <div class="schedule-container" v-if="!value.follow_facility_timing">
         <div
           v-for="(day, index) in value.timings"

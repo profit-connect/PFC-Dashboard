@@ -78,8 +78,8 @@ const getBreadcrumbMargin = computed(() => {
 // Set breadcrumb and its styles
 breadcrumbStore.setBreadcrumb({
   items: [
-    { label: "Control Panel", link: "/" },
-    { label: "Profiles", link: "/profiles" }, 
+    { label: "Control Panel", link: "" },
+    { label: "Profiles", link: "" }, 
   ],
 });
 

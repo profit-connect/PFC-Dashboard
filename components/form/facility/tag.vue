@@ -20,6 +20,7 @@
           type="text"
           name="description"
           placeholder="Description"
+          validation="required"
           v-model="form.description"
           :classes="{
             outer: 'flex-grow-1',

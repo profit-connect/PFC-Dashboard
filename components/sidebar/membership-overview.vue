@@ -153,8 +153,8 @@ const { setBreadcrumb, setBreadcrumbTab } = useBreadcrumb();
 const breadcrumbStore = useBreadcrumbStore();
 breadcrumbStore.setBreadcrumb({
   items: [
-    { label: "Profiles", link: "/" },
-    { label: "Membership ", link: "/profiles" },
+    { label: "Profiles", link: "" },
+    { label: "Membership ", link: "" },
   ],
 });
 
@@ -265,12 +265,17 @@ const computedPlanDetails = computed(() => {
   // Check if `ComputedPackage.value` is truthy and is an array before calling reduce
   if (Array.isArray(ComputedPackage.value)) {
     return ComputedPackage.value.reduce((acc, plan) => {
+      // if (
+      //   plan !== null &&
+      //   (selectedFilter.value === "All" ||
+      //     plan.type === selectedFilter.value) &&
+      //   plan.private === "No"
+      // ) 
       if (
         plan !== null &&
         (selectedFilter.value === "All" ||
-          plan.type === selectedFilter.value) &&
-        plan.private === "No"
-      ) {
+          plan.type === selectedFilter.value) 
+      ){
         acc.push({
           id: plan.id,
           name: plan.name,
@@ -568,7 +573,32 @@ const formattedDate = `${day} ${monthNames[monthIndex]} ${year}`;
   position: relative;
   width: 65vw;
   max-width: 950px;
+  min-height: 600px;
+  // overflow-x: auto;
+  overflow-y: hidden;
+
+  /* Custom scrollbar styles: */
+  &::-webkit-scrollbar {
+    height: 12px; /* Reduced height for a thinner scrollbar */
+    background-color: #f2faff;
+   
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #f2faff;
+    border-radius: 4px; /* Slightly less rounded for a thinner look */
+    border: 2px solid #eadfdf; /* Adjusted for the thinner scrollbar */
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #e5d9d9;
+    border-radius: 4px;
+    box-shadow: inset 0 0 6px rgba(159, 109, 109, 0.3); /* Optional */
+    position: relative;
+  }
 }
+
 .content-box1 {
   position: relative;
   width: 65vw;

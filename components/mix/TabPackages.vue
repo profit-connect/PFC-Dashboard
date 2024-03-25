@@ -14,7 +14,7 @@
          
           @click="currentIndex = key"
         >
-         <span  style="margin-left: 40px; "> {{ item }}</span> 
+         <span  style="margin-left: 95px; "> {{ item }}</span> 
         </div>
       </SwiperSlide>
     </Swiper>
@@ -47,6 +47,8 @@ const onClickEdit = (tab: number) => {
 .tab {
   overflow-x: scroll;
   position: relative;
+  right: 40px;
+  width: 850px;
   // background-color: $main-bg;
   &:before {
     content: "";
@@ -73,9 +75,9 @@ const onClickEdit = (tab: number) => {
 
   .tab-item {
     cursor: pointer;
-    padding: 0px 34px;
+    padding: 0px 0px;
     position: relative;
-    width: 200px;
+    width: 240px;
     text-align: center;
 
     &.active {

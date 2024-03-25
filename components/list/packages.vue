@@ -47,11 +47,11 @@
               })
             "
           >
-            <img
+            <img style=" height:50px; width:50px;"
               src="~/assets/images/svg/plus-icon.svg?timestamp=1701243704100"
               alt="Add plan icon"
             />
-            <div >Add Plan</div>
+            <div  style="font-size: 22px;" >Add Plan</div>
           </div>
      
         
@@ -144,6 +144,7 @@ const filteredPackages = computed(() => {
   display: flex;
   flex-flow: column;
   .add-button{
+    cursor: pointer;
     height: 134px;
     align-items: center;
     font-weight: 800;

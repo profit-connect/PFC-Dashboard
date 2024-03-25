@@ -1,8 +1,8 @@
 <template>
   <div class="card bg-white rounded-lg mt-5" style="width: 536px">
     <div class="card-body d-flex flex-column justify-content-center">
-      <img
-        src="~/assets/images/logo-for-light.png"
+      <NuxtImg
+        src="images/profit-logo.png"
         width="351"
         height="85"
         class="mx-auto"

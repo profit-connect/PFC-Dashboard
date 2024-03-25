@@ -72,8 +72,8 @@ import { useBreadcrumbStore } from "~/store/breadcrumb";
 const breadcrumbStore = useBreadcrumbStore();
 breadcrumbStore.setBreadcrumb({
   items: [
-    { label: "Control Panel", link: "#" },
-    { label: "Classes", link: "#" },
+    { label: "Control Panel", link: "" },
+    { label: "Classes", link: "" },
   ],
 });
 

@@ -107,7 +107,7 @@
 
     <div class="memebers d-flex flex-wrap">
       <div
-        class="card rounded px-3 py-3 m-1"
+        class="card  rounded px-3 py-3 m-1"
         v-for="member in schedule.members.filter((item: any) => item && item.status === 'Booked')"
         :key="member.id"
         :style="{
@@ -116,6 +116,7 @@
         }"
       >
         <div class="d-flex align-items-center gap-2">
+          <div class="hover-wrapper">
           <NuxtImg class="profile-image" :src="getImageUrl(member.img_src)" />
           <div class="hover-wrapper">
         <div
@@ -137,6 +138,7 @@
         <img src="~/assets/images/svg/schedule-cancel-blue.svg" alt="Cancel icon" class="img-hover" />
       </div>
     </div>
+  </div>
   </div>
 
           <div
@@ -617,6 +619,7 @@ watch(() => showMember.value, (newVal, oldVal) => {
     border-radius: 50%;
     transition: .35s;
     position: relative;
+    cursor: pointer;
 }
 
 

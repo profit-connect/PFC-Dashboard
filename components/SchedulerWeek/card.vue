@@ -27,7 +27,7 @@
       >
         <img class="avatar" :src="getImageUrl(data.coach[0].img_src)" />
         <img
-          style="position: relative; bottom: 36px; left: 20px"
+          style="position: relative; bottom: 35px; left: 20px"
           class="avatar"
           :src="getImageUrl(data.coach[1].img_src)"
         />
@@ -203,7 +203,7 @@ const topOffset = computed(() =>
 }
 
 .avatar {
-  width: 32.5px;
+  width: 35px;
   height: 35px;
   border: 6px black;
   // margin-right: px;
@@ -212,7 +212,7 @@ const topOffset = computed(() =>
   border: 1px solid #ffffff;
 }
 .avatar0 {
-  width: 40.5px;
+  width: 38px;
   height: 35px;
   border: 6px black;
   // margin-right: px;
@@ -221,7 +221,7 @@ const topOffset = computed(() =>
   border: 1px solid #ffffff;
 }
 .avatar1 {
-  width: 40.6px;
+  width: 38px;
   height: 35px;
   border: 6px black;
   // margin-right: px;

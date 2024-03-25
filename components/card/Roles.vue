@@ -2,25 +2,29 @@
     <div  class="card-package" > 
         <div  class="title" role="button"
         >
-       <span> Franchise Owner</span>
+       <span>{{ title }}  </span>
         </div>
     
         <div class="desc">
-          <span> Reset Fitness | JIP</span>
+          <span>{{ description }}</span>
         </div>
     
         <div class="d-flex align-items-center gap-5">
         <div >
-         <img src="~assets/images/svg/icon-material-computer.svg"  />
+         <img v-if="dashboard_access == 'Yes'" src="~assets/images/svg/icon-material-computer.svg"  />
+         <img v-else src="~assets/images/svg/icon-material-computer-gray.svg"  />
         </div>
         <div>
-            <img src="~assets/images/svg/ionic-ios-phone-portrait.svg"  />
-        </div>
+            <img v-if="admin_app_access == 'Yes'" src="~assets/images/svg/ionic-ios-phone-portrait.svg"  />
+            <img v-else src="~assets/images/svg/ionic-ios-phone-portrait-gray.svg"  />
+        </div> 
         <div >
-         <img src="~assets/images/svg/icon-material-payment.svg"  />
+         <img v-if="on_payroll == 'Yes'" src="~assets/images/svg/icon-material-payment.svg"  />
+         <img  v-else src="~assets/images/svg/icon-material-payment-gray.svg"  />
         </div>
         <div>
-            <img src="~assets/images/svg/icon-ionic-ios-stats.svg"  />
+            <img  v-if="performance_monitored == 'Yes'" src="~assets/images/svg/icon-ionic-ios-stats.svg"  />
+            <img v-else src="~assets/images/svg/icon-ionic-ios-stats-gray.svg"  />
         </div>
     </div>
     </div>
@@ -32,66 +36,48 @@
       type: Number,
       default: 0,
     },
-    name: {
+    title: {
       type: String,
       default: "",
     },
-    price: {
-      type: Number,
-      default: 0,
-    },
-    promotion_price: {
-      type: Number,
-      default: "",
-    },
-    category: {
+    description: {
       type: String,
       default: "",
     },
-    private: {
-      type: String,
-      default: "No",
-    },
-    featured: {
-      type: String,
-      default: "No",
-    },
-    description:{
+    access_level: {
       type: String,
       default: "",
     },
-    status: {
+    dashboard_access: {
       type: String,
-      default: "Active",
+      default: "",
     },
-    display_original_price: {
+    admin_app_access: {
       type: String,
-      default: "No",
+      default: "",
     },
+    on_payroll:{
+      type: String,
+      default: "",
+    },
+    performance_monitored:{
+      type: String,
+      default: "",
+    },
+    updated_date: {
+      type: String,
+      default: "",
+    },
+
   });
-  const isPublic = ref(props.private === "No" ?? false);
-  const isFeatured = ref(props.featured === "Yes" ?? false);
+ 
   const emit = defineEmits([
     "on-planstatus-change",
     "on-featured-change",
     "on-plan-select",
   ]);
   
-  const discountInPercent = computed(() => {
-    if (!props.promotion_price) return 0;
-    return Math.ceil(
-      ((+props.price - +props.promotion_price) * 100) / +props.price
-    );
-  });
-  const onFeaturedChange = (val: boolean) => {
-    emit("on-featured-change", {
-      plan_id: props.id,
-      featured: val ? "Yes" : "No",
-    });
-  };
-  function formatPrice(value) {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
+
   </script>
   
   <style scoped lang="scss">

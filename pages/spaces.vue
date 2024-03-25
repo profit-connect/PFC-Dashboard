@@ -68,8 +68,8 @@ const breadcrumbStore = useBreadcrumbStore();
 import { defaultTiming } from "~/constants/common";
 breadcrumbStore.setBreadcrumb({
   items: [
-    { label: "Control Panel", link: "#" },
-    { label: "Spaces", link: "#" },
+    { label: "Control Panel", link: "" },
+    { label: "Spaces", link: "" },
   ],
 });
 

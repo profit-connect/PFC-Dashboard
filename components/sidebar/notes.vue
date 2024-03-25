@@ -72,7 +72,7 @@
             font-weight: bold;
             position: absolute;
             top: 50%;
-            margin-left: 100px;
+            margin-left: 150px;
           "
         >
           No notes available. Click the button below to add a new note.
@@ -293,8 +293,8 @@ import { useBreadcrumbStore } from "~/store/breadcrumb";
 const breadcrumbStore = useBreadcrumbStore();
 breadcrumbStore.setBreadcrumb({
   items: [
-    { label: "Profiles", link: "/" },
-    { label: "Notes", link: "/profiles" },
+    { label: "Profiles", link: "" },
+    { label: "Notes", link: "" },
   ],
 });
 
@@ -551,7 +551,7 @@ const selectFilter = (filterType) => {
 }
 .textarea {
   position: relative;
-  width: 800px;
+  width: 900px;
   padding: 16px;
   color: #000;
   font-size: 0.875rem;
@@ -564,7 +564,7 @@ const selectFilter = (filterType) => {
 }
 .no-notes {
   position: relative;
-  width: 800px;
+  width: 900px;
   height: 400px;
   padding: 16px;
   color: #000;

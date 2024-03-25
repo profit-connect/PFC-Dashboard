@@ -30,14 +30,14 @@
         name="name"
         placeholder="Name"
         validation="required"
-        help="Recommended 26 charector"
+        help="Recommended 26 character"
       />
       <FormKit
         type="text"
         name="description"
         label="Description"
         placeholder="Short description"
-        help="Recommended 35 charector"
+        help="Recommended 35 character"
         validation="required"
       />
       <div class="plan-tab my-4">
@@ -78,6 +78,9 @@
                     type="number"
                     name="duration"
                     validation="required"
+                    :validation-messages="{
+                  required: 'Duration Required',
+                }"
                   />
                   <FormKit
                     :classes="{

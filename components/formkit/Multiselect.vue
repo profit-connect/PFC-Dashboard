@@ -630,10 +630,11 @@ function handleInput(value: any) {
   // }gfd
 }
 .multiselect-dropdown {
-  border: 1px solid rgb(201, 174, 226);;
+  // border: 1px solid rgb(201, 174, 226);;
   // border-bottom: 1px solid rgb(201, 174, 226);
   // border-left: 1px solid rgb(201, 174, 226);
   // border-right: 1px solid rgb(201, 174, 226);
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, .1215686275));
   position: absolute;
   left: calc(var(--ms-border-width, 1px) * -1);
   right: calc(var(--ms-border-width, 1px) * -1);

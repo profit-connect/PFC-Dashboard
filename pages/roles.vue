@@ -34,46 +34,33 @@
         </div>
       </div>
       
-        <div class="d-flex align-items-center row levels">
-      <div class="access-title col-3">
-        Level 4
-        </div>
-        <div class="cards col-9">
-        <CardRoles />
-      </div>
-    </div>
-    <div class="d-flex align-items-center row levels">
-      <div class="access-title col-3">
-        Level 3
-        </div>
-        <div class="cards col-9">
-        <CardRoles />  <CardRoles />  <CardRoles />  <CardRoles />  <CardRoles />  <CardRoles />   
-      </div>
-    </div>
-    <div class="d-flex align-items-center row levels">
-      <div class="access-title col-3">
-        Level 2
-        </div>
-        <div class="cards col-9">
-        <CardRoles />
-      </div>
-    </div>
-    <div class="d-flex align-items-center row levels">
-      <div class="access-title col-3">
-        Level 1
-        </div>
-        <div class="cards col-9">
-        <CardRoles />
-      </div>
-    </div>
+      <div 
+  class="d-flex align-items-center row levels" 
+  v-for="(roles, accessLevel) in groupedRoles" 
+  :key="accessLevel"
+>
+  <div class="access-title col-3">
+    {{ accessLevel }}
+  </div>
+  <div class="cards col-9">
+    <CardRoles 
+      v-for="role in roles" 
+      :key="role.id" 
+      v-bind="role" 
+      @click="onRoleSelect(role.id)"  
+    />
+  </div>
+</div>
+
     <Modal v-model="showRolesForm" id="roles-modal">
       <template #title>
-        <!-- {{ selectedPackage ? "Update" : "Create" }} a Role -->
+        {{ selectedRole ? "Update" : "Create" }} a Role
       </template>
       <FormRoles
         v-if="showRolesForm"
-        @reload="refresh"
+        @reload="refreshData"
         @close-canvas="showRolesForm = false"
+        :role-data="selectedRole"
       />
     </Modal>
      
@@ -81,13 +68,19 @@
   </template>
   
   <script lang="ts" setup>
+  import { useAuthStore } from "~/store/auth";
   import { useBreadcrumbStore } from "~/store/breadcrumb";
+  import { computedAsync } from "@vueuse/core";
 
+  const { currentUserType } = useAuthStore();
   const breadcrumbStore = useBreadcrumbStore();
+  const selectedRole = ref(null); 
+  const showRolesForm = ref(false);
+
   breadcrumbStore.setBreadcrumb({
     items: [
-      { label: "Control", link: "#" },
-      { label: "Roles ", link: "#" },
+      { label: "Control", link: "" },
+      { label: "Roles ", link: "" },
     ],
   });
   
@@ -96,30 +89,123 @@
     right: "0px",
   });
 
-  const showRolesForm = ref(false);
-  const data = ref({
-  accessLevel1: {
-    title: "Title for Access Level 1",
-    description: "Description for Access Level 1"
-  },
-  accessLevel2: {
-    title: "Title for Access Level 2",
-    description: "Description for Access Level 2"
-  },
-  accessLevel3: {
-    title: "Title for Access Level 3",
-    description: "Description for Access Level 3"
-  },
-  accessLevel4: {
-    title: "Title for Access Level 4",
-    description: "Description for Access Level 4"
-  }
-  // Add more access levels if needed
-});
 
-const onAddNewRole = () => {
-  // selectedPackage.value = null; // Reset selectedPackage
-  showRolesForm.value = true; // Show the form for a new package
+
+  const onAddNewRole = () => {
+  selectedRole.value = null; 
+  showRolesForm.value = true;
+};
+
+const { data, pending, refresh } = await useCustomFetch<any>(
+    "/roles/get/roles", 
+    {
+    method: "POST",
+    body: {
+      facility_id: currentUserType?.id,
+    },
+    });
+
+    const refreshData = () => {
+  refresh();
+};
+    const roles = ref({
+  level1: [],
+  level2: [],
+  level3: [],
+  level4: []
+});
+const groupedRoles = computed(() => {
+  const groups = {};
+  if (data.value && data.value.roles) {
+    for (const level in data.value.roles[0]) {
+      const roles = data.value.roles[0][level];
+      if (Array.isArray(roles)) {
+        for (const role of roles) {
+          if (role) { // make sure the role is not null
+            const accessLevel = role.access_level;
+            if (!groups[accessLevel]) {
+              groups[accessLevel] = [];
+            }
+            groups[accessLevel].push(role);
+          }
+        }
+      }
+    }
+  }
+  return groups;
+});
+//     const filteredRoles = computed(() => {
+//   // Verify that `data.value.roles` is an array
+//   if (!Array.isArray(data.value.roles) || data.value.roles.length === 0) {
+//     return []; // Return an empty array if `data.roles` is not an array or is empty
+//   }
+
+//   return data.value.roles.flatMap(role => {
+//     // Create an array to hold the filtered roles from all levels
+//     let allLevels = [];
+
+//     // Iterate through each level (1 to 4)
+//     for (let level = 1; level <= 4; level++) {
+//       const levelKey = `level${level}`; // Create the key for the current level (e.g., "level1")
+      
+//       // Check if the current level exists and is an array before proceeding
+//       if (Array.isArray(role[levelKey])) {
+//         // For each role in the current level, filter out null entries and add level information
+//         const rolesWithLevel = role[levelKey]
+//           .filter(item => item !== null)
+//           .map(item => ({ ...item, level: levelKey })); // Add level information to each role
+//         allLevels = allLevels.concat(rolesWithLevel);
+//       }
+//     }
+
+//     return allLevels; // Return the aggregated roles for this entry, including their levels
+//   }).filter(item => item !== null); // Ensure the final output does not contain null values
+// });
+
+// const computedRoles = computed(() => {
+//   // Assuming data.value.roles is an array of objects, each representing a level with an array of roles
+//   if (data.value?.roles?.length > activeLevel.value) {
+//     const activeRoles = data.value.roles[activeLevel.value]; // Access roles by the active level
+
+//     // Ensure activeRoles is defined and is an array
+//     if (Array.isArray(activeRoles)) {
+//       let roles = activeRoles
+//         .filter(role => role) // Ensure each role is truthy
+//         .map(role => ({
+//           // Map and return each property of the role
+//           id: role.id,
+//           title: role.title,
+//           description: role.description,
+//           access_level: role.access_level,
+//           dashboard_access: role.dashboard_access,
+//           admin_app_access: role.admin_app_access,
+//           on_payroll: role.on_payroll,
+//           performance_monitored: role.performance_monitored,
+//           updated_date: role.updated_date,
+//           // Include any additional properties here
+//         }));
+
+//       return roles;
+//     }
+//   }
+//   return [];
+// });
+const onRoleSelect = (roleId: number) => {
+  console.log(`Selected role ID: ${roleId}`);
+  
+  // Assuming 'data.value.roles' contains all your roles across all levels
+  for (const level in data.value.roles[0]) {
+    const roles = data.value.roles[0][level];
+    if (Array.isArray(roles)) {
+      const foundRole = roles.find(role => role && role.id === roleId.toString()); // Convert to string if necessary
+      if (foundRole) {
+        selectedRole.value = foundRole;
+        break; // Stop searching once the role is found
+      }
+    }
+  }
+
+  showRolesForm.value = true; 
 };
   
   </script>

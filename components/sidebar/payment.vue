@@ -213,8 +213,8 @@ const { setBreadcrumb, setBreadcrumbTab } = useBreadcrumb();
 const breadcrumbStore = useBreadcrumbStore();
 breadcrumbStore.setBreadcrumb({
   items: [
-    { label: "Profiles", link: "/" },
-    { label: "Payment", link: "/profiles" },
+    { label: "Profiles", link: "" },
+    { label: "Payment", link: "" },
   ],
 });
 

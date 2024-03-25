@@ -1,5 +1,5 @@
 <template>
-  <div  class="card-package" :class="{ 'inactive-package': status === 'Inactive' }"> 
+  <div  class="card-package" :class="{ 'inactive-package': status === 'Inactive' }"  > 
   <!-- rest of your code -->
     <MixToggleStar
       v-model="isFeatured"
@@ -40,8 +40,8 @@
     </div>
       
 
-    <div class="middle">
-      <div class="desc">
+    <div class="middle" @click="$emit('on-plan-select')">
+      <div class="desc" >
         <p>{{description }}</p>
       </div>
       <div class="text-end">
@@ -81,7 +81,7 @@
     </div>
     </div>
   
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between" @click="$emit('on-plan-select')">
       <div class="d-flex align-items-center gap-2">
       <div style=" position: relative; top: 5px; width: 160px;"
         v-if="category === 'Recurring'"

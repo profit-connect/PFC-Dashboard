@@ -141,7 +141,7 @@
           @click="showButton=true "
           validation="required"
         /> -->
-        <div style="position: relative; width:100%; bottom:60px;">
+        <div style="position: relative; width:100%; bottom:0px;">
           <FormKit
           type="tiny"
           name="description_html"

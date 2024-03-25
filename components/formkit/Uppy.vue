@@ -79,7 +79,8 @@ onMounted(() => {
     },
     cropperOptions: {
       aspectRatio: tagetRatio,
-    },
+      resizable: false, 
+      },
   });
 
   const getFiles = computed(() => {

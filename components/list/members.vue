@@ -1,6 +1,6 @@
 <template>
-  <div v-if="items  && items.length > 0">
-        <div class="member-scroll" v-for="(item, index) in items" 
+  <div v-if="modifiableItems  && modifiableItems.length > 0"> 
+        <div class="member-scroll" v-for="(item, index) in modifiableItems" 
          :key="item ? item.id : index" 
          @click="item && item.id ? onClickEdit(item.id) : null">
        <div class="member-box allMembersBox">
@@ -11,13 +11,13 @@
           <img v-if="item && item.img_src" class="member-row__avatar avatar" :src="getImageUrl(item.img_src)" 
           >
             <div v-else class="avatar-initials">
-              {{ item.firstname.charAt(0) }}{{ item.lastname.charAt(0) }}
+              {{ formatName(item.firstname.charAt(0)) }}{{ formatName(item.lastname.charAt(0)) }}
             
             </div>
         </div>
   
         <div class="member-row__data">
-           <div class="member-row__name">{{ formatName(item.firstname) }} {{ formatName(item.lastname) }}</div>
+           <div class="member-row__name">{{ formatName(item.firstname) }} {{ formatName(item.lastname) }}{{ item.imageError }}</div>
           <div class="d-flex">
           <div class="member-row__time" v-if=" item.membership_status === 'Active'"> 
             {{getDaysLeft(item.end_date)}}
@@ -83,7 +83,24 @@ const getDaysLeft = (endDate) => {
   return '';
 };
 
+const modifiableItems = ref([...props.items]);
+const checkImages = () => {
+  modifiableItems.value.forEach((item, index) => {
+    const img = new Image();
+    img.onload = () => {}; // Do nothing if image loads successfully
+    img.onerror = () => {
+      // If image fails to load, set img_src to an empty string
+      const newItem = { ...item, img_src: '' };
+      modifiableItems.value[index] = newItem;
+    };
+    img.src = getImageUrl(item.img_src); // This assumes getImageUrl returns a valid URL or an empty string
+  });
+};
 
+// Call checkImages when the component mounts
+onMounted(() => {
+  checkImages();
+});
   </script>
 
 
@@ -177,14 +194,13 @@ const getDaysLeft = (endDate) => {
   width: 60px;
   height:60px;
   border-radius: 50%; /* Makes the div circular */
-  background-color: #1a74cd; /* Example background color, change as needed */
-  color: white; /* Example text color, change as needed */
-  font-size: 22px; /* Adjust based on your design */
+  background-color: #f2faff; /* Example background color, change as needed */
+  color: black; /* Example text color, change as needed */
+  font-size: 16px; /* Adjust based on your design */
   font-weight: bold; /* Makes the letters a bit thicker */
+  margin-right: 15px;
 }
 }
 
-
- 
 
 </style>

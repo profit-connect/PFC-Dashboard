@@ -264,8 +264,7 @@ import { useBreadcrumbStore } from "~/store/breadcrumb";
 setBreadcrumbTab({
     items: [
       {
-        label: "General",
-        link: `/facility`,
+        label: "General", link: `/facility`,
       },
       { label: "Timing", link: `/facility/timing` },
       { label: "Staff", link: `/facility/staff` },
@@ -281,8 +280,8 @@ setBreadcrumbTab({
 const breadcrumbStore = useBreadcrumbStore();
 breadcrumbStore.setBreadcrumb({
   items: [
-    { label: "Facility", link: "/" },
-    { label: "General", link: "/" },
+    { label: "Facility", link: "" },
+    { label: "General", link: "" },
   ],
 });
 

@@ -140,10 +140,11 @@ const countryCodes = ref([{ label: "Select a country", value: "" }]);
 
 const passwordValidation = ({ value }) => {
   const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]+$/;
 
   return passwordRegex.test(value);
 };
+
 
 const addMember = async (addNewMember: IAddMember) => {
   try {
