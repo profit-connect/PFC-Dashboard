@@ -573,7 +573,7 @@ const formattedDate = `${day} ${monthNames[monthIndex]} ${year}`;
   position: relative;
   width: 65vw;
   max-width: 950px;
-  min-height: 600px;
+  min-height: 800px;
   // overflow-x: auto;
   overflow-y: hidden;
 

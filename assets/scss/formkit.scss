@@ -1058,8 +1058,9 @@ input.formkit-input[type="radio"] ~ .formkit-decorator::before {
 .formkit-outer .formkit-icon svg {
   width: 100%;
   margin: auto;
-  max-height: 1em;
-  max-width: 1em;
+  max-height: 2em;
+  max-width: 2em;
+  margin-left: 10px;
   // background: url("~/assets/images/svg/select-dropdown.svg");
 }
 /* input specific variations */

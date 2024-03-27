@@ -2,7 +2,7 @@
   <div>
     <div v-if="sortedPlans.length > 0" class="membership-graph">
       <div class="membership-graph__row1">
-        <div v-for="(plan, index) in sortedPlans" :key="plan.id">
+        <div v-for="(plan, index) in sortedPlans" :key="plan.id"> 
           <div
             v-if="
               plan.plan_type === 'credits' || plan.plan_type === 'unlimited'
@@ -13,12 +13,18 @@
               width: calculateWidth(plan.start_date, plan.end_date),
               marginLeft: calculateMarginPlan(index, sortedPlans),
             }"
-          >
-            {{ plan.plan_name }}
+          > 
+           <div style="color: #002E4B; font-size: 22px;" > {{ plan.plan_name }} </div> 
+           <div style="color: #002E4B; font-size: 12px;"> AED:  {{ plan.plan_price }}</div>
+            
             <!-- <div class="end-date-text1">
               {{ formatDate(plan.start_date) }}
             </div> -->
-            <div class="end-date-text">{{ formatDate(plan.end_date) }}</div>
+            <!-- <div class="expiry-line-box">
+              <div>Expiring</div>
+              <div>{{ formatDate(plan.end_date) }}</div>
+            </div> -->
+            <div class="end-date-text">Expiring :{{ formatDate(plan.end_date) }}</div>
           </div>
         </div>
       </div>
@@ -34,11 +40,12 @@
               marginLeft: calculateMarginPlan(index, sortedPlans),
             }"
           >
-            {{ plan.plan_name }}
+          <div style="color: #002E4B; font-size: 22px;" > {{ plan.plan_name }} </div> 
+           <div style="color: #002E4B; font-size: 12px;"> AED:  {{ plan.plan_price }}</div>
             <!-- <div class="end-date-text1">
               {{ formatDate(plan.start_date) }}
             </div> -->
-            <div class="end-date-text">{{ formatDate(plan.end_date) }}</div>
+            <div class="end-date-text">Expiring :{{ formatDate(plan.end_date) }}</div>
           </div>
         </div>
       </div>
@@ -144,6 +151,8 @@ const calculateWidth = (startDate: any, endDate: any) => {
 }
 
 .membership-graph .graph-box {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   background: #f2faff;
   border: 1px solid #84ceff;
@@ -156,6 +165,16 @@ const calculateWidth = (startDate: any, endDate: any) => {
   text-align: center;
   font-family: "Poppins Medium", sans-serif, Arial;
 }
+// .membership-graph .graph-box::after {
+//   content: '';
+//   position: absolute;
+//   right: -3px; /* Aligns the pseudo-element border with the right edge of the parent */
+//   top: 100%;
+//   transform: translateY(-50%); /* Centers it vertically relative to the parent's height */
+//   width: 3px; /* The thickness of your extended border */
+//   height: 300px; /* The desired height of your extended border */
+//   background-color: red;
+// }
 
 .membership-graph .end-date-text {
   color: #84ceff;
@@ -165,8 +184,32 @@ const calculateWidth = (startDate: any, endDate: any) => {
   right: 0;
   font-size: 12px;
   font-family: "Poppins Regular", sans-serif, Arial;
+  div {
+    background: #fff;
+    margin-left: -20px;
+    width: 100px;
+    color: red;
+    font-weight: 800;
+  }
 }
-
+.membership-graph .expiry-line-box {
+  position: absolute;
+  width: 10px;
+  height: 500px;
+  border-left: 3px solid red;
+  top: -60px;
+  left: 218px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  div {
+    background: #fff;
+    margin-left: -20px;
+    width: 100px;
+    color: red;
+    font-weight: 800;
+  }
+}
 .membership-graph .end-date-text1 {
   color: #84ceff;
   height: 23px;
@@ -184,7 +227,7 @@ element.style {
 .membership-graph .today-line-box {
   position: absolute;
   width: 10px;
-  height: 384px;
+  height: 484px;
   border-left: 1px dashed #ffd500;
   top: 0;
   display: flex;

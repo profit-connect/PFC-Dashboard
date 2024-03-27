@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="scheduler-member-card">
     <div class="d-flex align-items-center gap-4">
       <NuxtImg :src="getImageUrl(member.img_src)" />
@@ -11,7 +11,28 @@
     </div>
     <MixButton label="" @click="$emit('onSelect')" size="lg" />
   </div>
+</template> -->
+<template>
+  <div class="scheduler-member-card">
+    <div class="d-flex align-items-center gap-4">
+      <!-- Conditional rendering based on imageError -->
+      <div v-if="!member.imageError" class="avatar-container">
+        <img :src="getImageUrl(member.img_src)" @error="member.imageError = true" alt="Member Avatar" />
+      </div>
+      <div v-else class="avatar-initials">
+        {{ formatName(member.firstname.charAt(0)) }}{{ formatName(member.lastname.charAt(0)) }}
+      </div>
+      <div class="d-flex flex-column">
+        <span class="fw-bold" style="font-size: 22px">
+          {{ formatName(member.firstname) }} {{ formatName(member.lastname) }}
+        </span>
+        <span style="font-size: 14px; color: skyblue">{{ daysLeft }}</span>
+      </div>
+    </div>
+    <MixButton label="" @click="$emit('onSelect')" size="lg" />
+  </div>
 </template>
+
 
 <script lang="ts" setup>
 defineEmits(["onSelect"]);
@@ -37,6 +58,15 @@ const getDaysLeft = (endDate: string) => {
   }
   return "";
 };
+
+function formatName(string) {
+  if (!string) return "";
+  const words = string.split(" ");
+  const capitalizedWords = words.map(
+    (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  );
+  return capitalizedWords.join(" ");
+}
 </script>
 
 <style scoped lang="scss">
@@ -58,6 +88,19 @@ const getDaysLeft = (endDate: string) => {
     width: 60px;
     border-radius: 50%;
   }
+}
+.avatar-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px; /* Adjust size as needed */
+  height: 60px; /* Adjust size as needed */
+  border-radius: 50%;
+  background-color: #84ceff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  /* Add other styling as needed */
 }
 
 </style>

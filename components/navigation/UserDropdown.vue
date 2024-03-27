@@ -94,7 +94,7 @@ function formatName(string) {
     .avatar-img {
       position: relative;
       z-index: 60;
-      height: 40px;
+      height: 50px;
       width: 50px;
     }
   }

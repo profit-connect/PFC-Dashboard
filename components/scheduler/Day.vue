@@ -117,15 +117,20 @@
       >
         <div class="d-flex align-items-center gap-2">
           <div class="hover-wrapper">
-          <NuxtImg class="profile-image" :src="getImageUrl(member.img_src)" />
-          <div class="hover-wrapper">
+         <img  v-if="!member.imageError"  class="profile-image" :src="getImageUrl(member.img_src)" @error="member.imageError = true" alt="Member Avatar" />
+         <div v-else class="avatar-initials">
+          {{ formatName(member.firstname.charAt(0)) }}{{ formatName(member.lastname.charAt(0)) }}
+        </div>
+       
+         <div class="hover-wrapper">
         <div
           class="hover-info"
           :class="{ 'is-visible': isHovering }"
           @mouseover="isHovering = true"
           @mouseleave="isHovering = false"
         >
-      <a   :href="`/members/${member.id}/membership-overview`" class="hover-info__link">
+      <!-- <a   :href="`/members/details/${member.id}/membership-overview`" class="hover-info__link"> -->
+        <a   :href="`/members/details/membership-overview?id=${member.id}`" class="hover-info__link">
         <img src="~/assets/images/svg/schedule-profile-white.svg" alt="Profile icon" class="img-normal"/>
         <img src="~/assets/images/svg/schedule-profile-blue.svg" alt="Profile icon" class="img-hover" />
       </a>
@@ -141,32 +146,34 @@
   </div>
   </div>
 
-          <div
+          <div 
             v-if="member.type === 'normal'"
             ty
             class="d-flex flex-column gap-0"
-            style="width: 200px"
+            style="width: 160px;"
           >
+          <!-- currently i have put 160 the actual width is 200 but i am adding padding 40px -->
             <div class="text-white fw-bold" v-if="member.firsttimer === 'Yes'">
               First Timer
             </div>
-            <div class="fs-4 fw-semibold">
+            <div class="fs-4 fw-semibold ml-2" style="margin-left: 20px;">
               {{ formatName(member.firstname) }}
-              {{ formatName(member.lastname) }}
+              <!-- {{ formatName(member.lastname) }} -->
             </div>
-            <div>
+            <div  style="margin-left: 20px;" >
               {{ member.days_left }}
             </div>
           </div>
-          <div v-else class="d-flex flex-column gap-0" style="width: 298px">
+          <div v-else class="d-flex flex-column gap-0" style="width: 258px">
+                 <!-- currently i have put 298 the actual width is 200 but i am adding padding 40px -->
             <div class="text-white fw-bold" v-if="member.firsttimer === 'Yes'">
               First Timer
             </div>
-            <div class="fs-4 fw-semibold">
+            <div class="fs-4 fw-semibold"  style="margin-left: 20px;">
               {{ formatName(member.firstname) }} 
               {{ formatName(member.lastname) }}
             </div>
-            <div>
+            <div  style="margin-left: 20px;" >
               {{ member.days_left }}
             </div>
           </div>
@@ -200,11 +207,19 @@
             :labels="['A-Z', 'Z-A']"
           />
         </div>
-        <FormKit
+        <FormKit 
+        style=" border-bottom-left-radius: 0px; border-top-left-radius: 0px; "
+          type="search"
+          label="FormKit Input"
+          prefix-icon="search"
+          placeholder="Search member or Tags"
+          v-model="memberText"
+        />
+        <!-- <FormKit
           type="text"
           v-model="memberText"
           placeholder="Search member or Tags"
-        />
+        /> -->
         <!-- <MixButton
           label="Add New"
           size="lg"
@@ -313,6 +328,7 @@ import { useTagStore } from "@/store/tag";
 import { storeToRefs } from "pinia";
 
 const { getUrl: getImageUrl } = useBoImage();
+const { getUrl: getUrl } = useUrl();
 const bus = useEventBus<boolean>("reload-days");
 
 const { currentUserType } = useAuthStore();
@@ -651,7 +667,7 @@ watch(() => showMember.value, (newVal, oldVal) => {
 }
 .card {
   height: 131px;
-  width: 398px;
+  // width: 398px;
 }
 </style>
 
@@ -678,5 +694,17 @@ watch(() => showMember.value, (newVal, oldVal) => {
     margin-left: -15px;
   }
 }
-
+.avatar-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background-color: #84ceff;
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  /* Add other styling as needed */
+}
 </style>

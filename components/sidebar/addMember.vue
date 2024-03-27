@@ -10,6 +10,8 @@
         type="uppy"
         label="Upload Image"
         name="image"
+        :targetHeight="100"
+        :targetWidth="100"
         :hideUploadButton="true"
         help="Max image upload: 960x540px, 1MB, in .jpg and .png."
       />

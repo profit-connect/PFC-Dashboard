@@ -47,8 +47,8 @@
         />
         <div v-show="activeTab === 0">
           <div class="row mb-4">
-            <div class="col-6">
-              <MixInputBox title="Type">
+            <div class="col-6" >
+              <MixInputBox title="Type"   style="height: 140px; padding-top: 10px">
                 <div class="d-flex align-items-center gap-2">
                   <FormKit
                     type="number"
@@ -72,8 +72,10 @@
               </MixInputBox>
             </div>
             <div class="col-6">
-              <MixInputBox title="Duration">
-                <div class="d-flex align-items-center gap-2">
+              <MixInputBox title="Duration"
+              style="height: 140px; padding-top: 10px"
+              >
+                <!-- <div class="d-flex align-items-center gap-2">
                   <FormKit
                     type="number"
                     name="duration"
@@ -92,7 +94,36 @@
                     :options="periodType"
                     validation="required"
                   />
-                </div>
+                </div> -->
+                <div class="row">
+              <div
+                class="col-3"
+                style="
+                  width: 80px;
+                  margin-left: 15px;
+                  position: relative;
+                  left: 10px;
+                "
+              >
+                <FormKit
+                  type="number"
+                  name="duration"
+                  validation="required"
+                    :validation-messages="{
+                  required: 'Duration Required',
+                }"
+                />
+              </div>
+              <div class="col-9">
+                <FormKit
+                    type="multiselect"
+                    name="period"
+                    mode="single"
+                    :options="periodType"
+                    validation="required"
+                  />
+              </div>
+            </div>
               </MixInputBox>
             </div>
           </div>

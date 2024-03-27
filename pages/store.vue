@@ -38,6 +38,7 @@
             />
         </div>
       </div> -->
+      <div style="min-height: calc(100vh - 284px)">
       <div class="row g-3">
         <div
           class="col-12 col-lg-4"
@@ -51,6 +52,7 @@
             />
         </div>
       </div>
+    </div>
     </div>
     <Modal v-model="showStoreForm" id="store-modal">
       <template #title>

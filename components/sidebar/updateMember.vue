@@ -115,6 +115,8 @@
             type="uppy"
             label="Upload Image"
             name="image"
+           :targetHeight="100"
+           :targetWidth="100"
             :hideUploadButton="true"
             help="Max image upload: 960x540px, 1MB, in .jpg and .png."
           />
@@ -910,8 +912,8 @@ watch(
   width: 100px;
   height: 100px;
   border-radius: 50%; /* Makes the div circular */
-  background-color: #f2faff; /* Example background color, change as needed */
-  color: black; /* Example text color, change as needed */
+  background-color: #84ceff;
+  color: white; /* Example text color, change as needed */
   font-size: 22px; /* Adjust based on your design */
   font-weight: bold; /* Makes the letters a bit thicker */
   margin-bottom: 10px;

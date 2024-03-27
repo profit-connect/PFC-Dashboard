@@ -23,6 +23,7 @@
           style="min-width: 190px; margin-top: 5px"
         />
       </div>
+      <div style="min-height: calc(100vh - 284px)">
       <div class="row g-3">
         <div
           class="col-6 col-lg-3"
@@ -32,6 +33,7 @@
           <CardSpace v-bind="space" @click="onSpaceSelect(space.id)" />
         </div>
       </div>
+    </div>
     </div>
     <Modal v-model="showSpaceForm" id="space-modal">
       <template #title>
