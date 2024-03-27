@@ -147,8 +147,10 @@
                   name="price"
                   placeholder="Price"
                   validation="required"
-                />
+                />  
+                   <p>AED</p>
               </div>
+         
               <div
                 class="col-7 d-flex align-items-center gap-2"
                 v-if="paymentCategoryData === 'Recurring'"
@@ -250,8 +252,8 @@
             </div>
           </div>
         </div>
-        <div v-show="activeTab === 1" class="row g-4">
-          <div class="col-4">
+        <div v-show="activeTab === 1" class="row g-4 custom-multiselect-access">
+          <div class="col-4  ">
             <MixInputBox title="Classes">
               <FormKit
                 type="multiselect"

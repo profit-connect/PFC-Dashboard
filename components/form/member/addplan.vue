@@ -12,13 +12,20 @@
       :actions="false"
     >
       <div class="checkout-member">
-        <div class="d-flex">
+        <!-- <div class="d-flex">
           <img class="member-avatar" :src="getImageUrl(getMemberInfo.image)" />
           <div class="member-name memberNameModal">
             {{ getMemberInfo.firstname }} {{ getMemberInfo.lastname }}
           </div>
-        </div>
-
+        </div> -->
+        <div class="d-flex">
+          <!-- Conditional rendering for member's avatar -->
+          <img v-if="getMemberInfo.image && !memberImageError" class="member-avatar" :src="getImageUrl(getMemberInfo.image)" @error="memberImageError = true" alt="Member Avatar">
+          <div v-else class="member-avatar avatar-initials">
+            <!-- Display initials if the image fails to load or if there is no image -->
+            {{ formatName(getMemberInfo.firstname.charAt(0) )}}{{ formatName(getMemberInfo.lastname.charAt(0) )}}
+          </div>
+      </div>
         <div style="position: relative; left: 20px" class="d-flex">
           <div
             class="switches d-flex justify-content-end align-items-center gap-4 mb-3"
@@ -259,6 +266,15 @@ const getMemberInfo = computed(() => {
 
   return {};
 });
+
+function formatName(string) {
+  if (!string) return '';
+  const words = string.split(' ');
+  const capitalizedWords = words.map(word => 
+    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  );
+  return capitalizedWords.join(' ');
+}
 </script>
 
 <style lang="scss" scoped>
@@ -476,5 +492,18 @@ element.style {
 }
 .swicthes {
   margin-left: 100px;
+}
+.avatar-initials {
+  display: flex;
+  align-items: center; /* Centers the initials vertically */
+  justify-content: center; /* Centers the initials horizontally */
+  width: 60px;
+  height:60px;
+  border-radius: 50%; /* Makes the div circular */
+  background-color: #84ceff; /* Example background color, change as needed */
+  color: white; /* Example text color, change as needed */
+  font-size: 16px; /* Adjust based on your design */
+  font-weight: bold; /* Makes the letters a bit thicker */
+  margin-right: 15px;
 }
 </style>

@@ -179,6 +179,7 @@
           </div>
         </div>
       </div>
+      <div class="book_member">
       <MixButton
         v-if="
           !isBookingDisabled(schedule.start_time) &&
@@ -188,6 +189,7 @@
         @click="showMemberModal('member')"
         label="Book Member"
       />
+    </div>
       <!-- <MixButton size="lg" @click="showMemberModal('member')" label="Book Member"
        :disabled="isBookingDisabled(schedule.start_time) || isCapacityReached ( schedule.nonNullMemberCount ,schedule.capacity)" /> -->
     </div>
@@ -706,5 +708,10 @@ watch(() => showMember.value, (newVal, oldVal) => {
   font-size: 36px;
   font-weight: bold;
   /* Add other styling as needed */
+}
+.book_member {
+  display: flex;
+  height: 131px;
+  width: 303px;
 }
 </style>

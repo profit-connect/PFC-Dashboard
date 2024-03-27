@@ -105,7 +105,7 @@
         alt="chat icon"
         style="width: 20px; height: 20px; rotate:-90deg;"
       />
-      Comments
+      Chats
     </div>
   </div>
 </template>
@@ -521,6 +521,6 @@ bus.on((val) => {
   }
 }
 .content {
-  // width: 1650px;
+  width: 90%;
 }
 </style>

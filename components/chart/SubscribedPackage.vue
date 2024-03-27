@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="sortedPlans.length > 0" class="membership-graph">
+   <div v-if="sortedPlans && sortedPlans.length > 0" class="membership-graph">
       <div class="membership-graph__row1">
         <div v-for="(plan, index) in sortedPlans" :key="plan.id"> 
           <div
@@ -24,7 +24,7 @@
               <div>Expiring</div>
               <div>{{ formatDate(plan.end_date) }}</div>
             </div> -->
-            <div class="end-date-text">Expiring :{{ formatDate(plan.end_date) }}</div>
+            <div class="end-date-text"><p style="color: #002E4B;">Expiring :</p>  {{ formatDate(plan.end_date) }}</div>
           </div>
         </div>
       </div>
@@ -45,7 +45,7 @@
             <!-- <div class="end-date-text1">
               {{ formatDate(plan.start_date) }}
             </div> -->
-            <div class="end-date-text">Expiring :{{ formatDate(plan.end_date) }}</div>
+            <div class="end-date-text"><p style="color: #002E4B;">Expiring:</p> {{ formatDate(plan.end_date) }}</div>
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@ const calculateMarginPlan = (index: number, sortedPlans: [any]) => {
     const referenceDate = dayjs(sortedPlans[0].start_date);
     const startDate = dayjs(sortedPlans[index].start_date);
     const days = startDate.diff(referenceDate, "d");
-    return `${days * 10}px`;
+    return `${days * 4}px`;
   }
 };
 
@@ -112,25 +112,46 @@ const todayLineMargin = computed(() => {
     const referenceDate = dayjs(sortedPlans.value[0].start_date);
     const startDate = dayjs();
     const days = startDate.diff(referenceDate, "d");
-    return `${days * 10}px`;
+    return `${days * 4}px`;
   }
   return "0px";
 });
-
-const sortedPlans: any = computed(() => {
+const sortedPlans = computed(() => {
   return props.plans
-    .slice()
-    .sort((a: any, b: any) => new Date(a.start_date) - new Date(b.start_date));
+    .filter(plan => plan && plan.start_date && plan.end_date) // Filter out invalid plans or plans with invalid dates
+    .slice() // Create a shallow copy
+    .sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
 });
-const calculateWidth = (startDate: any, endDate: any) => {
-  const start: any = new Date(startDate);
-  const end: any = new Date(endDate);
-  if (isNaN(start) || isNaN(end)) return "50px"; // Return default width if dates are invalid
+const calculateWidth = (startDate, endDate) => {
+  // Check if either date is falsy (null, undefined, '', etc.) before converting to a Date object
+  if (!startDate || !endDate) return "50px"; // Return default width if either date is invalid
+  
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  
+  // Continue with the rest unchanged...
+  if (isNaN(start.getTime()) || isNaN(end.getTime())) return "50px"; // Check if dates are valid
+  
   const diffTime = Math.abs(end - start);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  const widthPerDay = 10;
-  return Math.max(diffDays * widthPerDay, 50) + "px";
+  const widthPerDay = 4;
+  return `${Math.max(diffDays * widthPerDay, 50)}px`; // Use template literals for clarity
 };
+
+// const sortedPlans: any = computed(() => {
+//   return props.plans
+//     .slice()
+//     .sort((a: any, b: any) => new Date(a.start_date) - new Date(b.start_date));
+// });
+// const calculateWidth = (startDate: any, endDate: any) => {
+//   const start: any = new Date(startDate);
+//   const end: any = new Date(endDate);
+//   if (isNaN(start) || isNaN(end)) return "50px"; // Return default width if dates are invalid
+//   const diffTime = Math.abs(end - start);
+//   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+//   const widthPerDay = 10;
+//   return Math.max(diffDays * widthPerDay, 50) + "px";
+// };
 </script>
 
 <style scoped lang="scss">
@@ -138,7 +159,30 @@ const calculateWidth = (startDate: any, endDate: any) => {
   position: relative;
   // overflow-x: auto;
   // overflow-y: hidden;
-  padding: 40px 30px 70px;
+  padding: 70px 0px 0px 0px;
+  overflow-y: hidden;
+  min-height: 650px;
+
+/* Custom scrollbar styles: */
+&::-webkit-scrollbar {
+  height: 12px; /* Reduced height for a thinner scrollbar */
+  background-color: #f2faff;
+ 
+}
+
+&::-webkit-scrollbar-thumb {
+  background-color: #f2faff;
+  border-radius: 4px; /* Slightly less rounded for a thinner look */
+  border: 2px solid #eadfdf; /* Adjusted for the thinner scrollbar */
+  cursor: pointer;
+}
+
+&::-webkit-scrollbar-track {
+  background-color: #e5d9d9;
+  border-radius: 4px;
+  box-shadow: inset 0 0 6px rgba(159, 109, 109, 0.3); /* Optional */
+  position: relative;
+}
 }
 
 .membership-graph .membership-graph__row1 {
@@ -177,6 +221,7 @@ const calculateWidth = (startDate: any, endDate: any) => {
 // }
 
 .membership-graph .end-date-text {
+  display: flex;
   color: #84ceff;
   height: 23px;
   position: absolute;

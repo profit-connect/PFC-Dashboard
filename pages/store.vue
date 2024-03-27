@@ -15,13 +15,13 @@
           <SearchBar @on-search="onSearch" />
         </div>
       </div>
-      <div class="d-flex align-items-baseline mt-4 ">
+      <div class="d-flex align-items-baseline mt-5 ">
         <MixTab
           v-model="activeTab"
           :items="getCategories"
           @edit="onSelectCategory"
         />
-        <MixButton style="width: 210px;"
+        <MixButton style="width: 220px;"
           @click="showCatrgoryForm = true"
           size="sm"
           label="Add category"

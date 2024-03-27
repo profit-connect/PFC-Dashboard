@@ -97,8 +97,37 @@ const { data, pending, refresh } = await useCustomFetch<any>(
 );
 
 const refreshData = () => {
-  refresh();
+  refresh().then(() => {
+    // Loop through each category
+    data.value.categories.forEach(category => {
+      // Update category image URL for cache busting
+      if (category.img_src) {
+        category.img_src = `${category.img_src.split('?')[0]}?timestamp=${new Date().getTime()}`;
+      }
+      
+      // Check if the category has classes and they are not null
+      if (Array.isArray(category.class) && category.class[0]) {
+        // Loop through each class within the category
+        category.class.forEach(classItem => {
+          // Update class image and video URLs for cache busting
+          if (classItem) {
+            if (classItem.img_src) {
+              classItem.img_src = `${classItem.img_src.split('?')[0]}?timestamp=${new Date().getTime()}`;
+            }
+            if (classItem.img_video) {
+              classItem.img_video = `${classItem.img_video.split('?')[0]}?timestamp=${new Date().getTime()}`;
+            }
+          }
+        });
+      }
+    });
+    
+    // Trigger reactivity to update the view with new data
+    data.value = { ...data.value };
+  });
 };
+
+
 
 
 const getCategorOptions = computed(() => {
@@ -135,7 +164,8 @@ const computedClasses = computed(() => {
           .map((item: IClass) => ({
             id: item.id,
             name: item.name,
-            image: `${item.img_src}?timestamp=${new Date().getTime()}`,
+            // image: `${item.img_src}?timestamp=${new Date().getTime()}`,
+            image: item.img_src,
             duration: item.duration,
             description: item.description,
             period: item.period,

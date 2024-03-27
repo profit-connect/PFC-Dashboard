@@ -48,7 +48,7 @@
       <template
         v-if="promotion_price == '0' && display_original_price !== 'Yes'"
       >
-        <div class="price-only" style="width: 150px; position:relative;  left:-37px;">
+        <div class="price-only" style="width: 150px; position:relative;  left:-37px; bottom: 10px;">
            <span style="font-size:  22px;">AED <b>{{ formatPrice(price) }}</b></span>
         </div>
       </template>

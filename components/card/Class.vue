@@ -44,9 +44,11 @@ const { getUrl } = useBoImage();
 
 const computedStyle = computed(() => {
   return {
-    backgroundImage: `url(${getUrl(props.image)})`,
+    backgroundImage: `url('https://app.ihitreset.com/resetcrm/${props.image}')`,
   };
 });
+
+
 </script>
 
 <style scoped lang="scss">

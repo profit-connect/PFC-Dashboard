@@ -843,6 +843,77 @@ function handleInput(value: any) {
   }
 }
 
+
+.custom-multiselect-access .multiselect-option {
+  padding: var(--ms-option-py, 0.5rem) var(--ms-option-px, 0.75rem);
+  font-size: var(--ms-option-font-size, 1rem);
+  line-height: var(--ms-option-line-height, 1.375);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center text */
+  text-align: left;
+  position: relative; /* For absolute positioning of the SVG */
+  box-sizing: border-box;
+  text-decoration: none;
+  min-height: 40px; /* Adjust based on your content */
+
+  &.is-pointed {
+    background: $main-bg;
+    border-radius: 10px;
+    // background: var(--ms-option-bg-pointed, #f3f4f6);
+    color: var(--ms-option-color-pointed, #1f2937);
+    color: #84ceff;
+  }
+
+  &.is-selected {
+    // color: $main-blue;
+    color: #323a45;
+    // background: transparent;
+    
+    // color: #fff;
+  }
+
+  &.is-disabled {
+    background: transparent;
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.is-selected.is-pointed {
+    // background: var(--ms-option-bg-selected-pointed, #0c193a);
+     color: $main-blue;
+    // color: var(--ms-option-color-selected-pointed, #ffffff);
+    // color: var(--ms-option-color-selected-pointed, #000000);
+  }
+
+  &.is-selected.is-disabled {
+    background: transparent;
+    color: $main-blue;
+    opacity: 1;
+  }
+}
+.custom-multiselect-access .multiselect-option::before {
+  content: url("~/assets/images/svg/checkbox-disable.svg");
+  display: block;
+  width: 12px; /* Adjust based on SVG size */
+  height: 12px; /* Adjust based on SVG size */
+  position: absolute;
+  left: 25px; /* Adjust to move the checkmark left, closer to the edge */
+  top: 50%;
+  transform: translateY(-50%); /* Center vertically */
+  pointer-events: none; /* Allows click through */
+}
+
+.custom-multiselect-access .multiselect-option.is-selected::before {
+  content: url("~/assets/images/svg/checkbox.svg");
+  /* SVG is positioned, adjust the left value as needed */
+}
+
+.custom-multiselect-access .multiselect-option {
+  padding-left: calc(var(--ms-option-px, 0.75rem) + 20px); /* Increase left padding to accommodate the SVG, ensure this matches the width reserved for the SVG */
+}
+
 .multiselect-no-options,
 .multiselect-no-results {
   padding: var(--ms-option-py, 0.5rem) var(--ms-option-px, 0.75rem);

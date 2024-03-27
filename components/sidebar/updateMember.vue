@@ -18,7 +18,7 @@
             v-show="!imageError" />
 
         <div style="position: relative; left: 35%;" v-else class="avatar-initials content-title-bold ">
-          {{ memberInfoData.member.data[0].firstname.charAt(0) }}{{ memberInfoData.member.data[0].lastname.charAt(0) }} 
+          {{formatName( memberInfoData.member.data[0].firstname.charAt(0)) }}{{ formatName(memberInfoData.member.data[0].lastname.charAt(0)) }} 
         </div>
       </div>
         <h2 class="content-title-bold editUserName">

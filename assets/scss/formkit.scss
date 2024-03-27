@@ -760,8 +760,9 @@ input.formkit-input[type="radio"] ~ .formkit-decorator::before {
 }
 [data-type="checkbox"] .formkit-input:checked ~ .formkit-decorator,
 [data-type="radio"] .formkit-input:checked ~ .formkit-decorator {
-  box-shadow: var(--fk-border-box-shadow-decorator-checked);
-  background: var(--fk-bg-decorator);
+  content: url("~/assets/images/svg/checkbox.svg");
+  // box-shadow: var(--fk-border-box-shadow-decorator-checked);
+  // background: var(--fk-bg-decorator);
 }
 [data-type="checkbox"]
   .formkit-input:checked
