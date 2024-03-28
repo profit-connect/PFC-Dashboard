@@ -28,17 +28,23 @@
         type="text"
         label="Name"
         name="name"
-        placeholder="Name"
+        placeholder="Please enter plan name"
         validation="required"
-        help="Recommended 26 character"
+        help=" Recommended character count: 26"
+        :validation-messages="{
+                  required: 'Plan name is required',
+                }"
       />
       <FormKit
         type="text"
         name="description"
         label="Description"
-        placeholder="Short description"
-        help="Recommended 35 character"
+        placeholder="Please enter short plan description"
+        help=" Recommended character count: 26"
         validation="required"
+        :validation-messages="{
+                  required: 'Plan description is required',
+                }"
       />
       <div class="plan-tab my-4">
         <MixTabPackages
@@ -62,11 +68,15 @@
                       outer: 'w-100 plan-input-min-width',
                     }"
                     type="multiselect"
+                    placeholder="Please select plan type"
                     v-model="planTypeData"
                     name="type"
                     mode="single"
                     validation="required"
                     :options="planType"
+                    :validation-messages="{
+                     required: 'Plan type is required',
+                }"
                   />
                 </div>
               </MixInputBox>
@@ -108,6 +118,7 @@
                 <FormKit
                   type="number"
                   name="duration"
+                  placeholder="No."
                   validation="required"
                     :validation-messages="{
                   required: 'Duration Required',
@@ -118,9 +129,13 @@
                 <FormKit
                     type="multiselect"
                     name="period"
+                    placeholder="Please select time period."
                     mode="single"
                     :options="periodType"
                     validation="required"
+                    :validation-messages="{
+                  required: 'Time period is required',
+                }"
                   />
               </div>
             </div>
@@ -135,12 +150,16 @@
                   type="multiselect"
                   name="category"
                   mode="single"
+                  placeholder="Payment frequency"
                   :classes="{
                     outer: 'plan-input-min-width',
                   }"
                   :options="paymentCategory"
                   v-model="paymentCategoryData"
                   validation="required"
+                  :validation-messages="{
+                  required: 'Payment frequency is required',
+                }"
                 />
                 <FormKit
                   type="number"
@@ -206,7 +225,7 @@
                 name="promotion_price"
                 v-model="promotion_price"
                 label="Promotion price"
-                placeholder="Promotion price"
+                placeholder="Enter Promotion price"
                 :disabled="!isPromotionPriceActive"
                 :validation="`${isPromotionPriceActive ? 'required|max:' + OriginalPrice : ''}`"
                 :validation-messages="{

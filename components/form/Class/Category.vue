@@ -15,7 +15,7 @@
             :targetWidth="250"
             name="image"
             :hideUploadButton="true"
-            help="Max image upload: 250X250px, 1Mb png with transparency"
+            help="Max image size: 250x250px, 1MB. Format: .png with transparency"
           />
         </div>
         <div class="col-9">
@@ -23,16 +23,22 @@
             type="text"
             label="Name"
             name="name"
-            placeholder="Name"
+            placeholder="Please enter category name"
             validation="required"
+            :validation-messages="{
+                  required: 'Category name is required',
+                }"
           />
           <FormKit
             style="height: 140px"
             type="textarea"
             name="description"
             label="Description"
-            placeholder="Description"
+            placeholder="Please enter category description"
             validation="required"
+            :validation-messages="{
+                  required: 'Category description is required',
+                }"
           />
         </div>
       </div>

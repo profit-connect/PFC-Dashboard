@@ -1,18 +1,19 @@
 <template>
   <div class="top-bar-bg">
     <div
-      class="text-white fs-2"
+      class="text-white fs-2" 
       @click="hideScheduler"
-      style="margin-left: 300px; cursor: pointer"
+      v-show="!hideSchedulerBar"
+      style="margin-left: 355px; cursor: pointer; z-index: 1000; position: relative;"
     >
       &lt;&lt;
     </div>
     <div
       class="text-white fs-2"
       @click="hideScheduler"
-      style="margin-left: 300px; cursor: pointer"
+      style="margin-left: 400px; cursor: pointer"
     >
-      &gt;&gt;
+      <!-- &gt;&gt; -->
     </div>
   </div>
   <div
@@ -37,6 +38,16 @@
       Calendar
     </div>
   </div>
+  <div class="d-flex h-100">
+     <SchedulerFilterSideBar
+      style="min-width: 400px; transition: 100ms ease-in all"
+      :class="{ 'hide-scheduler': hideSchedulerBar }"
+      :classes="classDetails"
+      :coachData="coachDetailsFromWeekData"
+      :disciplines="DisciplineDetails"
+      @dateChanged="dateChanged"
+      @weekChanged="weekChanged"
+    />
   <div class="d-flex h-100 content">
     <!-- <SchedulerFilterSideBar
       style="min-width: 400px; transition: 100ms ease-in all"
@@ -49,15 +60,6 @@
       @dateChanged="dateChanged"
       @weekChanged="weekChanged"
     />  -->
-    <SchedulerFilterSideBar
-      style="min-width: 400px; transition: 100ms ease-in all"
-      :class="{ 'hide-scheduler': hideSchedulerBar }"
-      :classes="classDetails"
-      :coachData="coachDetailsFromWeekData"
-      :disciplines="DisciplineDetails"
-      @dateChanged="dateChanged"
-      @weekChanged="weekChanged"
-    />
     <SchedulerWeek
       :data="weekData"
       v-if="weekSchedule"
@@ -71,6 +73,7 @@
     />
     <Scheduler
       v-else
+      :hide-scheduler-bar="hideSchedulerBar"
       :key="currentScheduledTime.start"
       :data="sortScheduleTime(data)"
       :availableClasses="computedClass"
@@ -85,7 +88,7 @@
       @on-class-add="refresh"
     />
   </div>
-
+</div>
   <div
     class="calander-show-btn-right"
     @click="hideSchedulerBarChat = false"
@@ -521,6 +524,10 @@ bus.on((val) => {
   }
 }
 .content {
-  width: 90%;
+  width: 1397px;
+  margin-left: auto;
+  margin-right: auto;
+
 }
+
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div class="scheduler d-flex disable-scorllbar">
     <SchedulerTab
+      :hide-scheduler-bar="hideSchedulerBar"
       @toggle-modal="handleModalToggle"
       :timeSlot="computedTimeSlots"
       :dates="dates"
@@ -52,6 +53,9 @@
 import { useDayjs } from "#dayjs";
 const dayjs = useDayjs();
 const props = defineProps({
+
+  hideSchedulerBar: Boolean,
+
   data: {
     type: Object,
     default: () => {},
@@ -161,6 +165,10 @@ watch(
   },
   { immediate: true }
 );
+
+watch(() => props.hideSchedulerBar, (newValue) => {
+  console.log('Scheduler hideSchedulerBar changed:', newValue);
+});
 </script>
 
 <style scoped lang="scss">
@@ -169,7 +177,7 @@ watch(
   height: fit-content;
   overflow: hidden;
   position: relative;
-  margin-left: -38px;
+  margin-left: -55px;
   width: calc(100% + 38px);
   margin-top: -39px;
   .scheduler-list {

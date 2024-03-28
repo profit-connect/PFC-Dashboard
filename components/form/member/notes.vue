@@ -4,10 +4,13 @@
       <FormKit
         type="text"
         name="heading"
-        placeholder="Title"
+        placeholder="Please enter note title"
         validation="required"
+        :validation-messages="{
+                  required: 'Note title is required',
+                }"
       />
-      <FormKit type="textarea" name="description" placeholder="Notes" />
+      <FormKit type="textarea" name="description" placeholder="Please enter note" />
 
       <div
         class="mt-4 d-flex justify-content-center flex-column"

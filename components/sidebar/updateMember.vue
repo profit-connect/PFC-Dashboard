@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar-box">
-    <div class="image-box">
+    <!-- <div class="image-box">
       <a
         @click="
           router.push({
@@ -35,9 +35,66 @@
       >
         Reset Fitness
       </p>
+    </div> -->
+    <div class="image-box" @mouseover="isHovering = true" @mouseleave="isHovering = false">
+      <div class="hover-wrapper">
+        <div
+          class="hover-info">
+        <a class="hover-info__link" @click=" router.push({
+            path: '/members/details/membership-overview',
+            query: { id: getMemberImage.id },
+          })">
+        <img src="~/assets/images/svg/schedule-profile-white-outline.svg" alt="Profile icon" class="img-normal"/>
+        <img src="~/assets/images/svg/schedule-profile-blue.svg" alt="Profile icon" class="img-hover" />
+    </a>
+      <a  class="hover-info__link-1">
+        <img src="~/assets/images/svg/schedule-chat-white-outline.svg" alt="Chat icon" class="img-normal"/>
+        <img src="~/assets/images/svg/schedule-chat-blue.svg" alt="Chat icon" class="img-hover" />
+      </a>
+      <div href="" class="hover-info__link-1">
+        <img src="~/assets/images/svg/schedule-cancel-white-outline.svg" alt="Cancel icon" class="img-normal"/>
+        <!-- <img src="~/assets/images/svg/schedule-cancel-blue.svg" alt="Cancel icon" class="img-hover" /> -->
+      </div>
     </div>
+  
+      <a
+        @click="
+          router.push({
+            path: '/members/details/membership-overview',
+            query: { id: getMemberImage.id },
+          })
+        "
+        class="sidebar-box__title text-center"
+        title="View membership"
+      >
+      <div v-if="memberInfoData">
+        <img v-if="!imageError && memberInfoData.member.data[0].img_src"
+            :src="getImageUrl(memberInfoData.member.data[0].img_src)"
+            @error="imageError = true"
+            v-show="!imageError" />
 
-    <div class="update-member">
+        <div style="position: relative; left: 35%;" v-else class="avatar-initials content-title-bold ">
+          {{formatName( memberInfoData.member.data[0].firstname.charAt(0)) }}{{ formatName(memberInfoData.member.data[0].lastname.charAt(0)) }} 
+        </div>
+      </div>
+        <h2 class="content-title-bold editUserName">
+          {{ formatName(getMemberInfo.firstname) }} {{ formatName(getMemberInfo.lastname) }} 
+        </h2>
+      </a>
+      <p
+        style="
+          font-size: 14px;
+          text-align: center;
+          position: relative;
+          bottom: 25px;
+          margin-bottom: 10px;
+        "
+      >
+        Reset Fitness
+      </p>
+    </div>
+    </div>
+    <div class="update-member" style="margin-top: 50px;">
       <FormKit
         class="formEditMember"
         type="form"
@@ -454,6 +511,7 @@ const { CountryCodes } = useCountryStore();
 const emergencyContactNameTouched = ref(false);
 const emergencyCountryCodeTouched = ref(false);
 const emergencyContactNoTouched = ref(false);
+
 
 const setEmergencyContactNameTouched = () => {
   emergencyContactNameTouched.value = true;
@@ -918,5 +976,66 @@ watch(
   font-weight: bold; /* Makes the letters a bit thicker */
   margin-bottom: 10px;
 }
+.hover-info {
+    position: relative;
+    display: flex;
+    top: 210px;
+    gap: 15px;
+    left: 115px;
+    visibility: visible; /* Initially hidden */
+    // opacity: 0; /* Start fully transparent */
+    transition: visibility 0s, opacity 0.3s linear; /* Smooth transition for opacity */
+}
 
+.hover-wrapper:hover .hover-info {
+    visibility: visible;
+    opacity: 1;
+}
+
+.hover-info__link {
+    display: block;
+    width: 35px;
+    height: 35px;
+    // box-shadow: 0 10px 20px rgba(0,0,0,.16);
+    background-color: #fff;
+    border-radius: 50%;
+    transition: .35s;
+    position: relative;
+    cursor: pointer;
+}
+.hover-info__link-1 {
+    display: block;
+    width: 35px;
+    height: 35px;
+    // box-shadow: 0 10px 20px rgba(0,0,0,.16);
+    // background-color: #fff;
+    border-radius: 50%;
+    // transition: .35s;
+    position: relative;
+    cursor: pointer;
+}
+
+
+
+.img-normal {
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.img-hover {
+    display: none; /* Hide blue images initially */
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    // transition: transform 0.3s ease;
+}
+
+.hover-info__link:hover .img-normal {
+    display: none; /* Hide white images on hover */
+}
+
+.hover-info__link:hover .img-hover {
+    display: block; /* Show blue images on hover */
+}
 </style>

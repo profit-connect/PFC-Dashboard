@@ -5,7 +5,7 @@
         type="multiselect"
         label="Franchise/Facility"
         name="franchise_or_facility_name"
-        placeholder="Franchise/Facility"
+        placeholder="Please select Franchise or Facility"
         validation="required"
         :options="combinedNames"
         :searchable="true"
@@ -14,7 +14,7 @@
         type="text"
         name="username"
         label="username"
-        placeholder="Username"
+        placeholder="Please enter Username"
         validation="required"
       />
 
@@ -26,7 +26,7 @@
         suffix-icon="eyeClosed"
         @suffix-icon-click="handleIconClick"
         validation="required"
-        placeholder="Password"
+        placeholder="Please enter Password"
       />
 
       <button class="sign-in" type="submit" label="Sign In" >Sign In </button>

@@ -13,8 +13,11 @@
             type="text"
             label="Name"
             name="name"
-            placeholder="Name"
+            placeholder="Please enter space name"
             validation="required"
+            :validation-messages="{
+                  required: 'Space name is required',
+                }"
           />
         </div>
         <div class="col-4">
@@ -36,8 +39,11 @@
             type="textarea"
             name="description"
             label="Description"
-            placeholder="Description"
+            placeholder="Please enter space description"
             validation="required"
+            :validation-messages="{
+                  required: 'Space description is required',
+                }"
           />
         </div>
       </div>
@@ -50,6 +56,7 @@
             <FormKit
               style="height: 40px"
               type="text"
+              placeholder="No."
               name="capacity"
               label="Capacity"
             />
@@ -123,7 +130,7 @@
               "
               class="custom-formkit-message"
             >
-              End time should be  greater
+              End time should be later.
             </p>
           </div>
         </div>

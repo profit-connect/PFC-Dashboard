@@ -30,7 +30,7 @@
           <Span> Schedule available to registered clients only</Span>
         </div>
 
-        <div class="row">
+        <!-- <div class="row">
           <div class="d-flex align-items-center gap-2">
             <Span class="mb-3"> Schedule displays</Span>
             <div style="width: 50px" class="col-1">
@@ -49,10 +49,10 @@
             </div>
             <Span class="mb-3"> of past and available</Span>
           </div>
-        </div>
+        </div> -->
       </div>
 
-      <div class="booking__settings mt-4">
+      <!-- <div class="booking__settings mt-4">
         <h2 class="content-title">Booking &amp; Cancellation</h2>
 
         <div class="row mt-4">
@@ -103,7 +103,7 @@
             >
           </div>
         </div>
-        <!-- <div class="d-flex gap-2" style="margin-bottom: 20px">
+        <div class="d-flex gap-2" style="margin-bottom: 20px">
           <div class="col-">
             <FormKit
               type="switch"
@@ -112,7 +112,7 @@
             />
           </div>
           <Span>Schedule available to registered clients only</Span>
-        </div> -->
+        </div>
         <div class="d-flex gap-2" style="margin-bottom: 10px">
           <div class="col-">
             <FormKit
@@ -161,7 +161,7 @@
           </div>
           <Span class="mb-3">strike(s)</Span>
         </div>
-      </div>
+      </div> -->
 
       <div class="plans__settings">
         <h2 class="content-title plans">Plans &amp; Packages</h2>
@@ -177,7 +177,7 @@
           </div>
           <Span>Allow renewal of inactive plans</Span>
         </div>
-        <div class="d-flex gap-2" style="margin-bottom: 10px">
+        <!-- <div class="d-flex gap-2" style="margin-bottom: 10px">
           <div class="col-">
             <FormKit
               type="switch"
@@ -208,7 +208,7 @@
             />
           </div>
           <Span> Allow group/family plans</Span>
-        </div>
+        </div> -->
       </div>
       <div class="mt-4 d-flex justify-content-center">
         <FormKit type="submit">Save</FormKit>

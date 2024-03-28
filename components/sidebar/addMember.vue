@@ -13,21 +13,27 @@
         :targetHeight="100"
         :targetWidth="100"
         :hideUploadButton="true"
-        help="Max image upload: 960x540px, 1MB, in .jpg and .png."
+        help="Max image size: 960x540px, 1MB. Format: .jpg or .png"
       />
 
       <FormKit
         type="text"
         name="firstname"
-        placeholder="First name"
+        placeholder="Please enter first name"
         validation="required"
+        :validation-messages="{
+                  required: 'First name is required',
+                }"
       />
 
       <FormKit
         type="text"
         name="lastname"
-        placeholder="Last name"
+        placeholder="Please enter last name"
         validation="required"
+        :validation-messages="{
+                  required: 'Last name is required',
+                }"
       />
 
       <h3 class="small-title-bold">Personal</h3>
@@ -35,26 +41,33 @@
       <FormKit
         type="date"
         name="dob"
-        value="2011-01-01"
+        placeholder="Please enter first name"
         label="Birthday"
         validation-visibility="live"
         validation="required"
+        :validation-messages="{
+                  required: 'Date of birth is required',
+                }"
       />
       <div class="row g-2">
         <div class="col-6">
           <FormKit
             type="multiselect"
             label="select Country"
+            placeholder="Country code"
             name="country_code"
             :options="countryCodes"
             validation="required"
+            :validation-messages="{
+                  required: 'Country code is required',
+                }"
           />
         </div>
         <div class="col-6">
           <FormKit
             type="tel"
             name="contactno"
-            placeholder="Phone number"
+            placeholder="Enter phone number"
             validation="required|number|"
             :validation-messages="{
               required: 'Phone number is required.',
@@ -68,13 +81,14 @@
         name="email"
         validation="required|email|"
         validation-visibility="live"
-        placeholder="Email"
+        placeholder="Please enter email"
       />
       <FormKit
         style="border-radius: 0px 0px 0px 0px"
         type="password"
         name="password"
         label="password"
+        placeholder="Please enter password"
         prefix-icon="password"
         suffix-icon="eyeClosed"
         @suffix-icon-click="handleIconClick"
@@ -84,12 +98,12 @@
         validation="required|passwordValidation|length:8"
         :validation-messages="{
           passwordValidation:
-            'Password should contain at least one symbol, number, capital, and small letter.',
+            'Please enter password. Password must contain at least 1 of the following: upper case letter, lower case letter, number and special character',
         }"
-        placeholder="Password"
+      
       />
       <h3 class="small-title-bold">Social</h3>
-      <FormKit type="text" placeholder="Facebook" name="facebook" />
+      <FormKit type="text" placeholder="Please enter Facebook handle. This is not a mandatory field." name="facebook" />
       <FormKit type="text" placeholder="Instagram" name="instagram" />
       <FormKit type="text" placeholder="Linkedin" name="linkedin" />
       <h3 class="small-title-bold">Tags</h3>

@@ -1,6 +1,7 @@
 <template>
   <div style="background-color: #036095">
-    <div class="vertical-tab" v-show="startDate.isSame(currentDay, 'day') || startDate.isAfter(currentDay, 'day')"> 
+    <!-- <div :class="{'tab-bg-color': props.hideSchedulerBar}" class="vertical-tab" v-show="startDate.isSame(currentDay, 'day') || startDate.isAfter(currentDay, 'day')">  -->
+      <div class="vertical-tab" :style="{ 'background-color': hideSchedulerBar ? '#f2faff' : '#002e4b' }" v-show="startDate.isSame(currentDay, 'day') || startDate.isAfter(currentDay, 'day')">
       <div
         v-for="(tab, index) in sortedTimeSlots"
         :key="index"
@@ -43,6 +44,9 @@ function selectTab(index: number) {
 }
 
 const props = defineProps({
+
+  hideSchedulerBar: Boolean,
+
   dates: {
     type: Object,
     default: () => {},
@@ -79,12 +83,23 @@ const sortedTimeSlots = computed(() => {
     return convertTo24Hour(a.start_time) - convertTo24Hour(b.start_time);
   });
 });
+
+import { watch } from 'vue';
+
+watch(() => props.hideSchedulerBar, (newValue) => {
+  console.log('SchedulerTab hideSchedulerBar changed:', newValue);
+});
+
 </script>
 
 <style scoped lang="scss">
+.tab-bg-color {
+  background-color: #f2faff;
+}
 .vertical-tab {
   margin-top: 39px;
-  background: #002e4b;
+  // background: #002e4b;
+  // background: #f2faff;
   display: flex;
   flex-direction: column;
   width: 43px;

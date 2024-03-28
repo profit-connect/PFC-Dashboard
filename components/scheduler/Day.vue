@@ -150,9 +150,9 @@
             v-if="member.type === 'normal'"
             ty
             class="d-flex flex-column gap-0"
-            style="width: 160px;"
+            style="width: 116px;"
           >
-          <!-- currently i have put 160 the actual width is 200 but i am adding padding 40px -->
+          <!-- currently i have put 116 the actual width is 200 but i am adding padding 40px -->
             <div class="text-white fw-bold" v-if="member.firsttimer === 'Yes'">
               First Timer
             </div>
@@ -164,8 +164,8 @@
               {{ member.days_left }}
             </div>
           </div>
-          <div v-else class="d-flex flex-column gap-0" style="width: 258px">
-                 <!-- currently i have put 298 the actual width is 200 but i am adding padding 40px -->
+          <div v-else class="d-flex flex-column gap-0" style="width: 256px">
+                 <!-- currently i have put 296 the actual width is 200 but i am adding padding 40px -->
             <div class="text-white fw-bold" v-if="member.firsttimer === 'Yes'">
               First Timer
             </div>
@@ -712,6 +712,6 @@ watch(() => showMember.value, (newVal, oldVal) => {
 .book_member {
   display: flex;
   height: 131px;
-  width: 303px;
+  width: 260px;
 }
 </style>

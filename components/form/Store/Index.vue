@@ -13,7 +13,7 @@
             label="Upload Image"
             name="image"
             :hideUploadButton="true"
-            help="Max image upload: 500x500px, 1MB, in .jpg and .png."
+            help="Max image size: 500x500px, 1MB. Format: .jpg or .png"
           />
         </div>
         <div class="col-8">
@@ -23,8 +23,11 @@
                 type="text"
                 label="Name"
                 name="name"
-                placeholder="Name"
+                placeholder="Please enter item name"
                 validation="required"
+                :validation-messages="{
+                  required: 'Item name is required',
+                }"
               />
             </div>
             <div class="col-4">
@@ -45,11 +48,15 @@
             type="textarea"
             name="description"
             label="Description"
-            placeholder="Description"
+            placeholder="Please enter item description"
             validation="required"
             :classes="{
               input: 'description-height',
             }"
+              :validation-messages="{
+                  required: 'Item description is required',
+                }"
+
           />
         </div>
       </div>
@@ -62,7 +69,7 @@
             outer-class="m-0"
             name="price"
             label="Price"
-            placeholder="Price"
+            placeholder="Enter Price"
             validation="required"
           />
           <div class="d-flex align-items-center gap-4">
@@ -100,7 +107,7 @@
             name="promotion_price"
             v-model="promotion_price"
             label="Promotion price"
-            placeholder="Promotion price"
+            placeholder="Enter Promotion price"
             :disabled="!isPromotionPriceActive"
             :validation="`${isPromotionPriceActive ? 'required|max:' + OriginalPrice : ''}`"
             :validation-messages="{
@@ -150,12 +157,11 @@
               z-index: 90;
               font-size: 16px;
             "
-            >Available To</span
+            >Open To</span
           >
           <FormKit
             type="multiselect"
             label="Available To"
-            openDirection="top"
             name="available_tags"
             mode="tags"
             v-model="availableTagsSelected"
@@ -178,7 +184,6 @@
             label="Except"
             name="except_tags"
             mode="tags"
-            openDirection="top"
             :options="exceptTags"
             v-model="exceptTagsSelected"
           />
@@ -189,13 +194,13 @@
       </div>
       <div
         class="mt-4 d-flex justify-content-center flex-column"
-        style="position: fixed; bottom: 0; right: 17%; margin-bottom: 20px"
+        style="position: fixed; bottom: 0; right: 15.2%; margin-bottom: 20px"
       >
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
           <button
             class="btn"
-            style="margin-left: 145px"
+            style="margin-left: 140px"
             @click="$emit('close-canvas')"
           >
             Cancel

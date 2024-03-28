@@ -10,7 +10,7 @@
         type="text"
         label="Name"
         name="name"
-        placeholder="Name"
+        placeholder="Enter class or event name"
         validation="required"
       />
       <div class="row my-4">
@@ -51,6 +51,7 @@
                   style="height: 40px"
                   type="number"
                   name="duration"
+                  placeholder="No."
                   validation="required"
                 />
               </div>
@@ -60,9 +61,13 @@
                   label="Class"
                   class="w-75"
                   name="period"
+                  placeholder="Select minutes or hours"
                   openDirection="bottom"
                   validation="required"
                   :options="timeTypeSelect"
+                  :validation-messages="{
+                  required: 'Unit of time is required',
+                }"
                 />
               </div>
             </div>
@@ -76,8 +81,11 @@
           type="textarea"
           name="description"
           label="Description"
-          placeholder="Description"
+          placeholder="Please enter class/event description"
           validation="required"
+          :validation-messages="{
+                  required: 'Class/event description is required',
+                }"
         />
       </div>
       <div class="row mt-4">
@@ -87,7 +95,7 @@
             label="Upload Image or Video"
             name="image_video"
             :hideUploadButton="true"
-            help="Max image upload: 960x540px, 1MB, in .jpg and .png."
+            help="Max image size: 960x540px, 1MB. Format: .jpg or .png"
           />
         </div>
         <div class="col-6">
@@ -98,7 +106,7 @@
             :targetHeight="262"
             :targetWidth="890"
             :hideUploadButton="true"
-            help="Max image upload: 890x262px, 1MB, in .jpg and .png."
+            help="Max image size: 890x262px, 1MB. in .jpg and .png."
           />
         </div>
       </div>
@@ -119,7 +127,7 @@
             type="text"
             label="Location"
             name="location"
-            placeholder="Location"
+            placeholder="Please enter Location"
             v-model="location"
             :disabled="['On-site', 'Online'].includes(classType)"
             :validation="locationValidation"
@@ -131,7 +139,7 @@
             type="text"
             label="Google Map Url"
             name="googlemaps"
-            placeholder="Google Map Url"
+            placeholder="Please enter Google Map Url"
             v-model="googlemaps"
             :disabled="['On-site', 'Online'].includes(classType)"
             :validation="googleMapsValidation"
@@ -146,9 +154,12 @@
             label="Url"
             name="url"
             v-model="url"
-            placeholder="Url"
+            placeholder="URL"
             :disabled="['On-site', 'Off-site'].includes(classType)"
             :validation="urlValidation"
+            :validation-messages="{
+                  required: 'URL is required',
+                }"
           />
         </div>
       </div>
@@ -162,12 +173,12 @@
               z-index: 90;
               font-size: 16px;
             "
-            >Available To</span
+            >Open To</span
           >
+          <!-- openDirection="top" -->
           <FormKit
             type="multiselect"
             label="Available To"
-            openDirection="top"
             name="available_tags"
             mode="tags"
             v-model="availableTagsSelected"
@@ -190,7 +201,6 @@
             label="Except"
             name="except_tags"
             mode="tags"
-            openDirection="top"
             :options="exceptTags"
             v-model="exceptTagsSelected"
           />

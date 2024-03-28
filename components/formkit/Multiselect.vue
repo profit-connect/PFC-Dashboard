@@ -34,18 +34,19 @@ function handleInput(value: any) {
   box-sizing: border-box;
   cursor: pointer;
   outline: none;
-  border: var(--ms-border-width, 1px) solid #fff;
+  // border: var(--ms-border-width, 1px) solid #fff;
   border-radius: var(--fk-border-radius);
   background: $main-bg;
   font-size: var(--ms-font-size, 1rem);
+  
   // height: 48px;
 
   &.is-open {
-    border-radius: var(--ms-radius, 4px) var(--ms-radius, 4px) 0 0;
+    // border-radius: var(--ms-radius, 4px) var(--ms-radius, 4px) 0 0;
   }
 
   &.is-open-top {
-    border-radius: 0 0 var(--ms-radius, 4px) var(--ms-radius, 4px);
+    // border-radius: 0 0 var(--ms-radius, 4px) var(--ms-radius, 4px);
   }
 
   &.is-disabled {
@@ -53,10 +54,19 @@ function handleInput(value: any) {
     background: var(--ms-bg-disabled, #f3f4f6);
   }
 
-  &.is-active,
-  &:hover {
-    border: var(--ms-border-width-active, var(--ms-border-width, 1px)) solid #{$main-blue};
+  &.is-active {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+    z-index: 100;
+   box-shadow:
+    0 -4px 6px -4px rgba(0, 0, 0, .12), /* Top shadow */
+    4px 0 6px -4px rgba(0, 0, 0, .12), /* Right side shadow */
+    -4px 0 6px -4px rgba(0, 0, 0, .12); /* Left side shadow */
   }
+  // &.is-active,
+  // &:hover {
+    // border: var(--ms-border-width-active, var(--ms-border-width, 1px)) solid #{$main-blue};
+  // }
 }
 
 .multiselect-wrapper {
@@ -634,10 +644,15 @@ function handleInput(value: any) {
   // border-bottom: 1px solid rgb(201, 174, 226);
   // border-left: 1px solid rgb(201, 174, 226);
   // border-right: 1px solid rgb(201, 174, 226);
-  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, .1215686275));
+  // filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, .1215686275));
+  box-shadow:
+    0 4px 6px -4px rgba(0, 0, 0, .12), /* Bottom shadow */
+    4px 0 6px -4px rgba(0, 0, 0, .12), /* Right side shadow */
+    -4px 0 6px -4px rgba(0, 0, 0, .12); /* Left side shadow */
+  
   position: absolute;
-  left: calc(var(--ms-border-width, 1px) * -1);
-  right: calc(var(--ms-border-width, 1px) * -1);
+  left: calc(var(--ms-border-width, 1px) * +1);
+  right: calc(var(--ms-border-width, 1px) * +1);
   bottom: 0;
   transform: translateY(100%);
   margin-top: calc(var(--ms-border-width, 1px) * -1);
@@ -650,10 +665,14 @@ function handleInput(value: any) {
   display: flex;
   flex-direction: column;
   border-radius: var(--fk-border-radius);
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
   outline: none;
   max-height: var(--ms-max-height, 10rem);
   scrollbar-width: thin; /* For Firefox */
   scrollbar-color: rgb(133, 128, 128) transparent;
+  padding-bottom: 10px;
+  
 
   &.is-top {
     transform: translateY(-100%);

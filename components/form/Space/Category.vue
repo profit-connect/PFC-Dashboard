@@ -12,8 +12,11 @@
             type="text"
             label="Name"
             name="name"
-            placeholder="Name"
+            placeholder="Please enter category name"
             validation="required"
+            :validation-messages="{
+                  required: 'Category name is required',
+                }"
           />
         </div>
         <div class="">
@@ -21,8 +24,11 @@
             type="textarea"
             name="description"
             label="Description"
-            placeholder="Description"
+            placeholder="Please enter category description"
             validation="required"
+            :validation-messages="{
+                  required: 'Category description is required',
+                }"
           />
         </div>
       </div>

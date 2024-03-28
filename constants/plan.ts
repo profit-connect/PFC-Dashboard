@@ -5,10 +5,10 @@ export const planType = [
 ];
 
 export const periodType = [
-  { label: "Day(s)", value: "Day" },
-  { label: "Week(s)", value: "Week" },
-  { label: "Month(s)", value: "Month" },
-  { label: "Year(s)", value: "Year" },
+  { label: "day(s)", value: "Day" },
+  { label: "week(s)", value: "Week" },
+  { label: "month(s)", value: "Month" },
+  { label: "year(s)", value: "Year" },
 ];
 
 export const paymentCategory = [

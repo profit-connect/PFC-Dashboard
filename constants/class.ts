@@ -5,6 +5,6 @@ export const classOptions = [
 ];
 
 export const timeTypeSelect = [
-  { label: "Minutes", value: "Minutes" },
-  { label: "Hours", value: "Hours" },
+  { label: "minutes", value: "Minutes" },
+  { label: "hours", value: "Hours" },
 ];

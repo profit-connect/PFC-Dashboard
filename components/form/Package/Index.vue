@@ -29,15 +29,21 @@
         type="text"
         label="Name"
         name="name"
-        placeholder="Name"
+        placeholder="Please enter package name"
         validation="required"
+        :validation-messages="{
+                  required: 'Package name is required',
+                }"
       />
       <FormKit
         type="textarea"
         name="description"
         label="Description"
-        placeholder="Description"
+        placeholder="Package Description"
         validation="required"
+        :validation-messages="{
+                  required: 'Package description name is required',
+                }"
       />
       <div
         class="mt-4 d-flex justify-content-center flex-column"
