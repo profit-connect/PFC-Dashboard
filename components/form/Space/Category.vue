@@ -7,7 +7,7 @@
       :actions="false"
     >
       <div class="mt-4">
-        <div class="">
+        <div class="" style="height: 74px;">
           <FormKit
             type="text"
             label="Name"

@@ -4,7 +4,7 @@
       class="text-white fs-2" 
       @click="hideScheduler"
       v-show="!hideSchedulerBar"
-      style="margin-left: 355px; cursor: pointer; z-index: 1000; position: relative;"
+      style="margin-left: 355px; cursor: pointer; z-index: 40; position: relative;"
     >
       &lt;&lt;
     </div>

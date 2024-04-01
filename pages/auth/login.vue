@@ -1,5 +1,5 @@
 <template>
-  <div class="card bg-white rounded-lg mt-5" style="width: 536px">
+  <div class="card bg-white rounded-lg mt-5" style="width: 536px; ">
     <div class="card-body d-flex flex-column justify-content-center">
       <NuxtImg
         src="images/profit-logo.png"

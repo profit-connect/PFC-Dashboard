@@ -6,7 +6,8 @@
       @submit="submitHandler"
       :actions="false"
     >
-      <div class="d-flex gap-2">
+      <div class="d-flex gap-2" style="height: 90px;">
+        
         <FormKit
           type="date"
           label="Start date"
@@ -25,6 +26,7 @@
           :validation="`required|date_after:${startDate}`"
         />
       </div>
+      <div style="height: 74px;">
       <FormKit
         type="text"
         label="Name"
@@ -35,6 +37,7 @@
                   required: 'Package name is required',
                 }"
       />
+    </div>
       <FormKit
         type="textarea"
         name="description"

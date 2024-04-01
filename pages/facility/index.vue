@@ -51,13 +51,14 @@
          :hideUploadButton="true"
           help="Max image upload: 960x540px, 1MB, in .jpg and .png."
         />
+        <div  style="height: 60px;" >
         <FormKit
           type="text"
           placeholder="Location"
           validation="required"
           name="address"
         />
-
+      </div>
         <h3 class="small-title-bold mt-2">
           Address
           <div
@@ -120,7 +121,7 @@
         <div class="upload-image">
           <div id="uploadEditAvatar"></div>
         </div>
-        <div class="row g-2">
+        <div class="row g-2" style="height: 80px;">
           <FormKit
             type="tel"
             name="contactno"
@@ -132,6 +133,7 @@
             }"
           />
         </div>
+        <div  style="height: 80px;" >
         <FormKit
           type="email"
           name="email"
@@ -139,6 +141,7 @@
           validation-visibility="live"
           placeholder="Email"
         />
+      </div>
         <div class="input-label-box d-none">
           <input type="password" class="passwordInput" placeholder="Password" />
         </div>
@@ -555,7 +558,7 @@ watch(
   max-width: 950px;
   margin: unset;
   height: fit-content;
-  min-height: calc(100vh - 129px);
+  min-height: calc(100vh - 100px);
   margin-bottom: 50px;
 }
 
@@ -565,8 +568,8 @@ watch(
   margin-right: 20px;
   margin-left: 20px;
   padding: 20px;
-  // height: fit-content;
-  min-height: calc(100vh - 129px);
+  height: fit-content;
+  // min-height: calc(100vh - 129px);
   background: #fff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.0784313725);
   padding-bottom: 30px;

@@ -7,7 +7,7 @@
         :modelValue="computedSelectedRole"
       >
      
-            <div class="row">
+            <div class="row" style="height: 74px;">
               <div class="col-6">
                 <FormKit
                   type="text"

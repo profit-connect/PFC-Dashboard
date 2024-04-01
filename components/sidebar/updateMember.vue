@@ -193,13 +193,16 @@
             validation-visibility="live"
           />
 
-          <div class="row g-2">
+          <div class="row g-2"  style="height: 94px;">
             <div class="col-6">
               <FormKit
                 type="multiselect"
                 name="country_code"
                 :options="CountryCodes"
                 validation="required"
+                :validation-messages="{
+                  required: 'Country code is required',
+                }"
               />
             </div>
             <div class="col-6">
@@ -981,7 +984,7 @@ watch(
     display: flex;
     top: 210px;
     gap: 15px;
-    left: 115px;
+    left: 107px;
     visibility: visible; /* Initially hidden */
     // opacity: 0; /* Start fully transparent */
     transition: visibility 0s, opacity 0.3s linear; /* Smooth transition for opacity */

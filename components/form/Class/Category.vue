@@ -19,6 +19,7 @@
           />
         </div>
         <div class="col-9">
+          <div style="height: 74px;">
           <FormKit
             type="text"
             label="Name"
@@ -29,8 +30,9 @@
                   required: 'Category name is required',
                 }"
           />
+        </div>
           <FormKit
-            style="height: 140px"
+            style="height: 120px"
             type="textarea"
             name="description"
             label="Description"
@@ -226,4 +228,5 @@ const submitHandler = async (categoryData) => {
     overflow: hidden;
   }
 }
+
 </style>

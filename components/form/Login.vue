@@ -1,6 +1,7 @@
 <template>
   <div class="login-form">
     <FormKit type="form" @submit="submitHandler" :actions="false">
+      <div  style="height: 60px;" >
       <FormKit
         type="multiselect"
         label="Franchise/Facility"
@@ -10,6 +11,8 @@
         :options="combinedNames"
         :searchable="true"
       />
+    </div>
+    <div  style="height: 60px;" >
       <FormKit
         type="text"
         name="username"
@@ -17,9 +20,10 @@
         placeholder="Please enter Username"
         validation="required"
       />
-
+    </div>
+    <div  style="height: 60px;" >
       <FormKit
-        style="border-radius: 10px 0px 0px 10px"
+        style="border-radius: 10px 0px 0px 10px;"
         type="password"
         name="password"
         label="password"
@@ -28,7 +32,7 @@
         validation="required"
         placeholder="Please enter Password"
       />
-
+    </div>
       <button class="sign-in" type="submit" label="Sign In" >Sign In </button>
       <div class="bottom-link-action d-flex justify-content-between">
         <FormKit
@@ -132,6 +136,7 @@ form {
 
 <style lang="scss">
 .login-form {
+  height: 350px;
   .bottom-link-action {
     .formkit-label {
       display: block !important;

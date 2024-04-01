@@ -1,14 +1,14 @@
 <template>
   <section class="content-section">
-    <div v-if="showFacilityForm"><FacilityAdd /></div>
-    <div v-else><FacilityUpdate /></div>
+    <div v-if="showFacilityForm"><FacilityAddStaff /></div>
+    <div v-else><FacilityUpdateStaff /></div>
 
     <div class="content-box">
       <div class="d-flex align-items-center gap-3">
         <h1 style="font-size: 22px; margin-bottom: 0px">Management & Staff</h1>
         <MixButton
           style="background-color: #f2faff"
-          @click="showFacilityForm = !showFacilityForm"
+          @click="showFacilityForm = true;"
           size="sm"
           label="New Staff"
         />
