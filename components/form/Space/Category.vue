@@ -58,7 +58,36 @@
           </div>
         </div>
       </div>
+      <div v-if="selectedCategory">
+        <div class="d-flex justify-content-center">
+          <FormKit type="submit">Save</FormKit>
+        </div>
+        <button
+          class="btn"
+          style="position: relative; left: 365px; bottom: 10px"
+          @click="$emit('close-canvas')"
+        >
+          Cancel
+        </button>
+      </div>
+
       <div
+        v-else
+        class="mt-4 d-flex justify-content-center flex-column"
+        style="position: fixed; bottom: 0; right: 17%; margin-bottom: 20px"
+      >
+        <div><FormKit type="submit">Save</FormKit></div>
+        <div>
+          <button
+            class="btn"
+            style="margin-left: 140px"
+            @click="$emit('close-canvas')"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+      <!-- <div
         class="d-flex justify-content-center flex-column"
         style="position: fixed; bottom: 0; right: 17%; margin-top: 0px"
       >
@@ -72,7 +101,7 @@
             Cancel
           </button>
         </div>
-      </div>
+      </div> -->
     </FormKit>
   </div>
 </template>

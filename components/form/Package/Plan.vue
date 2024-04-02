@@ -24,6 +24,7 @@
           :value="false"
         />
       </div>
+      <div class="mb-4">
       <FormKit
         type="text"
         label="Name"
@@ -35,6 +36,7 @@
                   required: 'Plan name is required',
                 }"
       />
+    </div>
       <FormKit
         type="text"
         name="description"
@@ -143,8 +145,8 @@
             </div>
           </div>
 
-          <MixInputBox title="Payment">
-            <div class="row">
+          <MixInputBox title="Payment"  >
+            <div class="row" style="height:90px;">
               <div class="col-5 d-flex align-items-center gap-2">
                 <FormKit
                   type="multiselect"
@@ -676,5 +678,16 @@ watchEffect(() => {
 }
 .plan-input-min-width {
   min-width: 180px;
+}
+.formkit-message {
+  margin-bottom: -50px;
+  min-height: 50px; /* Reserve enough space for one line of text */
+  transition: visibility 0.3s, opacity 0.3s ease-in-out;
+  // visibility: hidden;
+  // opacity: 0;
+}
+.formkit-invalid .formkit-message {
+  visibility: visible;
+  opacity: 1;
 }
 </style>

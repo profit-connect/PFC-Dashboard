@@ -27,7 +27,7 @@
       >
         <img class="avatar" :src="getImageUrl(data.coach[0].img_src)" />
         <img
-          style="position: relative; bottom: 34px; left: 20px"
+          style="position: relative; bottom: 36px; left: 20px"
           class="avatar"
           :src="getImageUrl(data.coach[1].img_src)"
         />

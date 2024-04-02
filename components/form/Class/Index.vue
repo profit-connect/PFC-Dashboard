@@ -6,6 +6,7 @@
       :actions="false"
       :modelValue="computedSelectedClass"
     >
+    <div style="height: 60px;">
       <FormKit
         type="text"
         label="Name"
@@ -13,6 +14,7 @@
         placeholder="Enter class or event name"
         validation="required"
       />
+      </div>
       <div class="row my-4">
         <div class="col-6 custom-multiselect-container">
           <MixInputBox
@@ -53,6 +55,9 @@
                   name="duration"
                   placeholder="No."
                   validation="required"
+                  :validation-messages="{
+                  required: 'Time required',
+                }"
                 />
               </div>
               <div class="col-9">
@@ -75,7 +80,7 @@
         </div>
       </div>
 
-      <div class="col-">
+      <div class="col-" style="height: 120px;">
         <FormKit
           style="height: 110px"
           type="textarea"
@@ -92,7 +97,7 @@
         <div class="col-6">
           <FormKit
             type="uppy"
-            label="Upload Image or Video"
+            label="Upload Image"
             name="image_video"
             :hideUploadButton="true"
             help="Max image size: 960x540px, 1MB. Format: .jpg or .png"
@@ -120,7 +125,7 @@
           />
         </div>
       </div>
-      <div class="row">
+      <div class="row"  style="height: 80px;">
         <div class="col-6">
           <FormKit
             :key="`location-${formKey}`"
@@ -133,7 +138,7 @@
             :validation="locationValidation"
           />
         </div>
-        <div class="col-6">
+        <div class="col-6" >
           <FormKit
             :key="`googlemaps-${formKey}`"
             type="text"
@@ -146,7 +151,7 @@
           />
         </div>
       </div>
-      <div class="row">
+      <div class="row" style="height: 80px;">
         <div class="col-12">
           <FormKit
             :key="`url-${formKey}`"

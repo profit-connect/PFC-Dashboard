@@ -39,11 +39,14 @@
     </div>
       <h3 class="small-title-bold">Personal</h3>
       <div  style="height: 74px;" >
-      <FormKit 
-      type="select"
-       name="gender" 
-       :options="['Male', 'Female']" 
-       />  
+        <div class="custom-multiselect-gender">
+            <FormKit type="multiselect"  
+           mode="single"
+           placeholder="Please select gender"
+            name="gender" 
+            :options="['Female', 'Male', 'Prefer not to say']"
+             />
+        </div>
        </div>
        <div  style="height: 80px;" >
       <FormKit

@@ -18,7 +18,7 @@
         </div>
         <div class="col-8">
           <div class="row">
-            <div class="col-8">
+            <div class="col-8 mb-2">
               <FormKit
                 type="text"
                 label="Name"
@@ -71,6 +71,9 @@
             label="Price"
             placeholder="Enter Price"
             validation="required"
+            :validation-messages="{
+                  required: 'Price is required',
+                }"
           />
           <div class="d-flex align-items-center gap-4">
             <span> Can be paid with </span>
@@ -112,6 +115,7 @@
             :validation="`${isPromotionPriceActive ? 'required|max:' + OriginalPrice : ''}`"
             :validation-messages="{
               max: 'Promotion price must be less than OriginalPrice',
+              required: 'Promotion Price is required',
             }"
              />
           </div>
@@ -133,6 +137,9 @@
             :min="effectiveMinDate"
             v-model="promotionStartDate"
             :validation="isPromotionPriceActive ? 'required' : ''"
+            :validation-messages="{
+                  required: 'Start date is required',
+                }"
           />
           <FormKit
             type="date"
@@ -144,6 +151,9 @@
             :validation="`${
               isPromotionPriceActive ? 'required|' : ''
             }date_after:${promotionStartDate}`"
+             :validation-messages="{
+                  required: 'End date is required',
+                }"
           />
         </div>
       </div>

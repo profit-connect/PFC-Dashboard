@@ -285,30 +285,27 @@
   // import { useAuthStore } from "~/store/auth";
   import { useBreadcrumbStore } from "~/store/breadcrumb";
   const { setBreadcrumb, setBreadcrumbTab } = useBreadcrumb();
-  setBreadcrumbTab({
-      items: [
-        {
-          label: "General",
-          link: `/facility`,
-        },
-        { label: "Timing", link: `/facility/timing` },
-        { label: "Staff", link: `/facility/staff` },
-        { label: "Forms", link: `/facility/forms` },
-        { label: "Tags", link: `/facility/tags` },
-        // { label: "Payments", link: `/facility/payments` },
-        // { label: "Discount Codes", link: `/facility/discount` },
-        // { label: "Tax", link: `/facility/tax` },
-        // { label: "Activity", link: `/facility/activity` },
-      ],
-    });;
+setBreadcrumbTab({
+    items: [
+      { label: "Web Dashboard", link: `/access-level` },
+      { label: "Admin App", link: `/access-level/admin-app` },
   
-   const breadcrumbStore = useBreadcrumbStore();
-  breadcrumbStore.setBreadcrumb({
-   items: [
-     { label: "Facility", link: "/" },
-     { label: "Timing", link: "/" }, 
-   ],
+    ],
   });
+
+const breadcrumbStore = useBreadcrumbStore();
+breadcrumbStore.setBreadcrumb({
+  items: [
+    // { label: "Facility", link: "" },
+    // { label: "Tags", link: "" }, 
+  ],
+});
+
+breadcrumbStore.setStyles({
+  position: "relative",
+  right: "70px",
+ 
+});
   
   breadcrumbStore.setStyles({
    position: "relative",

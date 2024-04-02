@@ -52,7 +52,7 @@
         label="Upload Image"
         name="image"
         :hideUploadButton="false"
-        help="Max image upload: 960x540px, 1MB, in .jpg, .png, or .gif. Max video upload: 720p resolution, 4MB."
+        help="Max image size: 960x540px, 1MB. Format: .jpg or .png"
         v-show="isImage"
     />
   </div>
@@ -72,7 +72,7 @@
           type="textarea"
           name="header"
           label="Title"
-          placeholder="Title                                                                          Limit: 50 characters"
+          placeholder="Title                                                                   Limit: 50 characters"
           validation="required"
         />
              <div class="row">

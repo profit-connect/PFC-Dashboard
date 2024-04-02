@@ -50,16 +50,17 @@
          :hideUploadButton="true"
           help="Max image upload: 960x540px, 1MB, in .jpg and .png."
         />
+        <div  style="height: 60px;" >   
         <FormKit
           type="text"
           placeholder="Location"
           validation="required"
           name="address"
         />
-
+     </div>
         <div class="row g-2">
         </div>
-        <h3 class="small-title-bold mt-2">
+        <h3 class="small-title-bold mt-4">
           Address
           <div
             class="goBackShowMode"
@@ -122,8 +123,7 @@
           <div id="uploadEditAvatar"></div>
         </div>
 
-        <div class="row g-2">
-    
+        <div class="row g-2" style="height: 75px;">
           <FormKit
             type="tel"
             name="contactno"
@@ -135,6 +135,7 @@
             }"
           />
         </div>
+        <div  style="height: 75px;" >
         <FormKit
           type="email"
           name="email"
@@ -142,6 +143,7 @@
           validation-visibility="live"
           placeholder="Email"
         />
+      </div>
         <div class="input-label-box d-none">
           <input type="password" class="passwordInput" placeholder="Password" />
         </div>
@@ -151,7 +153,7 @@
         v-show="!toggleStates.isSocialEditMode.value"
         class="social-show data-block-show"
       >
-        <h3 class="small-title-bold mb-4">
+        <h3 class="small-title-bold mb-4 mt-4">
           Social
           <img
             @click="() => startEdit('isSocialEditMode')"

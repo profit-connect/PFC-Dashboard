@@ -6,7 +6,7 @@
       @submit="submitHandler"
       :actions="false"
     >
-      <div class="d-flex gap-2" style="height: 90px;">
+      <div class="d-flex gap-2 mb-2" style="height: 90px;">
         
         <FormKit
           type="date"
@@ -26,7 +26,7 @@
           :validation="`required|date_after:${startDate}`"
         />
       </div>
-      <div style="height: 74px;">
+      <div class="mb-4" style="height: 74px;">
       <FormKit
         type="text"
         label="Name"
@@ -166,3 +166,17 @@ const submitHandler = async (packageData) => {
     : createCategory(packageData);
 };
 </script>
+<style lang="scss">
+.formkit-message {
+  margin-bottom: -50px;
+  min-height: 50px; /* Reserve enough space for one line of text */
+  transition: visibility 0.3s, opacity 0.3s ease-in-out;
+  // visibility: hidden;
+  // opacity: 0;
+}
+.formkit-invalid .formkit-message {
+  visibility: visible;
+  min-height: 50px;
+  opacity: 1;
+}
+</style>

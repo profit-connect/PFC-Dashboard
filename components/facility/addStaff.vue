@@ -159,7 +159,7 @@ onMounted(async () => {
 
       <div class="row" >
         <div class="col-2 small-title-bold" style="margin-top: 38px;"><B>Role</B> </div>
-            <div  class="col-10  mt-4"   style="height: 40px; margin-bottom: 25px;">
+            <div  class="col-10  mt-4"   style="height: 50px; margin-bottom: 25px;">
          <FormKit 
         type="multiselect"
         label="roles"

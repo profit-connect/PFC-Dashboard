@@ -207,8 +207,9 @@
             <div class="custom-multiselect-gender">
               <FormKit type="multiselect"  
              mode="single"
+             placeholder="Please select  gender"
               name="gender" 
-              :options="['Male', 'Female']"
+              :options="['Female','Male', 'Prefer not to say']"
                />
           </div>
             
@@ -245,6 +246,7 @@
                 />
               </div>
             </div>
+            <div style="height: 74px;">
             <FormKit
               type="email"
               name="email"
@@ -252,6 +254,7 @@
               validation-visibility="live"
               placeholder="Email"
             />
+          </div>
             <!-- <div class="input-label-box d-none">
               <input
                 type="password"
@@ -265,7 +268,7 @@
             v-show="!toggleStates.isSocialEditMode.value"
             class="social-show data-block-show"
           >
-            <h3 class="small-title-bold">
+            <h3 class="small-title-bold mt-2">
               Social
               <img
                 @click="() => startEdit('isSocialEditMode')"
@@ -419,16 +422,16 @@
             <div class="row g-2">
               <div class="col-6">
                 <FormKit
-                  type="select"
-                  name="emergency_country_code"
-                  :options="CountryCodes"
-                  v-model="getMemberInfo.emergency_country_code"
-                  @blur="setEmergencyCountryCodeTouched"
-                  :validation="isEmergencyContactFieldRequired"
-                  :validation-messages="{
-                    required: 'Emergency country code is required.',
-                  }"
-                />
+                type="multiselect"
+                name="emergency_country_code"
+                :options="CountryCodes"
+                v-model="getMemberInfo.emergency_country_code"
+                @blur="setEmergencyCountryCodeTouched"
+                :validation="isEmergencyContactFieldRequired"
+                :validation-messages="{
+                  required: 'Emergency country code is required.',
+                }"
+              />
               </div>
               <div class="col-6">
                 <FormKit

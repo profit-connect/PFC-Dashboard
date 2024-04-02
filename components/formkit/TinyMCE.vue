@@ -48,18 +48,43 @@ function handleInput(newValue) {
 
 onMounted(() => {
 const customStyles = `
-  .tox .tox-toolbar__primary .tox-tbtn {
-    background-color: #f2faff !important; // Default state
-    color: black !important;
-  }
-  .tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled {
-       background: #84CEFF !important; 
-      color: white !important;
-    }
-  .tox .tox-tbtn:hover {
-    background: #84CEFF !important; 
-  }
-  
+.tox .tox-toolbar__primary .tox-tbtn {
+  background-color: #f2faff !important; /* Default state */
+  color: white !important;
+}
+
+.tox .tox-toolbar__primary .tox-tbtn:hover {
+  background: #84CEFF !important; 
+  color: #FFFFFF !important; /* Assuming you want the text color to change on hover */
+}
+
+.tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled,
+.tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled:hover {
+  background: #84CEFF !important; 
+  color: #FFFFFF !important;
+}
+
+/* Adjusting the fill color for icons within enabled buttons */
+.tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled .tox-icon,
+.tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled:hover .tox-icon {
+  fill: white !important; /* Make fill white for enabled buttons */
+}
+
+.tox :not(svg):not(rect) {
+  background: 0 0;
+  border: 0;
+  box-shadow: none;
+  float: none;
+  fill: #84CEFF; /* Default fill color for icons */
+  height: auto;
+  margin: 0;
+  max-width: none;
+  outline: 0;
+  padding: 0;
+  position: static;
+  width: auto;
+}
+
 `;
 
 const styleTag = document.createElement('style');

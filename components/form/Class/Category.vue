@@ -6,7 +6,7 @@
       @submit="submitHandler"
       :actions="false"
     >
-      <div class="row mt-4">
+      <div class="row mt-4" >
         <div class="col-3">
           <FormKit
             type="uppy"
@@ -24,6 +24,7 @@
             type="text"
             label="Name"
             name="name"
+            v-tooltip="'This is a tooltip'"
             placeholder="Please enter category name"
             validation="required"
             :validation-messages="{

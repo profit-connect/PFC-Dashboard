@@ -6,8 +6,8 @@
       @submit="submitHandler"
       :actions="false"
     >
-      <div class="row mt-4">
-        <div class="col-6">
+      <!-- <div class="row mt-4"> -->
+        <div  style="height: 54px;">
           <FormKit
             type="text"
             label="Name"
@@ -19,7 +19,7 @@
                 }"
           />
         </div>
-        <div class="col-6">
+        <div class="mt-4" style="height: 74px; margin-bottom: 80px;">
           <FormKit
             type="textarea"
             name="description"
@@ -30,13 +30,13 @@
                 }"
           />
         </div>
-      </div>
+      <!-- </div> -->
       <div
       class="saved-category my-4"
       v-if="selectedCategory"
       style="margin-bottom: 20px"
     >
-      <h5 class="text-center mb-3">Saved Categories</h5>
+      <h5 class="text-center  mb-4">Saved Categories</h5>
       <div class="row g-3">
         <div
           v-for="category in categories"

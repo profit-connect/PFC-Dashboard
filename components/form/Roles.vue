@@ -29,6 +29,7 @@
                 />
               </div>
             </div>
+            <div class="row" style="height: 174px;">
             <FormKit
               type="textarea"
               name="description"
@@ -39,7 +40,7 @@
                 input: 'description-height',
               }"
             />
-          
+            </div>
         <div class="row mb-4">
           <div class=""></div>
           <div class="d-flex align-items-center justify-content-between gap-2">

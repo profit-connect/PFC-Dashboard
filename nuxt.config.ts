@@ -9,7 +9,11 @@ export default defineNuxtConfig({
     "assets/scss/app.scss",
     "assets/scss/utility.scss",
   ],
-  plugins: [{ src: "~/plugins/bootstrap.client", mode: "client" }],
+  // plugins: [{ src: "~/plugins/bootstrap.client", mode: "client" }],
+  plugins: [
+    { src: '~/plugins/bootstrap.client', mode: 'client' },
+    { src: '~/plugins/tooltip.ts', mode: 'client' }, 
+  ],
   modules: [
     "@pinia/nuxt",
     "@nuxt/image",

@@ -180,8 +180,9 @@
           <div class="custom-multiselect-gender">
             <FormKit type="multiselect"  
            mode="single"
+           placeholder="Please select a gender"
             name="gender" 
-            :options="['Male', 'Female']"
+            :options="['Female', 'Male', 'Prefer not to say']"
              />
         </div>
           
@@ -392,7 +393,7 @@
           <div class="row g-2">
             <div class="col-6">
               <FormKit
-                type="select"
+                type="multiselect"
                 name="emergency_country_code"
                 :options="CountryCodes"
                 v-model="getMemberInfo.emergency_country_code"

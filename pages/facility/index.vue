@@ -59,7 +59,7 @@
           name="address"
         />
       </div>
-        <h3 class="small-title-bold mt-2">
+        <h3 class="small-title-bold mt-4">
           Address
           <div
             class="goBackShowMode"
@@ -121,7 +121,7 @@
         <div class="upload-image">
           <div id="uploadEditAvatar"></div>
         </div>
-        <div class="row g-2" style="height: 80px;">
+        <div class="row g-2" style="height: 75px;">
           <FormKit
             type="tel"
             name="contactno"
@@ -133,7 +133,7 @@
             }"
           />
         </div>
-        <div  style="height: 80px;" >
+        <div  style="height: 75px;" >
         <FormKit
           type="email"
           name="email"
@@ -151,7 +151,7 @@
         v-show="!toggleStates.isSocialEditMode.value"
         class="social-show data-block-show"
       >
-        <h3 class="small-title-bold mb-4">
+        <h3 class="small-title-bold mb-4 mt-4">
           Social
           <img
             @click="() => startEdit('isSocialEditMode')"

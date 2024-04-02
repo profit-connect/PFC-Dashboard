@@ -318,3 +318,46 @@ h6 {
     }
   }
 }
+/* Tooltip container */
+.tooltip-container {
+  position: relative; /* Establish a positioning context */
+}
+
+/* Tooltip text */
+.tooltip-text {
+  position: absolute;
+  bottom: 108%; /* Position the tooltip above the container */
+  left: 50%; /* Center the tooltip */
+  transform: translateX(-50%); /* Align the center of the tooltip with the center of the element */
+  white-space: nowrap; /* Keep the tooltip text on a single line */
+
+  visibility: hidden;
+  opacity: 0;
+  z-index: 100; /* Ensure the tooltip is above other elements */
+  
+  background-color: #f2faff;/* Tooltip background color */
+  color: black; /* Tooltip text color */
+  text-align: center;
+  border-radius: 4px; /* Rounded corners */
+  padding: 6px 12px; /* Padding inside the tooltip */
+
+  transition: visibility 0.2s, opacity 0.2s ease-in-out;
+}
+
+/* Tooltip arrow */
+.tooltip-text::after {
+  content: '';
+  position: absolute;
+  top: 100%; /* Position it at the bottom of the tooltip text */
+  left: 50%; /* Center the arrow */
+  margin-left: -5px; /* Adjust this value to move the arrow left or right */
+  border-width: 5px;
+  border-style: solid;
+  border-color:#f2faff transparent transparent transparent; /* The first color is the arrow color */
+}
+
+/* Show the tooltip on hover */
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}

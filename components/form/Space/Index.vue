@@ -8,7 +8,7 @@
       #default="{ value }"
     >
       <div class="row">
-        <div class="col-8">
+        <div class="col-8 " style="height: 80px;">
           <FormKit
             type="text"
             label="Name"
@@ -33,7 +33,7 @@
           />
         </div>
       </div>
-      <div class="row">
+      <div class="row" style="height: 110px;">
         <div class="col-12">
           <FormKit
             type="textarea"
@@ -104,7 +104,7 @@
           :key="index"
           class="day-schedule"
         >
-          <div style="width: 100px; margin-bottom: 15px">{{ day.day }}</div>
+          <div style="width: 90px; margin-bottom: 15px">{{ day.day }}</div>
           <FormKit
             style="height: 40px"
             type="time"

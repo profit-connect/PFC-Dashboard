@@ -79,7 +79,7 @@ export const useMenuStore = defineStore("menu", () => {
           label: "Access Levels",
           description:
             "Manage access level for specified features and dashboard pages.",
-          link: "/",
+          link: "/access-level",
         },
       ],
     },
