@@ -15,8 +15,53 @@
               plugins: [
               'link', 'code' 
               ],
-              toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat  | code | link ',
-              content_style: 'body { background-color: #f2faff; } iframe {border: none;}',
+              toolbar: 'undo redo | formatselect | blocks  fontsiz| bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat  | code | link | your_custom_button | customInsertButtonPanel',
+              content_style: `body { font-family: 'Poppins Regular', sans-serif, Arial; background-color: #f2faff; } iframe {border: none;}`,
+              setup: function(editor) {
+  editor.ui.registry.addButton('your_custom_button', {
+    text: 'Insert Button',
+    onAction: function() {
+      // Define the content of your inline panel with single quotes
+      const panelContent = `
+        <div style='padding: 20px;'>
+          <label for='button-label'>Button Label<input id='button-label' type='text' /></label>
+          <label for='button-url'>Button URL<input id='button-url' type='text' /></label>
+          <button type='button' id='insert-button'>Insert</button>
+        </div>
+      `;
+
+      // Show the inline panel
+      editor.ui.registry.addPanel('customInsertButtonPanel', {
+        html: panelContent,
+        onPostRender: function() {
+          // Handle the insert button click
+          document.getElementById('insert-button').addEventListener('click', function() {
+            const label = document.getElementById('button-label').value;
+            const url = document.getElementById('button-url').value;
+            if (label && url) { // Simple validation
+              const content = `<a href='${url}' target='_blank' rel='noopener'><button>${label}</button></a>`;
+              editor.insertContent(content);
+              editor.ui.hidePanel('customInsertButtonPanel'); // Hide the panel after insertion
+            } else {
+              alert('Please fill in both fields.'); // Basic error handling
+            }
+          });
+        }
+      });
+
+      // Position the panel relative to the button or cursor
+      editor.ui.showPanel('customInsertButtonPanel', {
+        // Positioning options here, you might need to adjust based on your UI
+        predicate: (elem) => true // Show the panel for all elements (you might want to customize this)
+      });
+    }
+  });
+}
+
+
+
+
+
            }"
 
         @update:modelValue="handleInput"
@@ -47,51 +92,66 @@ function handleInput(newValue) {
 }
 
 onMounted(() => {
-const customStyles = `
-.tox .tox-toolbar__primary .tox-tbtn {
-  background-color: #f2faff !important; /* Default state */
-  color: white !important;
+  const dialogStyles = `
+    .tox .tox-dialog-wrap {
+      z-index: 2 !important;
+    }
+
+    .tox .tox-dialog {
+      z-index: 2 !important;
+      position:absolute
+      right:800px;
+    }
+  `;
+  const customStyles = `
+    .tox .tox-toolbar__primary .tox-tbtn {
+      background-color: #f2faff !important; /* Default state */
+      color: white !important;
+      color: #84CEFF;
+    }
+
+    .tox .tox-toolbar__primary .tox-tbtn:hover,
+    .tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled,
+    .tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--selected {
+      background: #84CEFF !important;
+      color: #84CEFF;
+    }
+    .tox .tox-tbtn__select-label {
+      color: #84CEFF;
+    cursor: default;
+    font-weight: 400;
+    height: initial;
+    margin: 0 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.tox .tox-toolbar__primary .tox-tbtn:hover {
-  background: #84CEFF !important; 
-  color: #FFFFFF !important; /* Assuming you want the text color to change on hover */
-}
 
-.tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled,
-.tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled:hover {
-  background: #84CEFF !important; 
-  color: #FFFFFF !important;
-}
+  .tox .tox-toolbar__primary .tox-tbtn:hover .tox-tbtn__select-label,
+  .tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled .tox-tbtn__select-label {
+    color: white;
+  }
+    .tox .tox-toolbar__primary .tox-tbtn svg {
+      fill: #84CEFF; /* Default fill color for icons */
+      color: #84CEFF;
+    }
 
-/* Adjusting the fill color for icons within enabled buttons */
-.tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled .tox-icon,
-.tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled:hover .tox-icon {
-  fill: white !important; /* Make fill white for enabled buttons */
-}
+    .tox .tox-toolbar__primary .tox-tbtn:hover svg,
+    .tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--enabled svg,
+    .tox .tox-toolbar__primary .tox-tbtn.tox-tbtn--selected svg {
+      fill: white !important; /* White fill color for icons on hover and selected */
+      color: #84CEFF;
+      
+    }
+  `;
 
-.tox :not(svg):not(rect) {
-  background: 0 0;
-  border: 0;
-  box-shadow: none;
-  float: none;
-  fill: #84CEFF; /* Default fill color for icons */
-  height: auto;
-  margin: 0;
-  max-width: none;
-  outline: 0;
-  padding: 0;
-  position: static;
-  width: auto;
-}
-
-`;
-
-const styleTag = document.createElement('style');
-styleTag.type = 'text/css';
-styleTag.appendChild(document.createTextNode(customStyles));
-document.head.appendChild(styleTag);
+  const styleTag = document.createElement('style');
+  styleTag.type = 'text/css';
+  styleTag.appendChild(document.createTextNode(customStyles + dialogStyles));
+  document.head.appendChild(styleTag);
 });
+
 
 
 </script>

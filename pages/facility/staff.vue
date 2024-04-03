@@ -90,7 +90,8 @@ const refreshData = () => {
   max-width: 950px;
   margin: unset;
   height: fit-content;
-  min-height: calc(100vh - 129px);
-  margin-bottom: 50px;
+  min-height: calc(100vh - 50px);
+  border-radius: 0px 0px 0px 0px;
+  // margin-bottom: 50px;
 }
 </style>

@@ -202,14 +202,18 @@
              :targetHeight="100"
              :targetWidth="100"
               :hideUploadButton="true"
-              help="Max image upload: 960x540px, 1MB, in .jpg and .png."
+              help="Max image size: 960x540px, 1MB. Format: .jpg or .png"
             />
-            <div class="custom-multiselect-gender">
-              <FormKit type="multiselect"  
-             mode="single"
+            <div style="height: 74px" class="custom-multiselect-gender">
+             <FormKit type="multiselect"  
+              mode="single"
              placeholder="Please select  gender"
               name="gender" 
               :options="['Female','Male', 'Prefer not to say']"
+              validation="required"
+              :validation-messages="{
+                    required: 'Gender is required',
+                  }"
                />
           </div>
             
@@ -219,6 +223,9 @@
               label="Birthday"
               validation="required"
               validation-visibility="live"
+              :validation-messages="{
+                    required: 'Date of Birth is required',
+                  }"
             />
   
             <div class="row g-2"  style="height: 94px;">
@@ -227,6 +234,7 @@
                   type="multiselect"
                   name="country_code"
                   :options="CountryCodes"
+                  placeholder="Country code"
                   validation="required"
                   :validation-messages="{
                     required: 'Country code is required',
@@ -253,6 +261,9 @@
               validation="required|email|"
               validation-visibility="live"
               placeholder="Email"
+              :validation-messages="{
+                    required: 'Email is required',
+                  }"
             />
           </div>
             <!-- <div class="input-label-box d-none">
@@ -425,6 +436,7 @@
                 type="multiselect"
                 name="emergency_country_code"
                 :options="CountryCodes"
+                placeholder="Country code"
                 v-model="getMemberInfo.emergency_country_code"
                 @blur="setEmergencyCountryCodeTouched"
                 :validation="isEmergencyContactFieldRequired"
@@ -820,7 +832,7 @@
     // height: 100vh;
     background: #fff;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.0784313725);
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 0px 0px 0px 0px;
   }
   .sidebar-box__title img {
     width: 100px;

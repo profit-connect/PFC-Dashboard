@@ -31,7 +31,7 @@
             <div>
               <div v-show="isImage || isVideo" style="display: flex; gap: 5px; font-size: 12px; position: absolute; bottom: 86%; right: 80%; cursor: pointer;" @click="isImage = false; isVideo = false">
     <img src="~/assets/images/svg/icon-feather-arrow-left.svg" style="height: 20px; rotate: 180deg; z-index: 10;"/>
-    Back
+  <span style="z-index: 10;" @click="isImage = false; isVideo = false" >Back</span> 
 </div>
             </div>
    

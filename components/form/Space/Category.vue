@@ -34,7 +34,7 @@
       </div>
 
       <div class="saved-category my-4" v-if="selectedCategory">
-        <h5 class="text-center mb-3" style="font-size: 22px">
+        <h5 class="text-center mb-3" style="font-size: 23px">
           Saved Categories
         </h5>
         <div class="row g-3">
@@ -47,12 +47,12 @@
               @edit="onCategorySelect(category)"
               :active="category.category_id === selectedCategory?.category_id"
             >
-              <h6>
-                {{ category.name }}
-              </h6>
+            <span class="category">
+              {{ category.name }}
+            </span>
 
               <p class="mt-2">
-                {{ category.description }}
+                <!-- {{ category.description }} -->
               </p>
             </CardEdit>
           </div>
@@ -206,7 +206,7 @@ const submitHandler = async (categoryData) => {
 <style lang="scss" scoped>
 .saved-category-card {
   > div {
-    min-height: 148px;
+    min-height: 131px;
   }
   h6 {
     display: -webkit-box;
@@ -221,5 +221,11 @@ const submitHandler = async (categoryData) => {
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+}
+.category {
+  position: absolute;
+   top:38%;
+   font-weight:600;
+   font-size: 22px;
 }
 </style>

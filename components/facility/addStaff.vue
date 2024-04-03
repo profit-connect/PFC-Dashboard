@@ -403,6 +403,6 @@ const computedTags = computed(() => {
     // height: 100vh;
     background: #fff;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.0784313725);
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 0px 0px 0px 0px;
   }
 </style>

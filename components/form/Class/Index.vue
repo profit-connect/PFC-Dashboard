@@ -98,7 +98,9 @@
           <FormKit
             type="uppy"
             label="Upload Image"
-            name="image_video"
+            name="img_video"
+            :targetHeight="540"
+            :targetWidth="960"
             :hideUploadButton="true"
             help="Max image size: 960x540px, 1MB. Format: .jpg or .png"
           />
@@ -349,6 +351,7 @@ const addClass = async (classData: any) => {
 
 
 const updateClass = async (classData: any) => {
+  console.log(classData)
   const { data, error, execute } = useCustomFetch<any>("/category/update/class", {
     method: "POST",
     body: JSON.stringify(cleanObjectL1({ // Make sure to stringify your body if your fetch wrapper doesn't automatically do it

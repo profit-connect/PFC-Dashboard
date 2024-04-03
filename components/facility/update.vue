@@ -208,7 +208,7 @@
             Cancel
           </div>
         </h3>
-        <FormKit type="text" placeholder="Facebook" name="facebook" />
+        <FormKit type="text"  placeholder="Facebook" name="facebook" />
         <FormKit type="text" placeholder="instagram" name="instagram" />
         <FormKit type="text" placeholder="Linkedin" name="linkedin" />
       </div>
@@ -450,7 +450,7 @@ watch(
   background: #fff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.0784313725);
   padding-bottom: 30px;
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px 0px 0px;
 }
 
 .sidebar-box {

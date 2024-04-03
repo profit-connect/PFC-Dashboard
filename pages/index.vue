@@ -1,12 +1,12 @@
 <template>
+   <!-- style="margin-left: 355px; cursor: pointer; z-index: 40; position: relative;" -->
   <div class="top-bar-bg">
     <div
       class="text-white fs-2" 
       @click="hideScheduler"
       v-show="!hideSchedulerBar"
-      style="margin-left: 355px; cursor: pointer; z-index: 40; position: relative;"
     >
-      &lt;&lt;
+     <p style="margin-left: 320px; cursor: pointer;"> &lt;&lt;</p>
     </div>
     <div
       class="text-white fs-2"

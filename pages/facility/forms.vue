@@ -67,23 +67,23 @@ breadcrumbStore.setStyles({
 
   </script>
   <style lang="scss" scoped>
-  .content-section {
-    display: flex;
-    justify-content: center;
-    margin: 0 15px;
-  }
+.content-section {
+  display: flex;
+  justify-content: center;
+  margin: 0 15px;
+}
+
+.content-box {
+  position: relative;
+  width: 70vw;
+  max-width: 950px;
+  margin: unset;
+  height: fit-content;
+  min-height: calc(100vh - 50px);
+  border-radius: 0px 0px 0px 0px;
   
- 
-  
-  .content-box {
-    position: relative;
-    width: 70vw;
-    max-width: 950px;
-    margin: unset;
-    height: fit-content;
-    min-height: calc(100vh - 129px);
-    margin-bottom: 50px;
-  }
+  // margin-bottom: 50px;
+}
   
   
 

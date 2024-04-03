@@ -98,7 +98,7 @@ const { breadcrumb, breadcrumbTab, styles } = storeToRefs(useBreadcrumbStore());
   width: 100%;
   height: 43px;
   background: $dark-blue-seconadary;
-  color: #c5c5c5;
+  color: #ffffff;
 
   ul {
     list-style: none;

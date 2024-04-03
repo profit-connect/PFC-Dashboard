@@ -48,7 +48,7 @@
 
       </div>
       </div>
-        <div  class="title line-clamp-2" style="position: relative; bottom: 5px; ">
+        <div  class="title line-clamp-2 small-title-bold" style="position: relative; bottom: 5px; ">
           {{ name }}
         </div>
         <p class="description line-clamp-3" style="position: relative; bottom: 5px;">

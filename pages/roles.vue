@@ -26,8 +26,8 @@
               &nbsp; On Payroll
           </div>
           <div class="access">
-            <img src="~assets/images/svg/icon-ionic-ios-stats.svg"  />
-              &nbsp; Performance Monitored
+            <img src="~assets/images/svg/assignable-class.svg"  />
+              &nbsp; Assignable to Class
           </div>
 
          </div>

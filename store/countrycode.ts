@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 export const useCountryStore = defineStore("countrycode", () => {
   const CountryCodes = [
     
-      { label: "Select a country", value: "" },
+      // { label: "Select a country", value: "" },
       { label: "Afghanistan (+93)", value: "+93" },
       { label: "Aland Islands (+358)", value: "+358" },
       { label: "Albania (+355)", value: "+355" },

@@ -634,8 +634,8 @@ watch(
  max-width: 950px;
  margin: unset;
  height: fit-content;
- min-height: calc(100vh - 110px);
-
+ min-height: calc(100vh - 68px);
+ border-radius: 0px 0px 0px 0px;
 }
 
 .sidebar-box {
@@ -644,12 +644,12 @@ watch(
   margin-right: 20px;
   margin-left: 20px;
   padding: 20px;
-  // height: fit-content;
-  min-height: calc(100vh - 129px);
+  height: fit-content;
+  min-height: calc(100vh - 68px);
   background: #fff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.0784313725);
   padding-bottom: 30px;
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px 0px 0px;
 }
 
 .sidebar-box {

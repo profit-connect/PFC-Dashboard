@@ -546,20 +546,15 @@ watch(
   margin: 0 15px;
 }
 
-.content-section {
-  display: flex;
-  justify-content: center;
-  margin: 0 15px;
-}
-
 .content-box {
   position: relative;
   width: 70vw;
   max-width: 950px;
   margin: unset;
   height: fit-content;
-  min-height: calc(100vh - 100px);
-  margin-bottom: 50px;
+  min-height: calc(100vh - 68px);
+  border-radius: 0px 0px 0px 0px;
+  // margin-bottom: 50px;
 }
 
 .sidebar-box {
@@ -569,11 +564,11 @@ watch(
   margin-left: 20px;
   padding: 20px;
   height: fit-content;
-  // min-height: calc(100vh - 129px);
+  min-height: calc(100vh - 68px);
   background: #fff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.0784313725);
   padding-bottom: 30px;
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px 0px 0px;
 }
 
 .sidebar-box {

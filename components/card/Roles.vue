@@ -23,8 +23,8 @@
          <img  v-else src="~assets/images/svg/icon-material-payment-gray.svg"  />
         </div>
         <div>
-            <img  v-if="performance_monitored == 'Yes'" src="~assets/images/svg/icon-ionic-ios-stats.svg"  />
-            <img v-else src="~assets/images/svg/icon-ionic-ios-stats-gray.svg"  />
+            <img  v-if="performance_monitored == 'Yes'" src="~assets/images/svg/assignable-class.svg"  />
+            <img v-else src="~assets/images/svg/assignable-class-gray.svg"  />
         </div>
     </div>
     </div>
@@ -87,7 +87,7 @@
       align-items: center;
       position: relative;
       background: #f2faff;
-      padding: 8px;
+      padding: 15px;
       border-radius: 10px;
       width: 230px;
       min-height: 130px;
@@ -105,7 +105,7 @@
   .title{
     width: 100%;
     // font-style: italic;
-    font-size: 16px;
+    font-size: 22px;
     font-weight: bold;
     color: #000;
     min-height: 0px;
@@ -115,8 +115,10 @@
     -webkit-box-orient: vertical;
   }
   .desc{
+    position: relative;
+    bottom: 2px;
     width: 100%;
-    font-size: 10px;
+    font-size: 14px;
     margin-bottom: 9px;
     color: #000;
     min-height: 5px;

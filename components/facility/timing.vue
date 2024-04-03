@@ -60,12 +60,14 @@
          </div>
        </div>
      </div>
+     <div style="position: relative; top: 160px; left: 29%;">
      <div
        class="mt-4 d-flex justify-content-center save"
-       style="position: fixed; bottom: 0; right: 25%; margin-bottom: 20px"
+       style="position: absolute; "
      >
        <FormKit type="submit">Save</FormKit>
      </div>
+    </div>
    </FormKit>
  </div>
 <!-- </div> -->

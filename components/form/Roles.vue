@@ -69,7 +69,7 @@
                 type="checkbox"
                 outer-class="m-0"
                 name="performance_monitored"
-                label="Performance Monitored"
+                label="Assignable to Class"
                 :value="false"
               />
            

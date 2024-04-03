@@ -210,12 +210,14 @@
           <Span> Allow group/family plans</Span>
         </div> -->
       </div>
-      <div class="mt-4 d-flex justify-content-center"  style="position: relative;"
+      <div style="position: relative; top: 160px; left: 29%;">
+     <div
+       class="mt-4 d-flex justify-content-center save"
+       style="position: absolute; "
      >
-        <FormKit 
-        style="position: absolute; top: 1600%; right: 30%;"
-        type="submit">Save</FormKit>
-      </div>
+       <FormKit type="submit">Save</FormKit>
+     </div>
+    </div>
     </div>
   </FormKit>
     <!-- </div> -->

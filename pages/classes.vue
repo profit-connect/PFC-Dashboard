@@ -95,6 +95,9 @@ const { data, pending, refresh } = await useCustomFetch<any>(
     body: { facility_id: currentUserType?.id },
   }
 );
+// const refreshData = () => {
+//   refresh();
+// };
 
 const refreshData = () => {
   refresh().then(() => {
@@ -164,8 +167,9 @@ const computedClasses = computed(() => {
           .map((item: IClass) => ({
             id: item.id,
             name: item.name,
-            // image: `${item.img_src}?timestamp=${new Date().getTime()}`,
-            image: item.img_src,
+            image: `${item.img_src}?timestamp=${new Date().getTime()}`,
+            // image: item.img_src,
+            img_video: item.img_video,
             duration: item.duration,
             description: item.description,
             period: item.period,

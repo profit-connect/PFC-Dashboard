@@ -73,7 +73,7 @@
                   </h6>
                 </div>
                 <p class="mt-2">
-                  {{ category.description }}
+                  {{ category.description }} 
                 </p>
               </div>
             </CardEdit>
