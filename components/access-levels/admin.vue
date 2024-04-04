@@ -1,14 +1,38 @@
- <template>
+ <template> {{ levels }}
     <div>
-      <h1 style="font-size: 22px; margin-bottom: 0px">Access Levels</h1>
-  
+      <div class="row">
+        <div class="col-6"> 
+          <h1 style="font-size: 23px; margin-top: 10px">Access Levels</h1>
+        </div>
+     
+      <div class="level-headers col-6">
+        <span class="level-header">Level 3</span>
+        <span class="level-header"  >Level 2</span>
+        <span class="level-header" style="margin-right: 35px;">Level 1</span>
+      </div>
+    </div>
       <!-- Static Home Section -->
       <div class="module">
         <h2 class="module-header">Home</h2>
+        
         <div class="module-content">
-          <div v-for="functionality in levels.accesslevels[0].Home" :key="functionality.id" class="functionality">
-            <span class="name">{{ functionality.functionality }}</span>
-            <!-- Render your switches here for each access level -->
+          <div v-for="functionality in levels.accesslevels[0].Home" :key="functionality.id" class="functionality row" >
+            <div class="name col-6">{{ functionality.functionality }}</div>
+            <div class=" level-switches col-6">
+            <FormKit
+          type="switch"
+          name="level3"
+        
+        />  <FormKit
+          type="switch"
+          name="level2"
+        
+        />  <FormKit
+          type="switch"
+          name="level1"
+        
+        />
+      </div>
           </div>
         </div>
       </div>
@@ -18,20 +42,46 @@
         <h2 class="module-header">Profiles</h2>
         <div class="module-content">
           <template v-for="(value, name) in levels.accesslevels[0].Profiles[0]" :key="name">
-            <!-- Check if the property is an array, indicating it's a sub-category -->
             <div v-if="Array.isArray(value)" class="sub-category">
-              <button @click="toggleAccordion(name)"  :class="{ 'sub-module-header': true, 'is-open': isExpanded(name) }" class="sub-module-header"><span style="margin-left: 30px;">{{ name }}</span></button>
+              <button @click="toggleAccordion(name)"  :class="{ 'sub-module-header': true, 'is-open': isExpanded(name) }" class="sub-module-header"><span style="margin-left: 30px;">&nbsp;&nbsp;&nbsp;{{ name }}</span></button>
               <div v-if="isExpanded(name)" class="accordion-content">
                 <div v-for="subFunctionality in value" :key="subFunctionality.id" class="functionality">
-                  <span class="name">{{ subFunctionality.functionality }}</span>
-                  <!-- Render your switches here for each access level -->
+                  <div class="name col-6">{{ subFunctionality.functionality }}</div>
+            <div class=" level-switches col-6">
+            <FormKit
+          type="switch"
+          name="is_public"
+        
+        />  <FormKit
+          type="switch"
+          name="is_public"
+        
+        />  <FormKit
+          type="switch"
+          name="is_public"
+        
+        />
+      </div>
+          
                 </div>
               </div>
             </div>
             <!-- Direct functionalities under Profiles, not collapsible -->
             <div v-else class="functionality">
               <span class="name">{{ value.functionality }}</span>
-              <!-- Render your switches here for each access level -->
+              <FormKit
+          type="switch"
+          name="is_public"
+        
+        />  <FormKit
+          type="switch"
+          name="is_public"
+        
+        />  <FormKit
+          type="switch"
+          name="is_public"
+        
+        />
             </div>
           </template>
         </div>
@@ -50,7 +100,8 @@
       default: () => ({}),
     },
   });
-  
+
+
   const expandedSections = ref({});
   
   const toggleAccordion = (section) => {
@@ -76,19 +127,43 @@
     font-size: 22px;
     font-weight: bold;
     cursor: pointer;
-    padding: 10px 42px;
+    padding: 10px 20px;
     margin-top: 10px;
     border-radius: 5px;
     transition: background-color 0.3s;
   }
   
   .module-header:hover, .sub-module-header:hover {
-    background-color: #e2e8f0;
+    background-color: #f2faff;
+    border-radius: 5px;
   }
-  
+  .level-headers {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0px 0;
+}
+.level-switches {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0px 0;
+ position: relative;
+ top: 5px;
+
+}
+.level-header {
+  /* width: calc(33.333% - 20px); */
+  text-align: center;
+  font-size: 21px;
+  font-weight:600;
+  position: relative;
+}
   .module-content, .sub-module-content {
-    padding-left: 42px;
+    display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+    /* padding-left: 42px; */
     transition: all 0.3s;
+    border-radius: 5px;
   }
   
   .sub-module-header {
@@ -124,8 +199,11 @@
   }
   
   .functionality {
-    padding: 10px 0; /* Add padding as requested */
+    display: flex;
+    align-items: center;
+    padding: 5px 20px; /* Add padding as requested */
     transition: background-color 0.3s; /* For a smooth hover effect */
+    border-radius: 5px;
   }
   
   .functionality:hover {

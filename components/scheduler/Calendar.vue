@@ -7,19 +7,19 @@
         @click="(currentFilter = 'today'), selectToday()"
         :class="currentFilter === 'today' ? 'active' : ''"
       >
-        Today
+        Day
       </button>
-      <button
+      <button style=""
         @click="(currentFilter = 'currentWeek'), selectWeek()"
         :class="currentFilter === 'currentWeek' ? 'active' : ''"
       >
-        This Week
+       &nbsp;Week&nbsp;
       </button>
       <button
         @click="(currentFilter = 'currentMonth'), selectCurrentMonth()"
         :class="currentFilter === 'currentMonth' ? 'active' : ''"
       >
-        This Month
+      &nbsp;Month&nbsp;
       </button>
     </div>
     <DatePicker
@@ -118,6 +118,7 @@ const selectWeek = async () => {
 };
 
 const onDaySelected = (date) => {
+   currentFilter.value = 'today';
   const selectedDate = dayjs(date);
   range.value = { start: selectedDate.toDate(), end: selectedDate.toDate() };
 };

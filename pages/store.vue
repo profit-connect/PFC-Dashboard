@@ -83,6 +83,7 @@
 </template>
 <script lang="ts" setup>
 import { useAuthStore } from "~/store/auth";
+import type { ICategory, IItem } from "@/types/api/store/category";
 import { useBreadcrumbStore } from "~/store/breadcrumb";
 const { $toast } = useNuxtApp();
 const breadcrumbStore = useBreadcrumbStore();
@@ -127,11 +128,19 @@ const getCategoryOptions = computed(() => {
     : [];
 });
 
+// const getCategories = computed(() => {
+//   return data.value && data.value.categories
+//     ? data.value.categories.map((item: any) => item.name)
+//     : [];
+// });
 const getCategories = computed(() => {
   return data.value && data.value.categories
-    ? data.value.categories.map((item: any) => item.name)
+    ? data.value.categories
+        .filter((item: ICategory | null | undefined) => item != null)
+        .map((item: ICategory) => item.name)
     : [];
 });
+
 
 const computedStores = computed(() => {
   const items = data.value?.categories?.[activeTab.value]?.items;

@@ -17,51 +17,6 @@
               ],
               toolbar: 'undo redo | formatselect | blocks  fontsiz| bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat  | code | link | your_custom_button | customInsertButtonPanel',
               content_style: `body { font-family: 'Poppins Regular', sans-serif, Arial; background-color: #f2faff; } iframe {border: none;}`,
-              setup: function(editor) {
-  editor.ui.registry.addButton('your_custom_button', {
-    text: 'Insert Button',
-    onAction: function() {
-      // Define the content of your inline panel with single quotes
-      const panelContent = `
-        <div style='padding: 20px;'>
-          <label for='button-label'>Button Label<input id='button-label' type='text' /></label>
-          <label for='button-url'>Button URL<input id='button-url' type='text' /></label>
-          <button type='button' id='insert-button'>Insert</button>
-        </div>
-      `;
-
-      // Show the inline panel
-      editor.ui.registry.addPanel('customInsertButtonPanel', {
-        html: panelContent,
-        onPostRender: function() {
-          // Handle the insert button click
-          document.getElementById('insert-button').addEventListener('click', function() {
-            const label = document.getElementById('button-label').value;
-            const url = document.getElementById('button-url').value;
-            if (label && url) { // Simple validation
-              const content = `<a href='${url}' target='_blank' rel='noopener'><button>${label}</button></a>`;
-              editor.insertContent(content);
-              editor.ui.hidePanel('customInsertButtonPanel'); // Hide the panel after insertion
-            } else {
-              alert('Please fill in both fields.'); // Basic error handling
-            }
-          });
-        }
-      });
-
-      // Position the panel relative to the button or cursor
-      editor.ui.showPanel('customInsertButtonPanel', {
-        // Positioning options here, you might need to adjust based on your UI
-        predicate: (elem) => true // Show the panel for all elements (you might want to customize this)
-      });
-    }
-  });
-}
-
-
-
-
-
            }"
 
         @update:modelValue="handleInput"

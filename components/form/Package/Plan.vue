@@ -579,27 +579,84 @@ const editPlan = async (planData) => {
 
 
 
-const submitHandler = async (planData) => {
-  const totalSpaces = props.accessData.spaces.length;
-  const spaces = [];
-  for (let i = 0; i < totalSpaces; i++) {
-    if (planData[`spaces[${props.accessData.spaces[i].label}]`])
-      planData[`spaces[${props.accessData.spaces[i].label}]`].forEach(
-        (item) => {
-          spaces.push(item);
-        }
-      );
-  }
+// const submitHandler = async (planData) => {
+//   const totalSpaces = props.accessData.spaces.length;
+//   const spaces = [];
+//   for (let i = 0; i < totalSpaces; i++) {
+//     if (planData[`spaces[${props.accessData.spaces[i].label}]`])
+//       planData[`spaces[${props.accessData.spaces[i].label}]`].forEach(
+//         (item) => {
+//           spaces.push(item);
+//         }
+//       );
+//   }
   
 
+//   const getTagsOrDefault = (tags) => {
+//     return tags.length === 0 || tags.every((tag) => tag === "" || tag === null)
+//       ? [""]
+//       : tags;
+//   };
+
+//   const availableTags = getTagsOrDefault(planData.available_tags);
+//   const exceptTags = getTagsOrDefault(planData.except_tags);
+//   const postData = {
+//     private: planData.private ? "Yes" : "No",
+//     pay_with_card: planData.pay_with_card ? "Yes" : "No",
+//     pay_with_gift_card: planData.pay_with_gift_card ? "Yes" : "No",
+//     name: planData.name,
+//     description: planData.description,
+//     charge_on_first: planData.charge_on_first ? "Yes" : "No",
+//     auto_renew: planData.auto_renew ? "Yes" : "No",
+//     first_class_free: planData.first_class_free ? "Yes" : "No",
+//     joining_fee: planData.joining_fee ? "Yes" : "No",
+//     available_tags: availableTags,
+//     except_tags: exceptTags,
+//     display_original_price: planData.display_original_price ? "Yes" : "No",
+//     promotion_end: planData.promotion_end ?? null,
+//     promotion_price: isPromotionPriceActive.value
+//       ? planData.promotion_price ?? ""
+//       : "",
+//     promotion_start: planData.promotion_start ?? null,
+//     classes: planData.classes,
+//     spaces,
+//     credit_count: planData.credit_count,
+//     price: planData.price,
+//     payment_duration: planData.payment_duration,
+//     payment_period: planData.payment_period,
+//     payment_cycle: planData.payment_cycle,
+//     type: planData.type,
+//     duration: planData.duration,
+//     period: planData.period,
+//     category: planData.category,
+//   };
+//   planData.plan_id ? editPlan(postData) : createPlan(postData);
+// };
+
+
+const submitHandler = async (planData) => {
+  // Default to an empty array if props.accessData.spaces is null or undefined
+  const spacesArray = props.accessData?.spaces ?? [];
+  const spaces = [];
+
+  // Iterate over spacesArray if it is not empty
+  spacesArray.forEach(space => {
+    const spaceInput = planData[`spaces[${space.label}]`];
+    if (spaceInput) {
+      spaceInput.forEach(item => spaces.push(item));
+    }
+  });
+
   const getTagsOrDefault = (tags) => {
-    return tags.length === 0 || tags.every((tag) => tag === "" || tag === null)
-      ? [""]
-      : tags;
+    // Return a default array with an empty string if tags is falsy, empty, or contains only empty/null values
+    return (!tags || tags.length === 0 || tags.every(tag => !tag)) ? [""] : tags;
   };
 
+  // Use getTagsOrDefault to handle available_tags and except_tags
   const availableTags = getTagsOrDefault(planData.available_tags);
   const exceptTags = getTagsOrDefault(planData.except_tags);
+
+  // Construct postData with spaces and other properties from planData
   const postData = {
     private: planData.private ? "Yes" : "No",
     pay_with_card: planData.pay_with_card ? "Yes" : "No",
@@ -614,9 +671,7 @@ const submitHandler = async (planData) => {
     except_tags: exceptTags,
     display_original_price: planData.display_original_price ? "Yes" : "No",
     promotion_end: planData.promotion_end ?? null,
-    promotion_price: isPromotionPriceActive.value
-      ? planData.promotion_price ?? ""
-      : "",
+    promotion_price: planData.promotion_price ?? "",
     promotion_start: planData.promotion_start ?? null,
     classes: planData.classes,
     spaces,
@@ -630,8 +685,11 @@ const submitHandler = async (planData) => {
     period: planData.period,
     category: planData.category,
   };
+
+  // Decide to create or edit the plan based on the presence of plan_id
   planData.plan_id ? editPlan(postData) : createPlan(postData);
 };
+
 
 const exceptTags = computed(() => {
   return tags.value

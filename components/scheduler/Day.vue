@@ -166,7 +166,7 @@
           </div>
           <div v-else class="d-flex flex-column gap-0" style="width: 256px">
                  <!-- currently i have put 296 the actual width is 200 but i am adding padding 40px -->
-            <div class="text-white fw-bold" v-if="member.firsttimer === 'Yes'">
+            <div class="text-white fw-bold" style="margin-left: 20px;"  v-if="member.firsttimer === 'Yes'">
               First Timer
             </div>
             <div class="fs-4 fw-semibold"  style="margin-left: 20px;">
