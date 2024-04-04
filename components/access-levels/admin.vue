@@ -1,4 +1,4 @@
- <template> {{ levels }}
+ <template>
     <div>
       <div class="row">
         <div class="col-6"> 
@@ -19,19 +19,26 @@
           <div v-for="functionality in levels.accesslevels[0].Home" :key="functionality.id" class="functionality row" >
             <div class="name col-6">{{ functionality.functionality }}</div>
             <div class=" level-switches col-6">
-            <FormKit
-          type="switch"
-          name="level3"
-        
-        />  <FormKit
-          type="switch"
-          name="level2"
-        
-        />  <FormKit
-          type="switch"
-          name="level1"
-        
-        />
+              <FormKit
+      type="switch"
+      :name="`level3-${functionality.id}`"
+      :model-value="functionality.level3 === '1'"
+      @update:model-value="value => updateAccessLevel(functionality.id, 'level3', value)"
+    />
+    <!-- Level 2 Switch -->
+    <FormKit
+      type="switch"
+      :name="`level2-${functionality.id}`"
+      :model-value="functionality.level2 === '1'"
+      @update:model-value="value => updateAccessLevel(functionality.id, 'level2', value)"
+    />
+    <!-- Level 1 Switch -->
+    <FormKit
+      type="switch"
+      :name="`level1-${functionality.id}`"
+      :model-value="functionality.level1 === '1'"
+      @update:model-value="value => updateAccessLevel(functionality.id, 'level1', value)"
+    />
       </div>
           </div>
         </div>
@@ -39,7 +46,7 @@
   
       <!-- Profiles Section with Accordions -->
       <div class="module">
-        <h2 class="module-header">Profiles</h2>
+        <h2 class="module-header">Control Panel</h2>
         <div class="module-content">
           <template v-for="(value, name) in levels.accesslevels[0].Profiles[0]" :key="name">
             <div v-if="Array.isArray(value)" class="sub-category">
@@ -48,18 +55,26 @@
                 <div v-for="subFunctionality in value" :key="subFunctionality.id" class="functionality">
                   <div class="name col-6">{{ subFunctionality.functionality }}</div>
             <div class=" level-switches col-6">
+            <!-- Level 3 Switch -->
             <FormKit
           type="switch"
-          name="is_public"
-        
-        />  <FormKit
+          :name="`level3-${subFunctionality.id}`"
+          :model-value="subFunctionality.level3 === '1'"
+          @update:model-value="value => updateAccessLevel(subFunctionality.id, 'level3', value)"
+        />
+        <!-- Level 2 Switch -->
+        <FormKit
           type="switch"
-          name="is_public"
-        
-        />  <FormKit
+          :name="`level2-${subFunctionality.id}`"
+          :model-value="subFunctionality.level2 === '1'"
+          @update:model-value="value => updateAccessLevel(subFunctionality.id, 'level2', value)"
+        />
+        <!-- Level 1 Switch -->
+        <FormKit
           type="switch"
-          name="is_public"
-        
+          :name="`level1-${subFunctionality.id}`"
+          :model-value="subFunctionality.level1 === '1'"
+          @update:model-value="value => updateAccessLevel(subFunctionality.id, 'level1', value)"
         />
       </div>
           
@@ -115,6 +130,8 @@
   const isFunctionalityGroup = (functionalityGroup) => {
     return Object.keys(functionalityGroup).some((key) => Array.isArray(functionalityGroup[key]));
   };
+
+  
   </script>
   
 

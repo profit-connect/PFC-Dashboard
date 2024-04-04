@@ -100,7 +100,6 @@ const minDate = computed(() => {
 //   return startDate.value || minDate.value; // Use startDate if it exists, otherwise use minDate
 // });
 const effectiveStartDate = computed(() => {
-  // Parse both startDate and minDate as Date objects for comparison
   const startDateObj = new Date(startDate.value);
   const minDateObj = new Date(minDate.value);
 
@@ -108,7 +107,6 @@ const effectiveStartDate = computed(() => {
   if (startDate.value && startDateObj <= minDateObj) {
     return startDate.value;
   }
-  // Use minDate if startDate doesn't exist, or if startDate is greater than minDate
   return minDate.value;
 });
 
