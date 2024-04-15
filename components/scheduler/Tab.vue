@@ -15,16 +15,17 @@
       </div>
       <div class="tab-ite">
         <div  class="tab-content1" @click="emit('toggle-modal')">
-          <span class="rotated-text" style="font-size: 16px"
+          <span class="rotated-text" 
             >{{ sortedTimeSlots.length ? "Update" : "Add" }} &nbsp;
             <img
+             style="width: 22px; height: 22px;"
               v-if="!sortedTimeSlots.length"
               src="@/assets/images/svg/add-icon.svg"
               alt="Add icon"
             />
             <img
               v-else
-              style="width: 16px; height: 16px; margin-right: 8px"
+              style="width: 20px; height: 20px; margin-right: 0px; position: relative; left: -12px;" 
               src="@/assets/images/svg/edit-icon.svg"
               alt="Edit icon"
             />
@@ -103,7 +104,7 @@ watch(() => props.hideSchedulerBar, (newValue) => {
   display: flex;
   flex-direction: column;
   width: 43px;
-  padding-top: 49px;
+  padding-top: 10px;
   padding-bottom: 64px;
   height: calc(100vh - 80px);
   overflow: scroll;
@@ -153,6 +154,7 @@ watch(() => props.hideSchedulerBar, (newValue) => {
   background-color: #fff;
   border-color: #fff;
   z-index: 1000;
+  font-weight: bold;
 }
 .tab-content {
   width: 100%;
@@ -172,7 +174,7 @@ watch(() => props.hideSchedulerBar, (newValue) => {
 }
 
 .rotated-text {
-  font-size: 16px;
+  font-size: 22px;
   display: inline-block;
   white-space: nowrap;
   transform: rotate(270deg);

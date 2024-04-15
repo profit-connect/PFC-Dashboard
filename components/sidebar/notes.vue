@@ -4,7 +4,7 @@
     <div class="content-box mb-3">
       <div class="d-flex align-items-center justify-content-between gap-3">
         <div class="d-flex align-items-center gap-4">
-          <h1 style="font-size: 22px; margin-bottom: 0px">Notes</h1>
+          <p class="small-title-medium" style="font-size: 22px; margin-bottom: 0px">Notes</p>
           <MixButton
             style="background-color: #f2faff"
             @click="showStoreForm = true"
@@ -95,14 +95,13 @@
                 @click="toggleNote(note.id)"
                 class="d-flex align-items-center justify-content-between gap-3"
               >
-                <p
+                <p class="small-title-medium"
                   style="
                     font-size: 22px;
-                    font-weight: bold;
                     margin-bottom: 10px;
                   "
                 >
-                  {{ note.title }}
+                  {{ formatName(note.title) }}
                 </p>
                 <div
                   class="d-flex align-items-center gap-2"
@@ -211,7 +210,7 @@
                   <FormKit
                     type="text"
                     name="reply"
-                    placeholder="write a reply "
+                    placeholder="Write a reply "
                     class="custom-input"
                     :value="userReply"
                     style="background-color: white; padding-right: 80px"
@@ -234,14 +233,12 @@
                       z-index: 2;
                     "
                   >
-                    <svg
-                      width="20px"
-                      height="20px"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M2 2 L18 10 L2 18 Z" fill="skyblue" />
-                    </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+                  <g id="Group_2425" data-name="Group 2425" transform="translate(-524 -493)">
+                    <path id="Icon_material-send" data-name="Icon material-send" d="M3.01,21.684l20.038-8.592L3.01,4.5,3,11.183l14.32,1.909L3,15Z" transform="translate(531 499.5)" fill="#84ceff"/>
+                    <rect id="Rectangle_1422" data-name="Rectangle 1422" width="40" height="40" transform="translate(524 493)" fill="#fff" opacity="0"/>
+                  </g>
+                </svg>
                   </button>
                 </div>
               </FormKit>
@@ -300,7 +297,7 @@ breadcrumbStore.setBreadcrumb({
 
 breadcrumbStore.setStyles({
   position: "relative",
-  right: "75px",
+  right: "-20px",
 });
 setBreadcrumbTab({
   items: [
@@ -409,6 +406,14 @@ const getCurrentMemberInfo = computed(() => {
   );
 });
 
+function formatName(string) {
+  if (!string) return '';
+  const words = string.split(' ');
+  const capitalizedWords = words.map(word => 
+    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  );
+  return capitalizedWords.join(' ');
+}
 const defaultValue = () => ({
   notes_id: null,
   replyId: null,

@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-white h-full">
+  <div class="container bg-white h-full" >
     <div class="p-5">
       <div  v-if="data && data.categories && data.categories.some(category => category != null)" class="d-flex align-items-center gap-3">
         <h1 style="font-size: 22px; margin-bottom: 0px">Spaces</h1> 
@@ -23,8 +23,8 @@
           style="min-width: 190px; margin-top: 5px"
         />
       </div>
-      <div style="min-height: calc(100vh - 284px)">
-      <div class="row g-3">
+      <div style="min-height: calc(100vh - 284px); position: relative; left">
+      <div class="row g-0">
         <div
           class="col-6 col-lg-3"
           v-for="space in computedSpaces"
@@ -77,7 +77,7 @@ breadcrumbStore.setBreadcrumb({
 
 breadcrumbStore.setStyles({
   position: "relative",
-  right: "0px",
+  right: "-95px",
 });
 
 const activeTab = ref(0);

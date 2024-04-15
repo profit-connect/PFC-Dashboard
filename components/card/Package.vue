@@ -48,7 +48,7 @@
       <template
         v-if="promotion_price == '0' && display_original_price !== 'Yes'"
       >
-        <div class="price-only" style="width: 150px; position:relative;  left:-37px; bottom: 10px;">
+        <div class="price-only" style="width: 150px; position:relative;  left:-47px; bottom: 10px;">
            <span style="font-size:  22px;">AED <b>{{ formatPrice(price) }}</b></span>
         </div>
       </template>
@@ -57,13 +57,13 @@
         v-else-if="promotion_price !== '0' && display_original_price === 'Yes'"
       >
         <div class="discount">
-          <div class="price-only" style="font-size:22px;">AED <b>{{formatPrice(promotion_price) }}</b></div>
+          <div class="price-only" style="font-size:22px; position:relative;  left:-10px;">AED <b>{{formatPrice(promotion_price) }}</b></div>
           <div class="gap-1 d-flex align-items-center justify-content-end">
             <div class="custom-badge" :class="{ 'custom-badge-inactive': status === 'Inactive' }">
               {{ `${discountInPercent}% off ` }}
             </div>
-            <div class="line-though">
-              AED <span><b>{{formatPrice( price) }} </b></span>
+            <div class="line-though" >
+              AED <span ><b>{{formatPrice( price) }} </b></span>
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@
       </div>
     </div>
 
-      <div style="position: relative; top: 5px ; width: 100px;">
+      <div style="position: relative; top: 5px ; width: 100px; right: 10px;">
         <img
           src="~assets/images/svg/tax-icon.svg?timestamp=1701243704100"
           alt="Tax icluded img"
@@ -191,7 +191,7 @@ function formatPrice(value) {
     background: #f2faff;
     padding: 12px;
     border-radius: 10px;
-    width: 270px;
+    width: 250px;
     height: 150px;
     cursor: pointer;
     // margin-left: 15px;
@@ -247,18 +247,20 @@ function formatPrice(value) {
   }
   .line-though {
     text-decoration: line-through;
+    margin-right: 10px;;
   }
 }
 .name-card-left{
   display: flex;
   gap: 10px;
   align-items: center;
+  position: relative;
 }
 .name-card-right{
   display: flex;
   gap: 10px;
   align-items: center;
-  margin-left: 20px;
+  margin-left: 5px;
 }
 .discount{
   width: 150px; 

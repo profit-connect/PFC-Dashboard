@@ -23,7 +23,7 @@
       </div>
       <!-- <div class="row g-3 w-100"> -->
       <div class="row  w-100">
-        <div class="col-4" 
+        <div class="col-3" 
      v-for="plan in (data?.plans || []).filter(plan => plan !== null)" 
      :key="plan.id">
     <CardPackage

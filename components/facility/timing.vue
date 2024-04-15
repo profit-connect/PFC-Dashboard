@@ -2,7 +2,7 @@
   <!-- <section class="content-section"> -->
    <!-- <FacilityUpdate /> -->
    <!-- <div class="content-box"> -->
- <h3 class="mt-2">Facility Timing</h3>
+ <p class="title small-title-medium">Facility Timing</p>
  <div class="facility">
    <FormKit
      type="form"
@@ -60,12 +60,14 @@
          </div>
        </div>
      </div>
-     <div style="position: relative; top: 160px; left: 29%;">
+     <div style="position: relative; bottom: 530px; left: 87%;">
      <div
        class="mt-4 d-flex justify-content-center save"
        style="position: absolute; "
      >
-       <FormKit type="submit">Save</FormKit>
+       <FormKit
+       style="width:122px; height: 40px; font-size: 14px;"
+        type="submit">Save</FormKit>
      </div>
     </div>
    </FormKit>
@@ -211,6 +213,10 @@ const submitHandler = async () => {
 .general-timimg {
  margin-top: 40px;
  margin-bottom: 60px;
+}
+.title {
+  font-size: 22px;
+
 }
 .schedule-container {
  display: grid;

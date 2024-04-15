@@ -14,6 +14,7 @@
       <SearchBar @on-search="onSearch" />
       <div class="addNewMember" @click="handleAddSidebar()">
         <img
+          
           class="plusIcon"
           src="~/assets/images/svg/plus-icon.svg"
           alt="Plus icon"
@@ -69,9 +70,9 @@ const taggs = ref();
 
 const getBreadcrumbMargin = computed(() => {
   if (showAddSidebar.value || showEditSidebar.value) {
-    return "95px"; // Adjust margin when either sidebar is active
+    return "0px"; // Adjust margin when either sidebar is active
   } else {
-    return "-130px"; // Default margin when both sidebars are inactive
+    return "-220px"; // Default margin when both sidebars are inactive
   }
 });
 
@@ -276,11 +277,12 @@ const onSearch = (data: string) => {
 .addNewMember {
   font: 22px $font-family-medium;
   cursor: pointer;
-  margin-left: 35px;
+  margin-left: 30px;
   padding: 20px 0px;
 
   .plusIcon {
-    width: 40px;
+    width: 50px;
+    height: 50px;
     margin-right: 0px;
   }
 }

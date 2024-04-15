@@ -128,7 +128,7 @@ const { breadcrumb, breadcrumbTab, styles } = storeToRefs(useBreadcrumbStore());
   }
   .breadcrumb-tab {
     position: relative;
-    left: 115px;
+    left: 145px;
 
     .tabPrev,
     .tabNext {

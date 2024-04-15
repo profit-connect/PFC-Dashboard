@@ -108,6 +108,7 @@ onMounted(() => {
 .modal-expandable {
   .offcanvas {
     background: none;
+    border: none;
     
   }
   

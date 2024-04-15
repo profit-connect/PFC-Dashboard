@@ -266,6 +266,6 @@ watch(showCatrgoryForm, (val) => {
   width: 200px;
   position: relative;
   bottom: 43px;
-  left: 880px;
+  left: 1065px;
 }
 </style>

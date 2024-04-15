@@ -56,7 +56,7 @@ const computedIcon = computed(() => {
 const iconSize = computed(() => {
   return props.size === "sm"
     ? { height: 16, width: 16 }
-    : { height: 32, width: 32 };
+    : { height: 50, width: 50 };
 });
 
 const computedClasses = computed(() => {

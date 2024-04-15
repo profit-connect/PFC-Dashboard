@@ -206,27 +206,6 @@ const computedTags = computed(() => {
     : [];
 });
 
-onMounted(async () => {
-  try {
-    const response = await fetch(
-      "https://gist.githubusercontent.com/anubhavshrimal/75f6183458db8c453306f93521e93d37/raw/CountryCodes.json"
-    );
-    if (response.ok) {
-      const data = await response.json();
-      countryCodes.value = [
-        ...countryCodes.value,
-        ...data.map((country) => ({
-          label: `${country.name} (${country.dial_code})`,
-          value: country.dial_code,
-        })),
-      ];
-    } else {
-      console.error("Failed to fetch country codes");
-    }
-  } catch (error) {
-    console.error("Error fetching country codes:", error);
-  }
-});
 </script>
 <style lang="scss" scoped>
 .sidebar-box {

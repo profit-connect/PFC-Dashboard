@@ -1,150 +1,9 @@
-<!-- <template>
-  <div class="sidebar-box">
-    <FormKit
-      class="formCreateMember"
-      type="form"
-      #default="{ value }"
-      @submit="addMember"
-      :actions="false"
-    >
-      <h3 class="small-title-bold">Address & Information</h3>
-      <FormKit
-        type="uppy"
-        label="Upload Image"
-        name="image"
-        :hideUploadButton="true"
-      />
-      <FormKit type="text" name="address" placeholder="Address" />
-
-      <div class="row g-2">
-        <div class="col-6">
-          <FormKit
-            type="select"
-            label="select Country"
-            name="country_code"
-            :options="countryCodes"
-          />
-        </div>
-        <div class="col-6">
-          <FormKit
-            type="tel"
-            name="contactno"
-            placeholder="Phone number"
-            validation="required|number|"
-            :validation-messages="{
-              required: 'Phone number is required.',
-              number: 'Phone number must be numeric.',
-            }"
-          />
-        </div>
-      </div>
-      <FormKit
-        type="email"
-        name="email"
-        validation="required|email|"
-        validation-visibility="live"
-        placeholder="Email"
-      />
-
-      <h3 class="small-title-bold">Social</h3>
-      <FormKit type="text" placeholder="Facebook" name="facebook" />
-      <FormKit type="text" placeholder="Instagram" name="instagram" />
-      <FormKit type="text" placeholder="Linkedin" name="linkedin" />
-      <h3 class="small-title-bold">Website</h3>
-      <FormKit type="text" name="website" placeholder="website" />
-      <FormKit type="submit" label="Save" class="EditSave" />
-      <pre>{{ value }}</pre>
-    </FormKit>
-  </div>
-</template>
-
-<script lang="ts" setup>
-import { ref } from "vue";
-import type { IAddMember } from "@/types/api/member/info";
-import { useAuthStore } from "@/store/auth";
-import { useTagStore } from "@/store/tag";
-import { storeToRefs } from "pinia";
-import { cleanObjectL1 } from "@/utils/dataCleaner";
-
-interface NodeProps {
-  suffixIcon: string;
-  type: string;
-}
-
-const handleIconClick = (node: { props: NodeProps }, e: Event) => {
-  node.props.suffixIcon = node.props.suffixIcon === "eye" ? "eyeClosed" : "eye";
-  node.props.type = node.props.type === "password" ? "text" : "password";
-};
-
-const { currentUserType } = useAuthStore();
-const { tags } = storeToRefs(useTagStore());
-const emit = defineEmits(["reload"]);
-const countryCodes = ref([]);
-const { $toast } = useNuxtApp();
-
-const addMember = async (addNewMember: IAddMember) => {
-  try {
-    const { data } = await useCustomFetch<any>("/members/add/member", {
-      method: "POST",
-      body: cleanObjectL1({
-        ...addNewMember,
-        facility_id: currentUserType?.id,
-      }),
-    });
-    if (data.value.return) {
-      emit("reload");
-      $toast("Fcaility Added successfully!");
-    } else {
-      $toast(data.value.message);
-    }
-  } catch (err) {
-    console.log("Error:/api/Member/add", err);
-  }
-};
-
-const computedTags = computed(() => {
-  return tags.value
-    ? tags.value.map((item: any) => ({ label: item.name, value: item.id }))
-    : [];
-});
-
-onMounted(async () => {
-  try {
-    const response = await fetch(
-      "https://gist.githubusercontent.com/anubhavshrimal/75f6183458db8c453306f93521e93d37/raw/CountryCodes.json"
-    );
-    if (response.ok) {
-      const data = await response.json();
-      countryCodes.value = data.map((country) => ({
-        label: `${country.name} (${country.dial_code})`,
-        value: country.dial_code,
-      }));
-    } else {
-      console.error("Failed to fetch country codes");
-    }
-  } catch (error) {
-    console.error("Error fetching country codes:", error);
-  }
-});
-</script>
-<style lang="scss" scoped>
-.sidebar-box {
-  max-width: 400px;
-  width: 30vw;
-  margin-right: 20px;
-  padding: 20px;
-  // height: fit-content;
-  min-height: calc(100vh - 129px);
-  background: #fff;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.0784313725);
-}
-</style> -->
 <template>
   <div class="sidebar-box">
     <FormKit
       class="formCreateMember"
       type="form"
-      @submit="addMember"
+      @submit="addStaff"
       :actions="false"
     >
       <FormKit
@@ -163,11 +22,11 @@ onMounted(async () => {
          <FormKit 
         type="multiselect"
         label="roles"
-        name="roles"
+        name="role_id"
         placeholder="Roles"
         openDirection="bottom"
         validation="required"
-        :options="levels"
+        :options="staffRoles"
                 />
             </div>
             </div>
@@ -195,11 +54,14 @@ onMounted(async () => {
     </div>
       <h3 class="small-title-bold">Personal</h3>
       <div  style="height: 74px;" >
-      <FormKit 
-      type="select"
-       name="gender" 
-       :options="['Male', 'Female']" 
-       />  
+        <div class="custom-multiselect-gender">
+            <FormKit type="multiselect"  
+           mode="single"
+           placeholder="Please select gender"
+            name="gender" 
+            :options="['Female', 'Male', 'Prefer not to say']"
+             />
+        </div>
        </div>
        <div  style="height: 80px;" >
       <FormKit
@@ -250,7 +112,7 @@ onMounted(async () => {
         placeholder="Please enter email"
       />
          </div>
-         <div  style="height: 100px;" >
+         <div  style="height: 120px;" >
       <FormKit
         style="border-radius: 0px 0px 0px 0px"
         type="password"
@@ -276,25 +138,7 @@ onMounted(async () => {
       <FormKit type="text" placeholder="Instagram" name="instagram" />
       <FormKit type="text" placeholder="Linkedin" name="linkedin" />
       <h3 class="small-title-bold">Tags</h3>
-      <!-- <div class="custom-multiselect-member-tags">
-        <span
-          style="
-            position: relative;
-            bottom: -39.1px;
-            left: 15px;
-            z-index: 90;
-            font-size: 16px;
-          "
-          >Add Tags</span
-        >
-        <FormKit
-          type="multiselect"
-          name="tags"
-          mode="tags"
-          openDirection="top"
-          :options="computedTags"
-        />
-      </div> -->
+     
       <FormKit type="submit" label="Save" class="EditSave" />
     </FormKit>
   </div>
@@ -302,8 +146,9 @@ onMounted(async () => {
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import type { IAddMember } from "@/types/api/member/info";
+import type { IStaff } from "@/types/api/staff/info";
 import { useCountryStore } from "@/store/countrycode";
+import { useRoleStore } from "@/store/roles";
 import { useAuthStore } from "@/store/auth";
 import { useTagStore } from "@/store/tag";
 import { storeToRefs } from "pinia";
@@ -320,9 +165,10 @@ const handleIconClick = (node: { props: NodeProps }, e: Event) => {
 };
 
 const { currentUserType } = useAuthStore();
-const { tags } = storeToRefs(useTagStore());
-const emit = defineEmits(["reload", "close-sidebar"]);
+// const { tags } = storeToRefs(useTagStore());
+const emit = defineEmits(["reload", "close-sidebar", "staff-added"]);
 const { CountryCodes } = useCountryStore();
+const { staffRoles } = useRoleStore();
 
 const passwordValidation = ({ value }) => {
   const passwordRegex =
@@ -332,66 +178,49 @@ const passwordValidation = ({ value }) => {
 };
 
 
-const addMember = async (addNewMember: IAddMember) => {
+const processFormData = (formData) => {
+  Object.keys(formData).forEach(key => {
+    if (formData[key] === undefined) {
+      formData[key] = ''; // Convert undefined to empty string
+    }
+  });
+  return formData;
+};
+
+const addStaff = async (rawFormData: any) => {
+  const formData = processFormData(rawFormData); // Process form data to replace undefined with empty strings
+  console.log(formData);
   try {
-    const { data } = await useCustomFetch<any>("/members/add/member", {
+    const response = await useCustomFetch("/staff/add/staff", {
       method: "POST",
-      body: {
-        ...addNewMember,
+      body: JSON.stringify({
+        ...formData,
         facility_id: currentUserType?.id,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
       },
     });
+    const { data } = response;
     if (data.value.return) {
+      $toast.success("Staff added successfully!");
       emit("reload");
-      $toast.success("Member Added successfully!");
       emit("close-sidebar");
+      console.log(data.value.staff_id)
+      emit("staff-added", data.value.staff_id); 
     } else {
       $toast.error(data.value.message);
     }
-  } catch (err) {
-    console.log("Error:/api/Member/add", err);
+  } catch (error) {
+    console.error('Error adding staff:', error);
+    $toast.error("Failed to add staff.");
   }
 };
 
-const computedTags = computed(() => {
-  return tags.value
-    ? tags.value.map((item: any) => ({ label: item.name, value: item.id }))
-    : [];
-});
 
-// onMounted(async () => {
-//   try {
-//     const response = await fetch(
-//       "https://gist.githubusercontent.com/anubhavshrimal/75f6183458db8c453306f93521e93d37/raw/CountryCodes.json"
-//     );
-//     if (response.ok) {
-//       const data = await response.json();
-//       countryCodes.value = [
-//         ...countryCodes.value,
-//         ...data.map((country) => ({
-//           label: `${country.name} (${country.dial_code})`,
-//           value: country.dial_code,
-//         })),
-//       ];
-//     } else {
-//       console.error("Failed to fetch country codes");
-//     }
-//   } catch (error) {
-//     console.error("Error fetching country codes:", error);
-//   }
-// });
+
 </script>
 <style lang="scss" scoped>
-// .sidebar-box {
-//   max-width: 400px;
-//   width: 30vw;
-//   margin-left: 20px;
-//   padding: 20px;
-//   min-height: calc(100vh - 129px);
-//   background: #fff;
-//   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.0784313725);
-//   border-radius: 10px;
-// }
 .sidebar-box {
     max-width: 400px;
     width: 30vw;

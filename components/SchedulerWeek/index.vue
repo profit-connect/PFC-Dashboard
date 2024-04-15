@@ -244,7 +244,7 @@
         <template #title>
           <div>
             Add/ Edit Classes
-            <div class="room-title-date">
+            <div class="room-title small-title-medium">
               {{ currentRoom?.name }} |
               {{
                 selectedDate
@@ -607,11 +607,19 @@ const onSchedulerDateSelect = (date: number, data: any, type: string) => {
 }
 </style>
 <style>
-.room-title-date {
-  font-size: 18px !important;
+/* .room-title-date {
+  font-size: 22px !important;
   font-weight: normal !important;
   text-align: left;
   margin-top: 12px;
+  margin-left: 60px;
+} */
+.room-title {
+  font-size: 22px !important;
+  font-weight: normal;
+  text-align: left;
+  margin-top: 12px;
+  margin-left: 60px;
 }
 </style>
 <style lang="scss">

@@ -6,7 +6,7 @@
   > <img  class="logo" src="~/assets/images/logo-home-small.png" />
       </NuxtLink>
     
-      <NavigationMenu />
+   <div style="margin-right: 35%;">  <NavigationMenu /></div> 
         <NavigationFacilityDropdown />
         <NavigationUserDropdown />
        

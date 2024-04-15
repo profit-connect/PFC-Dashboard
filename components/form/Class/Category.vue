@@ -62,17 +62,17 @@
             >
               <div class="row align-items-center" style="margin-bottom: 10px">
                 <div
-                  style="height: 26px; width: 26px; margin-bottom: 5px"
+                  style="height: 26px; width: 26px; margin-bottom: 14px"
                   class="col-2 p-0 rounded overflow-hidden"
                 >
                   <img :src="getImageUrl(category.image)" />
                 </div>
-                <div class="col-10">
-                  <h6>
+                <div class="col-10 ">
+                  <p class="small-title-medium " style="font-size: 22px" >
                     {{ category.name }}
-                  </h6>
+                  </p>
                 </div>
-                <p class="mt-2">
+                <p class="">
                   {{ category.description }} 
                 </p>
               </div>
@@ -80,13 +80,13 @@
           </div>
         </div>
       </div>
-      <div v-if="selectedCategory">
+      <div v-if="selectedCategory" style="position: relative;">
         <div class="d-flex justify-content-center">
           <FormKit type="submit">Save</FormKit>
         </div>
         <button
           class="btn"
-          style="position: relative; left: 365px; bottom: 10px"
+          style="position: absolute; left: 380px; top: 160px"
           @click="$emit('close-canvas')"
         >
           Cancel
@@ -96,7 +96,7 @@
       <div
         v-else
         class="mt-4 d-flex justify-content-center flex-column"
-        style="position: fixed; bottom: 0; right: 17%; margin-bottom: 20px"
+        style="position: fixed; bottom: 0; right: 14%; margin-bottom: 20px"
       >
         <div><FormKit type="submit">Save</FormKit></div>
         <div>

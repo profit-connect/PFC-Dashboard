@@ -1,41 +1,5 @@
 <template>
-    <div class="sidebar-box">
-      <!-- <div class="image-box">
-        <a
-          @click="
-            router.push({
-              path: '/members/details/membership-overview',
-              query: { id: getMemberImage.id },
-            })
-          "
-          class="sidebar-box__title text-center"
-          title="View membership"
-        >
-        <div v-if="memberInfoData">
-          <img v-if="!imageError && memberInfoData.member.data[0].img_src"
-              :src="getImageUrl(memberInfoData.member.data[0].img_src)"
-              @error="imageError = true"
-              v-show="!imageError" />
-  
-          <div style="position: relative; left: 35%;" v-else class="avatar-initials content-title-bold ">
-            {{formatName( memberInfoData.member.data[0].firstname.charAt(0)) }}{{ formatName(memberInfoData.member.data[0].lastname.charAt(0)) }} 
-          </div>
-        </div>
-          <h2 class="content-title-bold editUserName">
-            {{ formatName(getMemberInfo.firstname) }} {{ formatName(getMemberInfo.lastname) }} 
-          </h2>
-        </a>
-        <p
-          style="
-            font-size: 14px;
-            text-align: center;
-            position: relative;
-            bottom: 25px;
-          "
-        >
-          Reset Fitness
-        </p>
-      </div> -->
+    <div class="sidebar-box">{{ staffInfoData }}  ----{{ staffId }}
       <div class="image-box" @mouseover="isHovering = true" @mouseleave="isHovering = false">
         <div class="hover-wrapper">
           <div
@@ -57,40 +21,21 @@
         </div>
       </div>
     
-        <!-- <a
-          @click="
-            router.push({
-              path: '/members/details/membership-overview',
-              query: { id: getMemberImage.id },
-            })
-          "
-          class="sidebar-box__title text-center"
-          title="View membership"
-        >
-        <div v-if="memberInfoData">
-          <img v-if="!imageError && memberInfoData.member.data[0].img_src"
-              :src="getImageUrl(memberInfoData.member.data[0].img_src)"
-              @error="imageError = true"
-              v-show="!imageError" />
-  
-          <div style="position: relative; left: 35%;" v-else class="avatar-initials content-title-bold ">
-            {{formatName( memberInfoData.member.data[0].firstname.charAt(0)) }}{{ formatName(memberInfoData.member.data[0].lastname.charAt(0)) }} 
-          </div>
-        </div>
-          <h2 class="content-title-bold editUserName">
-            {{ formatName(getMemberInfo.firstname) }} {{ formatName(getMemberInfo.lastname) }}  
-          </h2>
-        </a> -->
-        <a
-        
+        <a     
           class="sidebar-box__title text-center"
           title="View membership"
         >
         <div >
-          <img src="~/assets/images/team/Ethan.png" />
+          <!-- <img v-if=" getStaffInfo.image"
+           :src="`https://app.ihitreset.com/resetcrm/${getStaffInfo.image}`"
+           /> -->
+           <img v-if=" getStaffInfo.image"
+           :src="getImageUrl(staffInfoData.staff.data.img_src )"
+           />
+
         </div>
           <h2 class="content-title-bold editUserName">
-          Ethan Mathews 
+            {{ formatName(getStaffInfo.firstname) }} {{ formatName(getStaffInfo.lastname) }} 
           </h2>
         </a>
         <p
@@ -102,33 +47,35 @@
             margin-bottom: 10px;
           "
         >
-        Coach - Reset Fitness JIP
+        {{getStaffInfo.role}} - Reset Fitness JIP
         </p>
       </div>
       </div>
-      <div class="row" >
-        <div class="col-2 small-title-bold" style="margin-top: 25px;"><B>Role</B> </div>
-            <div  class="col-10 custom-multiselect-container mt-4"   style="height: 40px;">
-         <FormKit 
-        type="multiselect"
-        label="roles"
-        name="roles"
-        placeholder="Roles"
-        openDirection="bottom"
-        validation="required"
-        :options="levels"
-                />
-            </div>
-            </div>
+    
      
       <div class="update-member" style="margin-top: 50px; ">
         <FormKit
           class="formEditMember"
           type="form"
-          :modelValue="getMemberInfo"
-          @submit="editMember"
+          :modelValue="getStaffInfo"
+          @submit="editStaff"
           :actions="false"
         >
+        <div class="row" >
+        <div class="col-2 small-title-bold" style="margin-top: -10px;"><B>Role</B> </div>
+            <div     @click="() => startEdit('isSelectEditMode')"
+            class="col-10 custom-multiselect-container mt-2 mb-4"   style="height: 40px;">
+         <FormKit 
+        type="multiselect"
+        label="roles"
+        name="role_id"
+        placeholder="Roles"
+        openDirection="bottom"
+        validation="required"
+        :options="staffRoles"
+                />
+            </div>
+            </div>
           <div
             v-show="!toggleStates.isPersonalEditMode.value"
             class="personal-show data-block-show"
@@ -149,7 +96,7 @@
                   src="~assets/images/svg/members-info/female.svg"
                   alt="Female icon"
                 />
-                <span class="showUserGender">{{ getMemberInfo.gender }} </span>
+                <span class="showUserGender">{{ getStaffInfo.gender }} </span>
               </div>
   
               <div class="icon-text">
@@ -157,7 +104,7 @@
                   src="~assets/images/svg/members-info/birthday.svg"
                   alt="Birthday icon"
                 />
-                <span class="showUserBirthday">{{ getMemberInfo.dob }}</span>
+                <span class="showUserBirthday">{{ getStaffInfo.dob }}</span>
               </div>
   
               <div class="icon-text">
@@ -166,8 +113,8 @@
                   alt="Phone icon"
                 />
                 <span class="showPhoneNumber"
-                  >{{ getMemberInfo.country_code }}
-                  {{ getMemberInfo.contactno }}</span
+                  >{{ getStaffInfo.country_code }}
+                  {{ getStaffInfo.contactno }}</span
                 >
               </div>
   
@@ -176,7 +123,7 @@
                   src="~assets/images/svg/members-info/email.svg"
                   alt="Email icon"
                 />
-                <span class="showUserEmail">{{ getMemberInfo.email }}</span>
+                <span class="showUserEmail">{{ getStaffInfo.email }}</span>
               </div>
             </div>
           </div>
@@ -266,13 +213,6 @@
                   }"
             />
           </div>
-            <!-- <div class="input-label-box d-none">
-              <input
-                type="password"
-                class="passwordInput"
-                placeholder="Password"
-              />
-            </div> -->
           </div>
   
           <div
@@ -291,7 +231,7 @@
             </h3>
   
             <div class="social-show__icons">
-              <a :href="getMemberInfo.facebook">
+              <a :href="getStaffInfo.facebook">
                 <div class="icon-text">
                   <img
                     src="~assets/images/svg/social/facebook.svg"
@@ -300,7 +240,7 @@
                   Facebook
                 </div>
               </a>
-              <a :href="getMemberInfo.instagram">
+              <a :href="getStaffInfo.instagram">
                 <div class="icon-text">
                   <img
                     src="~assets/images/svg/social/instagram.svg"
@@ -309,7 +249,7 @@
                   Instagram
                 </div>
               </a>
-              <a :href="getMemberInfo.linkedin">
+              <a :href="getStaffInfo.linkedin">
                 <div class="icon-text">
                   <img
                     src="~assets/images/svg/social/linkedin.svg"
@@ -354,7 +294,7 @@
                 alt="Edit icon"
               />
             </h3>
-            {{ getMemberInfo.about }}
+            {{ getStaffInfo.about }}
             <div class="icon-text showMemberAbout"></div>
           </div>
   
@@ -392,12 +332,12 @@
             </h3>
             <div class="d-flex items-align-center justify-content-between">
               <div style="width: 150px">
-                {{ getMemberInfo.emergency_contact_name }}
+                {{ getStaffInfo.emergency_contact_name }}
               </div>
               <div>
                 <span style="">
-                  {{ getMemberInfo.emergency_country_code }}
-                  {{ getMemberInfo.emergency_contact_no }}</span
+                  {{ getStaffInfo.emergency_country_code }}
+                  {{ getStaffInfo.emergency_contact_no }}</span
                 >
               </div>
             </div>
@@ -422,7 +362,7 @@
               type="text"
               placeholder="Emergency contact name"
               name="emergency_contact_name"
-              v-model="getMemberInfo.emergency_contact_name"
+              v-model="getStaffInfo.emergency_contact_name"
               @blur="setEmergencyContactNameTouched"
               :validation="isEmergencyContactFieldRequired"
               :validation-messages="{
@@ -437,7 +377,7 @@
                 name="emergency_country_code"
                 :options="CountryCodes"
                 placeholder="Country code"
-                v-model="getMemberInfo.emergency_country_code"
+                v-model="getStaffInfo.emergency_country_code"
                 @blur="setEmergencyCountryCodeTouched"
                 :validation="isEmergencyContactFieldRequired"
                 :validation-messages="{
@@ -450,7 +390,7 @@
                   type="tel"
                   placeholder="Contact Number"
                   name="emergency_contact_no"
-                  v-model="getMemberInfo.emergency_contact_no"
+                  v-model="getStaffInfo.emergency_contact_no"
                   @blur="setEmergencyContactNoTouched"
                   :validation="isEmergencyContactFieldRequired"
                   :validation-messages="{
@@ -461,65 +401,6 @@
             </div>
           </div>
   
-          <!-- <div
-            v-show="!toggleStates.isTagsEditMode.value"
-            class="tags-show data-block-show"
-          >
-            <h3 class="small-title-bold">
-              Tags
-              <img
-                @click="() => startEdit('isTagsEditMode')"
-                class="editgetMemberInfo"
-                data-edit="tags-edit"
-                src="~assets/images/svg/edit-icon-black.svg"
-                alt="Edit icon"
-              />
-            </h3>
-            <div>
-              <span
-                v-for="tag in tagObjects(getMemberInfo.tags)"
-                :key="tag.value"
-                class="tags"
-              >
-                {{ tag.label }}
-              </span>
-            </div>
-          </div>
-  
-          <div
-            v-show="toggleStates.isTagsEditMode.value"
-            class="tags-edit data-block-edit"
-          >
-            <h3 class="small-title-bold">
-              Tags
-              <div
-                class="goBackShowMode"
-                data-show="tags-show"
-                @click="() => cancelEdit('isTagsEditMode')"
-              >
-                Cancel
-              </div>
-            </h3>
-            <div class="custom-multiselect-member-tags">
-              <span
-                style="
-                  position: relative;
-                  bottom: -39.1px;
-                  left: 15px;
-                  z-index: 90;
-                  font-size: 16px;
-                "
-                >Add Tags</span
-              >
-              <FormKit
-                type="multiselect"
-                name="tags"
-                mode="tags"
-                openDirection="top"
-                :options="computedTags"
-              />
-            </div>
-          </div> -->
           <FormKit type="submit" label="Save" v-show="isAnyEditModeActive" />
         </FormKit>
       </div>
@@ -531,28 +412,27 @@
   import { useAuthStore } from "@/store/auth";
   import { useTagStore } from "@/store/tag";
   import { useCountryStore } from "@/store/countrycode";
+  import { useRoleStore } from "@/store/roles";
   import { storeToRefs } from "pinia";
   const { $toast } = useNuxtApp();
   const router = useRouter();
   const emit = defineEmits(["reload", "update:categoryData", "close-sidebar"]);
-  import type { ITag } from "@/types/api/member/info";
   const props = defineProps({
-    memberId: {
+    staffId: {
       type: String,
-      default: "",
+      default: "1",
     },
   });
-  const route = useRoute();
   
-  const { setBreadcrumb, setBreadcrumbTab } = useBreadcrumb();
-  
-  const { memberId } = toRefs(props);
-  const memberInfoData = ref(null);
-  const memberInfoPending = ref(false);
+  const { staffId } = toRefs(props);
+  const staffInfoPending = ref(false);
+  const staffInfoData = ref(1);
+  const StaffId = ref('1'); 
   const { tags } = storeToRefs(useTagStore());
   const { currentUserType } = useAuthStore();
   const { getUrl: getImageUrl } = useBoImage();
   const { CountryCodes } = useCountryStore();
+  const { staffRoles } = useRoleStore();
   const emergencyContactNameTouched = ref(false);
   const emergencyCountryCodeTouched = ref(false);
   const emergencyContactNoTouched = ref(false);
@@ -574,6 +454,7 @@
   
 
   type ToggleStates = {
+    isSelectEditMode: Ref<boolean>;
     isImageEditMode: Ref<boolean>;
     isPersonalEditMode: Ref<boolean>;
     isSocialEditMode: Ref<boolean>;
@@ -583,6 +464,7 @@
   };
   
   const toggleStates: ToggleStates = {
+    isSelectEditMode: ref(false),
     isImageEditMode: ref(false),
     isPersonalEditMode: ref(false),
     isSocialEditMode: ref(false),
@@ -590,6 +472,32 @@
     isEmergencyEditMode: ref(false),
     isTagsEditMode: ref(false),
   };
+  
+  onMounted(async () => {
+  await fetchStaffInfo();
+});
+
+async function fetchStaffInfo() {
+  const effectiveStaffId = staffId.value || StaffId.value; // Use staffId if it exists, otherwise fallback to StaffId
+  console.log("Fetching data for staff ID:", effectiveStaffId); // To check which ID is being used
+  
+  try {
+    const { data, pending } = await useCustomFetch('/staff/get/staffinfo', {
+      method: 'POST',
+      body: JSON.stringify({
+        facility_id: currentUserType?.id,
+        staff_id: effectiveStaffId, // Pass the effectiveStaffId here
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    staffInfoData.value = data.value; 
+  } catch (error) {
+    console.error('Error fetching staff information:', error);
+  }
+}
+
   
   function formatName(string) {
     if (!string) return '';
@@ -613,47 +521,25 @@
     toggleStates[toggleKey].value = false;
   };
   
-  const editMemberImage = async (getMemberImage: any) => {
-    try {
-      const { id, ...memberInfoWithoutId } = getMemberImage;
+
   
-      const { data } = await useCustomFetch<any>("/members/update/member", {
+  const editStaff = async (getStaffInfo: any) => {
+    console.log(getStaffInfo)
+    try {
+      const { id, ...staffInfoWithoutId } = getStaffInfo;
+  
+      const { data } = await useCustomFetch<any>("/staff/update/staff", {
         method: "POST",
         body: {
-          member_id: getMemberImage.id,
+          staff_id: getStaffInfo.id,
           facility_id: currentUserType?.id,
-          ...memberInfoWithoutId,
+          ...staffInfoWithoutId,
         },
       });
   
       if (data.value.return) {
         emit("reload");
-        $toast.success("Member Image edited successfully!");
-        emit("close-sidebar");
-      } else {
-        $toast.error(data.value.message);
-      }
-    } catch (err) {
-      console.log("Error:/api/Member/update", err);
-    }
-  };
-  
-  const editMember = async (getMemberInfo: any) => {
-    try {
-      const { id, ...memberInfoWithoutId } = getMemberInfo;
-  
-      const { data } = await useCustomFetch<any>("/members/update/member", {
-        method: "POST",
-        body: {
-          member_id: getMemberInfo.id,
-          facility_id: currentUserType?.id,
-          ...memberInfoWithoutId,
-        },
-      });
-  
-      if (data.value.return) {
-        emit("reload");
-        $toast.success("Member  edited successfully!");
+        $toast.success("Staff  edited successfully!");
         emit("close-sidebar");
         Object.keys(toggleStates).forEach((key) => {
           toggleStates[key].value = false;
@@ -662,19 +548,21 @@
         $toast.error(data.value.message);
       }
     } catch (err) {
-      console.log("Error:/api/Member/update", err);
+      console.log("Error:/api/Staff/update", err);
     }
   };
+
+
   
   const isEmergencyContactInfoFilled = computed(() => {
     // Check if any of the fields have a non-empty value.
     return (
-      (getMemberInfo.value.emergency_contact_name &&
-        getMemberInfo.value.emergency_contact_name.trim() !== "") ||
-      (getMemberInfo.value.emergency_country_code &&
-        getMemberInfo.value.emergency_country_code.trim() !== "") ||
-      (getMemberInfo.value.emergency_contact_no &&
-        getMemberInfo.value.emergency_contact_no.trim() !== "")
+      (getStaffInfo.value.emergency_contact_name &&
+      getStaffInfo.value.emergency_contact_name.trim() !== "") ||
+      (getStaffInfo.value.emergency_country_code &&
+      getStaffInfo.value.emergency_country_code.trim() !== "") ||
+      (getStaffInfo.value.emergency_contact_no &&
+      getStaffInfo.value.emergency_contact_no.trim() !== "")
     );
   });
   
@@ -683,141 +571,88 @@
     return isEmergencyContactInfoFilled.value ? "required" : null;
   });
   
-  const computedTags = computed(() => {
-    return tags.value
-      ? tags.value.map((item: any) => ({ label: item.name, value: item.id }))
-      : [];
-  });
-  const tagObjects = (tagIds) => {
-    return tagIds
-      ? tagIds
-          .map((tagId) => {
-            const foundTag = computedTags.value.find(
-              (tag) => tag.value === String(tagId)
-            );
-            return foundTag || null; // Return the entire object or null if not found
-          })
-          .filter((tag) => tag !== null) // Filter out any null entries
-      : [];
+ 
+  
+
+  const getStaffInfo = computed(() => {
+  // Ensure staffInfoData.value exists and has the 'staff' and 'data' properties.
+  const staffData = staffInfoData.value?.staff?.data;
+  const socialData = staffInfoData.value?.staff?.social || {};
+  const aboutData = staffInfoData.value?.staff?.about || {};
+  const emergencyContactData = staffInfoData.value?.staff?.emergency_contact || {
+    contact_name: '',
+    contact_no: '',
+    country_code: '',
   };
-  const tagname = (tagIds: number) => {
-    const labels = tagIds
-      ?.map((tagId: number) => {
-        const foundTag = computedTags.value.find(
-          (tag: any) => tag.value === String(tagId)
-        );
-        return foundTag ? foundTag.label : null;
-      })
-      .filter((label) => label !== null);
-    return labels?.join(", ");
+
+  // If staffData is falsy (null, undefined, etc.), return an empty object.
+  if (!staffData) {
+    return {};
+  }
+
+  // Construct the staff info object with available data.
+  return {
+    id: staffData.id || '',
+    firstname: staffData.firstname || '',
+    lastname: staffData.lastname || '',
+    dob: staffData.dob || '',
+    gender: staffData.gender || '',
+    country_code: staffData.country_code || '',
+    contactno: staffData.contactno || '',
+    email: staffData.email || '',
+    image: staffData.img_src|| '',
+    role_id: staffData.role_id || '',
+    role: staffData.role || '',
+    facebook: socialData.facebook || '',
+    instagram: socialData.instagram || '',
+    linkedin: socialData.linkedin || '',
+    about: aboutData.about || '',
+    emergency_contact_name: emergencyContactData.contact_name || '',
+    emergency_contact_no: emergencyContactData.contact_no || '',
+    emergency_country_code: emergencyContactData.country_code || '',
+    // Add other properties as needed
   };
-  
-  const getMemberImage = computed(() => {
-    if (
-      memberInfoData.value &&
-      memberInfoData.value.member &&
-      memberInfoData.value.member.data &&
-      memberInfoData.value.member.data.length > 0
-    ) {
-      const memberData = memberInfoData.value.member.data[0];
-  
-      return {
-        id: memberData.id,
-        image: memberData.img_src,
-      };
+});
+
+
+
+//   watch(
+//   () => props.staffId,
+//   async (newStaffId) => {
+//     if (newStaffId) {
+//       const { data, pending } = await useCustomFetch<any>(
+//         `/staff/get/staffinfo`,
+//         {
+//           method: "POST",
+//           body: { facility_id: currentUserType?.id, staff_id: newStaffId },
+//         }
+//       );
+//       staffInfoData.value = data.value;
+//       // ... other code for handling fetched data
+//     }
+//   },
+//   { immediate: true }
+// );
+watch(
+staffId,
+  async () => {
+    if (staffId.value) {
+      const { data, pending } = await useCustomFetch<any>(
+        `/staff/get/staffinfo`,
+        {
+          method: "POST",
+          body: { facility_id: currentUserType?.id, staff_id: staffId.value },
+        }
+      );
+      staffInfoData.value = data.value;
+      staffInfoPending.value = pending.value;
     }
+  },
+  { immediate: true }
+);
+ 
   
-    return {};
-  });
-  const getMemberInfo = computed(() => {
-    if (
-      memberInfoData.value &&
-      memberInfoData.value.member &&
-      memberInfoData.value.member.data &&
-      memberInfoData.value.member.data.length > 0
-    ) {
-      const memberData = memberInfoData.value.member.data[0];
-      const socialData = memberInfoData.value.member.social || {};
-      const aboutData = memberInfoData.value.member.about || {};
-      const emergencyContactData =
-        memberInfoData.value.member.emergency_contact || {};
-      const tags = memberInfoData.value.member?.tags || [];
-  
-      return {
-        id: memberData.id,
-        firstname: memberData.firstname,
-        lastname: memberData.lastname,
-        dob: memberData.dob,
-        gender: memberData.gender,
-        country_code: memberData.country_code,
-        contactno: memberData.contactno,
-        email: memberData.email,
-        image: "",
-        // membership_status: memberData.membership_status,
-        facebook: socialData.facebook,
-        instagram: socialData.instagram,
-        linkedin: socialData.linkedin,
-        about: aboutData.about,
-        emergency_contact_name: emergencyContactData.name,
-        emergency_contact_no: emergencyContactData.contactno,
-        emergency_country_code: emergencyContactData.country_code,
-        tags: tags?.map((tag: ITag) => tag?.id),
-      };
-    }
-  
-    return {};
-  });
-  
-  watch(
-    memberId,
-    async () => {
-      if (memberId.value) {
-        const { data, pending } = await useCustomFetch<any>(
-          `/members/get/memberinfo`,
-          {
-            method: "POST",
-            body: { facility_id: currentUserType?.id, member_id: memberId.value },
-          }
-        );
-        memberInfoData.value = data.value;
-        memberInfoPending.value = pending.value;
-      }
-    },
-    { immediate: true }
-  );
-  const imageError = ref(false);
-  watch(
-    () => memberInfoData.value?.member?.data[0]?.img_src,
-    (newImgSrc) => {
-      // Only reset imageError if newImgSrc is not undefined
-      if (newImgSrc !== undefined) {
-        imageError.value = false;
-      }
-    },
-    { immediate: true } // This ensures the watcher is run immediately with the current value
-  );
-  
-  // onMounted(async () => {
-  //   try {
-  //     const response = await fetch(
-  //       "https://gist.githubusercontent.com/anubhavshrimal/75f6183458db8c453306f93521e93d37/raw/CountryCodes.json"
-  //     );
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       countryCodes.value = [
-  //         ...countryCodes.value,
-  //         ...data.map((country) => ({
-  //           label: `${country.name} (${country.dial_code})`,
-  //           value: country.dial_code,
-  //         })),
-  //       ];
-  //     } else {
-  //       console.error("Failed to fetch country codes");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching country codes:", error);
-  //   }
-  // });
+
   </script>
   
   <style lang="scss" scoped>

@@ -3,19 +3,19 @@
     class="scheduler-calendar d-flex flex-column justify-content-center align-items-center"
   >
     <div class="filter">
-      <button
+      <button class="small-title-bold"
         @click="(currentFilter = 'today'), selectToday()"
         :class="currentFilter === 'today' ? 'active' : ''"
       >
         Day
       </button>
-      <button style=""
+      <button class="small-title-bold"
         @click="(currentFilter = 'currentWeek'), selectWeek()"
         :class="currentFilter === 'currentWeek' ? 'active' : ''"
       >
        &nbsp;Week&nbsp;
       </button>
-      <button
+      <button class="small-title-bold"
         @click="(currentFilter = 'currentMonth'), selectCurrentMonth()"
         :class="currentFilter === 'currentMonth' ? 'active' : ''"
       >
@@ -155,7 +155,7 @@ watch(
     background: none;
     border: 1px solid $dark-blue-seconadary;
     color: #fff;
-    font-size: 12px;
+    font-size: 14px;
     padding: 8px 12px;
     border-radius: 8px;
     &.active {

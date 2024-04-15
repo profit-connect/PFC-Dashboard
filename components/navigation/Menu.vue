@@ -117,6 +117,7 @@ ul.main-links {
 
   a.navigate-link {
     display: flex;
+    font-size: 18px;;
     align-items: center;
     color: $main-blue;
     text-decoration: none;

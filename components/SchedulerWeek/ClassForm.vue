@@ -141,7 +141,7 @@
               style="
                 position: relative;
                 right: 10px;
-                width: 70px;
+                width: 80px;
                 padding-bottom: 10px;
               "
             >
@@ -197,14 +197,14 @@
               <div class="action-btn">
                 <div class="btn">
                 <button @click="onDeleteSlot(key, key_2)" type="button">
-                  <NuxtImg src="/images/svg/delete-icon.svg" provider="none" style="height: 10px;"/>
+                  <NuxtImg src="/images/svg/delete-icon.svg" provider="none" style="height: 16px; width: 16px;"/>
                 </button>
                 <p style="position: relative; bottom: 5px; font-size: 13.5px;">Delete</p>
                 </div>
                 <div class="btn">
                 <button @click="onDuplicateSlot(key, key_2)" type="button">
                   <NuxtImg
-                    src="/images/svg/duplicate-icon.svg" provider="none" style="height: 12px;" />
+                    src="/images/svg/duplicate-icon.svg" provider="none" style="height: 20px; width: 20px;" />
                     <p style="position: relative; bottom: 4px; font-size: 12.5px;">Duplicate</p>  
                 </button>
               </div>
@@ -213,8 +213,17 @@
           </tr>
         </table>
       </div>
-      <div class="mt-4 d-flex justify-content-center">
-        <FormKit type="submit">Save</FormKit>
+      <div class="mt-4 d-flex justify-content-center"  style="position: relative;">
+        <FormKit type="submit" style=" margin-bottom: 30px;">Save</FormKit>
+        <div>
+          <button
+            class="btn"
+            style="position: absolute; bottom: 0px; left: 46%;"
+            @click="showCoach = false"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </FormKit>
   </div>

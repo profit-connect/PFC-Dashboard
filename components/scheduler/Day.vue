@@ -11,16 +11,17 @@
       >
         {{ isToday(dates.start) }} | {{ schedule.start_time }} -
         {{ schedule.end_time }}
-        <h2
+        <p class="small-title-bold"
           style="
             margin-top: 0px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-size: 36px;
           "
         >
           {{ schedule.class_name }} | {{ getLabelById(schedule.discipline_id) }}
-        </h2>
+    </p>
       </div>
       <div class="coaches d-flex align-items-center w-full">
         <div
@@ -41,6 +42,7 @@
             >
           </div>
           <MixButton
+            class="small-title-medium"
             style="margin-bottom: 10px"
             v-if="schedule.coach.length === 1"
             label="Add Coach"
@@ -52,23 +54,23 @@
       </div>
       <ul class="info">
         <li>
-          <h3>{{ schedule.injured }}</h3>
+          <p>{{ schedule.injured }}</p>
           Need Attention
         </li>
         <li>
-          <h3>{{ schedule.first_timer }}</h3>
+          <p>{{ schedule.first_timer }}</p>
           First Timer
         </li>
         <li>
-          <h3>{{ schedule.cancelled }}</h3>
+          <p>{{ schedule.cancelled }}</p>
           Canceled
         </li>
-        <li class="flex-column" style="margin-right: 20px">
+        <li class="flex-column" style="margin-right: 20px; margin-bottom: 10px;">
           Booked<br />
           <div class="d-flex alig-items-center" style="line-height: 38px"> 
-            <h3>{{ schedule.nonNullMemberCount }}/</h3>
+            <p>{{ schedule.nonNullMemberCount }}/</p>
             {{}}
-            <span class="fs-6">{{ schedule.capacity }}</span>
+            <span style="font-size: 18px; margin-top: 10px;">{{ schedule.capacity }}</span>
           </div>
         </li>
       </ul>
@@ -97,6 +99,7 @@
         <!-- <MixButton label="Add Coach" @click="showCoach = true"  size="lg"
     :disabled="isBookingDisabled(schedule.start_time)" /> -->
         <MixButton
+          class="small-title-medium"
           v-if="!isBookingDisabled(schedule.start_time)"
           label="Add Coach"
           @click="showCoach = true"
@@ -186,8 +189,9 @@
           !isCapacityReached(schedule.nonNullMemberCount, schedule.capacity)
         "
         size="lg"
+        
         @click="showMemberModal('member')"
-        label="Book Member"
+        label="Book a &nbsp;&nbsp;&nbsp;Member"
       />
     </div>
       <!-- <MixButton size="lg" @click="showMemberModal('member')" label="Book Member"
@@ -265,13 +269,22 @@
     />
       </div>
       <template #footer>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" style="position: relative;">
           <MixButton
-            label="Save"
-            style="border: 1px solid #84ceff; width: 300px"
+            label="Save" 
+            style=" background-color: #FFD500; width: 300px;  margin-bottom: 30px; font-size: 22px;"
             :disableIcon="true"
             @click="bookMember"
           />
+        </div>
+        <div>
+          <button
+            class="btn"
+            style="position: absolute; bottom: 0px; left: 68.8%;"
+            @click="showMember = false"
+          >
+            Cancel
+          </button>
         </div>
       </template>
     </ModalExpandable>
@@ -310,13 +323,22 @@
         />
       </div>
       <template #footer>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" style="position: relative;">
           <MixButton
             label="Save"
-            style="border: 1px solid #84ceff; width: 300px"
+            style="background-color: #FFD500; width: 300px; margin-bottom: 30px; font-size: 22px;"
             :disableIcon="true"
             @click="assignCoach"
           />
+        </div>
+        <div>
+          <button
+            class="btn"
+            style="position: absolute; bottom: 0px; left: 68.8%;"
+            @click="showCoach = false"
+          >
+            Cancel
+          </button>
         </div>
       </template>
     </ModalExpandable>
@@ -597,16 +619,18 @@ watch(() => showMember.value, (newVal, oldVal) => {
     display: flex;
     gap: 8px;
     align-items: center;
-    gap: 18px;
+    gap: 48px;
     li {
       display: flex;
       align-items: center;
       max-width: 64px;
-      font-size: 11px;
+      font-size: 14px;
       line-height: 12px;
       gap: 8px;
-      h3 {
+      p {
         margin: 0px;
+        font-size: 36px;
+        font-weight: bold;
       }
     }
   }

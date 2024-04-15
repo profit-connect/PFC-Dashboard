@@ -6,7 +6,7 @@
       @click="hideScheduler"
       v-show="!hideSchedulerBar"
     >
-     <p style="margin-left: 320px; cursor: pointer;"> &lt;&lt;</p>
+     <p style="margin-left: 310px; cursor: pointer;"> &lt;&lt;</p>
     </div>
     <div
       class="text-white fs-2"
@@ -524,7 +524,7 @@ bus.on((val) => {
   }
 }
 .content {
-  width: 1397px;
+  width: 1398px;
   margin-left: auto;
   margin-right: auto;
 

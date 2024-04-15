@@ -23,7 +23,7 @@
         {{ formatName(member.firstname.charAt(0)) }}{{ formatName(member.lastname.charAt(0)) }}
       </div>
       <div class="d-flex flex-column">
-        <span class="fw-bold" style="font-size: 22px">
+        <span class="small-title-medium" style="font-size: 22px">
           {{ formatName(member.firstname) }} {{ formatName(member.lastname) }}
         </span>
         <span style="font-size: 14px; color: skyblue">{{ daysLeft }}</span>

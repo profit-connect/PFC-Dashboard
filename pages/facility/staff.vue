@@ -1,7 +1,16 @@
 <template>
   <section class="content-section">
-    <div v-if="showFacilityForm"><FacilityAddStaff /></div>
-    <div v-else><FacilityUpdateStaff /></div>
+    <div v-if="showFacilityForm">
+      <FacilityAddStaff 
+      @reload="refreshData"
+      @staff-added="handleAddedStaff"
+      />
+    </div>
+    <div v-else><FacilityUpdateStaff 
+      :staff-id="selectedStaff"
+      @reload="refreshData"
+       />
+      </div>
 
     <div class="content-box">
       <div class="d-flex align-items-center gap-3">
@@ -13,7 +22,15 @@
           label="New Staff"
         />
       </div>
-      <FacilityStaff />
+      <div class="row g-3">
+        <div
+          class="col-6 col-lg-4"
+          v-for="staff in computedStaff"
+          :key="staff.id"
+        >
+          <CardStaff v-bind="staff" @click="onStaffSelect(staff.id)" />
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -49,32 +66,65 @@ breadcrumbStore.setBreadcrumb({
 
 breadcrumbStore.setStyles({
   position: "relative",
-  right: "70px",
+  right: "-20px",
 });
 
 const showFacilityForm = ref(false);
-const memberId = ref("");
+const selectedStaff = ref("");
 
 const { currentUserType } = useAuthStore();
-
-const {
-  data: membersData,
-  pending: membersPending,
-  refresh: refreshMembers,
-} = await useCustomFetch<any>("/members/get/members", {
-  method: "POST",
-  body: { facility_id: currentUserType?.id },
-});
-
-const getMembers = computed(() => {
-  return membersData.value && membersData.value.members
-    ? membersData.value.members
-    : [];
-});
-
+const { data, pending, refresh } = await useCustomFetch<any>(
+  "/staff/get/staff",
+  {
+    method: "POST",
+    body: { facility_id: currentUserType?.id },
+  }
+);
 const refreshData = () => {
-  refreshMembers();
+  console.log("jay")
+  refresh();
 };
+
+const computedStaff = computed(() => {
+  // Assuming the staff array is directly accessible within data.value
+  const staffMembers = data.value?.staff;
+  if (Array.isArray(staffMembers)) {
+    return staffMembers
+      .filter((member) => member) // Ensure member is not null or undefined
+      .map((member) => ({
+        id: member.id,
+        firstname: member.firstname,
+        lastname: member.lastname,
+        email: member.email,
+        dob: member.dob,
+        gender: member.gender,
+        country_code: member.country_code,
+        contactno: member.contactno,
+        img_src: member.img_src,
+        created_date: member.created_date,
+        updated_date: member.updated_date,
+        role_id: member.role_id,
+        role: member.role,
+      }));
+  } else {
+    return [];
+  }
+});
+const onStaffSelect = (staff_id: number) => {
+  selectedStaff.value = staff_id
+  //   data.value && data.value.categories && data.value.categories.length
+  //     ? data.value.categories[activeTab.value].room.find(
+  //         (item: any) => item && item.id === space_id.toString()
+  //       )
+  //     : null;
+  // showSpaceForm.value = true;
+};
+function handleAddedStaff(staffId: number) {
+  console.log("New staff ID:", staffId);
+  selectedStaff.value = staffId;  // Update selected staff ID
+  showFacilityForm.value = false; // Optionally, switch views
+  refreshData();                  // Optionally, refresh the data if necessary
+}
 </script>
 
 <style lang="scss" scoped>

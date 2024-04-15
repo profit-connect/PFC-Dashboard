@@ -1,9 +1,10 @@
 <template>
   <section class="content-section">
     <div class="sidebar-box" v-if="getMemberInfo">
-    <h4 class="text-center">Reset JIP</h4>
     <!-- <h6>Facilty Image</h6> -->
     <img class="facility-image" :src="getImageUrl(getMemberInfo.img)" />
+
+    <h4 class="text-center mt-2">Reset Fitness JIP</h4>
 
     <FormKit
       class="formEditMember"
@@ -317,7 +318,7 @@ breadcrumbStore.setBreadcrumb({
 
 breadcrumbStore.setStyles({
  position: "relative",
- right: "70px",
+ right: "-20px",
 
 });
 

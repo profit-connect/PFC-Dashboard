@@ -55,7 +55,7 @@ body {
 
 .container {
   @media (min-width: $lg-desktop) {
-    max-width: 1200px;
+    max-width: 1396px;
     border-radius: 10px;
   }
 }
@@ -152,7 +152,10 @@ h6 {
   font-size: 14px;
   font-family: $font-family-title;
 }
-
+.small-title-medium {
+  font-size: 14px;
+  font-family: $font-family-medium;
+}
 .hide-for-mobile {
   @media (max-width: $tablet) {
     display: none !important;

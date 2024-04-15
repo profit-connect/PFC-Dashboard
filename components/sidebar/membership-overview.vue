@@ -160,7 +160,7 @@ breadcrumbStore.setBreadcrumb({
 
 breadcrumbStore.setStyles({
   position: "relative",
-  right: "75px",
+  right: "-20px",
 });
 setBreadcrumbTab({
   items: [
@@ -591,7 +591,7 @@ const formattedDate = `${day} ${monthNames[monthIndex]} ${year}`;
   // margin-bottom: 50px;
   border-radius: 10px;
 }
-.content-main-box1 .content__title-box {
+.content-box1 .content__title-box {
   justify-content: space-between;
   margin-bottom: 15px;
 }
