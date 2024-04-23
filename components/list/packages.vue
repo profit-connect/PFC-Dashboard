@@ -22,8 +22,9 @@
         />
       </div>
       <!-- <div class="row g-3 w-100"> -->
-      <div class="row  w-100">
-        <div class="col-3" 
+      <div class="card-flex">
+        <!-- <div class="col-4"  -->
+        <div class="" 
      v-for="plan in (data?.plans || []).filter(plan => plan !== null)" 
      :key="plan.id">
     <CardPackage
@@ -35,7 +36,8 @@
     />
 </div>
 
-        <div v-if="data.plans && data.plans.length > 0" class="col-3 d-flex justify-content-center">
+        <!-- <div v-if="data.plans && data.plans.length > 0" class="col-3 d-flex justify-content-center"> -->
+          <div v-if="data.plans && data.plans.length > 0" class="d-flex justify-content-center" style="width: 250px;">
             <div 
             class="d-flex gap-3 add-button"
             @click="
@@ -166,9 +168,9 @@ const filteredPackages = computed(() => {
 }
 
 .content-packages .package-row__status {
-  min-width: 280px;
-  width: 280px;
-  margin-right: 30px;
+  min-width: 260px;
+  width: 260px;
+  margin-right: 10px;
 }
 
 .content-packages .package-row__status .title {
@@ -217,5 +219,10 @@ const filteredPackages = computed(() => {
   width: 30px;
   height: 30px;
   margin-right: 15px;
+}
+.card-flex{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 </style>

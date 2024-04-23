@@ -156,7 +156,7 @@ watch(
     border: 1px solid $dark-blue-seconadary;
     color: #fff;
     font-size: 14px;
-    padding: 8px 12px;
+    padding: 6px 16px;
     border-radius: 8px;
     &.active {
       border-color: $main-yellow;
@@ -187,7 +187,7 @@ watch(
   }
   .vc-day {
     height: 38px;
-    width: 42px;
+    width: 48px;
   }
 
   .vc-highlight {

@@ -61,12 +61,13 @@ function formatName(string) {
     display: flex;
     flex-wrap: wrap;
     gap: 8px 14px;
+    margin-bottom: 20px;;
     button {
       background: none;
       border: 1px solid $dark-blue-seconadary;
       color: #fff;
-      font-size: 12px;
-      padding: 8px 12px;
+      font-size: 14px;
+      padding: 6px 16px;
       border-radius: 8px;
       &.active {
         border-color: $main-yellow;

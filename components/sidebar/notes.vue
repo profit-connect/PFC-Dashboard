@@ -552,7 +552,7 @@ const selectFilter = (filterType) => {
   padding: 0;
 }
 .update-notes {
-  margin-top: 30px;
+  margin-top: 10px;
 }
 .textarea {
   position: relative;

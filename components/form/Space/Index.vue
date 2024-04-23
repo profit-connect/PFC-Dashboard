@@ -85,6 +85,21 @@
         <h6 class="text-center" style="font-size: 22px; margin-top: 50px">
           Availability
         </h6>
+        <!-- <div class="d-flex align-items-center gap-2" >
+        <div>
+        <FormKit
+          type="checkbox"
+          name="follow_facility_timing"
+          label=""
+          :value="value.follow_facility_timing"
+        />
+        </div>
+        <div class="mb-3">Follows Facility Timing</div>
+      </div> -->
+   
+    </div>
+    <!-- <div class="schedule-container" v-if="!value.follow_facility_timing"> -->
+      <div class="schedule-container" >
         <div class="d-flex align-items-center gap-2" >
         <div>
         <FormKit
@@ -96,17 +111,15 @@
         </div>
         <div class="mb-3">Follows Facility Timing</div>
       </div>
-   
-    </div>
-      <div class="schedule-container" v-if="!value.follow_facility_timing">
         <div
+          v-if="!value.follow_facility_timing"
           v-for="(day, index) in value.timings"
           :key="index"
           class="day-schedule"
         >
           <div style="width: 90px; margin-bottom: 15px">{{ day.day }}</div>
           <FormKit
-            style="height: 40px"
+            style="height: 30px"
             type="time"
             :placeholder="'From'"
             :ignore="true"
@@ -115,7 +128,7 @@
           />
           <span class="mb-3">to</span>
           <FormKit
-            style="height: 40px"
+            style="height: 30px"
             type="time"
             :ignore="true"
             :placeholder="'To'"
@@ -152,13 +165,13 @@
       </div>
       <div v-else
         class="mt-4 d-flex justify-content-center flex-column"
-        style=" margin-left: 250px; position: relative; top: 50px;"
+        style=" margin-left: 250px; position: relative; top: 0px;"
       >
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
           <button
             class="btn"
-            style="margin-left: 140px"
+            style="margin-left: 140px; "
             @click="$emit('close-canvas')"
           >
             Cancel

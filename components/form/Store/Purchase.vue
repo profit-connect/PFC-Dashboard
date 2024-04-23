@@ -2,8 +2,9 @@
   <div
     id="buyMembershipModal"
     class="modal-box buy-membership-modal is-active"
-    v-if="selectedPlanId"
+  
   >
+  <!-- v-if="selectedPlanId" -->
     <h3 class="text-center">Purchase Item</h3> 
     <FormKit
       type="form"
@@ -18,13 +19,14 @@
             {{ getMemberInfo.firstname }} {{ getMemberInfo.lastname }}
           </div>
         </div> -->
-        <div class="d-flex">
+        <div class="d-flex align-items-center gap-2">
           <!-- Conditional rendering for member's avatar -->
-          <img v-if="getMemberInfo.image && !memberImageError" class="member-avatar" :src="getImageUrl(getMemberInfo.image)" @error="memberImageError = true" alt="Member Avatar">
+          <img v-if="memberInfo?.img_src && !memberImageError" class="member-avatar" :src="getImageUrl(memberInfo?.img_src)" @error="memberImageError = true" alt="Member Avatar">
           <div v-else class="member-avatar avatar-initials">
             <!-- Display initials if the image fails to load or if there is no image -->
-            {{ formatName(getMemberInfo.firstname.charAt(0) )}}{{ formatName(getMemberInfo.lastname.charAt(0) )}}
+            {{ formatName(memberInfo?.firstname.charAt(0) )}}{{ formatName(memberInfo?.lastname.charAt(0) )}}
           </div>
+          <div style="font-size: 22px;" class="small-title-medium" >{{ formatName(memberInfo?.firstname) }} {{ formatName(memberInfo?.lastname) }} </div>
       </div>
         <div style="position: relative; left: 20px" class="d-flex">
           <div
@@ -62,7 +64,7 @@
           </div>
         </div>
       </div>
-      <div class="custom-multiselect-date col-3">
+      <!-- <div class="custom-multiselect-date col-3">
         <FormKit
           style="
             background-color: white;
@@ -80,40 +82,49 @@
           @input="updateDate"
           validation-visibility="live"
         />
-      </div>
-      <div class="membership-starts">
+      </div> -->
+      <!-- <div class="membership-starts">
         Membership Starts:
-        <!-- <input type="hidden" class="puchaseDatepicker flatpickr-input" placeholder="Today" name="start_date" :value=" getMemberInfo.start_date "> -->
 
-        <input
-          class="puchaseDatepicker form-control input"
-          placeholder="Today"
-          tabindex="0"
-          type="text"
-          readonly="readonly"
-          :value="displayDate"
-        />
-      </div>
+      </div> -->
       <div class="checkout-item-box">
         <div class="checkout-row">
           <div>
             <div class="checkout-row__title planNameModal">
-              {{ selectedPlanId.name }}
+              <!-- {{ selectedPlanId.name }} -->I Carrot 'bout You Berry Much
             </div>
-            <div class="planDescModal">{{ selectedPlanId.description }}</div>
+            <!-- <div class="planDescModal">I Carrot 'bout You Berry Much</div> -->
           </div>
-
           <div class="checkout-row__price">
-            AED
-            <span class="originalPriceVal">{{
-              formatPrice(selectedPlanId.price)
+            AED 
+            <span class="originalPriceVal small-title-bold" style="font-size: 22px;">{{
+              formatPrice(35)
+            }}</span>
+          </div>
+          <div class="d-flex align-items-center justify-content-center  ">
+            <button
+              class="bg-custom-plus px-2 py-1"
+              @click="increment">
+              +
+            </button>
+            <span class="bg-number px-2 py-1"> 2{{ number }}</span>
+            <button
+              class="bg-custom-minus px-2 py-1"
+              @click="decrement">
+              -
+            </button>
+          </div>
+          <div class="checkout-row__price">
+            AED 
+            <span class="originalPriceVal small-title-bold" style="font-size: 22px;">{{
+              formatPrice(35)
             }}</span>
           </div>
         </div>
       </div>
 
       <div class="total-price">
-        <div class="sub-total">
+        <!-- <div class="sub-total">
           <div class="title">Sub-total</div>
           <div v-if="selectedPlanId.promotionPrice > 0" class="price">
             AED
@@ -127,37 +138,37 @@
               >{{ formatPrice(selectedPlanId.price) }}
             </span>
           </div>
-        </div>
+        </div> -->
 
         <div class="info-box promo">
-          <!-- <div class="d-flex">
+          <div class="d-flex align-items-center">
           <div class="title">Promocode</div>
           <div class="title">Sub-total</div>
           <FormKit
+                style="height: 50px;"
                 type="text"
                 name="promocode"
                 placeholder="Promocode"    
             />
-        </div> -->
+        </div>
 
-          <!-- <div class="promocode__price">- AED 10.00</div> -->
+          <div class="promocode__price">- AED 10.00</div>
         </div>
 
         <div class="info-box total">
           <div class="d-flex">
             <div class="title">Total</div>
-            <div v-if="selectedPlanId.promotionPrice > 0" class="price">
+            <!-- <div v-if="selectedPlanId.promotionPrice > 0" class="price"> -->
+              <div  class="price">
               AED
-              <span class="originalPriceVal">{{
-                selectedPlanId.promotionPrice
-              }}</span>
+              <span class="originalPriceVal">
+                35</span>
             </div>
-            <div v-else class="price">
+            <!-- <div v-else class="price">
               AED
-              <span class="originalPriceVal">{{
-                formatPrice(selectedPlanId.price)
-              }}</span>
-            </div>
+              <span class="originalPriceVal">35
+               </span>
+            </div> -->
           </div>
         </div>
       </div>
@@ -286,6 +297,7 @@ watch(
   },
   { immediate: true }
 );
+
 </script>
 
 <style lang="scss" scoped>
@@ -516,5 +528,20 @@ element.style {
   font-size: 16px; /* Adjust based on your design */
   font-weight: bold; /* Makes the letters a bit thicker */
   margin-right: 15px;
+}
+.bg-custom-plus {
+    background-color: #84CEFF;
+    border: none;
+    border-radius: 5px 0px 0px 5px;
+
+}
+.bg-custom-minus {
+    background-color: #84CEFF;
+    border: none;
+    border-radius: 0px 5px 5px 0px;
+
+}
+.bg-number {
+  background-color:  #F2FAFF
 }
 </style>

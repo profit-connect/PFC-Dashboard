@@ -21,7 +21,7 @@
           "
         >
           {{ schedule.class_name }} | {{ getLabelById(schedule.discipline_id) }}
-    </p>
+       </p>
       </div>
       <div class="coaches d-flex align-items-center w-full">
         <div
@@ -42,7 +42,7 @@
             >
           </div>
           <MixButton
-            class="small-title-medium"
+          class="small-title-medium"
             style="margin-bottom: 10px"
             v-if="schedule.coach.length === 1"
             label="Add Coach"
@@ -189,7 +189,6 @@
           !isCapacityReached(schedule.nonNullMemberCount, schedule.capacity)
         "
         size="lg"
-        
         @click="showMemberModal('member')"
         label="Book a &nbsp;&nbsp;&nbsp;Member"
       />
@@ -244,8 +243,8 @@
       </template>
       <div>
             <SchedulerMemberCard
-      v-for="member in membersData.members
-        .filter(member => member.membership_status === 'Active')
+      v-for="member in membersData?.members
+       .filter(member => member && member.membership_status === 'Active')
         .filter(member => {
           const searchTermLower = memberText.toLowerCase(); // Replicate the working logic
           const matchesName = member.firstname?.toLowerCase().includes(searchTermLower) ||
@@ -269,22 +268,13 @@
     />
       </div>
       <template #footer>
-        <div class="d-flex justify-content-center" style="position: relative;">
+        <div class="d-flex justify-content-center">
           <MixButton
-            label="Save" 
+            label="Save"
             style=" background-color: #FFD500; width: 300px;  margin-bottom: 30px; font-size: 22px;"
             :disableIcon="true"
             @click="bookMember"
           />
-        </div>
-        <div>
-          <button
-            class="btn"
-            style="position: absolute; bottom: 0px; left: 68.8%;"
-            @click="showMember = false"
-          >
-            Cancel
-          </button>
         </div>
       </template>
     </ModalExpandable>
@@ -326,19 +316,10 @@
         <div class="d-flex justify-content-center" style="position: relative;">
           <MixButton
             label="Save"
-            style="background-color: #FFD500; width: 300px; margin-bottom: 30px; font-size: 22px;"
+            style=" background-color: #FFD500; width: 300px;  margin-bottom: 30px; font-size: 22px;"
             :disableIcon="true"
             @click="assignCoach"
           />
-        </div>
-        <div>
-          <button
-            class="btn"
-            style="position: absolute; bottom: 0px; left: 68.8%;"
-            @click="showCoach = false"
-          >
-            Cancel
-          </button>
         </div>
       </template>
     </ModalExpandable>
@@ -630,8 +611,9 @@ watch(() => showMember.value, (newVal, oldVal) => {
       p {
         margin: 0px;
         font-size: 36px;
-        font-weight: bold;
+         font-family: "Poppins Bold";
       }
+      
     }
   }
 

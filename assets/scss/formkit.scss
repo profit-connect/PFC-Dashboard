@@ -666,6 +666,7 @@ input.formkit-input[type="radio"] ~ .formkit-decorator::before {
   height: 50px;;
   text-align: center;
   margin:  100px 0px 0px 0px;
+  font: 22px "Poppins Medium", sans-serif, Arial;
 }
 [data-type="submit"] .formkit-input::before {
   box-sizing: border-box;

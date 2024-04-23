@@ -5,7 +5,6 @@
     <img class="facility-image" :src="getImageUrl(getMemberInfo.img)" />
 
     <h4 class="text-center mt-2">Reset Fitness JIP</h4>
-    
     <FormKit
       class="formEditMember"
       type="form"
@@ -24,7 +23,7 @@
             @click="() => startEdit('isAddressEditMode')"
             class="editgetMemberInfo"
             data-edit="personal-edit"
-            src="~assets/images/svg/edit-icon-black.svg"
+            src="~assets/images/svg/edit-icon-grey.svg"
             alt="Edit icon"
           />
         </h3>
@@ -85,7 +84,7 @@
             @click="() => startEdit('isContactEditMode')"
             class="editgetMemberInfo"
             data-edit="personal-edit"
-            src="~assets/images/svg/edit-icon-black.svg"
+            src="~assets/images/svg/edit-icon-grey.svg"
             alt="Edit icon"
           />
         </h3>
@@ -161,7 +160,7 @@
             @click="() => startEdit('isSocialEditMode')"
             class="editgetMemberInfo"
             data-edit="social-edit"
-            src="~assets/images/svg/edit-icon-black.svg"
+            src="~assets/images/svg/edit-icon-grey.svg"
             alt="Edit icon"
           />
         </h3>
@@ -225,7 +224,7 @@
             @click="() => startEdit('isWebsiteEditMode')"
             class="editgetMemberInfo"
             data-edit="about-edit"
-            src="~assets/images/svg/edit-icon-black.svg"
+            src="~assets/images/svg/edit-icon-grey.svg"
             alt="Edit icon"
           />
         </h3>

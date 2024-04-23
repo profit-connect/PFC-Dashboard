@@ -1,6 +1,6 @@
 
 <template>
-  <div class="container bg-white h-full p-4">
+  <div class="container bg-white h-full p-4 pt-2">
     <div class="content__title-box">
       <div class="content-left">
         <div>

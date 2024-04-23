@@ -12,19 +12,19 @@
        />
       </div>
 
-    <div class="content-box">
+    <div class="content-box p-5">
       <div class="d-flex align-items-center gap-3">
         <h1 style="font-size: 22px; margin-bottom: 0px">Management & Staff</h1>
         <MixButton
           style="background-color: #f2faff"
-          @click="showFacilityForm = true;"
+          @click="showFacilityForm = !showFacilityForm;"
           size="sm"
           label="New Staff"
         />
       </div>
-      <div class="row g-3">
+      <div class="row g-0">
         <div
-          class="col-6 col-lg-4"
+          class="col-2 col-sm-4"
           v-for="staff in computedStaff"
           :key="staff.id"
         >

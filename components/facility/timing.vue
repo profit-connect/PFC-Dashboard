@@ -10,7 +10,7 @@
      @submit="submitHandler"
      :actions="false"
    >
-     <div class="general-timimg">
+     <div class="general-timimg px-4">
        <FormKit
          type="checkbox"
          name="always_open"
@@ -19,7 +19,7 @@
          v-model="form.always_open"
        />
      </div>
-     <div class="schedule-container" v-if="!form.always_open">
+     <div class="schedule-container px-4" v-if="!form.always_open">
        <div
          v-for="(day, index) in form.generalTiming"
          :key="index"
@@ -31,7 +31,7 @@
 
          <FormKit
            style="
-             height: 40px;
+             height: 30px;
              font-family: Poppins Regular, sans-serif, Arial;
            "
            type="time"
@@ -42,7 +42,7 @@
          />
          <span class="mb-3">to</span>
          <FormKit
-           style="height: 40px"
+           style="height: 30px"
            type="time"
            :placeholder="'To'"
            v-model="day.end_time"
@@ -60,13 +60,13 @@
          </div>
        </div>
      </div>
-     <div style="position: relative; bottom: 530px; left: 87%;">
+     <div style="position: relative; bottom: 495px; left: 87%;">
      <div
        class="mt-4 d-flex justify-content-center save"
        style="position: absolute; "
      >
        <FormKit
-       style="width:122px; height: 40px; font-size: 14px;"
+       style="width:122px; height: 40px;   font: 14px 'Poppins Medium', sans-serif, Arial;"
         type="submit">Save</FormKit>
      </div>
     </div>

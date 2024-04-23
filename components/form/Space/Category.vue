@@ -6,7 +6,7 @@
       @submit="submitHandler"
       :actions="false"
     >
-      <div class="mt-4">
+      <div class="">
         <div class="" style="height: 74px;">
           <FormKit
             type="text"
@@ -34,7 +34,7 @@
       </div>
 
       <div class="saved-category my-4" v-if="selectedCategory">
-        <h5 class="text-center mb-3" style="font-size: 23px">
+        <h5 class="text-center mb-3" style="font-size: 23px; margin-top: 90px;">
           Saved Categories
         </h5>
         <div class="row g-3">
@@ -64,7 +64,7 @@
         </div>
         <button
           class="btn"
-          style="position: relative; left: 375px; bottom: 10px;"
+          style="position: relative; left: 370px; bottom: 10px;"
           @click="$emit('close-canvas')"
         >
           Cancel

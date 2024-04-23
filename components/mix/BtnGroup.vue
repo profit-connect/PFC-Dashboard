@@ -34,13 +34,14 @@ const data:Ref<number> = useVModel(props, "modelValue", emit);
     padding:0px;
     li {
       color: #cccccc;
-      padding: 8px 12px;
+      padding: 5px 18px;
       margin-right: 10px;
       border: 2px solid #f1f2f2;
       border-radius: 10px;
       text-decoration: none;
       transition: $transitionSpeed;
       height: fit-content;
+      height: 35px;
       cursor: pointer;
       &:hover {
         border: 2px solid #c2c2c2;

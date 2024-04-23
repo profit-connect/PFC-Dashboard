@@ -1,6 +1,6 @@
 <template>
   <div class="container bg-white h-full" >
-    <div class="p-5">
+    <div class="p-2 pt-5">
       <div  v-if="data && data.categories && data.categories.some(category => category != null)" class="d-flex align-items-center gap-3">
         <h1 style="font-size: 22px; margin-bottom: 0px">Spaces</h1> 
         <MixButton
@@ -24,9 +24,11 @@
         />
       </div>
       <div style="min-height: calc(100vh - 284px); position: relative; left">
-      <div class="row g-0">
-        <div
-          class="col-6 col-lg-3"
+      <!-- <div class="row g-0"> -->
+           <div class="d-flex flex-wrap">
+             <!-- <div
+          class="col-6 col-lg-3" -->
+          <div class=""
           v-for="space in computedSpaces"
           :key="space.id"
         >
@@ -77,7 +79,7 @@ breadcrumbStore.setBreadcrumb({
 
 breadcrumbStore.setStyles({
   position: "relative",
-  right: "-95px",
+  right: "0px",
 });
 
 const activeTab = ref(0);
@@ -143,9 +145,9 @@ const computedCategories = computed(() => {
     ? data.value.categories
         .filter((item: any) => item !== null && item !== undefined) // Filter out null or undefined items
         .map((item: any) => ({
-          name: item.name,
-          description: item.description,
-          category_id: item.id,
+          name: item?.name,
+          description: item?.description,
+          category_id: item?.id,
         }))
     : [];
 });

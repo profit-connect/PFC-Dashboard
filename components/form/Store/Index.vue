@@ -283,8 +283,9 @@ const computedSelectedStore = computed(() => {
       }
     : {};
 });
-const isPromotionPriceActive = ref(!!computedSelectedStore.value?.promotion_price);
+
 const promotionStartDate = ref(computedSelectedStore.value?.promotion_start);
+const isPromotionPriceActive = ref(!!computedSelectedStore.value?.promotion_price);
 const OriginalPrice = computed(() => {
   if (computedSelectedStore.value && computedSelectedStore.value.price) {
     return computedSelectedStore.value.price -1 ;

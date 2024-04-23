@@ -159,5 +159,7 @@ form {
     margin: 0px 0px 0px 0px;
     border: none;
     border-radius: 10px;
+    font-size: 22px;
+    font: 22px "Poppins Medium", sans-serif, Arial;
 }
 </style>

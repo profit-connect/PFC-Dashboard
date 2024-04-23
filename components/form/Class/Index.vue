@@ -279,11 +279,24 @@ const urlValidation = computed(() => {
 
 const { tags } = storeToRefs(useTagStore());
 
+// const exceptTags = computed(() => {
+//   return tags.value
+//     ? tags.value
+//         .filter(
+//           (item) =>
+//             availableTagsSelected.value &&
+//             !availableTagsSelected.value.includes(item.id.toString())
+//         )
+//         .map((item) => ({ label: item.name, value: item.id }))
+//     : [];
+// });
+
 const exceptTags = computed(() => {
   return tags.value
     ? tags.value
         .filter(
           (item) =>
+            item && item.id && // Add this conditional check
             availableTagsSelected.value &&
             !availableTagsSelected.value.includes(item.id.toString())
         )
@@ -305,17 +318,30 @@ const computedSelectedClass = computed(() => {
     : {};
 });
 
+// const availableTags = computed(() => {
+//   return tags.value
+//     ? tags.value
+//         .filter(
+//           (item) =>
+//             exceptTagsSelected.value &&
+//             !exceptTagsSelected.value.includes(item.id.toString())
+//         )
+//         .map((item) => ({ label: item.name, value: item.id }))
+//     : [];
+// });
 const availableTags = computed(() => {
   return tags.value
     ? tags.value
         .filter(
           (item) =>
+            item && item.id && // Add this conditional check
             exceptTagsSelected.value &&
             !exceptTagsSelected.value.includes(item.id.toString())
         )
         .map((item) => ({ label: item.name, value: item.id }))
     : [];
 });
+
 
 const addClass = async (classData: any) => {
   const { data, error, execute } = useCustomFetch<any>("/category/add/class", {

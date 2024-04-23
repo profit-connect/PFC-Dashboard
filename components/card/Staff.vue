@@ -6,7 +6,11 @@
       >
         <div class="d-flex align-items-center gap-2">
           <div class="hover-wrapper">
-          <img class="profile-image" :src="getImageUrl(img_src)" />
+            <img v-if="img_src && !staffImageError" class="member-avatar profile-image" :src="getImageUrl(img_src)" @error="staffImageError = true" alt="Member Avatar">
+            <div v-else class="avatar-initials">
+            <!-- Display initials if the image fails to load or if there is no image -->
+            {{ formatName(firstname.charAt(0) )}}{{ formatName(lastname.charAt(0) )}}
+          </div>
           <div class="hover-wrapper">
         <div
           class="hover-info"
@@ -51,6 +55,10 @@
     type: String,
     default: "",
   },
+  lastname: {
+    type: String,
+    default: "",
+  },
   img_src: {
     type: String,
     default: "",
@@ -67,6 +75,26 @@
 
  const isHovering = ref(false)
 
+ function formatName(string) {
+  if (!string) return '';
+  const words = string.split(' ');
+  const capitalizedWords = words.map(word => 
+    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  );
+  return capitalizedWords.join(' ');
+}
+
+const staffImageError = ref(false);
+
+watch(
+  () => props.img_src, // watch the img_src prop
+  (newImgSrc) => {
+    if (newImgSrc) { // If newImgSrc is truthy (not null, not undefined, not an empty string)
+      staffImageError.value = false; // Reset the error
+    }
+  },
+  { immediate: true } // Run the watcher immediately with the current value
+);
 
  </script>
  
@@ -185,6 +213,19 @@
 .card {
   height: 131px;
   width: 305px;
+}
+.avatar-initials {
+  display: flex;
+  align-items: center; /* Centers the initials vertically */
+  justify-content: center; /* Centers the initials horizontally */
+  width: 100px;
+  height:100px;
+  border-radius: 50%; /* Makes the div circular */
+  background-color: #84ceff; /* Example background color, change as needed */
+  color: white; /* Example text color, change as needed */
+  font-size: 26px; /* Adjust based on your design */
+  font-weight: bold; /* Makes the letters a bit thicker */
+  margin-right: 15px;
 }
  </style>
  

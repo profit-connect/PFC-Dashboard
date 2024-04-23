@@ -1,6 +1,6 @@
 <template>
   <div class="container bg-white h-full">
-    <div class="p-5">
+    <div class="p-2 pt-3">
       <div v-if="data && data.categories && data.categories.some(category => category != null)" class="d-flex align-items-center gap-3">
         <h1 style="font-size: 22px; margin-bottom: 0px" >Classes</h1>
         <MixButton
@@ -266,6 +266,6 @@ watch(showCatrgoryForm, (val) => {
   width: 200px;
   position: relative;
   bottom: 43px;
-  left: 1065px;
+  left: 85%;
 }
 </style>

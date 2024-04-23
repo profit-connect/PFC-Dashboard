@@ -1,7 +1,16 @@
 export default defineNuxtConfig({
-  //  app: {
-  //   baseURL: '/Profit-Connect/',
-  // },
+  app: {
+    head: {
+      title: 'Profit Connect', 
+      // meta: [
+      //   { charset: 'utf-8' },
+      //   { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      // ],
+      // link: [
+      //   { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      // ]
+    }
+  },
   devtools: { enabled: false },
   css: [
     "assets/scss/global.scss",

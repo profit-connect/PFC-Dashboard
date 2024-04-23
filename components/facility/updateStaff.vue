@@ -1,5 +1,5 @@
 <template>
-    <div class="sidebar-box">{{ staffInfoData }}  ----{{ staffId }}
+    <div class="sidebar-box">
       <div class="image-box" @mouseover="isHovering = true" @mouseleave="isHovering = false">
         <div class="hover-wrapper">
           <div
@@ -25,14 +25,15 @@
           class="sidebar-box__title text-center"
           title="View membership"
         >
-        <div >
-          <!-- <img v-if=" getStaffInfo.image"
-           :src="`https://app.ihitreset.com/resetcrm/${getStaffInfo.image}`"
+        <div class="d-flex justify-content-center">
+           <!-- <img v-if=" getStaffInfo.image"
+           :src="getImageUrl(getStaffInfo.image )"
            /> -->
-           <img v-if=" getStaffInfo.image"
-           :src="getImageUrl(staffInfoData.staff.data.img_src )"
-           />
-
+           <img v-if="getStaffInfo.image && !staffImageError" class="member-avatar profile-image" :src="getImageUrl(getStaffInfo.image)" @error="staffImageError = true" alt="Member Avatar">
+            <div v-else class="avatar-initials">
+            <!-- Display initials if the image fails to load or if there is no image -->
+            {{ formatName(getStaffInfo.firstname?.charAt(0) )}}  {{ formatName(getStaffInfo.lastname?.charAt(0) )}}
+          </div>
         </div>
           <h2 class="content-title-bold editUserName">
             {{ formatName(getStaffInfo.firstname) }} {{ formatName(getStaffInfo.lastname) }} 
@@ -66,13 +67,13 @@
             <div     @click="() => startEdit('isSelectEditMode')"
             class="col-10 custom-multiselect-container mt-2 mb-4"   style="height: 40px;">
          <FormKit 
-        type="multiselect"
-        label="roles"
-        name="role_id"
-        placeholder="Roles"
-        openDirection="bottom"
-        validation="required"
-        :options="staffRoles"
+          type="multiselect"
+          label="roles"
+          name="role_id"
+          placeholder="Roles"
+          openDirection="bottom"
+          validation="required"
+          :options="staffRoles"
                 />
             </div>
             </div>
@@ -154,7 +155,7 @@
             <div style="height: 74px" class="custom-multiselect-gender">
              <FormKit type="multiselect"  
               mode="single"
-             placeholder="Please select  gender"
+              placeholder="Please select  gender"
               name="gender" 
               :options="['Female','Male', 'Prefer not to say']"
               validation="required"
@@ -363,8 +364,7 @@
               placeholder="Emergency contact name"
               name="emergency_contact_name"
               v-model="getStaffInfo.emergency_contact_name"
-              @blur="setEmergencyContactNameTouched"
-              :validation="isEmergencyContactFieldRequired"
+            
               :validation-messages="{
                 required: 'Emergency contact name is required.',
               }"
@@ -378,8 +378,7 @@
                 :options="CountryCodes"
                 placeholder="Country code"
                 v-model="getStaffInfo.emergency_country_code"
-                @blur="setEmergencyCountryCodeTouched"
-                :validation="isEmergencyContactFieldRequired"
+               
                 :validation-messages="{
                   required: 'Emergency country code is required.',
                 }"
@@ -391,8 +390,7 @@
                   placeholder="Contact Number"
                   name="emergency_contact_no"
                   v-model="getStaffInfo.emergency_contact_no"
-                  @blur="setEmergencyContactNoTouched"
-                  :validation="isEmergencyContactFieldRequired"
+                  
                   :validation-messages="{
                     required: 'Emergency contact number is required.',
                   }"
@@ -433,22 +431,22 @@
   const { getUrl: getImageUrl } = useBoImage();
   const { CountryCodes } = useCountryStore();
   const { staffRoles } = useRoleStore();
-  const emergencyContactNameTouched = ref(false);
-  const emergencyCountryCodeTouched = ref(false);
-  const emergencyContactNoTouched = ref(false);
+  // const emergencyContactNameTouched = ref(false);
+  // const emergencyCountryCodeTouched = ref(false);
+  // const emergencyContactNoTouched = ref(false);
   
   
-  const setEmergencyContactNameTouched = () => {
-    emergencyContactNameTouched.value = true;
-  };
+  // const setEmergencyContactNameTouched = () => {
+  //   emergencyContactNameTouched.value = true;
+  // };
   
-  const setEmergencyCountryCodeTouched = () => {
-    emergencyCountryCodeTouched.value = true;
-  };
+  // const setEmergencyCountryCodeTouched = () => {
+  //   emergencyCountryCodeTouched.value = true;
+  // };
   
-  const setEmergencyContactNoTouched = () => {
-    emergencyContactNoTouched.value = true;
-  };
+  // const setEmergencyContactNoTouched = () => {
+  //   emergencyContactNoTouched.value = true;
+  // };
   
   // const countryCodes = ref([{ label: "Select a country", value: "" }]);
   
@@ -524,10 +522,10 @@ async function fetchStaffInfo() {
 
   
   const editStaff = async (getStaffInfo: any) => {
-    console.log(getStaffInfo)
-    try {
-      const { id, ...staffInfoWithoutId } = getStaffInfo;
   
+    try {
+      const { id,role, ...staffInfoWithoutId } = getStaffInfo;
+      console.log(getStaffInfo)
       const { data } = await useCustomFetch<any>("/staff/update/staff", {
         method: "POST",
         body: {
@@ -607,8 +605,8 @@ async function fetchStaffInfo() {
     instagram: socialData.instagram || '',
     linkedin: socialData.linkedin || '',
     about: aboutData.about || '',
-    emergency_contact_name: emergencyContactData.contact_name || '',
-    emergency_contact_no: emergencyContactData.contact_no || '',
+    emergency_contact_name: emergencyContactData.name || '',
+    emergency_contact_no: emergencyContactData.contactno || '',
     emergency_country_code: emergencyContactData.country_code || '',
     // Add other properties as needed
   };
@@ -651,7 +649,17 @@ staffId,
   { immediate: true }
 );
  
-  
+const staffImageError = ref(false);
+watch(
+  () => staffInfoData.value?.staff?.data?.img_src,
+  (newImgSrc) => {
+    // Only reset imageError if newImgSrc is not undefined
+    if (newImgSrc !== undefined) {
+      staffImageError.value = false;
+    }
+  },
+  { immediate: true } // This ensures the watcher is run immediately with the current value
+);
 
   </script>
   
@@ -864,4 +872,17 @@ staffId,
   .hover-info__link:hover .img-hover {
       display: block; /* Show blue images on hover */
   }
+  .avatar-initials {
+  display: flex;
+  align-items: center; /* Centers the initials vertically */
+  justify-content: center; /* Centers the initials horizontally */
+  width: 100px;
+  height:100px;
+  border-radius: 50%; /* Makes the div circular */
+  background-color: #84ceff; /* Example background color, change as needed */
+  color: white; /* Example text color, change as needed */
+  font-size: 26px; /* Adjust based on your design */
+  font-weight: bold; /* Makes the letters a bit thicker */
+  margin-right: 15px;
+}
   </style>

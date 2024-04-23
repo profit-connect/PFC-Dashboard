@@ -24,5 +24,6 @@ definePageMeta({
 .card-body {
   padding: 51px 92px 92px 76px;
   gap: 50px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.16);
 }
 </style>

@@ -216,7 +216,7 @@
        style="position: absolute; "
      >
        <FormKit 
-       style="width:122px; height: 40px; font-size: 14px;"
+       style="width:122px; height: 40px; font: 14px 'Poppins Medium', sans-serif, Arial;"
        type="submit">Save</FormKit>
      </div>
     </div>
@@ -347,7 +347,7 @@ element.style {
 
 .content__title-box {
   margin-bottom: 20px;
-  margin-top: 20px;
+  // margin-top: 10px;
 }
 .general__settings {
   margin-top: 100px;

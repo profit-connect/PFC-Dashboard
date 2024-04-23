@@ -48,7 +48,7 @@
       <template
         v-if="promotion_price == '0' && display_original_price !== 'Yes'"
       >
-        <div class="price-only" style="width: 150px; position:relative;  left:-47px; bottom: 10px;">
+        <div class="price-only" style="width: 150px; position:relative;  left:-46px; bottom: 10px;">
            <span style="font-size:  22px;">AED <b>{{ formatPrice(price) }}</b></span>
         </div>
       </template>
@@ -57,7 +57,7 @@
         v-else-if="promotion_price !== '0' && display_original_price === 'Yes'"
       >
         <div class="discount">
-          <div class="price-only" style="font-size:22px; position:relative;  left:-10px;">AED <b>{{formatPrice(promotion_price) }}</b></div>
+          <div class="price-only" style="font-size:22px; position:relative;  left:-8px;">AED <b>{{formatPrice(promotion_price) }}</b></div>
           <div class="gap-1 d-flex align-items-center justify-content-end">
             <div class="custom-badge" :class="{ 'custom-badge-inactive': status === 'Inactive' }">
               {{ `${discountInPercent}% off ` }}
@@ -191,8 +191,8 @@ function formatPrice(value) {
     background: #f2faff;
     padding: 12px;
     border-radius: 10px;
-    width: 250px;
-    height: 150px;
+    width: 260px;
+    height: 151px;
     cursor: pointer;
     // margin-left: 15px;
     margin-bottom: 15px;

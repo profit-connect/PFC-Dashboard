@@ -1,11 +1,11 @@
 <template>
   <TemplatesFacility>
     <div>
-      <div class="d-flex align-items-center justify-content-between gap-3 mb-4">
+      <div class="d-flex align-items-center justify-content-between gap-3">
         <div class="d-flex align-items-center gap-4">
-          <h1 style="font-size: 22px; margin-bottom: 0px">Tags</h1>
+          <h1 style="font-size: 22px; ">Tags</h1>
           <MixButton
-            style="background-color: #f2faff"
+            style="background-color: #f2faff;  margin-bottom: 10px;"
             size="sm"
             label="New tags"
             @Click="closeEditMode(), (showTagModal = true)"
@@ -15,8 +15,10 @@
           <SearchBar @on-search="onSearch" />
         </div>
       </div>
-      <div class="d-flex align-items-center justify-content-between mb-5">
-        <MixToggleBtn v-model="sortingOrder" left="A-Z" right="Z-A" />
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <MixToggleBtn 
+        style="position: relative; top: 10px ;"
+        v-model="sortingOrder" left="A-Z" right="Z-A" />
         <div class="d-flex align-items-center gap-2">
           <span>Created</span>
           <a
@@ -43,7 +45,7 @@
           <th  style="position: relative; right: 10px;" class="w-125px">Date created</th>
         </thead>
         <tbody>
-          <tr
+          <!-- <tr
             v-for="tag in getFilteredTags"
             :key="tag.id"
             @click="setEditId(tag.id)"
@@ -54,7 +56,14 @@
             <td>
               {{ formatDate(tag.updated_date) }}
             </td>
+          </tr> -->
+          <tr v-for="tag in getFilteredTags"  :key="tag && tag.id" @click="tag && tag.id && setEditId(tag.id)">
+            <td>{{ tag ? tag.name : '-' }}</td>
+            <td>{{ tag ? tag.count : '-' }}</td>
+            <td>{{ tag ? tag.created_by : '-' }}</td>
+            <td>{{ tag ? formatDate(tag.updated_date) : '-' }}</td>
           </tr>
+
         </tbody>
       </table>
 

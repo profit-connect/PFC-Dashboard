@@ -109,6 +109,7 @@
   
   
   <script lang="ts" setup>
+  import { useAuthStore } from "~/store/auth";
   const props = defineProps({
     levels: {
       type: Object,
@@ -116,7 +117,8 @@
     },
   });
 
-
+  const { currentUserType } = useAuthStore();
+  const { $toast } = useNuxtApp();
   const expandedSections = ref({});
   
   const toggleAccordion = (section) => {
@@ -130,6 +132,37 @@
   const isFunctionalityGroup = (functionalityGroup) => {
     return Object.keys(functionalityGroup).some((key) => Array.isArray(functionalityGroup[key]));
   };
+
+  
+  const updateAccessLevel = async (id, level, value) => {
+    console.log(id,level,value)
+  const { data, error, execute } = useCustomFetch<any>("/accesslevels/update/accesslevels", {
+    method: "POST",
+    body: JSON.stringify({
+      accesslevels: [{ id, [level]: value ? '1' : '0' }],
+      facility_id: currentUserType?.id,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  try {
+    await execute();
+
+    if (data.value && data.value.return) {
+      $toast("Levels updated successfully!");
+    } else if (data.value) {
+      $toast(data.value.message);
+    } else if (error.value) {
+      $toast("An error occurred while updating the Levels.");
+      console.error("Error:/api/category/edit", error.value);
+    }
+  } catch (err) {
+    console.log("Catch block error:/api/category/edit", err);
+    $toast("Failed to edit category due to an exception.");
+  }
+};
 
   
   </script>

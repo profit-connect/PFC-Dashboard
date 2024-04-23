@@ -7,8 +7,10 @@
       @update:model-value="onFeaturedChange"
     />
   <div class="card-store">
-    <div class="row">
-      <div class="col-6">
+    <!-- <div class="row"> -->
+      <div class="d-flex">
+      <!-- <div class="col-6"> -->
+        <div style="width: 50%;">
         <div style=" height: 30px; width: 30px; position: absolute; background-color: white; border-radius: 50%; left: 10px; top: 10px;">
         <NuxtImg        
         @click="$emit('on-plan-select')"               
@@ -24,7 +26,8 @@
           alt="Store item image"
         />
       </div>
-      <div class="col-6  px-4">
+      <div style="width: 50%;" class="px-4">
+      <!-- <div class="col-6  px-4"> -->
         <div class="name-card-right d-flex mt-2">
           <div style="width: 50px;">
             <div v-if="promotion_price > 0" class="custom-badge" :class="{ 'custom-badge-inactive': status === 'Inactive' }">
@@ -32,8 +35,8 @@
             </div>
           </div>
          
-      <div style=" font-size: 10px; width:40px; margin-top: 4px;position: relative; left: 10px;" > {{ isPublic ? 'Public' : 'Private' }}</div>
-          <div  style="position: relative; left: 10px;">
+      <div style=" font-size: 10px; width:40px; margin-top: 4px;position: relative; left: 30px;" > {{ isPublic ? 'Public' : 'Private' }}</div>
+          <div  style="position: relative; left: 30px;">
             <FormKit
               type="switch"
               name="is_public"
@@ -48,6 +51,7 @@
 
       </div>
       </div>
+      <div  @click="$emit('push-member')"    >
         <div  class="title line-clamp-2 small-title-bold" style="position: relative; bottom: 5px; ">
           {{ name }}
         </div>
@@ -61,7 +65,7 @@
               AED <b>{{ promotion_price }} </b> 
             </span>
             <span style="font-size: 10px; margin-left: 5px;"  class="strikethrough">
-                {{ price }}AED
+             AED    {{ price }}
             </span>
             </div>
            <div v-else-if="display_original_price=='No' &&  promotion_price > 0">
@@ -74,7 +78,7 @@
           </div> 
         </div>
 
-        <div class="d-flex justify-content-between footer-label"  style="position: relative; bottom: 10px;">
+        <div class="d-flex justify-content-between footer-label"  style="position: relative; bottom: 5px;">
           <span>
             <NuxtImg src="/images/svg/tax-icon.svg" alt="Tax icon" provider="none" height="10px" />
             included
@@ -84,6 +88,7 @@
             in stock
           </span>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -133,6 +138,7 @@ const emit = defineEmits([
   "on-planstatus-change",
   "on-featured-change",
   "on-plan-select",
+  "push-member",
 ]);
 const onFeaturedChange = (val: boolean) => {
   emit("on-featured-change", {
@@ -164,7 +170,7 @@ const discountInPercent = computed(() => {
     font-weight: bold;
     line-height: 1.2em;
     margin-bottom: 4px;
-    min-height: 38px;
+    min-height: 35px;
   }
   .description {
     font-style: italic;

@@ -1,10 +1,12 @@
 <template> 
-  <div class="scheduler-filter-side-bar h-100 px-5 py-4 disable-scorllbar">
+  <div class="scheduler-filter-side-bar h-100 px-4 py-4  disable-scorllbar">
     <SchedulerCalendar
+      style="position: relative; margin-right: 40px;"
       @dateChanged="emit('dateChanged', $event)"
       @weekChanged="emit('weekChanged', $event)"
     />
-    <div class="d-flex flex-column gap-4">
+    <div class="d-flex flex-column gap-4"
+    style="position: relative; margin-right: 80px;">
       <SchedulerFilterBtnGroup
         title="Disciplines"
         :items="disciplines"

@@ -29,7 +29,7 @@
         <span style="font-size: 14px; color: skyblue">{{ daysLeft }}</span>
       </div>
     </div>
-    <MixButton label="" @click="$emit('onSelect')" size="lg" />
+    <MixSchedulerButton label="" @click="$emit('onSelect')" size="lg" />
   </div>
 </template>
 

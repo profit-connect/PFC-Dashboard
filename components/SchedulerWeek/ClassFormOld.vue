@@ -204,7 +204,7 @@
                 <div class="btn">
                 <button @click="onDuplicateSlot(key, key_2)" type="button">
                   <NuxtImg
-                  src="/images/svg/duplicate-icon.svg" provider="none" style="height: 20px; width: 20px;" />
+                    src="/images/svg/duplicate-icon.svg" provider="none" style="height: 20px; width: 20px;" />
                     <p style="position: relative; bottom: 4px; font-size: 12.5px;">Duplicate</p>  
                 </button>
               </div>
@@ -219,6 +219,7 @@
           <button
             class="btn"
             style="position: absolute; bottom: 0px; left: 46%;"
+            @click="showCoach = false"
           >
             Cancel
           </button>
@@ -518,32 +519,13 @@ const submitHandler = async () => {
   }
 };
 
-const convertTo24Hour =(timeStr:string)=>  {
-    const [time, modifier] = timeStr.split(' ');
-    let [hours, minutes] = time.split(':');
-
-    if (hours === '12') {
-        hours = '00';
-    }
-
-    if (modifier === 'PM') {
-        hours = parseInt(hours, 10) + 12;
-    }
-
-    return `${hours}:${minutes}`;
-}
-
-
 const endTime = (start_time: string, offetInMinute: number = 0) => {
-   let time24hours = convertTo24Hour(start_time)
-  const originalDateTime = dayjs(`2024-01-01 ${time24hours}`);
+  const originalDateTime = dayjs(`2024-01-01 ${start_time}`);
   const newDateTime = originalDateTime.add(offetInMinute, "minute");
   return newDateTime.format("hh:mm A");
 };
-
 const formatTime = (time: string) => {
-  let time24hours = convertTo24Hour(time)
-  return dayjs(`2024-01-01 ${time24hours}`).format("hh:mm A");
+  return dayjs(`2024-01-01 ${time}`).format("hh:mm A");
 };
 function formatName(string) {
   if (!string) return '';

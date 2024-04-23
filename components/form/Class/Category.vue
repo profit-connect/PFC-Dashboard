@@ -1,12 +1,12 @@
 <template>
-  <div class="px-5">
+  <div class="px-5 pt-0">
     <FormKit
       type="form"
       :modelValue="selectedCategory"
       @submit="submitHandler"
       :actions="false"
     >
-      <div class="row mt-4" >
+      <div class="row mt-0" >
         <div class="col-3">
           <FormKit
             type="uppy"
@@ -47,10 +47,10 @@
       </div>
 
       <div class="saved-category my-4" v-if="selectedCategory">
-        <h5 class="text-center mb-3" style="font-size: 22px">
+        <h5 class="text-center mb-3" style="font-size: 22px;">
           Saved Categories
         </h5>
-        <div class="row g-3">
+        <div class="row g-3" >
           <div
             v-for="category in categories"
             :key="category.category_id"

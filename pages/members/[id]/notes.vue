@@ -28,7 +28,7 @@ breadcrumbStore.setBreadcrumb({
 
 breadcrumbStore.setStyles({
   position: "relative",
-  right: "75px",
+  right: "-20px",
 });
 setBreadcrumbTab({
   items: [

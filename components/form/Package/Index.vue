@@ -26,7 +26,7 @@
           :validation="`required|date_after:${startDate}`"
         />
       </div>
-      <div class="mb-4" style="height: 74px;">
+      <div class="mb-4" style="height: 54px;">
       <FormKit
         type="text"
         label="Name"
@@ -38,6 +38,7 @@
                 }"
       />
     </div>
+    <div class="mb-4" style="height: 94px;">
       <FormKit
         type="textarea"
         name="description"
@@ -48,6 +49,7 @@
                   required: 'Package description name is required',
                 }"
       />
+    </div>
       <div
         class="mt-4 d-flex justify-content-center flex-column"
         style="position: fixed; bottom: 0; right: 17%; margin-bottom: 20px"

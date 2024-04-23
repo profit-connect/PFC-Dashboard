@@ -114,7 +114,7 @@ const onClickEdit = (tab: number) => {
 
   .tab-item {
     cursor: pointer;
-    padding: 0px 34px;
+    padding: 0px 80px;
     position: relative;
 
     &.active {

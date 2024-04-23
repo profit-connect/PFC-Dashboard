@@ -522,6 +522,10 @@ const onSchedulerDateSelect = (date: number, data: any, type: string) => {
 }
 
 .scheduler-week {
+   margin-right: 100px;
+  @media only screen and (max-width: 1367px) {
+    margin-right:200px;
+  }
   background: #fff;
   margin-top: -38px;
   height: calc(100vh - 64px);
@@ -559,13 +563,13 @@ const onSchedulerDateSelect = (date: number, data: any, type: string) => {
         display: flex;
         align-items: center;
         width: 84px;
-        font-size: 11px;
+        font-size: 14px;
         line-height: 12px;
         gap: 8px;
 
         .value {
           margin: 0px;
-          font-size: 26px;
+          font-size: 36px;
           font-family: "Poppins Bold";
         }
       }
@@ -643,4 +647,3 @@ const onSchedulerDateSelect = (date: number, data: any, type: string) => {
   }
 }
 </style>
-

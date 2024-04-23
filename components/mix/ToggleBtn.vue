@@ -44,7 +44,7 @@ const computedStyle = computed(() => {
 <style lang="scss" scoped>
 .mix-toggle-btn {
   ul {
-    height: 40px;
+    height: 35px;
     list-style: none;
     width: 72px;
     display: flex;
@@ -60,11 +60,14 @@ const computedStyle = computed(() => {
       padding: 4px 12px;
       text-decoration: none;
       cursor: pointer;
+      width: 72px;
+      text-align: center;
+      justify-content: center;
 
       &.is-active {
         display: flex;
         align-items: center;
-        height: 40px;
+        height: 35px;
         color: #ffffff;
         text-decoration: none;
         border-radius: 10px;

@@ -465,7 +465,7 @@ breadcrumbStore.setStyles({
   onMounted(fetchFacilityInfo);
   
   const editFacility = async (getMemberInfo) => {
-    const { data, error, execute } = useCustomFetch<any>("/franchise/update/facility", {
+    const { data, error, execute } = useCustomFetch<any>("/accesslevels/update/accesslevels", {
       method: "POST",
       body: JSON.stringify(cleanObjectL1({
         member_id: getMemberInfo.id,
