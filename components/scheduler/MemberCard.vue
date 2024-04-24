@@ -26,10 +26,21 @@
         <span class="small-title-medium" style="font-size: 22px">
           {{ formatName(member.firstname) }} {{ formatName(member.lastname) }}
         </span>
-        <span style="font-size: 14px; color: skyblue">{{ daysLeft }}</span>
+        <div class="d-flex gap-2">
+          <span style="font-size: 14px; color: skyblue">{{ daysLeft }}</span>  |
+          <span style="font-size: 14px;">Reset Fitness</span> 
+        </div>
+   
       </div>
     </div>
-    <MixSchedulerButton label="" @click="$emit('onSelect')" size="lg" />
+    <!-- <MixSchedulerButton label="" @click="$emit('onSelect')" size="lg" /> -->
+    <img  
+       style="padding-left: 12px; margin-right: 20px;"
+        @click="$emit('onSelect')"
+        class="plusIcon"
+        src="~/assets/images/svg/aplus-icon.svg"
+        alt="Plus icon"
+      />
   </div>
 </template>
 

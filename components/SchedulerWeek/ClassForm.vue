@@ -47,15 +47,15 @@
         >
           <tr>
             <th>Pvt</th>
-            <th>Start</th>
+            <th style="position: relative; left: 10px">Start</th>
             <th style="position: relative; right: 20px">Duration</th>
             <th>End</th>
-            <th>Max</th>
-            <th>Wait</th>
-            <th>Coach</th>
+            <th  style="position: relative; left: 5px">Max</th>
+            <th  style="position: relative; left: 5px">Wait</th>
+            <th  style="position: relative; left: 10px">Coach</th>
             <th></th>
           </tr>
-          <tr v-for="(schedule, key_2) in item.schedule" :key="key_2">
+          <tr v-for="(schedule, key_2) in item.schedule" :key="key_2"  style="position: relative; bottom: 30px;">
             <td>
               <button
                 type="button"
@@ -716,9 +716,9 @@ const getAvailableTime = (availableTime: [any], schedule: any) => {
   }
 }
 
-th,
+th{}
 td {
-  padding: 2px 4px;
+  padding: 2px 7px;
 }
 
 .action-btn {

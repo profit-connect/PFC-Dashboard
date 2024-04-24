@@ -1,6 +1,6 @@
 <template>
   <header class="nav-header w-100">
-    <div class="d-flex  justify-content-between align-items-center h-100 mx-4" >
+    <div class="d-flex  justify-content-between align-items-center h-100 mx-5" >
 
   <NuxtLink to="/"
   > <img  class="logo" src="~/assets/images/logo-home-small.png" />

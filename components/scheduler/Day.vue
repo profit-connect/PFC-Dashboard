@@ -3,16 +3,21 @@
     <div class="header d-flex align-items-center gap-4 py-2 mb-2">
       <div
         style="
-          min-width: 300px;
+          min-width: 400px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
         "
       >
-        {{ isToday(dates.start) }} | {{ schedule.start_time }} -
-        {{ schedule.end_time }}
-        <p class="small-title-bold"
+        <span style="position: relative; top: 10px"
+          >{{ isToday(dates.start) }} | {{ schedule.start_time }} -
+          {{ schedule.end_time }}</span
+        >
+        <p
+          class="small-title-bold"
           style="
+            position: relative;
+            bottom: 4px;
             margin-top: 0px;
             white-space: nowrap;
             overflow: hidden;
@@ -20,12 +25,12 @@
             font-size: 36px;
           "
         >
-          {{ schedule.class_name }} | {{ getLabelById(schedule.discipline_id) }}
-       </p>
+          {{ getLabelById(schedule.discipline_id) }} | {{ schedule.class_name }}
+        </p>
       </div>
       <div class="coaches d-flex align-items-center w-full">
         <div
-          class="d-flex align-items-center gap-2"
+          class="d-flex align-items-center gap-4"
           v-if="schedule.coach.length === 1"
         >
           <NuxtImg
@@ -42,9 +47,12 @@
             >
           </div>
           <MixButton
-          class="small-title-medium"
+            class="small-title-medium"
             style="margin-bottom: 10px"
-            v-if="schedule.coach.length === 1"
+            v-if="
+              schedule.coach.length === 1 &&
+              !isBookingDisabled(schedule.start_time)
+            "
             label="Add Coach"
             @click="showCoach = true"
             size="lg"
@@ -65,12 +73,14 @@
           <p>{{ schedule.cancelled }}</p>
           Canceled
         </li>
-        <li class="flex-column" style="margin-right: 20px; margin-bottom: 10px;">
+        <li class="flex-column" style="margin-right: 20px; margin-bottom: 10px">
           Booked<br />
-          <div class="d-flex alig-items-center" style="line-height: 38px"> 
+          <div class="d-flex alig-items-center" style="line-height: 38px">
             <p>{{ schedule.nonNullMemberCount }}/</p>
             {{}}
-            <span style="font-size: 18px; margin-top: 10px;">{{ schedule.capacity }}</span>
+            <span style="font-size: 18px; margin-top: 10px">{{
+              schedule.capacity
+            }}</span>
           </div>
         </li>
       </ul>
@@ -110,7 +120,7 @@
 
     <div class="memebers d-flex flex-wrap">
       <div
-        class="card  rounded px-3 py-3 m-1"
+        class="card rounded px-3 py-3 m-1"
         v-for="member in schedule.members.filter((item: any) => item && item.status === 'Booked')"
         :key="member.id"
         :style="{
@@ -120,79 +130,120 @@
       >
         <div class="d-flex align-items-center gap-2">
           <div class="hover-wrapper">
-         <img  v-if="!member.imageError"  class="profile-image" :src="getImageUrl(member.img_src)" @error="member.imageError = true" alt="Member Avatar" />
-         <div v-else class="avatar-initials">
-          {{ formatName(member.firstname.charAt(0)) }}{{ formatName(member.lastname.charAt(0)) }}
-        </div>
-       
-         <div class="hover-wrapper">
-        <div
-          class="hover-info"
-          :class="{ 'is-visible': isHovering }"
-          @mouseover="isHovering = true"
-          @mouseleave="isHovering = false"
-        >
-      <!-- <a   :href="`/members/details/${member.id}/membership-overview`" class="hover-info__link"> -->
-        <a   :href="`/members/details/membership-overview?id=${member.id}`" class="hover-info__link">
-        <img src="~/assets/images/svg/schedule-profile-white.svg" alt="Profile icon" class="img-normal"/>
-        <img src="~/assets/images/svg/schedule-profile-blue.svg" alt="Profile icon" class="img-hover" />
-      </a>
-      <a href="/" class="hover-info__link">
-        <img src="~/assets/images/svg/schedule-chat-white.svg" alt="Chat icon" class="img-normal"/>
-        <img src="~/assets/images/svg/schedule-chat-blue.svg" alt="Chat icon" class="img-hover" />
-      </a>
-      <div @click="cancelMember(member.id, schedule.id)"  class="hover-info__link">
-        <img src="~/assets/images/svg/schedule-cancel-white.svg" alt="Cancel icon" class="img-normal"/>
-        <img src="~/assets/images/svg/schedule-cancel-blue.svg" alt="Cancel icon" class="img-hover" />
-      </div>
-    </div>
-  </div>
-  </div>
+            <img
+              v-if="!member.imageError"
+              class="profile-image"
+              :src="getImageUrl(member.img_src)"
+              @error="member.imageError = true"
+              alt="Member Avatar"
+            />
+            <div v-else class="avatar-initials">
+              {{ formatName(member.firstname.charAt(0))
+              }}{{ formatName(member.lastname.charAt(0)) }}
+            </div>
 
-          <div 
+            <div class="hover-wrapper">
+              <div
+                class="hover-info"
+                :class="{ 'is-visible': isHovering }"
+                @mouseover="isHovering = true"
+                @mouseleave="isHovering = false"
+              >
+                <!-- <a   :href="`/members/details/${member.id}/membership-overview`" class="hover-info__link"> -->
+                <a
+                  :href="`/members/details/membership-overview?id=${member.id}`"
+                  class="hover-info__link"
+                >
+                  <img
+                    src="~/assets/images/svg/schedule-profile-white.svg"
+                    alt="Profile icon"
+                    class="img-normal"
+                  />
+                  <img
+                    src="~/assets/images/svg/schedule-profile-blue.svg"
+                    alt="Profile icon"
+                    class="img-hover"
+                  />
+                </a>
+                <a href="/" class="hover-info__link">
+                  <img
+                    src="~/assets/images/svg/schedule-chat-white.svg"
+                    alt="Chat icon"
+                    class="img-normal"
+                  />
+                  <img
+                    src="~/assets/images/svg/schedule-chat-blue.svg"
+                    alt="Chat icon"
+                    class="img-hover"
+                  />
+                </a>
+                <div
+                  @click="cancelMember(member.id, schedule.id)"
+                  class="hover-info__link"
+                >
+                  <img
+                    src="~/assets/images/svg/schedule-cancel-white.svg"
+                    alt="Cancel icon"
+                    class="img-normal"
+                  />
+                  <img
+                    src="~/assets/images/svg/schedule-cancel-blue.svg"
+                    alt="Cancel icon"
+                    class="img-hover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
             v-if="member.type === 'normal'"
             ty
             class="d-flex flex-column gap-0"
-            style="width: 116px;"
+            style="width: 116px"
           >
-          <!-- currently i have put 116 the actual width is 200 but i am adding padding 40px -->
+            <!-- currently i have put 116 the actual width is 200 but i am adding padding 40px -->
             <div class="text-white fw-bold" v-if="member.firsttimer === 'Yes'">
               First Timer
             </div>
-            <div class="fs-4 fw-semibold ml-2" style="margin-left: 20px;">
+            <div class="fs-4 fw-semibold ml-2" style="margin-left: 20px">
               {{ formatName(member.firstname) }}
               <!-- {{ formatName(member.lastname) }} -->
             </div>
-            <div  style="margin-left: 20px;" >
+            <div style="margin-left: 20px">
               {{ member.days_left }}
             </div>
           </div>
           <div v-else class="d-flex flex-column gap-0" style="width: 256px">
-                 <!-- currently i have put 296 the actual width is 200 but i am adding padding 40px -->
-            <div class="text-white fw-bold" style="margin-left: 20px;"  v-if="member.firsttimer === 'Yes'">
+            <!-- currently i have put 296 the actual width is 200 but i am adding padding 40px -->
+            <div
+              class="text-white fw-bold"
+              style="margin-left: 20px"
+              v-if="member.firsttimer === 'Yes'"
+            >
               First Timer
             </div>
-            <div class="fs-4 fw-semibold"  style="margin-left: 20px;">
-              {{ formatName(member.firstname) }} 
+            <div class="fs-4 fw-semibold" style="margin-left: 20px">
+              {{ formatName(member.firstname) }}
               {{ formatName(member.lastname) }}
             </div>
-            <div  style="margin-left: 20px;" >
+            <div style="margin-left: 20px">
               {{ member.days_left }}
             </div>
           </div>
         </div>
       </div>
       <div class="book_member">
-      <MixButton
-        v-if="
-          !isBookingDisabled(schedule.start_time) &&
-          !isCapacityReached(schedule.nonNullMemberCount, schedule.capacity)
-        "
-        size="lg"
-        @click="showMemberModal('member')"
-        label="Book a &nbsp;&nbsp;&nbsp;Member"
-      />
-    </div>
+        <MixButton
+          v-if="
+            !isBookingDisabled(schedule.start_time) &&
+            !isCapacityReached(schedule.nonNullMemberCount, schedule.capacity)
+          "
+          size="lg"
+          @click="showMemberModal('member')"
+          label="Book a &nbsp;&nbsp;&nbsp;Member"
+        />
+      </div>
       <!-- <MixButton size="lg" @click="showMemberModal('member')" label="Book Member"
        :disabled="isBookingDisabled(schedule.start_time) || isCapacityReached ( schedule.nonNullMemberCount ,schedule.capacity)" /> -->
     </div>
@@ -206,14 +257,22 @@
       </template>
       <template #title>
         <div class="d-flex justify-content-between">
-          Member Search<MixBtnGroup
+          Member Search
+          <!-- <MixBtnGroup
             style="font-size: 11px"
             v-model="memberSort"
             :labels="['A-Z', 'Z-A']"
+          /> -->
+          <MixToggleBtn
+            v-model="memberSort"
+            left="A-Z"
+            right="Z-A"
+            size="sm"
+            style="font-size: 14px"
           />
         </div>
-        <FormKit 
-        style=" border-bottom-left-radius: 0px; border-top-left-radius: 0px; "
+        <FormKit
+          style="border-bottom-left-radius: 0px; border-top-left-radius: 0px"
           type="search"
           label="FormKit Input"
           prefix-icon="search"
@@ -233,45 +292,56 @@
         /> -->
         <div class="addNewMember" @click="isAddNewMember = true">
           <img
-            class="plusIcon"
+            class="plusIcon mt-2"
             src="~/assets/images/svg/plus-icon.svg"
             alt="Plus icon"
           />
           Add New
         </div>
-       <p style="font-size: 14px; color: red;">{{ capacityMessage }}</p> 
+        <p style="font-size: 14px; color: red">{{ capacityMessage }}</p>
       </template>
       <div>
-            <SchedulerMemberCard
-      v-for="member in membersData?.members
-       .filter(member => member && member.membership_status === 'Active')
-        .filter(member => {
-          const searchTermLower = memberText.toLowerCase(); // Replicate the working logic
-          const matchesName = member.firstname?.toLowerCase().includes(searchTermLower) ||
-                              member.lastname?.toLowerCase().includes(searchTermLower);
-          const matchesTag = member.tags?.some(tagId => { 
-            const tag = tags?.find(t => t.id === tagId); 
-            return tag ? tag.name.toLowerCase().includes(searchTermLower) : false;
-          }) || false; // Default to false if no tags
-          console.log(matchesTag)
-          return matchesName || matchesTag;
-        })
-        .sort((a, b) => {
-          return memberSort === 1 
-            ? a.firstname.localeCompare(b.firstname) 
-            : b.firstname.localeCompare(a.firstname);
-        })"
-      :key="member.id"
-      :member="member"
-      @click.prevent="onSelectMember(member.id)"
-      :class="{ active: selectedMember.includes(member.id) }"
-    />
+        <SchedulerMemberCard
+          v-for="member in membersData?.members
+            .filter((member) => member && member.membership_status === 'Active')
+            .filter((member) => {
+              const searchTermLower = memberText.toLowerCase(); // Replicate the working logic
+              const matchesName =
+                member.firstname?.toLowerCase().includes(searchTermLower) ||
+                member.lastname?.toLowerCase().includes(searchTermLower);
+              const matchesTag =
+                member.tags?.some((tagId) => {
+                  const tag = tags?.find((t) => t.id === tagId);
+                  return tag
+                    ? tag.name.toLowerCase().includes(searchTermLower)
+                    : false;
+                }) || false; // Default to false if no tags
+              console.log(matchesTag);
+              return matchesName || matchesTag;
+            })
+            .sort((a, b) => {
+              if (memberSort === 'A-Z') {
+                return a.firstname.localeCompare(b.firstname);
+              } else {
+                return b.firstname.localeCompare(a.firstname);
+              }
+            })"
+          :key="member.id"
+          :member="member"
+          @click.prevent="onSelectMember(member.id)"
+          :class="{ active: selectedMember.includes(member.id) }"
+        />
       </div>
       <template #footer>
         <div class="d-flex justify-content-center">
           <MixButton
             label="Save"
-            style=" background-color: #FFD500; width: 300px;  margin-bottom: 30px; font-size: 22px;"
+            style="
+              background-color: #ffd500;
+              width: 300px;
+              margin-bottom: 30px;
+              font-size: 22px;
+            "
             :disableIcon="true"
             @click="bookMember"
           />
@@ -281,42 +351,52 @@
     <ModalExpandable v-model="showCoach" id="day-coach-modal">
       <template #title>
         <div class="d-flex justify-content-between">
-          Coach Search<MixBtnGroup
+          Coach Search
+          <!-- <MixToggleBtn
             style="font-size: 11px"
             v-model="coachSort"
             :labels="['A-Z', 'Z-A']"
+          /> -->
+          <MixToggleBtn
+            v-model="coachSort"
+            left="A-Z"
+            right="Z-A"
+            size="sm"
+            style="font-size: 14px"
           />
         </div>
         <FormKit type="text" v-model="coachText" placeholder="Search coach" />
       </template>
       <div v-if="coachData && coachData.coaches">
         <SchedulerMemberCard
-          :member="coach"
-          v-for="coach in coachData.coaches
-            .filter((item) => item)
-            .filter((item) => item.status === 'Available')
-            .filter(
-              (coach) =>
-                coach.firstname
-                  .toLowerCase()
-                  .includes(memberText.toLowerCase()) ||
-                coach.lastname.toLowerCase().includes(coachText.toLowerCase())
-            )
+          v-for="coach in coachData?.coaches
+            .filter((item) => item && item.status === 'Available')
+            .filter((item) => {
+              const searchTermLower = coachText.toLowerCase();
+              return item.firstname?.toLowerCase().includes(searchTermLower) ||
+                    item.lastname?.toLowerCase().includes(searchTermLower);
+            })
             .sort((a, b) =>
-              coachSort === 1
-                ? a.firstname.localeCompare(b.firstname)
-                : b.firstname.localeCompare(a.firstname)
+              coachSort === 'A-Z' ? a.firstname.localeCompare(b.firstname)
+                                  : b.firstname.localeCompare(a.firstname)
             )"
           :key="coach.id"
           @click="onSelectCoach(coach.id)"
           :class="{ active: selectedCoach === coach.id }"
-        />
+          :member="coach"
+      />
+
       </div>
       <template #footer>
-        <div class="d-flex justify-content-center" style="position: relative;">
+        <div class="d-flex justify-content-center" style="position: relative">
           <MixButton
             label="Save"
-            style=" background-color: #FFD500; width: 300px;  margin-bottom: 30px; font-size: 22px;"
+            style="
+              background-color: #ffd500;
+              width: 300px;
+              margin-bottom: 30px;
+              font-size: 22px;
+            "
             :disableIcon="true"
             @click="assignCoach"
           />
@@ -344,13 +424,15 @@ const { tags } = storeToRefs(useTagStore());
 
 const selectedMember = ref([]);
 const selectedCoach = ref();
-const memberSort = ref(1);
-const coachSort = ref(1);
+// const memberSort = ref(1);
+const memberSort = ref("A-Z");
+// const coachSort = ref(1);
+const coachSort = ref("A-Z");
 const memberText = ref("");
 const coachText = ref("");
 const isAddNewMember = ref(false);
-const isHovering = ref(false)
-const capacityMessage = ref('');
+const isHovering = ref(false);
+const capacityMessage = ref("");
 const props = defineProps({
   schedule: {
     type: Object,
@@ -366,7 +448,6 @@ const props = defineProps({
   },
 });
 
-
 const cancelMember = async (member, calendarScheduleId) => {
   try {
     const { data } = await useCustomFetch<any>("/calendar/cancel/member", {
@@ -377,13 +458,12 @@ const cancelMember = async (member, calendarScheduleId) => {
         member_id: member,
       }),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
-    bus.emit(true)
-    if (data.value.success) { 
+    bus.emit(true);
+    if (data.value.success) {
       $toast("Membership cancellation successful!");
-      
     } else {
       $toast(data.value.message); // Show error message from API
     }
@@ -392,10 +472,6 @@ const cancelMember = async (member, calendarScheduleId) => {
     $toast("An error occurred while cancelling the membership.");
   }
 };
-
-
-
-
 
 function formatName(string) {
   if (!string) return "";
@@ -415,7 +491,7 @@ function isToday(dateString) {
     inputDate.getMonth() === today.getMonth() &&
     inputDate.getFullYear() === today.getFullYear();
 
-  return isToday ? "Today" : dateString;
+  return isToday ? "TODAY" : dateString;
 }
 
 const currentDate = ref(new Date());
@@ -450,17 +526,20 @@ const isCapacityReached = (currentCapacity: any, maxCapacity: any) => {
 const onSelectMember = (id: number) => {
   if (selectedMember.value.includes(id)) {
     selectedMember.value = selectedMember.value.filter((item) => item !== id);
-    capacityMessage.value = ''; // Clear message when a member is deselected
+    capacityMessage.value = ""; // Clear message when a member is deselected
   } else {
-    if (selectedMember.value.length < props.schedule.capacity - props.schedule.nonNullMemberCount) {
+    if (
+      selectedMember.value.length <
+      props.schedule.capacity - props.schedule.nonNullMemberCount
+    ) {
       selectedMember.value.push(id);
-      capacityMessage.value = ''; // Clear message when a member is successfully added
+      capacityMessage.value = ""; // Clear message when a member is successfully added
     } else {
-      capacityMessage.value = 'Capacity has been reached. Cannot add more members.'; // Set the message when capacity is reached
+      capacityMessage.value =
+        "Capacity has been reached. Cannot add more members."; // Set the message when capacity is reached
     }
   }
 };
-
 
 const onSelectCoach = (id: number) => {
   if (selectedCoach.value === id) {
@@ -493,21 +572,30 @@ const { data: coachData } = await useCustomFetch<any>("/adminapp/get/coaches", {
 const bookMember = async () => {
   // Calculate the total expected member count after booking the selected members
   // const totalExpectedMemberCount = props.schedule.nonNullMemberCount -selectedMember.value.length;
-  const totalExpectedMemberCount = props.schedule.nonNullMemberCount - props.schedule.capacity;
+  const totalExpectedMemberCount =
+    props.schedule.nonNullMemberCount - props.schedule.capacity;
 
   // Check if the total expected count exceeds the capacity
-  if (selectedMember.value.length && totalExpectedMemberCount <= props.schedule.capacity) {
-    console.log(selectedMember.value.length, props.schedule.nonNullMemberCount, props.schedule.capacity);
+  if (
+    selectedMember.value.length &&
+    totalExpectedMemberCount <= props.schedule.capacity
+  ) {
+    console.log(
+      selectedMember.value.length,
+      props.schedule.nonNullMemberCount,
+      props.schedule.capacity
+    );
     try {
       const { data } = await useCustomFetch<any>("/calendar/book/member", {
         method: "POST",
-        body: JSON.stringify({ // Ensure to stringify the body and set the correct headers if not handled inside `useCustomFetch`
+        body: JSON.stringify({
+          // Ensure to stringify the body and set the correct headers if not handled inside `useCustomFetch`
           facility_id: currentUserType?.id,
           member_id: selectedMember.value,
           calendar_schedule_id: props.schedule.id,
         }),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
       if (!data.value.return) {
@@ -527,7 +615,6 @@ const bookMember = async () => {
     $toast.error("Adding selected members would exceed capacity.");
   }
 };
-
 
 const assignCoach = async () => {
   if (selectedCoach.value) {
@@ -566,15 +653,17 @@ function getLabelById(id) {
 watch(showMember, (val) => {
   isAddNewMember.value = false;
 });
-watch(() => showMember.value, (newVal, oldVal) => {
-  // If the modal is being opened (showMember becomes true)
-  if (newVal === false) {
-    // Clear the selected members
-    selectedMember.value = [];
-    capacityMessage.value = "";
-    
+watch(
+  () => showMember.value,
+  (newVal, oldVal) => {
+    // If the modal is being opened (showMember becomes true)
+    if (newVal === false) {
+      // Clear the selected members
+      selectedMember.value = [];
+      capacityMessage.value = "";
+    }
   }
-});
+);
 </script>
 
 <style lang="scss" scoped>
@@ -582,7 +671,7 @@ watch(() => showMember.value, (newVal, oldVal) => {
   .profile-image {
     width: 104px;
     height: 104px;
-     
+
     border-radius: 50%;
     object-position: center;
   }
@@ -600,7 +689,7 @@ watch(() => showMember.value, (newVal, oldVal) => {
     display: flex;
     gap: 8px;
     align-items: center;
-    gap: 48px;
+    gap: 58px;
     li {
       display: flex;
       align-items: center;
@@ -611,12 +700,10 @@ watch(() => showMember.value, (newVal, oldVal) => {
       p {
         margin: 0px;
         font-size: 36px;
-         font-family: "Poppins Bold";
+        font-family: "Poppins Bold";
       }
-      
     }
   }
-
 
   .hover-info {
     position: absolute;
@@ -627,54 +714,50 @@ watch(() => showMember.value, (newVal, oldVal) => {
     visibility: visible; /* Initially hidden */
     opacity: 0; /* Start fully transparent */
     transition: visibility 0s, opacity 0.3s linear; /* Smooth transition for opacity */
-}
+  }
 
-.hover-wrapper:hover .hover-info {
+  .hover-wrapper:hover .hover-info {
     visibility: visible;
     opacity: 1;
-}
+  }
 
-.hover-info__link {
+  .hover-info__link {
     display: block;
     width: 35px;
     height: 35px;
-    box-shadow: 0 10px 20px rgba(0,0,0,.16);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
     background-color: #fff;
     border-radius: 50%;
-    transition: .35s;
+    transition: 0.35s;
     position: relative;
     cursor: pointer;
-}
+  }
 
-
-
-
-.img-normal {
+  .img-normal {
     width: 100%;
     transition: transform 0.3s ease;
-}
+  }
 
-.img-hover {
+  .img-hover {
     display: none; /* Hide blue images initially */
     width: 100%;
     position: absolute;
     top: 0;
     left: 0;
     transition: transform 0.3s ease;
-}
+  }
 
-.hover-info__link:hover .img-normal {
+  .hover-info__link:hover .img-normal {
     display: none; /* Hide white images on hover */
-}
+  }
 
-.hover-info__link:hover .img-hover {
+  .hover-info__link:hover .img-hover {
     display: block; /* Show blue images on hover */
-}
-
-
+  }
 }
 .card {
   height: 131px;
+  border-radius: 10px;
   // width: 398px;
 }
 </style>

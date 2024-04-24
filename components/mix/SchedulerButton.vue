@@ -49,7 +49,7 @@
   const computedIcon = computed(() => {
     switch (props.type) {
       case "add":
-        return "/images/svg/plus-icon-2.svg";
+        return "/images/svg/plus-icon.svg";
     }
   });
   

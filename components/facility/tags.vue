@@ -58,7 +58,7 @@
             </td>
           </tr> -->
           <tr v-for="tag in getFilteredTags"  :key="tag && tag.id" @click="tag && tag.id && setEditId(tag.id)">
-            <td>{{ tag ? tag.name : '-' }}</td>
+            <td  class="name">{{ tag ? tag.name : '-' }}</td>
             <td>{{ tag ? tag.count : '-' }}</td>
             <td>{{ tag ? tag.created_by : '-' }}</td>
             <td>{{ tag ? formatDate(tag.updated_date) : '-' }}</td>
@@ -184,12 +184,14 @@ const onSearch = (data: string) => {
 
   tr {
     transition: background-color 0.3s; /* Smooth transition for hover effect */
-    height: 60px;
+    height: 40px;
     &:hover {
       background-color: #f2faff; /* Light blue background on hover */
       cursor: pointer; /* Changes the cursor to indicate it's clickable */
     }
-    td,
+    td {
+
+    }
     th {
       /* padding: 7px 10px; */
     }

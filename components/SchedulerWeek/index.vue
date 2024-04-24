@@ -244,7 +244,7 @@
         <template #title>
           <div>
             Add/ Edit Classes
-            <div class="room-title small-title-medium">
+            <div class="room-title small-title-medium mt-4">
               {{ currentRoom?.name }} |
               {{
                 selectedDate

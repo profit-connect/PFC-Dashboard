@@ -24,11 +24,11 @@
    <img
      src="/images/svg/calander.svg"
      alt="calendar"
-     style="height: 200px"
+     style="height: 233px"
    />
    <div
      class="d-flex items-align-center scheduler-btn-text-left gap-2"
-     style="margin-left: 7px; position: absolute; top: 85px; rotate:180deg;"
+     style="margin-left: 9px; position: absolute; top: 95px; rotate:180deg;"
    >
      <img
        src="/images/svg/feather-calendar.svg"
@@ -97,7 +97,7 @@
    <img
      src="/images/svg/calander.svg"
      alt="calender"
-     style="height: 200px"
+     style="height: 233px"
    />
    <div
      class="d-flex items-align-center scheduler-btn-text-right gap-2"
@@ -484,6 +484,8 @@ bus.on((val) => {
  top: 50%;
  transform: translateY(-50%);
  cursor: pointer;
+ z-index: 1;
+
 
  .scheduler-btn-text-left,
  .scheduler-btn-text-right {

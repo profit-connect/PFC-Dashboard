@@ -29,7 +29,7 @@
       <template #title>
         <div>
           Add/ Edit Classes
-          <div class="room-title small-title-medium">
+          <div class="room-title small-title-medium mt-4">
             {{ currentRoom?.name }} |
             {{
               dates.start ? dayjs(dates.start).format("dddd,MMMM D, YYYY") : ""
@@ -185,6 +185,7 @@ watch(() => props.hideSchedulerBar, (newValue) => {
     padding-left: 10px;
     height: calc(100vh - 124px);
     overflow: scroll;
+    box-shadow: 0 0 13px #00000026;
   }
 }
 </style>

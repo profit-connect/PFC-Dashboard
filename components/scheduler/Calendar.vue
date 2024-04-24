@@ -150,7 +150,7 @@ watch(
 .filter {
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 18px;
   button {
     background: none;
     border: 1px solid $dark-blue-seconadary;
@@ -187,7 +187,7 @@ watch(
   }
   .vc-day {
     height: 38px;
-    width: 48px;
+    width: 42px;
   }
 
   .vc-highlight {

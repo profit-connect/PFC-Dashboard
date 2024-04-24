@@ -6,7 +6,7 @@
        <div class="member-box allMembersBox">
        
     <div v-if="item" class="member-row">
-      <div class="d-flex member-row-ava-box">
+      <div class="d-flex align-items-center member-row-ava-box">
         <div>
           <!-- Only display img if img_src is truthy and imageError is not set -->
           <img v-if="item && item.img_src && !item.imageError" class="member-row__avatar avatar" :src="getImageUrl(item.img_src)" @error="() => item.imageError = true" alt="Member Avatar">
@@ -20,11 +20,15 @@
            <div class="member-row__name">{{ formatName(item.firstname) }} {{ formatName(item.lastname) }}</div>
           <div class="d-flex">
           <div class="member-row__time" v-if=" item.membership_status === 'Active'"> 
-            {{getDaysLeft(item.end_date)}}
+            {{getDaysLeft(item.end_date)}}   <span style="font-size: 14px; color: #323a45;">&nbsp;| Reset Fitness</span> 
          </div >
-            <div v-else   style="color: red;">Inactive</div>
+         <div v-else class="d-flex gap-2">
+          <span style="font-size: 14px; color: red">Inactive</span>  |
+          <span style="font-size: 14px;">Reset Fitness</span> 
+        </div>
             <!-- <div>occupation  </div> -->
           </div>
+          
         </div>
       </div>
 

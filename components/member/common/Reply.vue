@@ -123,7 +123,7 @@ const submitHandler = async () => {
 
 <style scoped>
 .replies {
-  border-left: 5px solid#84ceff;
+  border-left: 3px solid#84ceff;
   padding: 10px;
   box-sizing: border-box;
 }

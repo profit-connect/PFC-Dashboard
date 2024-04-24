@@ -6,25 +6,31 @@
       @submit="submitHandler"
       :actions="false"
     >
-      <div class="d-flex gap-2 mb-2" style="height: 90px;">
-        
+      <div class="d-flex items-align-center gap-2 mb-2" style="height: 90px;">
+        <div class="d-flex flex-column items-align-center justify-content-center">
+        <span>Start Date</span>
         <FormKit
+          style="height: 40px;"
           type="date"
           label="Start date"
           name="start_date"
           validation="required"
           :min="effectiveStartDate"
-          help="Start date"
           v-model="startDate"
         />
+        </div>
+        <span style="margin-top: 40px;">To</span>
+        <div class="d-flex flex-column items-align-center justify-content-center">
+          <span>End Date</span>
         <FormKit
+          style="height: 40px;"
           type="date"
           label="End date"
           name="end_date"
           :min="startDate || minDate"
-          help="End date"
           :validation="`required|date_after:${startDate}`"
         />
+        </div>
       </div>
       <div class="mb-4" style="height: 54px;">
       <FormKit
@@ -50,15 +56,14 @@
                 }"
       />
     </div>
-      <div
+      <div 
         class="mt-4 d-flex justify-content-center flex-column"
-        style="position: fixed; bottom: 0; right: 17%; margin-bottom: 20px"
+        style=" width: 830px; text-align: center;"
       >
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
           <button
             class="btn"
-            style="margin-left: 140px"
             @click="$emit('close-canvas')"
           >
             Cancel

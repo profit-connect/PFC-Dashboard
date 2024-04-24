@@ -1,7 +1,7 @@
 <template>
   <SidebarUpdateMember v-model:member-id="props.memberId" />
   <div class="content-main-box">
-    <div class="content-box mb-3">
+    <div class="content-box mb-3 pt-1">
       <div class="d-flex align-items-center justify-content-between gap-3">
         <div class="d-flex align-items-center gap-4">
           <p class="small-title-medium" style="font-size: 22px; margin-bottom: 0px">Notes</p>
@@ -98,7 +98,7 @@
                 <p class="small-title-medium"
                   style="
                     font-size: 22px;
-                    margin-bottom: 10px;
+                    margin-bottom: 20px;
                   "
                 >
                   {{ formatName(note.title) }}

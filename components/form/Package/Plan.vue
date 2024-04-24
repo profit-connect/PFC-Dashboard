@@ -29,25 +29,27 @@
         type="text"
         label="Name"
         name="name"
-        placeholder="Please enter plan name"
+        placeholder="Please enter plan name. Recommended character count: 26"
         validation="required"
-        help=" Recommended character count: 26"
+      
         :validation-messages="{
                   required: 'Plan name is required',
                 }"
       />
+      <!-- help=" Recommended character count: 26" -->
     </div>
       <FormKit
         type="text"
         name="description"
         label="Description"
-        placeholder="Please enter short plan description"
-        help=" Recommended character count: 26"
+        placeholder="Please enter short plan description.  Recommended character count: 26"
+   
         validation="required"
         :validation-messages="{
                   required: 'Plan description is required',
                 }"
       />
+      <!-- help=" Recommended character count: 26" -->
       <div class="plan-tab my-4">
         <MixTabPackages
           v-model="activeTab"
@@ -210,9 +212,9 @@
             </div>
           </MixInputBox>
           <div
-            class="d-flex justify-content-between align-items-center mb-4 my-4"
+            class="d-flex justify-content-between align-items-center mb-4 my-2"
           >
-            <div class="d-flex gap-4 align-items-center">
+            <div class="d-flex gap-2 align-items-center">
               <FormKit
                 type="checkbox"
                 outer-class="m-0"
@@ -220,20 +222,21 @@
                 :value="false"
                 v-model="isPromotionPriceActive"
               />
-        
+            <div style="width: 150px;">
               <FormKit
                 type="number"
                 outer-class="m-0"
                 name="promotion_price"
                 v-model="promotion_price"
                 label="Promotion price"
-                placeholder="Enter Promotion price"
+                placeholder="Promotion price"
                 :disabled="!isPromotionPriceActive"
                 :validation="`${isPromotionPriceActive ? 'required|max:' + OriginalPrice : ''}`"
                 :validation-messages="{
                   max: 'Promotion price must be less than OriginalPrice',
                 }"
               />
+            </div>
               <FormKit
                 type="checkbox"
                 outer-class="m-0"
@@ -244,18 +247,21 @@
               />
             </div>
             <div class="d-flex gap-2">
-              
+              <div class="d-flex flex-column items-align-center justify-content-center">
+              <span>Promotion start</span>
               <FormKit
                 type="date"
                 outer-class="m-0"
                 label="Start date"
                 name="promotion_start"
                 :min="effectiveMinDate"
-                help="Promotion start"
                 v-model="promotionStartDate"
                 :validation="isPromotionPriceActive ? 'required' : ''"
                 />
-
+              </div>
+              <span style="margin-top: 40px;">To</span>
+                <div class="d-flex flex-column items-align-center justify-content-center">
+                <span>Promotion End</span>
               <FormKit
                 type="date"
                 outer-class="m-0 date-width"
@@ -264,12 +270,11 @@
                 name="promotion_end"
                 :max="maxDate"
                 :min="promotionStartDate || minDate"
-                help="Promotion end"
                 :validation="`${
                   isPromotionPriceActive ? 'required|' : ''
                 }date_after:${promotionStartDate}`"
               />
-              
+            </div> 
             </div>
           </div>
         </div>
