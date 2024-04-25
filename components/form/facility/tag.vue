@@ -20,7 +20,6 @@
           type="text"
           name="description"
           placeholder="Description"
-          validation="required"
           v-model="form.description"
           :classes="{
             outer: 'flex-grow-1',
@@ -85,6 +84,7 @@ const createTag = async (tagData :any) => {
     body: JSON.stringify({
       ...form.value,
       facility_id: currentUserType?.id,
+      staff_id:  currentUserType?.id,
     }),
     headers: {
       'Content-Type': 'application/json',

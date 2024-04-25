@@ -70,7 +70,7 @@
       </template>
 
       <template v-else>
-        <div class="discount" style="font-size:22px;">
+        <div class="discount" style="font-size:22px; position:relative;  left: -45px">
           AED
           <b>{{formatPrice(promotion_price !== "0" ? promotion_price : price ) }}</b>
         </div>
@@ -238,7 +238,7 @@ function formatPrice(value) {
     padding: 0 6px;
     height: 18px;
     border-radius: 5px;
-    margin-right: 35px;
+    margin-right: 45px;
     padding-top: 1px;
     // align-items: center;
     // &.custom-badge-inactive {

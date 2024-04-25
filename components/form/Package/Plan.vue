@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5">  
+  <div class="px-5">
     <FormKit
       type="form"
       :modelValue="selectedPlan"
@@ -7,7 +7,7 @@
       :actions="false"
       #default="{ state: { valid } }"
     >
-      <div class="d-flex justify-content-end align-items-center gap-4 mb-3">
+      <div class="d-flex justify-content-end align-items-center gap-4 mb-3">{{ minDate }}
         <span> Can be paid with </span>
         <FormKit
           type="checkbox"
@@ -166,10 +166,14 @@
                 }"
                 />
                 <FormKit
+                  style="width: 100px;"
                   type="number"
                   name="price"
-                  placeholder="Price"
+                  placeholder="Enter Price"
                   validation="required"
+                  :validation-messages="{
+                  required: 'Price is required',
+                }"
                 />  
                    <p>AED</p>
               </div>
@@ -234,6 +238,7 @@
                 :validation="`${isPromotionPriceActive ? 'required|max:' + OriginalPrice : ''}`"
                 :validation-messages="{
                   max: 'Promotion price must be less than OriginalPrice',
+                  required:'Promotion price is required',
                 }"
               />
             </div>
@@ -248,7 +253,7 @@
             </div>
             <div class="d-flex gap-2">
               <div class="d-flex flex-column items-align-center justify-content-center">
-              <span>Promotion start</span>
+              <span>Promotion/Start date</span>
               <FormKit
                 type="date"
                 outer-class="m-0"
@@ -257,11 +262,14 @@
                 :min="effectiveMinDate"
                 v-model="promotionStartDate"
                 :validation="isPromotionPriceActive ? 'required' : ''"
+                :validation-messages="{
+                  required: 'Start date is required',
+                }"
                 />
               </div>
               <span style="margin-top: 40px;">To</span>
                 <div class="d-flex flex-column items-align-center justify-content-center">
-                <span>Promotion End</span>
+                <span>Promotion/End date</span>
               <FormKit
                 type="date"
                 outer-class="m-0 date-width"
@@ -269,10 +277,15 @@
                 placeholder="End date"
                 name="promotion_end"
                 :max="maxDate"
-                :min="promotionStartDate || minDate"
+                :min="promotionStartDate || minDate "
                 :validation="`${
                   isPromotionPriceActive ? 'required|' : ''
-                }date_after:${promotionStartDate}`"
+                }date_after_or_equal:${promotionStartDate}`"
+                  :validation-messages="{
+                  min: 'Promotion price must be less than OriginalPrice',
+                  date_after_or_equal: 'End date must be on or after the start date',
+                  required: 'End date is required',
+                }"
               />
             </div> 
             </div>
@@ -436,6 +449,7 @@ const props = defineProps({
   },
 });
 
+const { $toast } = useNuxtApp();
 const { currentUserType } = useAuthStore();
 const selectedPlan = useVModel(props, "planData", emit);
 const promotionStartDate = ref(selectedPlan.value?.promotion_start);
@@ -458,7 +472,33 @@ const minDate = computed(() => {
   return `${year}-${month}-${day}`; // Today's date in YYYY-MM-DD format
 });
 
-const { $toast } = useNuxtApp();
+
+const minDateMinusOne = computed(() => {
+  const today = new Date();
+  today.setDate(today.getDate() - 1); // Subtract one day from today
+
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`; // Yesterday's date in YYYY-MM-DD format
+});
+
+const promotionStartDateMinusOne = computed(() => {
+    if (!promotionStartDate.value) {
+        return null; // or some default value if needed
+    }
+    const date = new Date(promotionStartDate.value);
+    date.setDate(date.getDate() - 1); // Subtract one day
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed in JavaScript Date
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`; // Returns the date in YYYY-MM-DD format
+});
+
+
 
 
 const activeTab = ref(0);
@@ -509,12 +549,20 @@ watch(planTypeData, (newValue) => {
 });
 
 const promotion_price = ref(selectedPlan.promotion_price || "");
+// watch(isPromotionPriceActive, (newVal) => {
+//   console.log({ isPromotionPriceActive });
+//   if (!newVal) {
+//     // promotion_price.value = null;
+//     promotion_price.value = "";
+    
+//   }
+// });
 watch(isPromotionPriceActive, (newVal) => {
-  console.log({ isPromotionPriceActive });
+  console.log('isPromotionPriceActive changed:', newVal);
   if (!newVal) {
-    // promotion_price.value = null;
+    promotion_price.value = "";
   }
-});
+}, { immediate: true, flush: 'post' });
 
 const createPlan = async (planData) => {
   const { data, error, execute } = useCustomFetch<any>("/packages/add/plan", {

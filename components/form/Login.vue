@@ -10,6 +10,9 @@
         validation="required"
         :options="combinedNames"
         :searchable="true"
+        :validation-messages="{
+                  required: 'Franchise/Facility is required ',
+                }"
       />
     </div>
     <div  style="height: 60px;" >
@@ -17,8 +20,11 @@
         type="text"
         name="username"
         label="username"
-        placeholder="Please enter Username"
+        placeholder="Please enter username"
         validation="required"
+        :validation-messages="{
+                  required: 'Username is required',
+                }"
       />
     </div>
     <div  style="height: 60px;" >
@@ -30,7 +36,11 @@
         suffix-icon="eyeClosed"
         @suffix-icon-click="handleIconClick"
         validation="required"
-        placeholder="Please enter Password"
+        placeholder="Please enter password"
+        :validation-messages="{
+                  required: 'Password is required',
+                }"
+        
       />
     </div>
       <button class="sign-in" type="submit" label="Sign In" >Sign In </button>

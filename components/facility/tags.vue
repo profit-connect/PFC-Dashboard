@@ -45,19 +45,8 @@
           <th  style="position: relative; right: 10px;" class="w-125px">Date created</th>
         </thead>
         <tbody>
-          <!-- <tr
-            v-for="tag in getFilteredTags"
-            :key="tag.id"
-            @click="setEditId(tag.id)"
-          >
-            <td class="name">{{ tag.name }}</td>
-            <td >{{ tag.count }}</td>
-            <td>{{ tag.created_by }}</td>
-            <td>
-              {{ formatDate(tag.updated_date) }}
-            </td>
-          </tr> -->
-          <tr v-for="tag in getFilteredTags"  :key="tag && tag.id" @click="tag && tag.id && setEditId(tag.id)">
+          <!-- <tr v-for="tag in getFilteredTags"  :key="tag && tag.id" @click="tag && tag.id && setEditId(tag.id)"> -->
+          <tr v-for="tag in getFilteredTags"  :key="tag && tag.id">
             <td  class="name">{{ tag ? tag.name : '-' }}</td>
             <td>{{ tag ? tag.count : '-' }}</td>
             <td>{{ tag ? tag.created_by : '-' }}</td>

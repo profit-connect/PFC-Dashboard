@@ -153,27 +153,52 @@ const accessData = computedAsync(async () => {
 //       return data;
 //   }
 // };
+// const filterPackages = (data: any) => {
+//   const currentDate = new Date(); // Current date for comparison
+//   switch (currentFilter.value) {
+//     case 1:
+//       return data; // No filter applied
+//     case 2:
+//       // Filter for "Active" packages: status is "Active" and current date is between start and end dates
+//       return data.filter((item: any) => {
+//         const startDate = new Date(item.start_date);
+//         const endDate = new Date(item.end_date);
+//         return item.status === "Active" && currentDate >= startDate && currentDate <= endDate;
+//       });
+//     case 3:
+//       // Filter for "Inactive" packages: status is "Inactive" or (status is "Active" but current date is not between start and end dates)
+//       return data.filter((item: any) => {
+//         const startDate = new Date(item.start_date);
+//         const endDate = new Date(item.end_date);
+//         return item.status === "Inactive" || (item.status === "Active" && (currentDate < startDate || currentDate > endDate));
+//       });
+//     default:
+//       return data; // Default case returns all data if no specific filter is matched
+//   }
+// };
 const filterPackages = (data: any) => {
-  const currentDate = new Date(); // Current date for comparison
+  if (!data) return [];  
+
+  const currentDate = new Date(); 
   switch (currentFilter.value) {
     case 1:
-      return data; // No filter applied
+      return data;
     case 2:
-      // Filter for "Active" packages: status is "Active" and current date is between start and end dates
-      return data.filter((item: any) => {
+      return data.filter((item:any) => {
+        if (!item || !item.start_date || !item.end_date) return false; 
         const startDate = new Date(item.start_date);
         const endDate = new Date(item.end_date);
         return item.status === "Active" && currentDate >= startDate && currentDate <= endDate;
       });
     case 3:
-      // Filter for "Inactive" packages: status is "Inactive" or (status is "Active" but current date is not between start and end dates)
       return data.filter((item: any) => {
+        if (!item || !item.start_date || !item.end_date) return true;
         const startDate = new Date(item.start_date);
         const endDate = new Date(item.end_date);
         return item.status === "Inactive" || (item.status === "Active" && (currentDate < startDate || currentDate > endDate));
       });
     default:
-      return data; // Default case returns all data if no specific filter is matched
+      return data; 
   }
 };
 const onAddNewPackage = () => {
@@ -193,6 +218,14 @@ const onPackageSelect = async (data: any) => {
 };
 
 const onChangePackageStatus = async (selectedPackage: any) => {
+
+  const startDate = new Date(selectedPackage.start_date);
+  const currentDate = new Date();
+
+  if (startDate > currentDate) {
+    $toast("This package's start date is in the future, cannot be activated yet.");
+    return; 
+  }
   try {
     const { data } = await useCustomFetch<any>(
       "/packages/update/packagestatus",
@@ -216,17 +249,39 @@ const onChangePackageStatus = async (selectedPackage: any) => {
   }
 };
 
+// const computedData = computed(() => {
+//   const newData: any = searchTerm.value
+//     ? data.value.packages.filter((a: any) =>
+//         a.name.toLowerCase().includes(searchTerm.value)
+//       )
+//     : data.value.packages;
+//   if (sortingOrder.value === "A-Z") {
+//     return filterPackages(newData);
+//   } else {
+//     return filterPackages(
+//       useOrderBy(newData, [(item) => item.name.toLowerCase()], ["desc"])
+//     );
+//   }
+// });
 const computedData = computed(() => {
   const newData: any = searchTerm.value
     ? data.value.packages.filter((a: any) =>
-        a.name.toLowerCase().includes(searchTerm.value)
+        // Check if 'a' is not null and 'a.name' is a string before calling toLowerCase
+        a && typeof a.name === 'string' && a.name.toLowerCase().includes(searchTerm.value)
       )
     : data.value.packages;
+
+  // A function to safely get the name in lowercase
+  const safeNameToLower = (item) => {
+    // Ensure item is not null and has a 'name' property which is a string
+    return item && typeof item.name === 'string' ? item.name.toLowerCase() : '';
+  };
+
   if (sortingOrder.value === "A-Z") {
     return filterPackages(newData);
   } else {
     return filterPackages(
-      useOrderBy(newData, [(item) => item.name.toLowerCase()], ["desc"])
+      useOrderBy(newData, [safeNameToLower], ["desc"])
     );
   }
 });

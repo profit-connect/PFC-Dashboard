@@ -165,34 +165,35 @@
           />
         </h3>
         <div class="social-show__icons">
-          <a :href="getMemberInfo.facebook">
-            <div class="icon-text">
-              <img
-                src="~assets/images/svg/social/facebook.svg"
-                alt="Phone icon"
-              />
-              Facebook
-            </div>
-          </a>
-          <a :href="getMemberInfo.instagram">
-            <div class="icon-text">
-              <img
-                src="~assets/images/svg/social/instagram.svg"
-                alt="Instagram icon"
-              />
-              Instagram
-            </div>
-          </a>
-          <a :href="getMemberInfo.linkedin">
-            <div class="icon-text">
-              <img
-                src="~assets/images/svg/social/linkedin.svg"
-                alt="Linkedin icon"
-              />
-              Linkedin
-            </div>
-          </a>
-        </div>
+  <a :href="getMemberInfo.facebook" target="_blank" rel="noopener noreferrer">
+    <div class="icon-text">
+      <img
+        src="~assets/images/svg/social/facebook.svg"
+        alt="Facebook icon"
+      />
+      Facebook
+    </div>
+  </a>
+  <a :href="getMemberInfo.instagram" target="_blank" rel="noopener noreferrer">
+    <div class="icon-text">
+      <img
+        src="~assets/images/svg/social/instagram.svg"
+        alt="Instagram icon"
+      />
+      Instagram
+    </div>
+  </a>
+  <a :href="getMemberInfo.linkedin" target="_blank" rel="noopener noreferrer">
+    <div class="icon-text">
+      <img
+        src="~assets/images/svg/social/linkedin.svg"
+        alt="LinkedIn icon"
+      />
+      LinkedIn
+    </div>
+  </a>
+</div>
+
       </div>
 
       <div

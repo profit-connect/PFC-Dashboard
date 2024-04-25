@@ -23,12 +23,12 @@
         <div style="position: relative; top: 1px;"> {{ capacity }}</div> 
         </div>
         <div class="category-item__waitlist">
-          <img
+          <!-- <img
             class="plusIcon"
             src="~/assets/images/svg/waiting-list.svg?timestamp=1701334462987"
             alt="Plus icon"
           />
-          waiting list
+          waiting list -->
         </div>
       </div>
     </div>

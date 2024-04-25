@@ -1,5 +1,5 @@
 <template>
-  <div
+  <div  
     class="user-dropdown-box openUserDropdown"
     @mouseenter="openUserDropdown = true"
     @mouseleave="openUserDropdown = false"
@@ -10,7 +10,8 @@
           :src="getImageUrl(loggedUser.img_src)"
         />
         <div v-else class="avatar-initials">
-  {{ loggedUser.firstname.charAt(0) }}{{ loggedUser.lastname.charAt(0) }}
+          {{ getUserInitials }}
+  <!-- {{ loggedUser.firstname.charAt(0) }}{{ loggedUser.lastname.charAt(0) }} -->
 </div>
       <!-- <img v-else
         class="avatar-img"
@@ -19,7 +20,7 @@
       /> -->
     </div>
 
-    <div
+    <div  v-if="loggedUser"
       class="user-dropdown userDropdown"
       :class="openUserDropdown ? 'is-active' : ''"
     >
@@ -76,6 +77,12 @@ function formatName(string) {
   );
   return capitalizedWords.join(" ");
 }
+
+const getUserInitials = computed(() => {
+  return loggedUser?.firstname && loggedUser?.lastname 
+    ? `${loggedUser.firstname.charAt(0)}${loggedUser.lastname.charAt(0)}`
+    : '';
+});
 </script>
 
 <style lang="scss" scoped>

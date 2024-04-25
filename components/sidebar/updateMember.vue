@@ -251,7 +251,7 @@
           </h3>
 
           <div class="social-show__icons">
-            <a :href="getMemberInfo.facebook">
+            <a :href="getMemberInfo.facebook" target="_blank" rel="noopener noreferrer">
               <div class="icon-text">
                 <img
                   src="~assets/images/svg/social/facebook.svg"
@@ -260,7 +260,7 @@
                 Facebook
               </div>
             </a>
-            <a :href="getMemberInfo.instagram">
+            <a :href="getMemberInfo.instagram" target="_blank" rel="noopener noreferrer">
               <div class="icon-text">
                 <img
                   src="~assets/images/svg/social/instagram.svg"
@@ -269,7 +269,7 @@
                 Instagram
               </div>
             </a>
-            <a :href="getMemberInfo.linkedin">
+            <a :href="getMemberInfo.linkedin" target="_blank" rel="noopener noreferrer">
               <div class="icon-text">
                 <img
                   src="~assets/images/svg/social/linkedin.svg"
@@ -295,9 +295,9 @@
               Cancel
             </div>
           </h3>
-          <FormKit type="text" placeholder="Facebook" name="facebook" />
-          <FormKit type="text" placeholder="instagram" name="instagram" />
-          <FormKit type="text" placeholder="Linkedin" name="linkedin" />
+          <FormKit type="text" placeholder="Facebook" name="facebook"   v-tooltip="'Please enter Facebook handle. This is not a mandatory field.'" />
+      <FormKit type="text" placeholder="Instagram" name="instagram"  v-tooltip="'Please enter Instagram handle. This is not a mandatory field.'" />
+      <FormKit type="text" placeholder="Linkedin" name="linkedin"    v-tooltip="'Please enter Linkedin handle. This is not a mandatory field.'"/>
         </div>
 
         <div

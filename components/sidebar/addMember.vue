@@ -43,6 +43,10 @@
             <FormKit type="multiselect"  
            mode="single"
            placeholder="Please select gender"
+           validation="required"
+           :validation-messages="{
+                  required: 'Gender is required',
+                }"
             name="gender" 
             :options="['Female', 'Male', 'Prefer not to say']"
              />
@@ -52,7 +56,7 @@
       <FormKit
         type="date"
         name="dob"
-        placeholder="Please enter first name"
+        placeholder=" Please enter date of birth"
         label="Birthday"
         validation-visibility="live"
         validation="required"
@@ -82,8 +86,8 @@
             placeholder="Enter phone number"
             validation="required|number|"
             :validation-messages="{
-              required: 'Phone number is required.',
-              number: 'Phone number must be numeric.',
+              required: 'Phone number is required',
+              number: 'Phone number must be numeric',
             }"
           />
         </div>
@@ -95,6 +99,9 @@
         validation="required|email|"
         validation-visibility="live"
         placeholder="Please enter email"
+        :validation-messages="{
+                  required: 'Email is required',
+                }"
       />
          </div>
          <div  style="height: 100px;" >
@@ -112,16 +119,17 @@
         }"
         validation="required|passwordValidation|length:8"
         :validation-messages="{
+           required: 'Password is required',
           passwordValidation:
-            'Please enter password. Password must contain at least 1 of the following: upper case letter, lower case letter, number and special character',
+            'Password error. Re-enter the password and ensure it meets the character requirements of at least 1 upper case letter, 1 lower case letter, 1 number and 1 special character',
         }"
       
       />
            </div>
       <h3 class="small-title-bold">Social</h3>
-      <FormKit type="text" placeholder="Please enter Facebook handle. This is not a mandatory field." name="facebook" />
-      <FormKit type="text" placeholder="Instagram" name="instagram" />
-      <FormKit type="text" placeholder="Linkedin" name="linkedin" />
+      <FormKit type="text" placeholder="Facebook" name="facebook"   v-tooltip="'Please enter Facebook handle. This is not a mandatory field.'" />
+      <FormKit type="text" placeholder="Instagram" name="instagram"  v-tooltip="'Please enter Instagram handle. This is not a mandatory field.'" />
+      <FormKit type="text" placeholder="Linkedin" name="linkedin"    v-tooltip="'Please enter Linkedin handle. This is not a mandatory field.'"/>
       <h3 class="small-title-bold">Tags</h3>
       <div class="custom-multiselect-member-tags">
         <span

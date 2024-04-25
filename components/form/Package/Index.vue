@@ -15,6 +15,9 @@
           label="Start date"
           name="start_date"
           validation="required"
+          :validation-messages="{
+                  required: 'Start date is required',
+                }"
           :min="effectiveStartDate"
           v-model="startDate"
         />
@@ -29,6 +32,9 @@
           name="end_date"
           :min="startDate || minDate"
           :validation="`required|date_after:${startDate}`"
+          :validation-messages="{
+                  required: 'End date is required',
+                }"
         />
         </div>
       </div>
@@ -49,10 +55,10 @@
         type="textarea"
         name="description"
         label="Description"
-        placeholder="Package Description"
+        placeholder="Please enter package description "
         validation="required"
         :validation-messages="{
-                  required: 'Package description name is required',
+                  required: 'Package description is required',
                 }"
       />
     </div>

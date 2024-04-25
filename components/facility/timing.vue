@@ -60,7 +60,7 @@
          </div>
        </div>
      </div>
-     <div style="position: relative; bottom: 495px; left: 87%;">
+     <div style="position: absolute; bottom: 679px; left: 85.5%;">
      <div
        class="mt-4 d-flex justify-content-center save"
        style="position: absolute; "
@@ -132,7 +132,7 @@ const submitHandler = async () => {
 
 import { useAuthStore } from "@/store/auth";
 import { cleanObjectL1 } from "@/utils/dataCleaner";
-
+import { defaultTiming } from "~/constants/common";
 const { $toast } = useNuxtApp();
 const { generalInfo, generalTiming } = defineProps({
  generalInfo: {

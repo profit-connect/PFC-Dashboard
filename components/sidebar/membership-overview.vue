@@ -21,46 +21,7 @@ Membership-overview without chart
         {{ formatDate(membersData.member.data[0].start_date) }}
       </div>
 
-      <!-- <div v-if="sortedPlans" class="membership-graph">
-
-  <div v-for="(plan, index) in sortedPlans" :key="plan.id" class="membership-graph__row1">
-    <div 
-      v-if="plan.plan_type === 'credits' || plan.plan_type === 'unlimited'" 
-      class="graph-box"
-      :style="{
-        minWidth: '75px',
-        width: calculateWidth(plan.start_date, plan.end_date),
-        marginLeft: calculateMargin(plan, index, sortedPlans)
-      }"
-    >
-      {{ plan.plan_name }} 
-      <div class="end-date-text1">{{ formatDate(plan.start_date) }}</div>
-      <div class="end-date-text">{{ formatDate(plan.end_date) }}</div>
-    </div>
-
    
-
-    <div style="margin-top: 30px;"
-      v-if="plan.plan_type === 'add-on'" 
-      class="graph-box"
-      :style="{
-        minWidth: '75px',
-        width: calculateWidth(plan.start_date, plan.end_date),
-        marginLeft: calculateMargin(plan, index, sortedPlans)
-      }"
-    >
-      {{ plan.plan_name }} 
-      <div class="end-date-text1">{{ formatDate(plan.start_date) }}</div>
-      <div class="end-date-text">{{ formatDate(plan.end_date) }}</div>
-    </div>
-  </div> -->
-
-      <!-- <div class="today-line-box" style="margin-left: 367px;">
-    <div class="text">Today</div>
-    <div class="line"></div>
-    <div class="text todayDatePreview">December 1</div> 
-  </div> -->
-      <!-- </div> -->
       <ChartSubscribedPackage :plans="actualPlans"  />
     </div>
     <div class="content-box1">
@@ -144,12 +105,7 @@ const { memberId } = toRefs(props);
 const route = useRoute();
 const { setBreadcrumb, setBreadcrumbTab } = useBreadcrumb();
 
-// setBreadcrumb({
-//   items: [
-//     { label: "Control Panel", link: "/" },
-//     { label: "Profiles", link: "/" },
-//   ],
-// });
+
 const breadcrumbStore = useBreadcrumbStore();
 breadcrumbStore.setBreadcrumb({
   items: [
@@ -265,12 +221,7 @@ const computedPlanDetails = computed(() => {
   // Check if `ComputedPackage.value` is truthy and is an array before calling reduce
   if (Array.isArray(ComputedPackage.value)) {
     return ComputedPackage.value.reduce((acc, plan) => {
-      // if (
-      //   plan !== null &&
-      //   (selectedFilter.value === "All" ||
-      //     plan.type === selectedFilter.value) &&
-      //   plan.private === "No"
-      // ) 
+
       if (
         plan !== null &&
         (selectedFilter.value === "All" ||

@@ -332,17 +332,19 @@ h6 {
   bottom: 108%; /* Position the tooltip above the container */
   left: 50%; /* Center the tooltip */
   transform: translateX(-50%); /* Align the center of the tooltip with the center of the element */
-  white-space: nowrap; /* Keep the tooltip text on a single line */
+  white-space: normal; /* Allow text to wrap */
 
   visibility: hidden;
   opacity: 0;
   z-index: 100; /* Ensure the tooltip is above other elements */
   
-  background-color: #f2faff;/* Tooltip background color */
+  background-color: #ffffff; /* White background for the tooltip */
   color: black; /* Tooltip text color */
   text-align: center;
   border-radius: 4px; /* Rounded corners */
   padding: 6px 12px; /* Padding inside the tooltip */
+  max-width: 200px; /* Max width before text wraps */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Box shadow for 3D effect */
 
   transition: visibility 0.2s, opacity 0.2s ease-in-out;
 }
@@ -356,7 +358,7 @@ h6 {
   margin-left: -5px; /* Adjust this value to move the arrow left or right */
   border-width: 5px;
   border-style: solid;
-  border-color:#f2faff transparent transparent transparent; /* The first color is the arrow color */
+  border-color: #ffffff transparent transparent transparent; /* Arrow color matches tooltip background */
 }
 
 /* Show the tooltip on hover */
@@ -364,3 +366,4 @@ h6 {
   visibility: visible;
   opacity: 1;
 }
+

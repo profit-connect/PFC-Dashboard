@@ -40,7 +40,6 @@
             name="description"
             label="Description"
             placeholder="Please enter space description"
-            validation="required"
             :validation-messages="{
                   required: 'Space description is required',
                 }"
@@ -70,6 +69,7 @@
             :value="false"
             v-model="isUrlactive"
           />
+          <div style="height: 60px;">
           <FormKit
             style="width: 170px; height: 40px"
             type="text"
@@ -78,7 +78,11 @@
             label="Url"
             :disabled="!isUrlactive"
             :validation="isUrlactive ? 'required' : ''"
+            :validation-messages="{
+                  required: 'Url is required',
+                }"
           />
+        </div>
         </div>
       </div>
       <div class="room-availabilty my-4">

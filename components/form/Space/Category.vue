@@ -25,7 +25,6 @@
             name="description"
             label="Description"
             placeholder="Please enter category description"
-            validation="required"
             :validation-messages="{
                   required: 'Category description is required',
                 }"

@@ -92,37 +92,6 @@ watchEffect(() => {
 });
 
 
-// async function tag() {
-//   try {
-//     const data = await $fetch('https://app.ihitreset.com/resetcrm/tags/get/tags', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: {
-//         facility_id: currentUserType?.id, // Ensure the body is stringified
-//       },
-//     });
-
-//     taggs.value = data
-//     console.log(taggs.value.tags)
-//     // console.log(data); // Example: log the response data
-//   } catch (error) {
-//     // Handle any errors that occurred during the fetch
-//     console.error('Error fetching tags:', error);
-//   }
-// }
-
-
-
-
-// const {
-//   data: membersData,
-//   pending: membersPending,
-//   refresh: refreshMembers,
-// } = await useFetch("/api/member/all", {
-//   query: { facility_id: currentUserType?.id },
-// });
 
 const {
   data: membersData,
@@ -136,10 +105,7 @@ const {
   }
 );
 
-// onMounted( () => {
-// tag();
 
-// });
 
 const handleAddSidebar = () => {
   showAddSidebar.value = true;
@@ -156,51 +122,16 @@ const handleCloseSidebar = () => {
 const filterPackages = (data: any) => {
   switch (currentFilter.value) {
     case 1:
-      return data;
+      return data; // No filter applied
     case 2:
-      return data.filter((item: any) => item.membership_status === "Active");
+      return data.filter((item: any) => item && item.membership_status === "Active");
     case 3:
-      return data.filter((item: any) => item.membership_status === null);
+      return data.filter((item: any) => item && item.membership_status === null);
     default:
-      return data;
+      return data; 
   }
 };
 
-
-// const getMembers = computed(() => {
-//   // Ensure membersData.value.members is available
-//   const members = membersData.value?.members || [];
-//   const searchTermLower = searchTerm.value.toLowerCase();
-
-//   const filteredData = members.filter((member) => {
-//     // Check against first name and last name
-//     const matchesName = member.firstname?.toLowerCase().includes(searchTermLower) ||
-//                         member.lastname?.toLowerCase().includes(searchTermLower);
-
-//     const matchesTag = member.tags.some(memberTagId => {
-//   let tag; // Declare `tag` in the accessible scope
-//   if (tags.value && tags.value) {
-//     tag = tags.value.find(tag => tag.id === memberTagId);
-//   } else {
-//     console.log("Tags are not defined yet.");
-//     return false; // Return false to ensure function continuity
-//   }
-//   return tag ? tag.name.toLowerCase().includes(searchTermLower) : false;
-// });
-
-
-//     return matchesName || matchesTag;
-//   });
-
-//   // Sort members based on sortingOrder
-//   let sortedData = filteredData.sort((a, b) => {
-//     const sortMultiplier = sortingOrder.value === "Z-A" ? -1 : 1;
-//     return a.firstname.localeCompare(b.firstname) * sortMultiplier;
-//   });
-
-//   // Apply additional filters if needed
-//   return filterPackages ? filterPackages(sortedData) : sortedData;
-// });
 
 const getMembers = computed(() => {
   const members = membersData.value?.members ?? [];
