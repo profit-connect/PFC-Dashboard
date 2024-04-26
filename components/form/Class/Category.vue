@@ -24,7 +24,6 @@
             type="text"
             label="Name"
             name="name"
-            v-tooltip="'This is a tooltip'"
             placeholder="Please enter category name"
             validation="required"
             :validation-messages="{
@@ -156,14 +155,14 @@ const createCategory = async (categoryData) => {
       $toast("Category added successfully!");
       // emit("close-canvas");
     } else if (data.value) {
-      $toast(data.value.message);
+      $toast.error(data.value.message);
     } else if (error.value) {
-      $toast("An error occurred while adding the category.");
+      $toast.error("An error occurred while adding the category.");
       console.error("Error:/api/category/add", error.value);
     }
   } catch (err) {
     console.log("Catch block error:/api/category/add", err);
-    $toast("Failed to add category due to an exception.");
+    $toast.error("Failed to add category due to an exception.");
   }
 };
 
@@ -185,17 +184,17 @@ const editCategory = async (categoryData) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Category edited successfully!");
+      $toast.sucess("Category edited successfully!");
       // emit("close-canvas");
     } else if (data.value) {
-      $toast(data.value.message);
+      $toast.error(data.value.message);
     } else if (error.value) {
-      $toast("An error occurred while editing the category.");
+      $toast.error("An error occurred while editing the category.");
       console.error("Error:/api/category/edit", error.value);
     }
   } catch (err) {
     console.log("Catch block error:/api/category/edit", err);
-    $toast("Failed to edit category due to an exception.");
+    $toast.error("Failed to edit category due to an exception.");
   }
 };
 

@@ -223,7 +223,7 @@ const onChangePackageStatus = async (selectedPackage: any) => {
   const currentDate = new Date();
 
   if (startDate > currentDate) {
-    $toast("This package's start date is in the future, cannot be activated yet.");
+    $toast.error("This package's start date is in the future, cannot be activated yet.");
     return; 
   }
   try {

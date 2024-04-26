@@ -233,11 +233,11 @@ const submitHandler = async (purchaseData: any) => {
     });
     if (data.value.return) {
       emit("reload");
-      $toast("Plan added successfully!");
+      $toast.sucess("Plan added successfully!");
       emit("close-canvas");
       location.reload();
     } else {
-      $toast(data.value.message);
+      $toast.error(data.value.message);
     }
   } catch (err) {
     console.log("Error:/api/member/add-plan", err);

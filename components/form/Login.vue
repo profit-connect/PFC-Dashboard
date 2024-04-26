@@ -144,9 +144,9 @@ form {
 }
 </style>
 
-<style lang="scss">
+<style scoped lang="scss">
 .login-form {
-  height: 350px;
+  height: 310px;
   .bottom-link-action {
     .formkit-label {
       display: block !important;
@@ -158,6 +158,16 @@ form {
       text-decoration: none;
       font-size: 14px;
     }
+  }
+  ::v-deep .formkit-outer .formkit-icon svg {
+    width: 100%;
+    margin: auto;
+    max-height: 2em;
+    max-width: 2em;
+    margin-left: 0px;
+    color: #002E4B;
+    // Uncomment and use the correct path if you need to use a background image:
+    // background: url("~/assets/images/svg/select-dropdown.svg");
   }
 }
 .sign-in {
@@ -172,4 +182,6 @@ form {
     font-size: 22px;
     font: 22px "Poppins Medium", sans-serif, Arial;
 }
+/* CSS to increase the size of the suffix icon in FormKit */
+
 </style>

@@ -76,11 +76,11 @@ const createNote = async (packageData) => {
       $toast(data.value.message); // Assuming success message is in data.value.message
       emit("update:modelValue", false); // Assuming this is to close a modal or similar component
     } else {
-      $toast(data.value.message); // Show error message from the API response
+      $toast.error(data.value.message); // Show error message from the API response
     }
   } catch (err) {
     console.error("Error:/api/package/add", err); // Use console.error for better error visibility
-    $toast("Failed to create note due to an exception.");
+    $toast.error("Failed to create note due to an exception.");
   }
 };
 

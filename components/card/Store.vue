@@ -74,7 +74,7 @@
             </span>
           </div>
           <div v-else >
-            <span  >  AED <b>{{ promotion_price }} </b> </span>
+            <span  >  AED <b>{{ price }} </b> </span>
           </div> 
         </div>
 

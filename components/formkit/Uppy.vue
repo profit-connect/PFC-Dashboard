@@ -45,7 +45,7 @@ onMounted(() => {
   if (targetHeight && targetWidth) {
     tagetRatio = targetWidth / targetHeight;
   }
-  console.log(props.context);
+  // console.log(props.context);
   uppy.value = new Uppy({
     debug: false,
     autoProceed: false,

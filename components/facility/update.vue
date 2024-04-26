@@ -350,16 +350,16 @@ const editFacility = async (getMemberInfo) => {
     await execute(); // Execute the custom fetch request
 
     if (data.value && data.value.return) {
-      $toast("Facility Updated successfully!"); // Display success message
+      $toast.success("Facility Updated successfully!"); // Display success message
       resetEditModes(); // Reset any editing modes in UI
       fetchFacilityInfo(); // Refresh facility info
       emit("reload"); // Notify any parent components or listeners
     } else if (data.value) {
-      $toast(data.value.message); // Show error message from response
+      $toast.error(data.value.message); // Show error message from response
     } 
   } catch (err) {
     console.error("Error updating facility: ", err); // Log detailed error
-    $toast("Failed to update facility due to an exception."); // Show user-friendly error message
+    $toast.error("Failed to update facility due to an exception."); // Show user-friendly error message
     if (error.value) {
       console.error("API Error:", error.value); // Additional API response error if exists
     }

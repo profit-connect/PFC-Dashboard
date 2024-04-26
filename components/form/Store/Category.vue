@@ -131,15 +131,15 @@ const createCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Category added successfully!");
+      $toast.sucess("Category added successfully!");
       // emit("close-canvas");
     } else {
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";
-      $toast(errorMessage);
+      $toast.error(errorMessage);
     }
   } catch (err) {
     console.error("Error:/api/store/add-category", err);
-    $toast("Failed to add category due to an exception.");
+    $toast.error("Failed to add category due to an exception.");
   }
 };
 
@@ -162,15 +162,15 @@ const editCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Category edited successfully!");
+      $toast.sucess("Category edited successfully!");
       // emit("close-canvas");
     } else {
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";
-      $toast(errorMessage);
+      $toast.error(errorMessage);
     }
   } catch (err) {
     console.error("Error:/api/store/update-category", err);
-    $toast("Failed to edit category due to an exception.");
+    $toast.error("Failed to edit category due to an exception.");
   }
 };
 

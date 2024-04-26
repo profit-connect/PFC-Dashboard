@@ -465,11 +465,11 @@ const cancelMember = async (member, calendarScheduleId) => {
     if (data.value.success) {
       $toast("Membership cancellation successful!");
     } else {
-      $toast(data.value.message); // Show error message from API
+      $toast.error(data.value.message); // Show error message from API
     }
   } catch (err) {
     console.error("Error:/api/cancel/member", err);
-    $toast("An error occurred while cancelling the membership.");
+    $toast.error("An error occurred while cancelling the membership.");
   }
 };
 
@@ -608,7 +608,7 @@ const bookMember = async () => {
       }
     } catch (error) {
       console.error("Error booking member:", error);
-      $toast("Member is not added!");
+      $toast.error("Member is not added!");
     }
   } else {
     // This error message will now also cover the case where adding the selected members would exceed capacity
@@ -636,7 +636,7 @@ const assignCoach = async () => {
         bus.emit(true);
       }
     } catch {
-      $toast("Coach is not added!");
+      $toast.error("Coach is not added!");
     }
 
     ///

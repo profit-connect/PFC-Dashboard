@@ -226,7 +226,7 @@ const submitHandler = async (purchaseData: any) => {
       emit("close-canvas");
       location.reload();
     } else {
-      $toast(data.value.message);
+      $toast.error(data.value.message);
     }
   } catch (err) {
     console.log("Error:/api/member/add-plan", err);

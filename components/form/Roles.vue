@@ -149,16 +149,16 @@ const computedSelectedRole = computed(() => {
       await execute();
   
       if (data.value && data.value.return) {
-        $toast("Roles added successfully!");
+        $toast.sucess("Roles added successfully!");
         emit("reload");
         // emit("close-canvas");
       } else {
         const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";
-        $toast(errorMessage);
+        $toast.error(errorMessage);
       }
     } catch (err) {
       console.error("Error:/api/store/add", err);
-      $toast("Failed to add role item  to an exception.");
+      $toast.error("Failed to add role item  to an exception.");
     }
   };
   
@@ -181,16 +181,16 @@ const computedSelectedRole = computed(() => {
       await execute();
   
       if (data.value && data.value.return) {
-        $toast("Roles edited successfully!");
+        $toast.sucess("Roles edited successfully!");
         emit("reload");
         // emit("close-canvas");
       } else {
         const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";
-        $toast(errorMessage);
+        $toast.error(errorMessage);
       }
     } catch (err) {
       console.error("Error:/api/store/edit", err);
-      $toast("Failed to edit role  due to an exception.");
+      $toast.error("Failed to edit role  due to an exception.");
     }
   };
   

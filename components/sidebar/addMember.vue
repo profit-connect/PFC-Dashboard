@@ -150,7 +150,15 @@
           :options="computedTags"
         />
       </div>
+      <div class="d-flex flex-column justify-content-center">
       <FormKit type="submit" label="Save" class="EditSave" />
+      <button
+          class="btn"
+          @click="$emit('close-sidebar')"
+        >
+          Cancel
+        </button>
+      </div>
     </FormKit>
   </div>
 </template>

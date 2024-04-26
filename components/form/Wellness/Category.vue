@@ -138,17 +138,17 @@ const createCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Category added successfully!");
+      $toast.sucess("Category added successfully!");
       // emit("close-canvas");
     } else if (data.value) {
-      alert(data.value.message); // Using alert for error feedback as per your code
+      $toast.error(data.value.message); // Using alert for error feedback as per your code
     } else if (error.value) {
       // console.error("Error:/api/space/add-category", error.value);
-      alert("An error occurred while adding the category.");
+      $toast.error("An error occurred while adding the category.");
     }
   } catch (err) {
     console.log("Catch block error:/api/space/add-category", err);
-    alert("Failed to add category due to an exception.");
+    $toast.error("Failed to add category due to an exception.");
   }
 };
 
@@ -170,17 +170,17 @@ const editCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Category edited successfully!");
+      $toast.sucess("Category edited successfully!");
       // emit("close-canvas");
     } else if (data.value) {
-      $toast(data.value.message);
+      $toast.error(data.value.message);
     } else if (error.value) {
       console.error("Error:/api/space/update-category", error.value);
-      $toast("An error occurred while editing the category.");
+      $toast.error("An error occurred while editing the category.");
     }
   } catch (err) {
     // console.log("Catch block error:/api/space/update-category", err);
-    $toast("Failed to edit category due to an exception.");
+    $toast.error("Failed to edit category due to an exception.");
   }
 };
 

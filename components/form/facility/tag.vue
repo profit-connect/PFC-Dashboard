@@ -99,14 +99,14 @@ const createTag = async (tagData :any) => {
       $toast("Tag added successfully!");
       // emit("close-canvas");
     } else if (data.value) {
-      $toast(data.value.message);
+      $toast.error(data.value.message);
     } else if (error.value) {
-      $toast("An error occurred while adding the tag.");
+      $toast.error("An error occurred while adding the tag.");
       console.error("Error:/tags/add", error.value);
     }
   } catch (err) {
     console.log("Catch block error:/tags/add", err);
-    $toast("Failed to add tag due to an exception.");
+    $toast.error("Failed to add tag due to an exception.");
   }
 };
 const editTag = async (tagData :any) => {
@@ -129,14 +129,14 @@ const editTag = async (tagData :any) => {
       $toast("Tag edited successfully!");
       // emit("close-canvas");
     } else if (data.value) {
-      $toast(data.value.message);
+      $toast.error(data.value.message);
     } else if (error.value) {
-      $toast("An error occurred while editing the tag.");
+      $toast.error("An error occurred while editing the tag.");
       console.error("Error:/api/tags/update", error.value);
     }
   } catch (err) {
     console.log("Catch block error:/api/tags/update", err);
-    $toast("Failed to edit tag due to an exception.");
+    $toast.error("Failed to edit tag due to an exception.");
   }
 };
 

@@ -247,18 +247,18 @@ console.log(spaceData)
     await execute();
 
     if (data.value && data.value.return) {
-      $toast("Space added successfully!");
+      $toast.sucess("Space added successfully!");
       emit("reload");
       // emit("close-canvas");
     } else if (data.value) {
-      $toast(data.value.message);
+      $toast.error(data.value.message);
     } else if (error.value) {
-      $toast("An error occurred while adding the space.");
+      $toast.error("An error occurred while adding the space.");
       console.error("Error:/api/space/add", error.value);
     }
   } catch (err) {
     console.log("Catch block error:/api/space/add", err);
-    $toast("Failed to add space due to an exception.");
+    $toast.error("Failed to add space due to an exception.");
   }
 };
 
@@ -282,18 +282,18 @@ console.log(spaceData)
     await execute();
 
     if (data.value && data.value.return) {
-      $toast("Space edited successfully!");
+      $toast.sucess("Space edited successfully!");
       emit("reload");
       // emit("close-canvas");
     } else if (data.value) {
-      $toast(data.value.message);
+      $toast.error(data.value.message);
     } else if (error.value) {
-      $toast("An error occurred while editing the space.");
+      $toast.error("An error occurred while editing the space.");
       console.error("Error:/api/space/edit", error.value);
     }
   } catch (err) {
     console.log("Catch block error:/api/space/edit", err);
-    $toast("Failed to edit space due to an exception.");
+    $toast.error("Failed to edit space due to an exception.");
   }
 };
 
@@ -317,7 +317,7 @@ const timeToMinutes = (time: string) => {
 const submitHandler = async (spaceData) => {
   console.log(spaceData)
   if (!timingIsValid.value && spaceData.follow_facility_timing === false) {
-    $toast('Please ensure all end times are greater than start times.');
+    $toast.error('Please ensure all end times are greater than start times.');
     return; // Stop the submission as the validation failed
   }
     let tempData = { ...spaceData };

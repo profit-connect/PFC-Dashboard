@@ -2,11 +2,15 @@
   <!-- <section class="content-section"> -->
    <!-- <FacilityUpdate /> -->
    <!-- <div class="content-box"> -->
- <p class="title small-title-medium">Facility Timing</p>
+ <p class="title small-title-medium" >Facility Timing</p>
+ <div style="position: relative; bottom: 160px; left: 87%;">
+       <FormKit 
+        style="width:122px; height: 40px; font: 14px 'Poppins Medium', sans-serif, Arial; background-color: #FFD500; position:absolute;" 
+       type="submit"   @click="submitHandler">Save</FormKit>
+     </div>
  <div class="facility">
    <FormKit
      type="form"
-     :modelValue="selectedPlan"
      @submit="submitHandler"
      :actions="false"
    >
@@ -60,16 +64,7 @@
          </div>
        </div>
      </div>
-     <div style="position: absolute; bottom: 679px; left: 85.5%;">
-     <div
-       class="mt-4 d-flex justify-content-center save"
-       style="position: absolute; "
-     >
-       <FormKit
-       style="width:122px; height: 40px;   font: 14px 'Poppins Medium', sans-serif, Arial;"
-        type="submit">Save</FormKit>
-     </div>
-    </div>
+    
    </FormKit>
  </div>
 <!-- </div> -->
@@ -132,7 +127,7 @@ const submitHandler = async () => {
 
 import { useAuthStore } from "@/store/auth";
 import { cleanObjectL1 } from "@/utils/dataCleaner";
-import { defaultTiming } from "~/constants/common";
+
 const { $toast } = useNuxtApp();
 const { generalInfo, generalTiming } = defineProps({
  generalInfo: {
@@ -179,7 +174,7 @@ const timeToMinutes = (time: string) => {
 const submitHandler = async () => {
   // Check if the form should not be submitted due to invalid timing
   if (!timingIsValid.value && !form.value.always_open) {
-    $toast('Please ensure all end times are greater than start times.');
+    $toast.error('Please ensure all end times are greater than start times.');
     return; // Stop the submission as the validation failed
   }
 
@@ -202,7 +197,7 @@ const submitHandler = async () => {
     $toast("Facility Timing Updated Successfully"); // Adjust according to actual response
   } catch (err) {
     console.error("Error fetching facility data:", err);
-    $toast('An error occurred while updating facility data.'); // Show an error toast
+    $toast.error('An error occurred while updating facility data.'); // Show an error toast
   }
 };
 
@@ -222,6 +217,7 @@ const submitHandler = async () => {
  display: grid;
  grid-template-columns: repeat(2, 1fr);
  gap: 10px;
+ max-height: 214px;
 }
 
 .day-schedule {

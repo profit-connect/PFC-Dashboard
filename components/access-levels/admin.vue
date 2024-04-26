@@ -151,16 +151,16 @@
     await execute();
 
     if (data.value && data.value.return) {
-      $toast("Levels updated successfully!");
+      $toast.sucess("Levels updated successfully!");
     } else if (data.value) {
-      $toast(data.value.message);
+      $toast.error(data.value.message);
     } else if (error.value) {
-      $toast("An error occurred while updating the Levels.");
+      $toast.error("An error occurred while updating the Levels.");
       console.error("Error:/api/category/edit", error.value);
     }
   } catch (err) {
     console.log("Catch block error:/api/category/edit", err);
-    $toast("Failed to edit category due to an exception.");
+    $toast.error("Failed to edit category due to an exception.");
   }
 };
 

@@ -1,41 +1,5 @@
 <template>
   <div class="sidebar-box">
-    <!-- <div class="image-box">
-      <a
-        @click="
-          router.push({
-            path: '/members/details/membership-overview',
-            query: { id: getMemberImage.id },
-          })
-        "
-        class="sidebar-box__title text-center"
-        title="View membership"
-      >
-      <div v-if="memberInfoData">
-        <img v-if="!imageError && memberInfoData.member.data[0].img_src"
-            :src="getImageUrl(memberInfoData.member.data[0].img_src)"
-            @error="imageError = true"
-            v-show="!imageError" />
-
-        <div style="position: relative; left: 35%;" v-else class="avatar-initials content-title-bold ">
-          {{formatName( memberInfoData.member.data[0].firstname.charAt(0)) }}{{ formatName(memberInfoData.member.data[0].lastname.charAt(0)) }} 
-        </div>
-      </div>
-        <h2 class="content-title-bold editUserName">
-          {{ formatName(getMemberInfo.firstname) }} {{ formatName(getMemberInfo.lastname) }} 
-        </h2>
-      </a>
-      <p
-        style="
-          font-size: 14px;
-          text-align: center;
-          position: relative;
-          bottom: 25px;
-        "
-      >
-        Reset Fitness
-      </p>
-    </div> -->
     <div class="image-box" @mouseover="isHovering = true" @mouseleave="isHovering = false">
       <div class="hover-wrapper">
         <div
@@ -56,7 +20,6 @@
         <!-- <img src="~/assets/images/svg/schedule-cancel-blue.svg" alt="Cancel icon" class="img-hover" /> -->
       </div>
     </div>
-  
       <a
         @click="
           router.push({
@@ -68,13 +31,13 @@
         title="View membership"
       >
       <div v-if="memberInfoData">
-        <img v-if="!imageError && memberInfoData.member.data[0].img_src"
-            :src="getImageUrl(memberInfoData.member.data[0].img_src)"
+        <img v-if="!imageError && getMemberImage.image"
+            :src="getImageUrl( getMemberImage.image)"
             @error="imageError = true"
             v-show="!imageError" />
 
         <div style="position: relative; left: 35%;" v-else class="avatar-initials content-title-bold ">
-          {{formatName( memberInfoData.member.data[0].firstname.charAt(0)) }}{{ formatName(memberInfoData.member.data[0].lastname.charAt(0)) }} 
+          {{formatName( getMemberInfo.firstname.charAt(0)) }}{{ formatName( getMemberInfo.lastname.charAt(0)) }} 
         </div>
       </div>
         <h2 class="content-title-bold editUserName">
@@ -640,6 +603,7 @@ const editMemberImage = async (getMemberImage: any) => {
     });
 
     if (data.value.return) {
+      refresh();
       emit("reload");
       $toast.success("Member Image edited successfully!");
       emit("close-sidebar");
@@ -736,7 +700,7 @@ const getMemberImage = computed(() => {
 
     return {
       id: memberData.id,
-      image: memberData.img_src,
+      image: `${memberData.img_src}?timestamp=${new Date().getTime()}`
     };
   }
 
@@ -785,7 +749,7 @@ watch(
   memberId,
   async () => {
     if (memberId.value) {
-      const { data, pending } = await useCustomFetch<any>(
+      const { data, pending, refresh } = await useCustomFetch<any>(
         `/members/get/memberinfo`,
         {
           method: "POST",
@@ -800,7 +764,7 @@ watch(
 );
 const imageError = ref(false);
 watch(
-  () => memberInfoData.value?.member?.data[0]?.img_src,
+  () => getMemberImage.image,
   (newImgSrc) => {
     // Only reset imageError if newImgSrc is not undefined
     if (newImgSrc !== undefined) {
@@ -810,27 +774,7 @@ watch(
   { immediate: true } // This ensures the watcher is run immediately with the current value
 );
 
-// onMounted(async () => {
-//   try {
-//     const response = await fetch(
-//       "https://gist.githubusercontent.com/anubhavshrimal/75f6183458db8c453306f93521e93d37/raw/CountryCodes.json"
-//     );
-//     if (response.ok) {
-//       const data = await response.json();
-//       countryCodes.value = [
-//         ...countryCodes.value,
-//         ...data.map((country) => ({
-//           label: `${country.name} (${country.dial_code})`,
-//           value: country.dial_code,
-//         })),
-//       ];
-//     } else {
-//       console.error("Failed to fetch country codes");
-//     }
-//   } catch (error) {
-//     console.error("Error fetching country codes:", error);
-//   }
-// });
+
 </script>
 
 <style lang="scss" scoped>

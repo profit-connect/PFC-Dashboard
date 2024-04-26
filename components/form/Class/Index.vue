@@ -360,18 +360,18 @@ const addClass = async (classData: any) => {
 
     // Check the response and handle accordingly
     if (data.value && data.value.return) {
-      $toast("Class added successfully!");
+      $toast.sucess("Class added successfully!");
       emit("reload"); // Reload or refresh data
       // emit("close-canvas"); // If you have a modal or overlay to close
     } else if (data.value) {
-      $toast(data.value.message); // Show error message from response
+      $toast.error(data.value.message); // Show error message from response
     } else if (error.value) {
-      $toast("An error occurred while adding the class.");
+      $toast.error("An error occurred while adding the class.");
       console.error("Error:/api/class/add", error.value); // Log the error
     }
   } catch (err) {
     console.log("Catch block error:/api/class/add", err);
-    $toast("Failed to add class due to an exception.");
+      $toast.error("Failed to add class due to an exception.");
   }
 };
 
@@ -400,14 +400,14 @@ const updateClass = async (classData: any) => {
       $toast("Class edited successfully!");
       // emit("close-canvas");
     } else if (data.value) {
-      $toast(data.value.message);
+      $toast.error(data.value.message);
     } else if (error.value) {
-      $toast("An error occurred while updating the class.");
+      $toast.error("An error occurred while updating the class.");
       console.error("Error:/api/class/edit", error.value);
     }
   } catch (err) {
     console.log("Catch block error:/api/class/edit", err);
-    $toast("Failed to update class due to an exception.");
+    $toast.error("Failed to update class due to an exception.");
   }
 };
 

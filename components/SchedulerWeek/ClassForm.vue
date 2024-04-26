@@ -15,7 +15,7 @@
             />
           </div>
           <div class="col-5">
-            <FormKit
+            <!-- <FormKit
               placeholder="Class"
               type="multiselect"
               mode="single"
@@ -36,7 +36,23 @@
               @update:model-value="
                 onClassSelect(key, formStructure[key].class_id)
               "
+            /> -->
+            <FormKit
+              placeholder="Class"
+              type="multiselect"
+              mode="single"
+              validation="required"
+              v-if="formStructure[key].discipline_id && computedClassType.find(
+                (item) => item.value == formStructure[key].discipline_id
+              )?.class.length"
+              :options="computedClassType.find(
+                (item) => item.value == formStructure[key].discipline_id
+              )?.class"
+              :key="`${formStructure[key].discipline_id}-${formStructure[key].class_id}`"
+              v-model="formStructure[key].class_id"
+              @update:model-value="onClassSelect(key, formStructure[key].class_id)"
             />
+
           </div>
         </div>
         <table
@@ -268,10 +284,28 @@ const formStructure = ref([
   },
 ]);
 
+// const onEmptyFirstSlot = (key: number) => {
+//   if (!props.selectedSchedule.length) {
+//     formStructure.value[key].schedule = [];
+//     formStructure.value[key].class_id = undefined;
+
+//     if (
+//       formStructure.value.length === key + 2 &&
+//       !(formStructure.value[key + 1] && formStructure.value[key + 1].class_id)
+//     ) {
+//       formStructure.value.splice(key + 1, 1);
+//     }
+//   }
+// };
 const onEmptyFirstSlot = (key: number) => {
+  console.log('Selected Schedule Length: ', props.selectedSchedule.length);
+  console.log('Form Structure Before:', JSON.parse(JSON.stringify(formStructure.value)));
+
   if (!props.selectedSchedule.length) {
     formStructure.value[key].schedule = [];
     formStructure.value[key].class_id = undefined;
+
+    console.log('Form Structure After Clearing:', JSON.parse(JSON.stringify(formStructure.value)));
 
     if (
       formStructure.value.length === key + 2 &&
@@ -280,7 +314,10 @@ const onEmptyFirstSlot = (key: number) => {
       formStructure.value.splice(key + 1, 1);
     }
   }
+
+  console.log('Form Structure Final:', JSON.parse(JSON.stringify(formStructure.value)));
 };
+
 
 const onAddFirstSlot = (key: number) => {
   formStructure.value[key].schedule = [
@@ -661,16 +698,22 @@ watch(
   },
   { immediate: true }
 );
-const onClassSelect = (key: number, class_id: number) => {
-  if (class_id) {
-    if (!formStructure.value[key].schedule.length) {
-      onAddFirstSlot(key);
-    }
-    if (formStructure.value.length - 1 === key) {
-      onAddNewClass();
-    }
-  }
+// const onClassSelect = (key: number, class_id: number) => {
+//   if (class_id) {
+//     if (!formStructure.value[key].schedule.length) {
+//       onAddFirstSlot(key);
+//     }
+//     if (formStructure.value.length - 1 === key) {
+//       onAddNewClass();
+//     }
+//   }
+// };
+
+const onClassSelect = (key, class_id) => {
+  console.log(`Updating class for key ${key} to ${class_id}`);
+  // Rest of your logic here...
 };
+
 
 onMounted(() => {
   onAddNewClass();
@@ -698,6 +741,18 @@ const getAvailableTime = (availableTime: [any], schedule: any) => {
     };
   });
 };
+
+// In your <script setup> block or methods section
+import { watch } from 'vue';
+
+watch(() => formStructure.value.map(item => item.discipline_id), (newValues, oldValues) => {
+  newValues.forEach((newValue, index) => {
+    if (newValue !== oldValues[index]) {
+      formStructure.value[index].class_id = undefined; // Reset the class_id
+    }
+  });
+}, { deep: true });
+
 </script>
 
 <style scoped lang="scss">

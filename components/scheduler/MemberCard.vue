@@ -38,7 +38,7 @@
        style="padding-left: 12px; margin-right: 20px;"
         @click="$emit('onSelect')"
         class="plusIcon"
-        src="~/assets/images/svg/aplus-icon.svg"
+        src="~/assets/images/svg/plus-icons.svg"
         alt="Plus icon"
       />
   </div>

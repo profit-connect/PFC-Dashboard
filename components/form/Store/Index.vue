@@ -391,12 +391,12 @@ const updateStore = async (storeData: any) => {
     await execute();
 
     if (data.value && data.value.return) {
-      $toast("Store edited successfully!");
       emit("reload");
+      $toast("Store edited successfully!");
       // emit("close-canvas");
     } else {
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";
-      $toast(errorMessage);
+      $toast.error(errorMessage);
     }
   } catch (err) {
     console.error("Error:/api/store/edit", err);
