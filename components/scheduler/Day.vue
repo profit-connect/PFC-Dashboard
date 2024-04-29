@@ -152,7 +152,7 @@
                 <!-- <a   :href="`/members/details/${member.id}/membership-overview`" class="hover-info__link"> -->
                 <a
                   :href="`/members/details/membership-overview?id=${member.id}`"
-                  class="hover-info__link"
+                  class="hover-info__link tooltips"
                 >
                   <img
                     src="~/assets/images/svg/schedule-profile-white.svg"
@@ -164,8 +164,9 @@
                     alt="Profile icon"
                     class="img-hover"
                   />
+                  <span class="tooltiptext">Profile</span>
                 </a>
-                <a href="/" class="hover-info__link">
+                <a href="/" class="hover-info__link tooltips">
                   <img
                     src="~/assets/images/svg/schedule-chat-white.svg"
                     alt="Chat icon"
@@ -176,10 +177,11 @@
                     alt="Chat icon"
                     class="img-hover"
                   />
+                  <span class="tooltiptext">Chat</span>
                 </a>
                 <div
                   @click="cancelMember(member.id, schedule.id)"
-                  class="hover-info__link"
+                  class="hover-info__link tooltips"
                 >
                   <img
                     src="~/assets/images/svg/schedule-cancel-white.svg"
@@ -191,6 +193,7 @@
                     alt="Cancel icon"
                     class="img-hover"
                   />
+                  <span class="tooltiptext">Cancel</span>
                 </div>
               </div>
             </div>
@@ -234,14 +237,14 @@
         </div>
       </div>
       <div class="book_member">
-        <MixButton
+        <MixButtonSchedule
           v-if="
             !isBookingDisabled(schedule.start_time) &&
             !isCapacityReached(schedule.nonNullMemberCount, schedule.capacity)
           "
           size="lg"
           @click="showMemberModal('member')"
-          label="Book a &nbsp;&nbsp;&nbsp;Member"
+          label="Book a &nbsp;&nbsp;Member"
         />
       </div>
       <!-- <MixButton size="lg" @click="showMemberModal('member')" label="Book Member"
@@ -754,6 +757,47 @@ watch(
   .hover-info__link:hover .img-hover {
     display: block; /* Show blue images on hover */
   }
+  .tooltips .tooltiptext {
+  visibility: hidden;
+  width: auto; /* Adjust width as needed */
+  background-color: white;
+  color: black;
+  font-size: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border-radius: 20px;
+  padding: 5px 8px; /* Adjust padding as needed, adding some space on the sides */
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  bottom: 110%; /* Adjust this to change the vertical position of the tooltip */
+  left: 50%;
+  transform: translateX(-50%); /* Centers the tooltip */
+  
+  /* Fade in tooltip - Transition for smooth appearance */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  
+  /* Tooltip arrow */
+  &:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent; /* Arrow color matches tooltip background */
+  }
+}
+
+.tooltips:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
 }
 .card {
   height: 131px;

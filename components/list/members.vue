@@ -114,7 +114,8 @@ const onImageError = (event, item) => {
     display: flex;
     margin-top: 10px;
     border-radius: 10px;
-    padding: 10px;
+    // padding: 10px;
+    padding: 10px 50px 10px 10px;
     cursor: pointer;
     background: transparent;
     transition: $transitionSpeed;
@@ -139,7 +140,7 @@ const onImageError = (event, item) => {
     }
 
     .member-row-ava-box {
-      width: 50%;
+      width: 40%;
     }
 
     &__data {

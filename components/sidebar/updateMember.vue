@@ -4,20 +4,23 @@
       <div class="hover-wrapper">
         <div
           class="hover-info">
-        <a class="hover-info__link" @click=" router.push({
+        <a class="hover-info__link tooltips" @click=" router.push({
             path: '/members/details/membership-overview',
             query: { id: getMemberImage.id },
           })">
         <img src="~/assets/images/svg/schedule-profile-white-outline.svg" alt="Profile icon" class="img-normal"/>
         <img src="~/assets/images/svg/schedule-profile-blue.svg" alt="Profile icon" class="img-hover" />
+        <span class="tooltiptext">Profile</span>
     </a>
-      <a  class="hover-info__link-1">
+      <a  class="hover-info__link-1 tooltips">
         <img src="~/assets/images/svg/schedule-chat-white-outline.svg" alt="Chat icon" class="img-normal"/>
         <img src="~/assets/images/svg/schedule-chat-blue.svg" alt="Chat icon" class="img-hover" />
+        <span class="tooltiptext">Chat</span>
       </a>
-      <div href="" class="hover-info__link-1">
+      <div href="" class="hover-info__link-1 tooltips">
         <img src="~/assets/images/svg/schedule-cancel-white-outline.svg" alt="Cancel icon" class="img-normal"/>
         <!-- <img src="~/assets/images/svg/schedule-cancel-blue.svg" alt="Cancel icon" class="img-hover" /> -->
+        <span class="tooltiptext">Cancel</span>
       </div>
     </div>
       <a
@@ -345,7 +348,6 @@
             type="text"
             placeholder="Emergency contact name"
             name="emergency_contact_name"
-            v-model="getMemberInfo.emergency_contact_name"
             @blur="setEmergencyContactNameTouched"
             :validation="isEmergencyContactFieldRequired"
             :validation-messages="{
@@ -359,7 +361,6 @@
                 type="multiselect"
                 name="emergency_country_code"
                 :options="CountryCodes"
-                v-model="getMemberInfo.emergency_country_code"
                 @blur="setEmergencyCountryCodeTouched"
                 :validation="isEmergencyContactFieldRequired"
                 :validation-messages="{
@@ -372,7 +373,6 @@
                 type="tel"
                 placeholder="Contact Number"
                 name="emergency_contact_no"
-                v-model="getMemberInfo.emergency_contact_no"
                 @blur="setEmergencyContactNoTouched"
                 :validation="isEmergencyContactFieldRequired"
                 :validation-messages="{
@@ -774,7 +774,11 @@ watch(
   { immediate: true } // This ensures the watcher is run immediately with the current value
 );
 
-
+watchEffect(() => {
+  const infoFilled = isEmergencyContactInfoFilled.value; // Accessing this ensures reactivity
+  // Log or handle state changes as needed, useful for debugging
+  console.log("Emergency contact info requirement updated: ", infoFilled);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -986,4 +990,44 @@ watch(
 .hover-info__link:hover .img-hover {
     display: block; /* Show blue images on hover */
 }
+.tooltips .tooltiptext {
+  visibility: hidden;
+  width: auto; /* Adjust width as needed */
+  background-color: white;
+  color: black;
+  font-size: 10px;
+  text-align: center;
+  border-radius: 20px;
+  padding: 5px 8px; /* Adjust padding as needed, adding some space on the sides */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  bottom: 110%; /* Adjust this to change the vertical position of the tooltip */
+  left: 50%;
+  transform: translateX(-50%); /* Centers the tooltip */
+  
+  /* Fade in tooltip - Transition for smooth appearance */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  
+  /* Tooltip arrow */
+  &:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent; /* Arrow color matches tooltip background */
+  }
+}
+.hover-info__link:hover .tooltiptext,
+.hover-info__link-1:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
 </style>

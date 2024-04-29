@@ -7,7 +7,7 @@
       :actions="false"
       #default="{ state: { valid } }"
     >
-      <div class="d-flex justify-content-end align-items-center gap-4 mb-3">{{ minDate }}
+      <div class="d-flex justify-content-end align-items-center gap-4 mb-3">
         <span> Can be paid with </span>
         <FormKit
           type="checkbox"
@@ -148,7 +148,7 @@
           </div>
 
           <MixInputBox title="Payment"  >
-            <div class="row" style="height:90px;">
+            <div class="row" style="height:100px;">
               <div class="col-5 d-flex align-items-center gap-2">
                 <FormKit
                   type="multiselect"
@@ -183,16 +183,23 @@
                 v-if="paymentCategoryData === 'Recurring'"
               >
                 <span class="mb-3"> every </span>
+                <div   style="width: 60px;">
                 <FormKit
                   type="number"
                   name="payment_duration"
                   :validation="
                     paymentCategoryData === 'Recurring' ? 'required' : ''
                   "
-                  placeholder="Dration"
+                  placeholder="No."
+                  :validation-messages="{
+                  required: 'Duration required',
+                }"
                 />
+              </div>
+              <div   style="width: 240px;">
                 <FormKit
                   type="multiselect"
+                  placeholder=" Select time period."
                   name="payment_period"
                   mode="single"
                   :classes="{
@@ -202,8 +209,13 @@
                     paymentCategoryData === 'Recurring' ? 'required' : ''
                   "
                   :options="periodType"
+                  :validation-messages="{
+                  required: 'Time period is required',
+                }"
                 />
+              </div>
                 <span class="mb-3"> for </span>
+                <div   style="width: 60px;">
                 <FormKit
                   type="number"
                   name="payment_cycle"
@@ -211,14 +223,18 @@
                     paymentCategoryData === 'Recurring' ? 'required' : ''
                   "
                   placeholder="Cycle"
+                  :validation-messages="{
+                  required: 'Cycle required',
+                }"
                 />
+              </div>
               </div>
             </div>
           </MixInputBox>
           <div
             class="d-flex justify-content-between align-items-center mb-4 my-2"
           >
-            <div class="d-flex gap-2 align-items-center">
+            <div class="d-flex gap-2 align-items-center mt-3">
               <FormKit
                 type="checkbox"
                 outer-class="m-0"
@@ -226,7 +242,7 @@
                 :value="false"
                 v-model="isPromotionPriceActive"
               />
-            <div style="width: 150px;">
+            <div style="width: 150px; height: 55px;">
               <FormKit
                 type="number"
                 outer-class="m-0"
@@ -253,7 +269,7 @@
             </div>
             <div class="d-flex gap-2">
               <div class="d-flex flex-column items-align-center justify-content-center">
-              <span>Promotion/Start date</span>
+              <span class="promotion-dates">Promotion/Start date</span>
               <FormKit
                 type="date"
                 outer-class="m-0"
@@ -267,9 +283,9 @@
                 }"
                 />
               </div>
-              <span style="margin-top: 40px;">To</span>
+              <span class="To">To</span>
                 <div class="d-flex flex-column items-align-center justify-content-center">
-                <span>Promotion/End date</span>
+                <span class="promotion-dates">Promotion/End date</span>
               <FormKit
                 type="date"
                 outer-class="m-0 date-width"
@@ -800,5 +816,11 @@ watchEffect(() => {
 .formkit-invalid .formkit-message {
   visibility: visible;
   opacity: 1;
+}
+.To {
+  margin-top: 35px;
+}
+.promotion-dates {
+  font-size: 10px;
 }
 </style>

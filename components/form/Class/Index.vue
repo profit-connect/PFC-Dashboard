@@ -13,6 +13,9 @@
         name="name"
         placeholder="Enter class or event name"
         validation="required"
+        :validation-messages="{
+                  required: 'Name is required',
+                }"
       />
       </div>
       <div class="row my-4">
@@ -102,7 +105,7 @@
             :targetHeight="540"
             :targetWidth="960"
             :hideUploadButton="true"
-            help="Max image size: 960x540px, 1MB. Format: .jpg or .png"
+            help="Upload image for class/event page, Max image size: 960x540px, 1MB. Format: .jpg or .png"
           />
         </div>
         <div class="col-6">
@@ -113,7 +116,7 @@
             :targetHeight="262"
             :targetWidth="890"
             :hideUploadButton="true"
-            help="Max image size: 890x262px, 1MB. in .jpg and .png."
+            help="Upload image for booking page, Max image size: 890x262px, 1MB. in .jpg and .png."
           />
         </div>
       </div>
@@ -134,10 +137,13 @@
             type="text"
             label="Location"
             name="location"
-            placeholder="Please enter Location"
+            placeholder="Please enter location"
             v-model="location"
             :disabled="['On-site', 'Online'].includes(classType)"
             :validation="locationValidation"
+            :validation-messages="{
+                  required: 'Location is required',
+                }"
           />
         </div>
         <div class="col-6" >
@@ -146,10 +152,13 @@
             type="text"
             label="Google Map Url"
             name="googlemaps"
-            placeholder="Please enter Google Map Url"
+            placeholder="Please enter Google Map URL"
             v-model="googlemaps"
             :disabled="['On-site', 'Online'].includes(classType)"
             :validation="googleMapsValidation"
+            :validation-messages="{
+                  required: 'Google Map URL  is required',
+                }"
           />
         </div>
       </div>
@@ -161,7 +170,7 @@
             label="Url"
             name="url"
             v-model="url"
-            placeholder="URL"
+            placeholder="Please enter URL"
             :disabled="['On-site', 'Off-site'].includes(classType)"
             :validation="urlValidation"
             :validation-messages="{
@@ -180,7 +189,7 @@
               z-index: 90;
               font-size: 16px;
             "
-            >Open To</span
+            >Open to</span
           >
           <!-- openDirection="top" -->
           <FormKit
@@ -360,9 +369,8 @@ const addClass = async (classData: any) => {
 
     // Check the response and handle accordingly
     if (data.value && data.value.return) {
-      $toast.sucess("Class added successfully!");
+      $toast("Class added successfully!");
       emit("reload"); // Reload or refresh data
-      // emit("close-canvas"); // If you have a modal or overlay to close
     } else if (data.value) {
       $toast.error(data.value.message); // Show error message from response
     } else if (error.value) {

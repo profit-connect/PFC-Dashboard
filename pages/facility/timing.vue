@@ -358,7 +358,7 @@ const SelectFacility = async (value) => {
 const generalTiming = computed(() => {
   // Accessing timings from the first general section of the first facility of the first franchise
   const timings = facilityData.value?.franchise?.[0]?.facility?.[0]?.general?.[0]?.timings?.filter(Boolean);
-  console.log("timings", timings);
+  // console.log("timings", timings);
 
   // If there are no timings or the 'timings' array does not exist, return default timing
   if (!timings || !timings.length) {
@@ -375,7 +375,7 @@ const generalTiming = computed(() => {
 
 const generalInfo = computed(() => {
   const info = facilityData.value?.franchise?.[0]?.facility?.[0]?.general?.[0] ?? null;
-  console.log("Computed generalInfo:", info);
+  // console.log("Computed generalInfo:", info);
   return info;
 });
 
@@ -444,7 +444,7 @@ const toggleStates: ToggleStates = {
 
 const isAnyEditModeActive = computed(() => {
   const isActive = Object.values(toggleStates).some((state) => state.value);
-  console.log("Edit Mode Active:", isActive);
+  // console.log("Edit Mode Active:", isActive);
   return isActive;
 });
 

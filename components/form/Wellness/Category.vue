@@ -138,7 +138,7 @@ const createCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast.sucess("Category added successfully!");
+      $toast("Category added successfully!");
       // emit("close-canvas");
     } else if (data.value) {
       $toast.error(data.value.message); // Using alert for error feedback as per your code
@@ -170,7 +170,7 @@ const editCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast.sucess("Category edited successfully!");
+      $toast("Category edited successfully!");
       // emit("close-canvas");
     } else if (data.value) {
       $toast.error(data.value.message);

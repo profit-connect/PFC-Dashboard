@@ -151,7 +151,7 @@
     await execute();
 
     if (data.value && data.value.return) {
-      $toast.sucess("Levels updated successfully!");
+      $toast("Levels updated successfully!");
     } else if (data.value) {
       $toast.error(data.value.message);
     } else if (error.value) {

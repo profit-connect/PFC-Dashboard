@@ -184,7 +184,7 @@ const editCategory = async (categoryData) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast.sucess("Category edited successfully!");
+      $toast("Category edited successfully!");
       // emit("close-canvas");
     } else if (data.value) {
       $toast.error(data.value.message);

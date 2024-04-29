@@ -23,7 +23,7 @@
       </button>
     </div>
     <DatePicker
-      class="mt-2 mb-4"
+      class="mt-2 mb-5"
       borderless
       transparent
       :class="

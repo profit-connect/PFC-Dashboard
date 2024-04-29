@@ -149,7 +149,7 @@ const computedSelectedRole = computed(() => {
       await execute();
   
       if (data.value && data.value.return) {
-        $toast.sucess("Roles added successfully!");
+        $toast("Roles added successfully!");
         emit("reload");
         // emit("close-canvas");
       } else {
@@ -181,7 +181,7 @@ const computedSelectedRole = computed(() => {
       await execute();
   
       if (data.value && data.value.return) {
-        $toast.sucess("Roles edited successfully!");
+        $toast("Roles edited successfully!");
         emit("reload");
         // emit("close-canvas");
       } else {

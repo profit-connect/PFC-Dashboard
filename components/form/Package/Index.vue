@@ -8,7 +8,7 @@
     >
       <div class="d-flex items-align-center gap-2 mb-2" style="height: 90px;">
         <div class="d-flex flex-column items-align-center justify-content-center">
-        <span>Start Date</span>
+        <span class="promotion-dates">Start Date</span>
         <FormKit
           style="height: 40px;"
           type="date"
@@ -22,9 +22,9 @@
           v-model="startDate"
         />
         </div>
-        <span style="margin-top: 40px;">To</span>
+        <span class="To">To</span>
         <div class="d-flex flex-column items-align-center justify-content-center">
-          <span>End Date</span>
+          <span class="promotion-dates">End Date</span>
         <FormKit
           style="height: 40px;"
           type="date"
@@ -64,7 +64,7 @@
     </div>
       <div 
         class="mt-4 d-flex justify-content-center flex-column"
-        style=" width: 830px; text-align: center;"
+        style="position: fixed; width: 830px; text-align: center; bottom: 0px;"
       >
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
@@ -202,4 +202,5 @@ const submitHandler = async (packageData) => {
   min-height: 50px;
   opacity: 1;
 }
+
 </style>

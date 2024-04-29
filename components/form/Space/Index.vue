@@ -230,7 +230,7 @@ const computedSelectedSpace = computed(() => {
 const isPromotionPriceActive = ref(!!computedSelectedSpace.value?.url);
 
 const addSpace = async (spaceData: any) => {
-console.log(spaceData)
+// console.log(spaceData)
   const { data, error, execute } = useCustomFetch<any>("/space/add/space", {
     method: "POST",
     body: JSON.stringify({
@@ -247,7 +247,7 @@ console.log(spaceData)
     await execute();
 
     if (data.value && data.value.return) {
-      $toast.sucess("Space added successfully!");
+      $toast("Space added successfully!");
       emit("reload");
       // emit("close-canvas");
     } else if (data.value) {
@@ -264,7 +264,7 @@ console.log(spaceData)
 
 
 const updateSpace = async (spaceData: any) => {
-console.log(spaceData)
+// console.log(spaceData)
   const { data, error, execute } = useCustomFetch<any>("/space/update/space", {
     method: "POST",
     body: JSON.stringify({
@@ -282,7 +282,7 @@ console.log(spaceData)
     await execute();
 
     if (data.value && data.value.return) {
-      $toast.sucess("Space edited successfully!");
+      $toast("Space edited successfully!");
       emit("reload");
       // emit("close-canvas");
     } else if (data.value) {
@@ -315,13 +315,13 @@ const timeToMinutes = (time: string) => {
 
 
 const submitHandler = async (spaceData) => {
-  console.log(spaceData)
+  // console.log(spaceData)
   if (!timingIsValid.value && spaceData.follow_facility_timing === false) {
     $toast.error('Please ensure all end times are greater than start times.');
     return; // Stop the submission as the validation failed
   }
     let tempData = { ...spaceData };
-    console.log("tempData",tempData)
+    // console.log("tempData",tempData)
     tempData.capacity = tempData.capacity ?? '';
 
     if (!tempData.virtual_room) {

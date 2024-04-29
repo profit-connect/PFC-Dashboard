@@ -443,7 +443,8 @@ input.formkit-input[type="checkbox"]:checked ~ .formkit-decorator::before {
 .formkit-help,
 .formkit-option-help {
   font-family: var(--fk-font-family-help);
-  font-size: var(--fk-font-size-help);
+  // font-size: var(--fk-font-size-help);
+  font-size: 10px;
   font-weight: var(--fk-font-weight-help);
   line-height: var(--fk-line-height-help);
 }

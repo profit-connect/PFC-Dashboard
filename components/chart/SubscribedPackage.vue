@@ -24,7 +24,7 @@
               <div>Expiring</div>
               <div>{{ formatDate(plan.end_date) }}</div>
             </div> -->
-            <div class="end-date-text"><p style="color: #002E4B;">Expiring :</p>  {{ formatDate(plan.end_date) }}</div>
+            <div class="end-date-text"><p style="color: #002E4B;">Expiring : &nbsp;</p>  {{ formatDate(plan.end_date) }}</div>
           </div>
         </div>
       </div>
@@ -45,7 +45,7 @@
             <!-- <div class="end-date-text1">
               {{ formatDate(plan.start_date) }}
             </div> -->
-            <div class="end-date-text"><p style="color: #002E4B;">Expiring:</p> {{ formatDate(plan.end_date) }}</div>
+            <div class="end-date-text"><p style="color: #002E4B;">Expiring : &nbsp;</p> {{ formatDate(plan.end_date) }}</div>
           </div>
         </div>
       </div>
@@ -149,6 +149,7 @@ const calculateWidth = (startDate, endDate) => {
   padding: 70px 0px 0px 0px;
   overflow-y: hidden;
   min-height: 650px;
+  
 
 /* Custom scrollbar styles: */
 &::-webkit-scrollbar {
@@ -175,6 +176,7 @@ const calculateWidth = (startDate, endDate) => {
 .membership-graph .membership-graph__row1 {
   position: relative;
   height: 168px;
+ 
 }
 
 .membership-graph .membership-graph__row1 .graph-box {
@@ -195,7 +197,7 @@ const calculateWidth = (startDate, endDate) => {
   justify-content: center;
   text-align: center;
   font-family: "Poppins Medium", sans-serif, Arial;
- 
+  left: 20px;
 }
 
 
@@ -251,6 +253,7 @@ element.style {
 
 .membership-graph .today-line-box {
   position: absolute;
+  left: 20px;
   width: 10px;
   height: 484px;
   border-left: 1px dashed #ffd500;

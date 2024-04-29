@@ -131,7 +131,7 @@ const createCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast.sucess("Category added successfully!");
+      $toast("Category added successfully!");
       // emit("close-canvas");
     } else {
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";
@@ -162,7 +162,7 @@ const editCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast.sucess("Category edited successfully!");
+      $toast("Category edited successfully!");
       // emit("close-canvas");
     } else {
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";

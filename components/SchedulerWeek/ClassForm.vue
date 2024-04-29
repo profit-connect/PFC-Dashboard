@@ -698,21 +698,21 @@ watch(
   },
   { immediate: true }
 );
-// const onClassSelect = (key: number, class_id: number) => {
-//   if (class_id) {
-//     if (!formStructure.value[key].schedule.length) {
-//       onAddFirstSlot(key);
-//     }
-//     if (formStructure.value.length - 1 === key) {
-//       onAddNewClass();
-//     }
-//   }
-// };
-
-const onClassSelect = (key, class_id) => {
-  console.log(`Updating class for key ${key} to ${class_id}`);
-  // Rest of your logic here...
+const onClassSelect = (key: number, class_id: number) => {
+  if (class_id) {
+    if (!formStructure.value[key].schedule.length) {
+      onAddFirstSlot(key);
+    }
+    if (formStructure.value.length - 1 === key) {
+      onAddNewClass();
+    }
+  }
 };
+
+// const onClassSelect = (key, class_id) => {
+//   console.log(`Updating class for key ${key} to ${class_id}`);
+//   // Rest of your logic here...
+// };
 
 
 onMounted(() => {
@@ -742,8 +742,7 @@ const getAvailableTime = (availableTime: [any], schedule: any) => {
   });
 };
 
-// In your <script setup> block or methods section
-import { watch } from 'vue';
+
 
 watch(() => formStructure.value.map(item => item.discipline_id), (newValues, oldValues) => {
   newValues.forEach((newValue, index) => {

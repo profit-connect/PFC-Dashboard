@@ -339,7 +339,7 @@ const SelectFacility = async (value) => {
 
 const generalInfo = computed(() => {
   const info = facilityData.value?.franchise?.[0]?.facility?.[0]?.general?.[0] ?? null;
-  console.log("Computed generalInfo:", info);
+  // console.log("Computed generalInfo:", info);
   return info;
 });
 
@@ -407,7 +407,7 @@ const toggleStates: ToggleStates = {
 
 const isAnyEditModeActive = computed(() => {
   const isActive = Object.values(toggleStates).some((state) => state.value);
-  console.log("Edit Mode Active:", isActive);
+  // console.log("Edit Mode Active:", isActive);
   return isActive;
 });
 

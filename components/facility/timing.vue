@@ -59,7 +59,7 @@
              class="custom-formkit-message"
              validation="required"
            >
-           Increase end-time
+           End time should be later.
            </p>
          </div>
        </div>

@@ -233,7 +233,7 @@ const submitHandler = async (purchaseData: any) => {
     });
     if (data.value.return) {
       emit("reload");
-      $toast.sucess("Plan added successfully!");
+      $toast("Plan added successfully!");
       emit("close-canvas");
       location.reload();
     } else {
