@@ -212,17 +212,22 @@
         </div> -->
         </div>
       </div>
-      <div class="d-flex justify-content-center">
-        <FormKit type="submit">Save</FormKit>
+      <div 
+        class="mt-4 d-flex justify-content-center flex-column"
+        style="position: relative; width: 830px; text-align: center; bottom: 0px;"
+      >
+        <div><FormKit type="submit">Save</FormKit></div>
+        <div>
+          <button
+            class="btn"
+            @click="$emit('close-canvas')"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </FormKit>
-    <button
-      class="btn"
-      style="position: relative; left: 365px; margin-bottom: 20px"
-      @click="$emit('close-canvas')"
-    >
-      Cancel
-    </button>
+ 
   </div>
 </template>
 
@@ -333,7 +338,7 @@ const addArticle = async (articleData: any) => {
     // Check the response and handle accordingly
     if (data.value && data.value.return) {
       console.log("data",data)
-      $toast.sucess("Article added successfully!");
+      $toast("Article added successfully!");
       emit("reload"); // Reload or refresh data
       // emit("close-canvas"); // If you have a modal or overlay to close
     } else if (data.value) {
@@ -371,7 +376,7 @@ const updateArticle = async (articleData: any) => {
     // Since useFetch from Nuxt 3 automatically unwraps the response, you might need to adjust how you access the data
     if (data.value && data.value.return) {
       emit("reload");
-      $toast.sucess("Article edited successfully!");
+      $toast("Article edited successfully!");
       // emit("close-canvas");
     } else if (data.value) {
       $toast.error(data.value.message);

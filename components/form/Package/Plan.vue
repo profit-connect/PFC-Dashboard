@@ -414,16 +414,20 @@
         </div>
       </div>
 
-      <div class="d-flex justify-content-center">
-        <FormKit type="submit">Save</FormKit>
-      </div>
-      <button
-        class="btn"
-        style="position: relative; left: 365px; bottom: 10px"
-        @click="$emit('close-canvas')"
+      <div 
+        class="mt-4 d-flex justify-content-center flex-column"
+        style="position: relative; width: 830px; text-align: center; bottom: 0px;"
       >
-        Cancel
-      </button>
+        <div><FormKit type="submit">Save</FormKit></div>
+        <div>
+          <button
+            class="btn"
+            @click="$emit('close-canvas')"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </FormKit>
   </div>
 </template>

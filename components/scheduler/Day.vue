@@ -118,7 +118,7 @@
       </div>
     </div>
 
-    <div class="memebers d-flex flex-wrap">
+    <div class="members d-flex flex-wrap gap-2">
       <div
         class="card rounded px-3 py-3 m-1"
         v-for="member in schedule.members.filter((item: any) => item && item.status === 'Booked')"
@@ -250,7 +250,7 @@
       <!-- <MixButton size="lg" @click="showMemberModal('member')" label="Book Member"
        :disabled="isBookingDisabled(schedule.start_time) || isCapacityReached ( schedule.nonNullMemberCount ,schedule.capacity)" /> -->
     </div>
-    <ModalExpandable
+    <ModalExpandableSchedule
       v-model="showMember"
       id="day-member-modal"
       v-model:showSubModal="isAddNewMember"
@@ -350,8 +350,8 @@
           />
         </div>
       </template>
-    </ModalExpandable>
-    <ModalExpandable v-model="showCoach" id="day-coach-modal">
+    </ModalExpandableSchedule>
+    <ModalExpandableSchedule v-model="showCoach" id="day-coach-modal">
       <template #title>
         <div class="d-flex justify-content-between">
           Coach Search
@@ -405,7 +405,7 @@
           />
         </div>
       </template>
-    </ModalExpandable>
+    </ModalExpandableSchedule>
   </div>
 </template>
 
@@ -801,7 +801,7 @@ watch(
 }
 .card {
   height: 131px;
-  border-radius: 10px;
+  border-radius: 10px !important;
   // width: 398px;
 }
 </style>

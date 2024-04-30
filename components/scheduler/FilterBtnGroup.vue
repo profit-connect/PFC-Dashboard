@@ -61,8 +61,9 @@ function formatName(string) {
     display: flex;
     flex-wrap: wrap;
     gap: 8px 14px;
-    margin-bottom: 40px;;
+    margin-bottom: 40px;
     button {
+      height: 40px;
       background: none;
       border: 1px solid $dark-blue-seconadary;
       color: #fff;

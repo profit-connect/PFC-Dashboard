@@ -39,7 +39,7 @@
       </div>
       <table class="tags-table w-full">
         <thead>
-          <th>Name</th>
+          <th style="position: relative; left: 15px">Name</th>
           <th style="position: relative; right: 15px;">Count</th>
           <th  style="position: relative; right: 10px;">Created by</th>
           <th  style="position: relative; right: 10px;" class="w-125px">Date created</th>
@@ -166,6 +166,7 @@ const onSearch = (data: string) => {
 <style scoped>
 .w-125px {
   width: 125px;
+
 }
 .tags-table {
   margin-top: 30px;
@@ -173,12 +174,15 @@ const onSearch = (data: string) => {
 
   tr {
     transition: background-color 0.3s; /* Smooth transition for hover effect */
-    height: 40px;
+    border-radius: 10px;
+    height: 60px;
     &:hover {
-      background-color: #f2faff; /* Light blue background on hover */
-      cursor: pointer; /* Changes the cursor to indicate it's clickable */
+      background-color: #f2faff; 
+      cursor: pointer; 
+      border-radius: 10px !important; 
     }
     td {
+      
 
     }
     th {
@@ -218,6 +222,9 @@ const onSearch = (data: string) => {
   height: fit-content;
 }
 .name {
+  position: relative;
+  left: 13px;
+
   display: inline-block;
   /* background-color: #f2faff; / */
   border: 1px solid #84ceff;

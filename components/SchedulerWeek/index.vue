@@ -522,7 +522,7 @@ const onSchedulerDateSelect = (date: number, data: any, type: string) => {
 }
 
 .scheduler-week {
-   margin-right: 100px;
+  //  margin-right: 100px;
   @media only screen and (max-width: 1367px) {
     margin-right:200px;
   }

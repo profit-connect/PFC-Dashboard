@@ -1,7 +1,7 @@
 <template> 
-  <div class="scheduler-filter-side-bar h-100 px-4 py-4  disable-scorllbar">
+  <div class="scheduler-filter-side-bar h-100 px-5 py-4  disable-scorllbar">
     <SchedulerCalendar
-      style="position: relative; margin-right: 40px;"
+      style="position: relative; margin-right: 31px; left: 10px;"
       @dateChanged="emit('dateChanged', $event)"
       @weekChanged="emit('weekChanged', $event)"
     />
@@ -93,7 +93,7 @@ const computedCoaches = computed(() => {
 .scheduler-filter-side-bar {
   background: $main-dark-blue;
   height: calc(100vh - 84px);
-  max-width: 380px;
+  max-width: 428px;
   overflow: scroll;
   padding-bottom: 48px !important;
 }

@@ -529,6 +529,7 @@ bus.on((val) => {
  width: 1398px;
  margin-left: auto;
  margin-right: auto;
+ box-shadow: 0 0 13px #00000026;
 
 }
 

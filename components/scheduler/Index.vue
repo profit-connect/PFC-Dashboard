@@ -25,7 +25,7 @@
         />
       </div>
     </div>
-    <Modal v-model="showMember" id="day-schdedule">
+    <Modal v-model="showWeekForm" id="day-schdedule">
       <template #title>
         <div>
           Add/ Edit Classes
@@ -38,13 +38,14 @@
         </div>
       </template>
       <SchedulerWeekClassForm
-        @on-class-add="emit('on-class-add'), (showMember = false)"
+        @on-class-add="emit('on-class-add'), (showWeekForm = false)"
+        @close-canvas="showWeekForm = false"
         :categoryData="categoryData"
         :selectedRoomId="selectedRoomId"
         :selectedRoomCapacity="currentRoom?.capacity"
         :selectedDate="dates.start"
         :selectedSchedule="computedTimeSlots.length ? data.schedule : []"
-        v-if="showMember"
+        v-if="showWeekForm"
       />
     </Modal>
   </div>
@@ -98,7 +99,7 @@ const indexForTimeSlot = ref(
   [...Array(props.availableRoom.length).keys()].map((i) => 0)
 );
 const selectedClass = ref(props.selectedClass);
-const showMember = ref(false);
+const showWeekForm = ref(false);
 const selectedDate = ref("");
 const computedTimeSlots = computed(() => {
   if (props.data.schedule)
@@ -130,7 +131,7 @@ const onAddClass = (selectedDateNew: string) => {
   selectedDate.value = selectedDateNew;
 };
 const handleModalToggle = () => {
-  showMember.value = !showMember.value;
+  showWeekForm.value = !showWeekForm.value;
 };
 
 
@@ -177,13 +178,13 @@ watch(() => props.hideSchedulerBar, (newValue) => {
   height: fit-content;
   overflow: hidden;
   position: relative;
-  margin-left: -55px;
+  margin-left: -39px;
   width: calc(100% + 38px);
   margin-top: -39px;
   .scheduler-list {
     margin-top: -25px;
     padding-left: 10px;
-    height: calc(100vh - 124px);
+    height: calc(100vh - 84px);
     overflow: scroll;
     box-shadow: 0 0 13px #00000026;
   }

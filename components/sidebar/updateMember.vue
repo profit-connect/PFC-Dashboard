@@ -348,6 +348,7 @@
             type="text"
             placeholder="Emergency contact name"
             name="emergency_contact_name"
+            v-model="getMemberInfo.emergency_contact_name"
             @blur="setEmergencyContactNameTouched"
             :validation="isEmergencyContactFieldRequired"
             :validation-messages="{
@@ -361,6 +362,7 @@
                 type="multiselect"
                 name="emergency_country_code"
                 :options="CountryCodes"
+                v-model="getMemberInfo.emergency_country_code"
                 @blur="setEmergencyCountryCodeTouched"
                 :validation="isEmergencyContactFieldRequired"
                 :validation-messages="{
@@ -373,6 +375,7 @@
                 type="tel"
                 placeholder="Contact Number"
                 name="emergency_contact_no"
+                v-model="getMemberInfo.emergency_contact_no"
                 @blur="setEmergencyContactNoTouched"
                 :validation="isEmergencyContactFieldRequired"
                 :validation-messages="{
@@ -774,11 +777,7 @@ watch(
   { immediate: true } // This ensures the watcher is run immediately with the current value
 );
 
-watchEffect(() => {
-  const infoFilled = isEmergencyContactInfoFilled.value; // Accessing this ensures reactivity
-  // Log or handle state changes as needed, useful for debugging
-  console.log("Emergency contact info requirement updated: ", infoFilled);
-});
+
 </script>
 
 <style lang="scss" scoped>

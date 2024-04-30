@@ -197,7 +197,7 @@ const calculateWidth = (startDate, endDate) => {
   justify-content: center;
   text-align: center;
   font-family: "Poppins Medium", sans-serif, Arial;
-  left: 20px;
+  margin-left: 20px;
 }
 
 

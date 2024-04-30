@@ -150,13 +150,15 @@ watch(
 .filter {
   display: flex;
   justify-content: center;
-  gap: 18px;
+  gap: 14px;
   button {
+    height: 40px;
+    width: 100px;
     background: none;
     border: 1px solid $dark-blue-seconadary;
     color: #fff;
     font-size: 14px;
-    padding: 6px 16px;
+    padding: 9px;
     border-radius: 8px;
     &.active {
       border-color: $main-yellow;
@@ -168,6 +170,7 @@ watch(
 <style lang="scss">
 .scheduler-calendar {
   .vc-header {
+    font-family: 'Poppins', sans-serif;
     .vc-arrow,
     .vc-title {
       background: none;
@@ -184,10 +187,11 @@ watch(
   .vc-weekday,
   .vc-focusable {
     color: #fff;
+    font-family: 'Poppins', sans-serif;
   }
   .vc-day {
     height: 38px;
-    width: 42px;
+    width: 48px;
   }
 
   .vc-highlight {

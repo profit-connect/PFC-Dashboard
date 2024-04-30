@@ -46,7 +46,7 @@
     <Modal v-model="showPlanForm" id="plan-modal">
       <template #title>
         {{ selectedPlan ? "Update / Create" : "Create" }} a Plan
-        <h5 class="text-center mt-2">
+        <h5 class="text-center mt-5 mb-5">
           {{ selectedPackageForPlan?.package_name }}
         </h5>
       </template>
@@ -441,7 +441,7 @@ const selectedPackageDates = computed(() => {
   width: 70vw;
   max-width: 1396px;
   margin: unset;
-  height: fit-content;
+  // height: fit-content;
 }
 
 .content__title-box {

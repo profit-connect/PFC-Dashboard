@@ -225,17 +225,22 @@
         </div> -->
         </div>
       </div>
-      <div class="d-flex justify-content-center">
-        <FormKit type="submit">Save</FormKit>
+      <div 
+        class="mt-4 d-flex justify-content-center flex-column"
+        style="position: relative; width: 830px; text-align: center; bottom: 0px;"
+      >
+        <div><FormKit type="submit">Save</FormKit></div>
+        <div>
+          <button
+            class="btn"
+            @click="$emit('close-canvas')"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </FormKit>
-    <button
-      class="btn"
-      style="position: relative; left: 365px; margin-bottom: 20px"
-      @click="$emit('close-canvas')"
-    >
-      Cancel
-    </button>
+ 
   </div>
 </template>
 

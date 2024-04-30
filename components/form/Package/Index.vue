@@ -62,7 +62,7 @@
                 }"
       />
     </div>
-      <div 
+    <div 
         class="mt-4 d-flex justify-content-center flex-column"
         style="position: fixed; width: 830px; text-align: center; bottom: 0px;"
       >

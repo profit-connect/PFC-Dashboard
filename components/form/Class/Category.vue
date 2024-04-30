@@ -79,29 +79,29 @@
           </div>
         </div>
       </div>
-      <div v-if="selectedCategory" style="position: relative;">
-        <div class="d-flex justify-content-center">
-          <FormKit type="submit">Save</FormKit>
-        </div>
-        <button
-          class="btn"
-          style="position: absolute; left: 380px; top: 160px"
-          @click="$emit('close-canvas')"
-        >
-          Cancel
-        </button>
-      </div>
-
-      <div
-        v-else
+      <div v-if="selectedCategory"
         class="mt-4 d-flex justify-content-center flex-column"
-        style="position: fixed; bottom: 0; right: 14%; margin-bottom: 20px"
+        style="position: relative; width: 830px; text-align: center; bottom: -40px;"
       >
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
           <button
             class="btn"
-            style="margin-left: 140px"
+            @click="$emit('close-canvas')"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <div v-else
+        class="mt-4 d-flex justify-content-center flex-column"
+        style="position: fixed; width: 830px; text-align: center; bottom: 0px;"
+      >
+        <div><FormKit type="submit">Save</FormKit></div>
+        <div>
+          <button
+            class="btn"
             @click="$emit('close-canvas')"
           >
             Cancel

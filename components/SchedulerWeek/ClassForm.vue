@@ -1,7 +1,7 @@
 <template>
-  <div class="scheduler-week-class-form">
+  <div class="scheduler-week-class-form"> 
     <FormKit type="form" @submit="submitHandler" :actions="false">
-      <div v-for="(item, key) in formStructure" :key="key" class="mb-5">
+      <div v-for="(item, key) in formStructure" :key="key" class="">
         <div class="row mx-5">
           <div class="col-5">
             <FormKit
@@ -58,7 +58,7 @@
         <table
           class="mx-4"
           v-if="item.schedule.length"
-          style="margin-bottom: 80px"
+
           v-show="formStructure[key].class_id"
         >
           <tr>
@@ -229,18 +229,17 @@
           </tr>
         </table>
       </div>
-      <div class="mt-4 d-flex justify-content-center"  style="position: relative;">
-        <FormKit type="submit" style=" margin-bottom: 30px;">Save</FormKit>
-        <div>
-          <button
+      <div class="mt-5 d-flex justify-content-center"  style="position: relative; width: 920px;">
+        <FormKit type="submit">Save</FormKit> 
+      </div>
+    </FormKit>
+    <div class="d-flex justify-content-center"  style="position: relative; width: 920px;">
+       <button @click="$emit('close-canvas')"
             class="btn"
-            style="position: absolute; bottom: 0px; left: 46%;"
           >
             Cancel
           </button>
-        </div>
-      </div>
-    </FormKit>
+     </div>
   </div>
 </template>
 
@@ -274,7 +273,7 @@ const selectedClassType = ref();
 const selectedSlot: any = ref([]);
 const { currentUserType } = useAuthStore();
 const dayjs = useDayjs();
-const emit = defineEmits(["on-class-add"]);
+const emit = defineEmits(["on-class-add", "close-canvas" ]);
 
 const formStructure = ref([
   {
@@ -298,14 +297,14 @@ const formStructure = ref([
 //   }
 // };
 const onEmptyFirstSlot = (key: number) => {
-  console.log('Selected Schedule Length: ', props.selectedSchedule.length);
-  console.log('Form Structure Before:', JSON.parse(JSON.stringify(formStructure.value)));
+  // console.log('Selected Schedule Length: ', props.selectedSchedule.length);
+  // console.log('Form Structure Before:', JSON.parse(JSON.stringify(formStructure.value)));
 
   if (!props.selectedSchedule.length) {
     formStructure.value[key].schedule = [];
     formStructure.value[key].class_id = undefined;
 
-    console.log('Form Structure After Clearing:', JSON.parse(JSON.stringify(formStructure.value)));
+    // console.log('Form Structure After Clearing:', JSON.parse(JSON.stringify(formStructure.value)));
 
     if (
       formStructure.value.length === key + 2 &&
@@ -315,7 +314,7 @@ const onEmptyFirstSlot = (key: number) => {
     }
   }
 
-  console.log('Form Structure Final:', JSON.parse(JSON.stringify(formStructure.value)));
+  // console.log('Form Structure Final:', JSON.parse(JSON.stringify(formStructure.value)));
 };
 
 
@@ -402,21 +401,36 @@ function notsametime(node: any) {
 
 function generateAvailableTimeArray() {
   const availableTime = [];
+  const now = new Date();
+  now.setSeconds(0, 0); // Normalize current time to remove seconds and milliseconds
+
+  // console.log("Current normalized time (now):", now);
+
   for (let h = 0; h < 24; h++) {
     for (let m = 0; m < 60; m += 30) {
-      const hour =
-        h === 0
-          ? "12"
-          : h > 12
-          ? (h - 12).toString().padStart(2, "0")
-          : h.toString().padStart(2, "0");
+      const hour = h === 0 ? "12" : (h > 12 ? h - 12 : h).toString().padStart(2, "0");
       const period = h < 12 ? "AM" : "PM";
       const minute = m === 0 ? "00" : m.toString().padStart(2, "0");
       const timeValue = `${hour}:${minute} ${period}`;
+
+      const timeSlotDate = new Date(now.toDateString());
+      let adjustedHour = h;
+      if (hour === "12" && period === "AM") {
+        adjustedHour = 0;
+      } else if (period === "PM" && hour !== "12") {
+        adjustedHour = h + 12;
+      }
+      timeSlotDate.setHours(adjustedHour, m, 0, 0);
+
+      const isPast = timeSlotDate < now;
+      // console.log(`Comparing: [Slot: ${timeSlotDate} < Now: ${now}] - Result: ${isPast}`);
+
+      const isDisabled = checkIsDateFallInBetween(timeValue) || isPast;
+
       availableTime.push({
         label: timeValue,
         value: timeValue,
-        disabled: checkIsDateFallInBetween(timeValue),
+        disabled: isDisabled
       });
     }
   }
@@ -424,10 +438,58 @@ function generateAvailableTimeArray() {
   return availableTime;
 }
 
-// Example usage:
+
+
 const availableTime = computed(() => {
   return generateAvailableTimeArray();
 });
+
+
+
+
+// function generateAvailableTimeArray() {
+//   const availableTime = [];
+//   for (let h = 0; h < 24; h++) {
+//     for (let m = 0; m < 60; m += 30) {
+//       const hour =
+//         h === 0
+//           ? "12"
+//           : h > 12
+//           ? (h - 12).toString().padStart(2, "0")
+//           : h.toString().padStart(2, "0");
+//       const period = h < 12 ? "AM" : "PM";
+//       const minute = m === 0 ? "00" : m.toString().padStart(2, "0");
+//       const timeValue = `${hour}:${minute} ${period}`;
+//       availableTime.push({
+//         label: timeValue,
+//         value: timeValue,
+//         disabled: checkIsDateFallInBetween(timeValue),
+//       });
+//     }
+//   }
+
+//   return availableTime;
+// }
+
+// // Example usage:
+// const availableTime = computed(() => {
+//   return generateAvailableTimeArray();
+// });
+
+
+
+const notTooEarly = (value) => {
+  const [selectedHour, selectedMinutes] = value.split(':');
+  const selectedTime = new Date();
+  selectedTime.setHours(parseInt(selectedHour), parseInt(selectedMinutes), 0);
+
+  const minTime = new Date();
+  // Set to whatever your minimum time is, e.g., 9:00 AM
+  minTime.setHours(9, 0, 0);
+
+  return selectedTime >= minTime;
+};
+
 
 const computedQueryCoach = computed(() => {
   return { facility_id: currentUserType?.id, date: props.selectedDate };

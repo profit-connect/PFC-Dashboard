@@ -57,6 +57,7 @@ body {
   @media (min-width: $lg-desktop) {
     max-width:1396px;
     border-radius: 10px;
+    min-height: calc(100vh - 68px);
   }
 }
 

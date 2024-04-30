@@ -116,7 +116,7 @@ watch(() => props.hideSchedulerBar, (newValue) => {
 }
 .vertical-tab div {
   cursor: pointer;
-  height: 148px;
+  height: 175px;
   // border: 1px solid $main-blue;
   clip-path: polygon(
     0% 20%,
@@ -145,6 +145,7 @@ watch(() => props.hideSchedulerBar, (newValue) => {
 .tab-item {
   background-color: #f3faff;
   margin-bottom: 5px;
+  
 }
 .vertical-tab div:hover {
   background-color: #fff;
