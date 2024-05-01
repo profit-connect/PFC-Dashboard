@@ -1,7 +1,7 @@
 <template>
-  <div class="scheduler-week-class-form"> 
+  <div class="scheduler-week-class-form">
     <FormKit type="form" @submit="submitHandler" :actions="false">
-      <div v-for="(item, key) in formStructure" :key="key" class="">
+      <div v-for="(item, key) in formStructure" :key="key" class="mb-5">
         <div class="row mx-5">
           <div class="col-5">
             <FormKit
@@ -58,7 +58,6 @@
         <table
           class="mx-4"
           v-if="item.schedule.length"
-
           v-show="formStructure[key].class_id"
         >
           <tr>
@@ -242,7 +241,6 @@
      </div>
   </div>
 </template>
-
 <script lang="ts" setup>
 import { useAuthStore } from "~/store/auth";
 import { useDayjs } from "#dayjs";
@@ -297,14 +295,14 @@ const formStructure = ref([
 //   }
 // };
 const onEmptyFirstSlot = (key: number) => {
-  // console.log('Selected Schedule Length: ', props.selectedSchedule.length);
-  // console.log('Form Structure Before:', JSON.parse(JSON.stringify(formStructure.value)));
+  console.log('Selected Schedule Length: ', props.selectedSchedule.length);
+  console.log('Form Structure Before:', JSON.parse(JSON.stringify(formStructure.value)));
 
   if (!props.selectedSchedule.length) {
     formStructure.value[key].schedule = [];
     formStructure.value[key].class_id = undefined;
 
-    // console.log('Form Structure After Clearing:', JSON.parse(JSON.stringify(formStructure.value)));
+    console.log('Form Structure After Clearing:', JSON.parse(JSON.stringify(formStructure.value)));
 
     if (
       formStructure.value.length === key + 2 &&
@@ -314,7 +312,7 @@ const onEmptyFirstSlot = (key: number) => {
     }
   }
 
-  // console.log('Form Structure Final:', JSON.parse(JSON.stringify(formStructure.value)));
+  console.log('Form Structure Final:', JSON.parse(JSON.stringify(formStructure.value)));
 };
 
 
@@ -445,8 +443,6 @@ const availableTime = computed(() => {
 });
 
 
-
-
 // function generateAvailableTimeArray() {
 //   const availableTime = [];
 //   for (let h = 0; h < 24; h++) {
@@ -475,21 +471,6 @@ const availableTime = computed(() => {
 // const availableTime = computed(() => {
 //   return generateAvailableTimeArray();
 // });
-
-
-
-const notTooEarly = (value) => {
-  const [selectedHour, selectedMinutes] = value.split(':');
-  const selectedTime = new Date();
-  selectedTime.setHours(parseInt(selectedHour), parseInt(selectedMinutes), 0);
-
-  const minTime = new Date();
-  // Set to whatever your minimum time is, e.g., 9:00 AM
-  minTime.setHours(9, 0, 0);
-
-  return selectedTime >= minTime;
-};
-
 
 const computedQueryCoach = computed(() => {
   return { facility_id: currentUserType?.id, date: props.selectedDate };

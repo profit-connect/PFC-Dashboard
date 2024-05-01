@@ -6,7 +6,7 @@
           class="hover-info">
         <a class="hover-info__link tooltips" @click=" router.push({
             path: '/members/details/membership-overview',
-            query: { id: getMemberImage.id },
+            query: { id: getMemberInfo.id },
           })">
         <img src="~/assets/images/svg/schedule-profile-white-outline.svg" alt="Profile icon" class="img-normal"/>
         <img src="~/assets/images/svg/schedule-profile-blue.svg" alt="Profile icon" class="img-hover" />
@@ -27,15 +27,16 @@
         @click="
           router.push({
             path: '/members/details/membership-overview',
-            query: { id: getMemberImage.id },
+            query: { id: getMemberInfo.id },
           })
         "
         class="sidebar-box__title text-center"
         title="View membership"
       >
       <div v-if="memberInfoData">
-        <img v-if="!imageError && getMemberImage.image"
-            :src="getImageUrl( getMemberImage.image)"
+        <img v-if="!imageError && getMemberInfo.image"
+            :key="`${getMemberInfo.image}-${new Date().getTime()}`"
+            :src="getImageUrl( getMemberInfo.image)"
             @error="imageError = true"
             v-show="!imageError" />
 
@@ -344,29 +345,32 @@
               Cancel
             </div>
           </h3>
+          <div style="height: 77px;" >
           <FormKit
             type="text"
             placeholder="Emergency contact name"
             name="emergency_contact_name"
-            v-model="getMemberInfo.emergency_contact_name"
-            @blur="setEmergencyContactNameTouched"
-            :validation="isEmergencyContactFieldRequired"
+            v-model="emergencyContactName"
+            :validation="
+              emergencyCountryCode || emergencyContactNo ? 'required' : ''
+            "
             :validation-messages="{
-              required: 'Emergency contact name is required.',
+              required: 'Emergency contact name is required',
             }"
           />
-
+        </div>
           <div class="row g-2">
             <div class="col-6">
               <FormKit
                 type="multiselect"
                 name="emergency_country_code"
                 :options="CountryCodes"
-                v-model="getMemberInfo.emergency_country_code"
-                @blur="setEmergencyCountryCodeTouched"
-                :validation="isEmergencyContactFieldRequired"
+                v-model="emergencyCountryCode"
+                :validation="
+                  emergencyContactName || emergencyContactNo ? 'required' : ''
+                "
                 :validation-messages="{
-                  required: 'Emergency country code is required.',
+                  required: 'Emergency country code is required',
                 }"
               />
             </div>
@@ -375,11 +379,12 @@
                 type="tel"
                 placeholder="Contact Number"
                 name="emergency_contact_no"
-                v-model="getMemberInfo.emergency_contact_no"
-                @blur="setEmergencyContactNoTouched"
-                :validation="isEmergencyContactFieldRequired"
+                v-model="emergencyContactNo"
+                :validation="
+                  emergencyContactName || emergencyCountryCode ? 'required' : ''
+                "
                 :validation-messages="{
-                  required: 'Emergency contact number is required.',
+                  required: 'Emergency contact number is required',
                 }"
               />
             </div>
@@ -390,7 +395,7 @@
           v-show="!toggleStates.isTagsEditMode.value"
           class="tags-show data-block-show"
         >
-          <h3 class="small-title-bold">
+          <h3 class="small-title-bold mt-4" >
             Tags
             <img
               @click="() => startEdit('isTagsEditMode')"
@@ -445,7 +450,7 @@
             />
           </div>
         </div>
-        <FormKit type="submit" label="Save" v-show="isAnyEditModeActive" />
+        <FormKit type="submit" label="Save" v-show="isAnyEditModeActive" @click="getMember"/>
       </FormKit>
     </div>
   </div>
@@ -478,23 +483,12 @@ const { tags } = storeToRefs(useTagStore());
 const { currentUserType } = useAuthStore();
 const { getUrl: getImageUrl } = useBoImage();
 const { CountryCodes } = useCountryStore();
-const emergencyContactNameTouched = ref(false);
-const emergencyCountryCodeTouched = ref(false);
-const emergencyContactNoTouched = ref(false);
+const imageError = ref(false);
 
-
-const setEmergencyContactNameTouched = () => {
-  emergencyContactNameTouched.value = true;
-};
-
-const setEmergencyCountryCodeTouched = () => {
-  emergencyCountryCodeTouched.value = true;
-};
-
-const setEmergencyContactNoTouched = () => {
-  emergencyContactNoTouched.value = true;
-};
-
+// New Variables
+const emergencyContactName = ref();
+const emergencyCountryCode = ref();
+const emergencyContactNo = ref();
 // const countryCodes = ref([{ label: "Select a country", value: "" }]);
 
 watch(
@@ -592,32 +586,6 @@ const cancelEdit = (toggleKey: keyof ToggleStates) => {
   toggleStates[toggleKey].value = false;
 };
 
-const editMemberImage = async (getMemberImage: any) => {
-  try {
-    const { id, ...memberInfoWithoutId } = getMemberImage;
-
-    const { data } = await useCustomFetch<any>("/members/update/member", {
-      method: "POST",
-      body: {
-        member_id: getMemberImage.id,
-        facility_id: currentUserType?.id,
-        ...memberInfoWithoutId,
-      },
-    });
-
-    if (data.value.return) {
-      refresh();
-      emit("reload");
-      $toast.success("Member Image edited successfully!");
-      emit("close-sidebar");
-    } else {
-      $toast.error(data.value.message);
-    }
-  } catch (err) {
-    console.log("Error:/api/Member/update", err);
-  }
-};
-
 const editMember = async (getMemberInfo: any) => {
   try {
     const { id, ...memberInfoWithoutId } = getMemberInfo;
@@ -634,7 +602,8 @@ const editMember = async (getMemberInfo: any) => {
     if (data.value.return) {
       emit("reload");
       $toast.success("Member  edited successfully!");
-      emit("close-sidebar");
+      getMember();
+      // emit("close-sidebar");
       Object.keys(toggleStates).forEach((key) => {
         toggleStates[key].value = false;
       });
@@ -646,69 +615,53 @@ const editMember = async (getMemberInfo: any) => {
   }
 };
 
-const isEmergencyContactInfoFilled = computed(() => {
-  // Check if any of the fields have a non-empty value.
-  return (
-    (getMemberInfo.value.emergency_contact_name &&
-      getMemberInfo.value.emergency_contact_name.trim() !== "") ||
-    (getMemberInfo.value.emergency_country_code &&
-      getMemberInfo.value.emergency_country_code.trim() !== "") ||
-    (getMemberInfo.value.emergency_contact_no &&
-      getMemberInfo.value.emergency_contact_no.trim() !== "")
-  );
-});
-
-const isEmergencyContactFieldRequired = computed(() => {
-  // Fields are required if any emergency contact information field is filled.
-  return isEmergencyContactInfoFilled.value ? "required" : null;
-});
 
 const computedTags = computed(() => {
   return tags.value
     ? tags.value.map((item: any) => ({ label: item.name, value: item.id }))
     : [];
 });
-const tagObjects = (tagIds) => {
+const tagObjects = (tagIds: any) => {
   return tagIds
     ? tagIds
-        .map((tagId) => {
+        .map((tagId : any) => {
           const foundTag = computedTags.value.find(
-            (tag) => tag.value === String(tagId)
+            (tag: any) => tag.value === String(tagId)
           );
           return foundTag || null; // Return the entire object or null if not found
         })
-        .filter((tag) => tag !== null) // Filter out any null entries
+        .filter((tag: any) => tag !== null) // Filter out any null entries
     : [];
 };
-const tagname = (tagIds: number) => {
-  const labels = tagIds
-    ?.map((tagId: number) => {
-      const foundTag = computedTags.value.find(
-        (tag: any) => tag.value === String(tagId)
-      );
-      return foundTag ? foundTag.label : null;
-    })
-    .filter((label) => label !== null);
-  return labels?.join(", ");
+
+
+
+const getMember = async () => {
+  try {
+    const response = await useCustomFetch(`/members/get/memberinfo`, {
+      method: "POST",
+      body: { facility_id: currentUserType?.id, member_id: memberId.value },
+    });
+    if (response.data && response.data.value) {
+      memberInfoData.value = response.data.value;
+    } else {
+      console.error("No data returned from fetch");
+    }
+  } catch (error) {
+    console.error("Error refreshing member data:", error);
+  }
 };
 
-const getMemberImage = computed(() => {
-  if (
-    memberInfoData.value &&
-    memberInfoData.value.member &&
-    memberInfoData.value.member.data &&
-    memberInfoData.value.member.data.length > 0
-  ) {
-    const memberData = memberInfoData.value.member.data[0];
 
-    return {
-      id: memberData.id,
-      image: `${memberData.img_src}?timestamp=${new Date().getTime()}`
-    };
-  }
-
-  return {};
-});
+watch(
+  memberId,
+  async () => {
+    if (memberId.value) {
+      await getMember();  
+    }
+  },
+  { immediate: true }
+);
 const getMemberInfo = computed(() => {
   if (
     memberInfoData.value &&
@@ -719,6 +672,7 @@ const getMemberInfo = computed(() => {
     const memberData = memberInfoData.value.member.data[0];
     const socialData = memberInfoData.value.member.social || {};
     const aboutData = memberInfoData.value.member.about || {};
+    const imageUrl = `${memberData.img_src}?timestamp=${new Date().getTime()}`;
     const emergencyContactData =
       memberInfoData.value.member.emergency_contact || {};
     const tags = memberInfoData.value.member?.tags || [];
@@ -732,7 +686,7 @@ const getMemberInfo = computed(() => {
       country_code: memberData.country_code,
       contactno: memberData.contactno,
       email: memberData.email,
-      image: "",
+      image: imageUrl,
       // membership_status: memberData.membership_status,
       facebook: socialData.facebook,
       instagram: socialData.instagram,
@@ -748,34 +702,11 @@ const getMemberInfo = computed(() => {
   return {};
 });
 
-watch(
-  memberId,
-  async () => {
-    if (memberId.value) {
-      const { data, pending, refresh } = await useCustomFetch<any>(
-        `/members/get/memberinfo`,
-        {
-          method: "POST",
-          body: { facility_id: currentUserType?.id, member_id: memberId.value },
-        }
-      );
-      memberInfoData.value = data.value;
-      memberInfoPending.value = pending.value;
-    }
-  },
-  { immediate: true }
-);
-const imageError = ref(false);
-watch(
-  () => getMemberImage.image,
-  (newImgSrc) => {
-    // Only reset imageError if newImgSrc is not undefined
-    if (newImgSrc !== undefined) {
-      imageError.value = false;
-    }
-  },
-  { immediate: true } // This ensures the watcher is run immediately with the current value
-);
+
+watch(() => getMemberInfo.value.image, (newImage) => {
+  imageError.value = false;  // Reset error on any new image set
+}, { immediate: true });
+
 
 
 </script>

@@ -56,7 +56,6 @@
       <div style="height: 80px">
         <FormKit
           type="date"
-          :max="defaultDOB"
           name="dob"
           placeholder=" Please enter date of birth"
           label="Birthday"

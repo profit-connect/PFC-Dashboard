@@ -224,12 +224,12 @@ const onSearch = (data: string) => {
 .name {
   position: relative;
   left: 13px;
-
+  top: 5px;
   display: inline-block;
   /* background-color: #f2faff; / */
   border: 1px solid #84ceff;
   border-radius: 5px; /* Rounded corners */
-  padding: 5px 15px;
+  padding: 3px 15px;
   font-size: 14px;
   text-align: center;
   margin: 2px;

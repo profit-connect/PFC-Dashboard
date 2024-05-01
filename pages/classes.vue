@@ -13,7 +13,7 @@
       <div class="search">
         <SearchBar @on-search="onSearch" />
       </div>
-      <div class="d-flex align-items-baseline mt-4">
+      <div class="d-flex align-items-baseline">
         <MixTab
           v-model="activeTab"
           :items="getCategories"

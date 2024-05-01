@@ -24,7 +24,7 @@ Membership-overview without chart
    
       <ChartSubscribedPackage :plans="actualPlans"  />
     </div>
-    <div class="content-box1">
+    <div class="content-box1" style="border-radius: 10px;">
       <div class="content__title-box">
         <h1 class="content-title">Membership Packages</h1>
         <div class="filter-box packagesByStatus">
@@ -524,7 +524,7 @@ const formattedDate = `${day} ${monthNames[monthIndex]} ${year}`;
   position: relative;
   width: 65vw;
   max-width: 950px;
-  min-height: 660px;
+  max-height: 660px;
   // overflow-x: auto;
 
 }

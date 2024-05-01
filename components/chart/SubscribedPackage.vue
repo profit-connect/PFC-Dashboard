@@ -187,6 +187,7 @@ const calculateWidth = (startDate, endDate) => {
   display: flex;
   flex-direction: column;
   position: absolute;
+  left: 20px;
   background: #f2faff;
   border: 1px solid #84ceff;
   border-radius: 7px;
@@ -255,7 +256,7 @@ element.style {
   position: absolute;
   left: 20px;
   width: 10px;
-  height: 484px;
+  height: 444px;
   border-left: 1px dashed #ffd500;
   top: 0;
   display: flex;

@@ -8,13 +8,14 @@
         style="width:122px; height: 40px; font: 14px 'Poppins Medium', sans-serif, Arial; background-color: #FFD500; position:absolute;" 
        type="submit"   @click="submitHandler">Save</FormKit>
      </div>
- <div class="facility">
+ <div class="facility row">
    <FormKit
      type="form"
      @submit="submitHandler"
      :actions="false"
    >
      <div class="general-timimg px-4">
+      
        <FormKit
          type="checkbox"
          name="always_open"
@@ -216,7 +217,7 @@ const submitHandler = async () => {
 .schedule-container {
  display: grid;
  grid-template-columns: repeat(2, 1fr);
- gap: 10px;
+ gap: 5px;
  max-height: 214px;
 }
 
