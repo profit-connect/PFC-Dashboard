@@ -225,10 +225,11 @@ const addMember = async (addNewMember: IAddMember) => {
     });
     if (data.value.return) {
       emit("reload");
-      $toast.success("Member Added successfully!");
+      $toast("Member added successfully");
       emit("close-sidebar");
     } else {
-      $toast.error(data.value.message);
+      // $toast.error(data.value.message);
+      $toast.error("Member already exists");
     }
   } catch (err) {
     console.log("Error:/api/Member/add", err);

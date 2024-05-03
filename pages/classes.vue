@@ -27,7 +27,7 @@
         />
       </div>
       <div style="min-height: calc(100vh - 284px)">
-        <div class="row g-3">
+        <div class="row g-3  case">
           <div
             class="col-6 col-lg-4"
             v-for="category in computedClasses"
@@ -267,5 +267,9 @@ watch(showCatrgoryForm, (val) => {
   position: relative;
   bottom: 43px;
   left: 85%;
+}
+.case {
+  position: relative;
+  bottom: 10px;
 }
 </style>

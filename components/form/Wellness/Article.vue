@@ -338,11 +338,12 @@ const addArticle = async (articleData: any) => {
     // Check the response and handle accordingly
     if (data.value && data.value.return) {
       console.log("data",data)
-      $toast("Article added successfully!");
+      $toast("Article added successfully");
       emit("reload"); // Reload or refresh data
       // emit("close-canvas"); // If you have a modal or overlay to close
     } else if (data.value) {
-      $toast.error(data.value.message); // Show error message from response
+      // $toast.error(data.value.message); // Show error message from response
+      $toast.error("Article already exist");
     } else if (error.value) {
       $toast.error("An error occurred while adding the article.");
       console.error("Error:/wellness/add/article", error.value); // Log the error
@@ -376,7 +377,7 @@ const updateArticle = async (articleData: any) => {
     // Since useFetch from Nuxt 3 automatically unwraps the response, you might need to adjust how you access the data
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Article edited successfully!");
+      $toast("Article updated successfully!");
       // emit("close-canvas");
     } else if (data.value) {
       $toast.error(data.value.message);

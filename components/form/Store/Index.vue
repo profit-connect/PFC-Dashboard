@@ -204,7 +204,7 @@
       </div>
       <div 
         class="mt-4 d-flex justify-content-center flex-column"
-        style="position: relative; width: 830px; text-align: center; bottom: -80px;"
+        style="position: relative; width: 830px; text-align: center; bottom: 0px;"
       >
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
@@ -358,12 +358,13 @@ const addStore = async (storeData: any) => {
     await execute();
 
     if (data.value && data.value.return) {
-      $toast("Store added successfully!");
+      $toast("Store item added successfully");
       emit("reload");
       // emit("close-canvas");
     } else {
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";
-      $toast(errorMessage);
+      // $toast(errorMessage);
+      $toast("Item already exist");
     }
   } catch (err) {
     console.error("Error:/api/store/add", err);
@@ -391,7 +392,7 @@ const updateStore = async (storeData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Store edited successfully!");
+      $toast("Store item updated edited successfully!");
       // emit("close-canvas");
     } else {
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";

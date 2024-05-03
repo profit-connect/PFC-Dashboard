@@ -59,7 +59,7 @@
                   placeholder="No."
                   validation="required"
                   :validation-messages="{
-                  required: 'Time required',
+                  required: 'Duration is required',
                 }"
                 />
               </div>
@@ -374,10 +374,11 @@ const addClass = async (classData: any) => {
 
     // Check the response and handle accordingly
     if (data.value && data.value.return) {
-      $toast("Class added successfully!");
+      $toast("Classes added successfully");
       emit("reload"); // Reload or refresh data
     } else if (data.value) {
-      $toast.error(data.value.message); // Show error message from response
+      $toast.error("Class already exists"); 
+      // $toast.error(data.value.message); // Show error message from response
     } else if (error.value) {
       $toast.error("An error occurred while adding the class.");
       console.error("Error:/api/class/add", error.value); // Log the error
@@ -410,7 +411,7 @@ const updateClass = async (classData: any) => {
     // Since useFetch from Nuxt 3 automatically unwraps the response, you might need to adjust how you access the data
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Class edited successfully!");
+      $toast("Classes updated successfully");
       // emit("close-canvas");
     } else if (data.value) {
       $toast.error(data.value.message);

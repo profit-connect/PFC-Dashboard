@@ -144,10 +144,11 @@ const createCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Category added successfully!");
+      $toast("Category updated successfully");
       // emit("close-canvas");
     } else if (data.value) {
-      $toast.error(data.value.message); // Using alert for error feedback as per your code
+      // $toast.error(data.value.message); // Using alert for error feedback as per your code
+      $toast.error("Category already exists");
     } else if (error.value) {
       console.error("Error:/api/space/add-category", error.value);
       $toast.error("An error occurred while adding the category.");
@@ -176,7 +177,7 @@ const editCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Category edited successfully!");
+      $toast("Category updated successfully");
       // emit("close-canvas");
     } else if (data.value) {
       $toast.error(data.value.message);

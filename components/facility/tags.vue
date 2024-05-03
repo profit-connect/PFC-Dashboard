@@ -42,7 +42,7 @@
           <th style="position: relative; left: 15px">Name</th>
           <th style="position: relative; right: 15px;">Count</th>
           <th  style="position: relative; right: 10px;">Created by</th>
-          <th  style="position: relative; right: 10px;" class="w-125px">Date created</th>
+          <th  style="position: relative; right: -10px;" class="w-125px">Date created</th>
         </thead>
         <tbody>
           <!-- <tr v-for="tag in getFilteredTags"  :key="tag && tag.id" @click="tag && tag.id && setEditId(tag.id)"> -->
@@ -50,7 +50,7 @@
             <td  class="name">{{ tag ? tag.name : '-' }}</td>
             <td>{{ tag ? tag.count : '-' }}</td>
             <td>{{ tag ? tag.created_by : '-' }}</td>
-            <td>{{ tag ? formatDate(tag.updated_date) : '-' }}</td>
+            <td> <span style="position: relative; right: -20px;">{{tag ? formatDate(tag.updated_date) : '-' }}</span></td>
           </tr>
 
         </tbody>
@@ -127,7 +127,7 @@ const getFilteredTags = computed(() => {
 
   let filteredTags = searchTerm.value
     ? tags.value.filter((tag) =>
-        tag.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+        tag && tag.name && tag.name.toLowerCase().includes(searchTerm.value.toLowerCase())
       )
     : tags.value;
 
@@ -175,7 +175,7 @@ const onSearch = (data: string) => {
   tr {
     transition: background-color 0.3s; /* Smooth transition for hover effect */
     border-radius: 10px;
-    height: 60px;
+    height: 65px;
     &:hover {
       background-color: #f2faff; 
       cursor: pointer; 
@@ -224,7 +224,7 @@ const onSearch = (data: string) => {
 .name {
   position: relative;
   left: 13px;
-  top: 5px;
+  top: 8px;
   display: inline-block;
   /* background-color: #f2faff; / */
   border: 1px solid #84ceff;

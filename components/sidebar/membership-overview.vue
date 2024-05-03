@@ -1,6 +1,6 @@
-Membership-overview without chart
+Membership-overview without chart  
 <template>
-  <SidebarUpdateMember v-model:member-id="props.memberId" />
+  <SidebarUpdateMember v-model:member-id="props.memberId" /> 
   <div
     class="content-main-box"
     v-if="
@@ -12,7 +12,7 @@ Membership-overview without chart
   >
     <div class="content-box1 mb-3">
       <div class="content__title-box">
-        <h1 class="content-title">Membership Overview</h1>
+        <h1 class="content-title">Membership Overview</h1>  {{ memberInfoData }}
       </div>
       <div class="pre-text activePlanName"></div>
 
@@ -162,7 +162,7 @@ const showPurchaseForm = ref(false);
 const selectedPlanId = ref("");
 const selectedPlanDetails = ref(null);
 const selectedFilter = ref("All");
-
+const memberInfoData = ref(null);
 function formatName(string) {
   if (!string) return "";
   const words = string.split(" ");
@@ -195,6 +195,28 @@ const { data, pending, refresh } = await useCustomFetch<any>(
     }),
   }
 );
+const refreshData = () => {
+  console.log("jahudbubf")
+  getMember();
+  refresh();
+};
+
+const getMember = async () => {
+  try {
+    const response = await useCustomFetch(`/members/get/memberinfo`, {
+      method: "POST",
+      body: { facility_id: currentUserType?.id },
+    });
+    if (response.data && response.data.value) {
+      memberInfoData.value = response.data.value;
+    } else {
+      console.error("No data returned from fetch");
+    }
+  } catch (error) {
+    console.error("Error refreshing member data:", error);
+  }
+};
+
 
 const ComputedPackage = computed(() => {
   const now = new Date();
@@ -267,9 +289,7 @@ const computedPlanDetails = computed(() => {
   }
 });
 
-const refreshData = () => {
-  refreshMembers();
-};
+
 
 const selectFilter = (filterType) => {
   selectedFilter.value = filterType;

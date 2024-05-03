@@ -34,9 +34,9 @@
         title="View membership"
       >
       <div v-if="memberInfoData">
-        <img v-if="!imageError && getMemberInfo.image"
-            :key="`${getMemberInfo.image}-${new Date().getTime()}`"
-            :src="getImageUrl( getMemberInfo.image)"
+        <img v-if="!imageError && getMemberImage.image"
+          
+            :src="getImageUrl( getMemberImage.image)"
             @error="imageError = true"
             v-show="!imageError" />
 
@@ -587,6 +587,7 @@ const cancelEdit = (toggleKey: keyof ToggleStates) => {
 };
 
 const editMember = async (getMemberInfo: any) => {
+  console.log(getMemberInfo)
   try {
     const { id, ...memberInfoWithoutId } = getMemberInfo;
 
@@ -601,7 +602,7 @@ const editMember = async (getMemberInfo: any) => {
 
     if (data.value.return) {
       emit("reload");
-      $toast.success("Member  edited successfully!");
+      $toast("Member profile updated successfully");
       getMember();
       // emit("close-sidebar");
       Object.keys(toggleStates).forEach((key) => {
@@ -653,15 +654,26 @@ const getMember = async () => {
 };
 
 
-watch(
-  memberId,
-  async () => {
-    if (memberId.value) {
-      await getMember();  
-    }
-  },
-  { immediate: true }
-);
+
+
+const getMemberImage = computed(() => {
+  if (
+    memberInfoData.value &&
+    memberInfoData.value.member &&
+    memberInfoData.value.member.data &&
+    memberInfoData.value.member.data.length > 0
+  ) {
+    const memberData = memberInfoData.value.member.data[0];
+    const imageUrl = `${memberData.img_src}?timestamp=${new Date().getTime()}`;
+
+    return {
+      id: memberData.id,
+       image: imageUrl,
+    };
+  }
+
+  return {};
+});
 const getMemberInfo = computed(() => {
   if (
     memberInfoData.value &&
@@ -686,7 +698,7 @@ const getMemberInfo = computed(() => {
       country_code: memberData.country_code,
       contactno: memberData.contactno,
       email: memberData.email,
-      image: imageUrl,
+      // image: imageUrl,
       // membership_status: memberData.membership_status,
       facebook: socialData.facebook,
       instagram: socialData.instagram,
@@ -702,8 +714,17 @@ const getMemberInfo = computed(() => {
   return {};
 });
 
+watch(
+  memberId,
+  async () => {
+    if (memberId.value) {
+      await getMember();  
+    }
+  },
+  { immediate: true }
+);
 
-watch(() => getMemberInfo.value.image, (newImage) => {
+watch(() => getMemberImage.value.image, (newImage) => {
   imageError.value = false;  // Reset error on any new image set
 }, { immediate: true });
 

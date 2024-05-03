@@ -256,6 +256,7 @@
         </template>
         <SchedulerWeekClassForm
           @on-class-add="emit('on-class-add'), (showClassScheduleForm = false)"
+          @close-canvas="showClassScheduleForm = false"
           :categoryData="categoryData"
           :selectedRoomId="selectedRoomId"
           :selectedRoomCapacity="currentRoom?.capacity"

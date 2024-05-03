@@ -154,34 +154,34 @@
       </div>
       <div v-if="computedSelectedSpace.follow_facility_timing === true"
         class="mt-4 d-flex justify-content-center flex-column"
-        style="position: fixed; bottom: 0; right: 17%; margin-bottom: 20px"
+        style="position: relative; width: 830px; text-align: center; bottom: -90px;"
       >
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
           <button
             class="btn"
-            style="margin-left: 140px"
             @click="$emit('close-canvas')"
           >
             Cancel
           </button>
         </div>
       </div>
+
       <div v-else
         class="mt-4 d-flex justify-content-center flex-column"
-        style=" margin-left: 250px; position: relative; top: 0px;"
+        style="position: fixed; width: 830px; text-align: center; bottom: 0px;"
       >
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
           <button
             class="btn"
-            style="margin-left: 140px; "
             @click="$emit('close-canvas')"
           >
             Cancel
           </button>
         </div>
       </div>
+    
     </FormKit>
   </div>
 </template>
@@ -231,6 +231,10 @@ const isPromotionPriceActive = ref(!!computedSelectedSpace.value?.url);
 
 const addSpace = async (spaceData: any) => {
 // console.log(spaceData)
+if (!timingIsValid.value && !spaceData.follow_facility_timing) {
+    $toast.error('Attempt to add space with invalid timings.');
+    return; // Optionally, show an error message here as well
+  }
   const { data, error, execute } = useCustomFetch<any>("/space/add/space", {
     method: "POST",
     body: JSON.stringify({
@@ -247,11 +251,12 @@ const addSpace = async (spaceData: any) => {
     await execute();
 
     if (data.value && data.value.return) {
-      $toast("Space added successfully!");
+      $toast("Space added successfully");
       emit("reload");
       // emit("close-canvas");
     } else if (data.value) {
-      $toast.error(data.value.message);
+      // $toast.error(data.value.message);
+      $toast.error("Space already exists");
     } else if (error.value) {
       $toast.error("An error occurred while adding the space.");
       console.error("Error:/api/space/add", error.value);
@@ -282,7 +287,7 @@ const updateSpace = async (spaceData: any) => {
     await execute();
 
     if (data.value && data.value.return) {
-      $toast("Space edited successfully!");
+      $toast("Space updated successfully");
       emit("reload");
       // emit("close-canvas");
     } else if (data.value) {
@@ -317,9 +322,10 @@ const timeToMinutes = (time: string) => {
 const submitHandler = async (spaceData) => {
   // console.log(spaceData)
   if (!timingIsValid.value && spaceData.follow_facility_timing === false) {
-    $toast.error('Please ensure all end times are greater than start times.');
+    $toast.error('Please ensure all end times are later than start times');
     return; // Stop the submission as the validation failed
   }
+
     let tempData = { ...spaceData };
     // console.log("tempData",tempData)
     tempData.capacity = tempData.capacity ?? '';
@@ -347,7 +353,7 @@ const submitHandler = async (spaceData) => {
 .day-schedule {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
 }
 .time-input {
   width: 100px;
@@ -358,11 +364,12 @@ const submitHandler = async (spaceData) => {
 .custom-formkit-message {
   width: 50px;
   position: relative;
-  left: 10px;
+  left: -4px;
   color: red;
   font-size: 10px;
   margin-bottom: 0px;
   margin-top: -10px;
+  line-height: 12px;
 }
 .scheduler-week-class-form {
   .formkit-messages {

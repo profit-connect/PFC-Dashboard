@@ -1,6 +1,6 @@
 
 <template>
-  <div class="container bg-white h-full p-4 pt-2">
+  <div class="container bg-white h-full p-4 pt-2"> 
     <div class="content__title-box">
       <div class="content-left">
         <div>
@@ -223,7 +223,7 @@ const onChangePackageStatus = async (selectedPackage: any) => {
   const currentDate = new Date();
 
   if (startDate > currentDate) {
-    $toast.error("This package's start date is in the future, cannot be activated yet.");
+    $toast.error("Package cannot be activated as its start date is in the future");
     return; 
   }
   try {
@@ -240,7 +240,7 @@ const onChangePackageStatus = async (selectedPackage: any) => {
     );
     if (data.value.return) {
       refresh();
-      $toast("Package status edited successfully!");
+      $toast("Package status updated successfully");
     } else {
       $toast(data.value.message);
     }
@@ -298,7 +298,7 @@ const onPlanstatusChange = async (newData: any) => {
     });
     if (data.value.return) {
       refresh();
-      $toast("Plan status edited successfully!");
+      $toast("Plan status updated successfully");
     } else {
       $toast(data.value.message);
     }
@@ -321,7 +321,7 @@ const onFeaturedChange = async (newData: any) => {
     );
     if (data.value.return) {
       refresh();
-      $toast("Plan featured status edited successfully!");
+      $toast("Plan feature status updated successfully");
     } else {
       $toast(data.value.message);
     }
@@ -386,31 +386,24 @@ function isNonZeroDate(dateString: string) {
 
 
 const packageDatesBySelectedPlan = computed(() => {
-  // First, ensure 'selectedPlan.value' and 'selectedPlan.value.id' are defined and not null
-  if (!selectedPlan.value || typeof selectedPlan.value.id !== 'number') {
-    // Return default values if 'selectedPlan.value' or 'selectedPlan.value.id' is null or undefined
-    return { startDate: null, endDate: null };
+  if (!data.value || !data.value.packages || !selectedPlan.value) {
+    return { startDate: null, endDate: null }; // Return default if data or selectedPlan is not properly defined
   }
 
-  // Check if 'packages' is defined and not null
-  if (!data.value.packages || !Array.isArray(data.value.packages)) {
-    // Return default values if 'packages' is null or undefined or not an array
-    return { startDate: null, endDate: null };
-  }
-
-  // Loop through all packages since 'packages' is valid
   for (const pkg of data.value.packages) {
-    // Check if this package contains the selected plan using optional chaining
-    const foundPlan = pkg.plans?.find(plan => plan.id === selectedPlan.value.id);
+    if (!pkg || !pkg.plans) {
+      continue; // Skip this iteration if pkg or pkg.plans is undefined or null
+    }
+
+    const foundPlan = pkg.plans.find(plan => plan && plan.id === selectedPlan.value.id);
     if (foundPlan) {
-      // Return the start and end dates if the selected plan is found
       return { startDate: pkg.start_date, endDate: pkg.end_date };
     }
   }
-
-  // Return null or default values if no package contains the selected plan
+  
   return { startDate: null, endDate: null };
 });
+
 
 
 const selectedPackageDates = computed(() => {
@@ -431,6 +424,9 @@ const selectedPackageDates = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  min-height: calc(100vh - 50px);
+}
 .content-section {
   display: flex;
   justify-content: center;
@@ -441,6 +437,7 @@ const selectedPackageDates = computed(() => {
   width: 70vw;
   max-width: 1396px;
   margin: unset;
+  
   // height: fit-content;
 }
 

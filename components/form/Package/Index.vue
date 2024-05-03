@@ -140,11 +140,12 @@ const createCategory  = async (packageData) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast.success("Package added successfully!");
+      $toast("Package added successfully");
       // emit("close-canvas");
     } else {
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";
-      $toast.error(errorMessage);
+      // $toast.error(errorMessage);
+      $toast.error("Package already exists");
     }
   } catch (err) {
     console.error("Error:/api/package/add", err);
@@ -170,7 +171,7 @@ const editCategory  = async (packageData) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast.success("Package edited successfully!");
+      $toast("Package updated successfully");
       // emit("close-canvas");
     } else {
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";

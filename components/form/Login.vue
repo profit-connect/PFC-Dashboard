@@ -121,8 +121,9 @@ const submitHandler = async (event) => {
       });
       if (data.value.return) {
         initClientAuthSetup(data, userTypeData);
+        $toast("Logged in Sucessfully");
       } else {
-        $toast(data.value.message);
+        $toast.error(data.value.message);
       }
     } catch (err) {
       console.log("Error:/franchise/get/login", err);

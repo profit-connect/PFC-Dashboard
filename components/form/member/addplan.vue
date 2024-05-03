@@ -161,10 +161,26 @@
           </div>
         </div>
       </div>
-      <div class="save mt-4 d-flex justify-content-center">
-        <FormKit type="submit">Purchase</FormKit>
+      <div 
+        class="mt-4 d-flex justify-content-center flex-column"
+        style="position: fixed; width: 830px; text-align: center; bottom: 30px;"
+      >
+        <div><FormKit type="submit">Save</FormKit></div>
       </div>
     </FormKit>
+    <div 
+        class="mt-4 d-flex justify-content-center flex-column"
+        style="position: fixed; width: 830px; text-align: center; bottom: 0px;"
+      >
+    <div>
+          <button
+            class="btn"
+            @click="$emit('close-canvas')"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -224,7 +240,7 @@ const submitHandler = async (purchaseData: any) => {
       emit("reload");
       $toast("Plan added successfully!");
       emit("close-canvas");
-      location.reload();
+      // location.reload();
     } else {
       $toast.error(data.value.message);
     }
@@ -472,23 +488,23 @@ element.style {
 .modal-box .save-cancel-box div {
   width: 358px;
 }
-.btn {
-  position: relative;
-  padding: 0.3rem 1.5rem;
-  height: 45px;
-  font-weight: 500;
-  letter-spacing: 0.025rem;
-  border-radius: 10px;
-  background: #ffd500;
-  border-color: #ffd500;
-  width: 100%;
-  color: #000;
-  transition: 0.35s;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  font: 22px "Poppins Medium", sans-serif, Arial;
-}
+// .btn {
+//   position: relative;
+//   padding: 0.3rem 1.5rem;
+//   height: 45px;
+//   font-weight: 500;
+//   letter-spacing: 0.025rem;
+//   border-radius: 10px;
+//   background: #ffd500;
+//   border-color: #ffd500;
+//   width: 100%;
+//   color: #000;
+//   transition: 0.35s;
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
+//   overflow: hidden;
+//   font: 22px "Poppins Medium", sans-serif, Arial;
+// }
 .modal-box .save-cancel-box div button.btn {
   width: 100%;
 }

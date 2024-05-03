@@ -99,7 +99,8 @@ const createTag = async (tagData :any) => {
       $toast("Tag added successfully!");
       // emit("close-canvas");
     } else if (data.value) {
-      $toast.error(data.value.message);
+      // $toast.error(data.value.message);
+      $toast.error("Tag already exist");
     } else if (error.value) {
       $toast.error("An error occurred while adding the tag.");
       console.error("Error:/tags/add", error.value);
@@ -126,7 +127,7 @@ const editTag = async (tagData :any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Tag edited successfully!");
+      $toast("Tag updated successfully");
       // emit("close-canvas");
     } else if (data.value) {
       $toast.error(data.value.message);

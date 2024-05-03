@@ -15,17 +15,18 @@
      :actions="false"
    >
      <div class="general-timimg px-4">
-      
-       <FormKit
+
+     </div>
+     <div class="schedule-container px-4" >
+      <FormKit
          type="checkbox"
          name="always_open"
          outer-class="m-10"
          label="Always Open"
          v-model="form.always_open"
        />
-     </div>
-     <div class="schedule-container px-4" v-if="!form.always_open">
        <div
+         v-if="!form.always_open"
          v-for="(day, index) in form.generalTiming"
          :key="index"
          class="day-schedule"
@@ -175,7 +176,7 @@ const timeToMinutes = (time: string) => {
 const submitHandler = async () => {
   // Check if the form should not be submitted due to invalid timing
   if (!timingIsValid.value && !form.value.always_open) {
-    $toast.error('Please ensure all end times are greater than start times.');
+    $toast.error('Please ensure all end times are later than start times');
     return; // Stop the submission as the validation failed
   }
 
@@ -195,7 +196,7 @@ const submitHandler = async () => {
       method: "POST",
       body: cleanObjectL1(payload),
     });
-    $toast("Facility Timing Updated Successfully"); // Adjust according to actual response
+    $toast("Facility Timings updated successfully"); // Adjust according to actual response
   } catch (err) {
     console.error("Error fetching facility data:", err);
     $toast.error('An error occurred while updating facility data.'); // Show an error toast
@@ -224,7 +225,7 @@ const submitHandler = async () => {
 .day-schedule {
  display: flex;
  align-items: center;
- gap: 10px;
+ gap: 15px;
 }
 
 .day-checked label {

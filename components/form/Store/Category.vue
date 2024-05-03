@@ -131,11 +131,12 @@ const createCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Category added successfully!");
+      $toast("Category added successfully");
       // emit("close-canvas");
     } else {
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";
-      $toast.error(errorMessage);
+      // $toast.error(errorMessage);
+      $toast.error("Category already exists");
     }
   } catch (err) {
     console.error("Error:/api/store/add-category", err);
@@ -162,7 +163,7 @@ const editCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Category edited successfully!");
+      $toast("Category updated successfully");
       // emit("close-canvas");
     } else {
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";

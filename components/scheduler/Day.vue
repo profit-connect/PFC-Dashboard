@@ -466,13 +466,13 @@ const cancelMember = async (member, calendarScheduleId) => {
     });
     bus.emit(true);
     if (data.value.success) {
-      $toast("Membership cancellation successful!");
+      $toast("Membership cancellation successful");
     } else {
-      $toast.error(data.value.message); // Show error message from API
+      $toast(data.value.message); // Show error message from API
     }
   } catch (err) {
     console.error("Error:/api/cancel/member", err);
-    $toast.error("An error occurred while cancelling the membership.");
+    // $toast.error("An error occurred while cancelling the membership.");
   }
 };
 
@@ -602,16 +602,17 @@ const bookMember = async () => {
         },
       });
       if (!data.value.return) {
-        $toast.error(data.value.message);
+        // $toast.error(data.value.message);
+        $toast.error("Member is already booked into this class");
       } else {
-        $toast("Member added successfully!");
+        $toast("Member added successfully");
         showMember.value = false;
         selectedMember.value = [];
         bus.emit(true); // Assuming this refreshes the member list or similar
       }
     } catch (error) {
       console.error("Error booking member:", error);
-      $toast.error("Member is not added!");
+      $toast("Member is not added!");
     }
   } else {
     // This error message will now also cover the case where adding the selected members would exceed capacity
@@ -631,9 +632,10 @@ const assignCoach = async () => {
         },
       });
       if (!data.value.return) {
-        $toast.error(data.value.message);
+        // $toast.error(data.value.message);
+        $toast.error("Coach is already assigned to this class");
       } else {
-        $toast("Coach added successfully!");
+        $toast("Coach added successfully");
         selectedCoach.value = undefined;
         showCoach.value = false;
         bus.emit(true);

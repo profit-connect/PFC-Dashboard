@@ -1,3 +1,4 @@
+
 import { createInput } from "@formkit/vue";
 import Uppy from "@/components/formkit/Uppy.vue";
 import Multiselect from "@/components/formkit/Multiselect.vue";
@@ -40,4 +41,11 @@ export default {
       props: [],
     }),
   },
+  messages: {
+      en: {
+        ui: {
+          incomplete: "Missing field(s). Please check and ensure all fields are completed correctly.",
+        },
+      },
+    },
 };

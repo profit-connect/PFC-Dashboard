@@ -350,7 +350,7 @@ const editFacility = async (getMemberInfo) => {
     await execute(); // Execute the custom fetch request
 
     if (data.value && data.value.return) {
-      $toast.success("Facility Updated successfully!"); // Display success message
+      $toast.success("Facility updated successfully"); // Display success message
       resetEditModes(); // Reset any editing modes in UI
       fetchFacilityInfo(); // Refresh facility info
       emit("reload"); // Notify any parent components or listeners

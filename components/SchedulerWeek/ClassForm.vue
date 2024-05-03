@@ -1,7 +1,7 @@
 <template>
   <div class="scheduler-week-class-form">
     <FormKit type="form" @submit="submitHandler" :actions="false">
-      <div v-for="(item, key) in formStructure" :key="key" class="mb-5">
+      <div v-for="(item, key) in formStructure" :key="key">
         <div class="row mx-5">
           <div class="col-5">
             <FormKit
@@ -42,17 +42,23 @@
               type="multiselect"
               mode="single"
               validation="required"
-              v-if="formStructure[key].discipline_id && computedClassType.find(
-                (item) => item.value == formStructure[key].discipline_id
-              )?.class.length"
-              :options="computedClassType.find(
-                (item) => item.value == formStructure[key].discipline_id
-              )?.class"
+              v-if="
+                formStructure[key].discipline_id &&
+                computedClassType.find(
+                  (item) => item.value == formStructure[key].discipline_id
+                )?.class.length
+              "
+              :options="
+                computedClassType.find(
+                  (item) => item.value == formStructure[key].discipline_id
+                )?.class
+              "
               :key="`${formStructure[key].discipline_id}-${formStructure[key].class_id}`"
               v-model="formStructure[key].class_id"
-              @update:model-value="onClassSelect(key, formStructure[key].class_id)"
+              @update:model-value="
+                onClassSelect(key, formStructure[key].class_id)
+              "
             />
-
           </div>
         </div>
         <table
@@ -65,12 +71,16 @@
             <th style="position: relative; left: 10px">Start</th>
             <th style="position: relative; right: 20px">Duration</th>
             <th>End</th>
-            <th  style="position: relative; left: 5px">Max</th>
-            <th  style="position: relative; left: 5px">Wait</th>
-            <th  style="position: relative; left: 10px">Coach</th>
+            <th style="position: relative; left: 5px">Max</th>
+            <th style="position: relative; left: 5px">Wait</th>
+            <th style="position: relative; left: 10px">Coach</th>
             <th></th>
           </tr>
-          <tr v-for="(schedule, key_2) in item.schedule" :key="key_2"  style="position: relative; bottom: 30px;">
+          <tr
+            v-for="(schedule, key_2) in item.schedule"
+            :key="key_2"
+            style="position: relative; bottom: 30px"
+          >
             <td>
               <button
                 type="button"
@@ -200,45 +210,64 @@
                 class="custom-schedule-wrapper"
               >
                 <FormKit
+                  :key="formStructure[key].schedule[key_2]"
                   type="multiselect"
                   mode="tags"
                   :options="computedCoachData"
-                  v-model="formStructure[key].schedule[key_2].coach"
+                  :model-value="formStructure[key].schedule[key_2].coach"
                   validation="required"
+                  @update:model-value="(val:any)=>{
+                    formStructure[key].schedule[key_2]?
+                    formStructure[key].schedule[key_2].coach = val:''}"
                 />
               </div>
             </td>
             <td>
               <div class="action-btn">
                 <div class="btn">
-                <button @click="onDeleteSlot(key, key_2)" type="button">
-                  <NuxtImg src="/images/svg/delete-icon.svg" provider="none" style="height: 16px; width: 16px;"/>
-                </button>
-                <p style="position: relative; bottom: 5px; font-size: 13.5px;">Delete</p>
+                  <button @click="onDeleteSlot(key, key_2)" type="button">
+                    <NuxtImg
+                      src="/images/svg/delete-icon.svg"
+                      provider="none"
+                      style="height: 16px; width: 16px"
+                    />
+                  </button>
+                  <p style="position: relative; bottom: 5px; font-size: 13.5px">
+                    Delete
+                  </p>
                 </div>
                 <div class="btn">
-                <button @click="onDuplicateSlot(key, key_2)" type="button">
-                  <NuxtImg
-                  src="/images/svg/duplicate-icon.svg" provider="none" style="height: 20px; width: 20px;" />
-                    <p style="position: relative; bottom: 4px; font-size: 12.5px;">Duplicate</p>  
-                </button>
-              </div>
+                  <button @click="onDuplicateSlot(key, key_2)" type="button">
+                    <NuxtImg
+                      src="/images/svg/duplicate-icon.svg"
+                      provider="none"
+                      style="height: 20px; width: 20px"
+                    />
+                    <p
+                      style="position: relative; bottom: 4px; font-size: 12.5px"
+                    >
+                      Duplicate
+                    </p>
+                  </button>
+                </div>
               </div>
             </td>
           </tr>
         </table>
       </div>
-      <div class="mt-5 d-flex justify-content-center"  style="position: relative; width: 920px;">
-        <FormKit type="submit">Save</FormKit> 
+      <div
+        class="mt-5 d-flex justify-content-center"
+        style="position: relative; width: 920px; top: 300px"
+      >
+        <FormKit type="submit">Save</FormKit>
       </div>
     </FormKit>
-    <div class="d-flex justify-content-center"  style="position: relative; width: 920px;">
-       <button @click="$emit('close-canvas')"
-            class="btn"
-          >
-            Cancel
-          </button>
-     </div>
+    <div
+      class="d-flex justify-content-center"
+      style="position: relative; width: 920px; top: 300px"
+    >
+      <button @click="$emit('close-canvas')" class="btn">Cancel</button>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -271,7 +300,7 @@ const selectedClassType = ref();
 const selectedSlot: any = ref([]);
 const { currentUserType } = useAuthStore();
 const dayjs = useDayjs();
-const emit = defineEmits(["on-class-add", "close-canvas" ]);
+const emit = defineEmits(["on-class-add", "close-canvas"]);
 
 const formStructure = ref([
   {
@@ -295,14 +324,20 @@ const formStructure = ref([
 //   }
 // };
 const onEmptyFirstSlot = (key: number) => {
-  console.log('Selected Schedule Length: ', props.selectedSchedule.length);
-  console.log('Form Structure Before:', JSON.parse(JSON.stringify(formStructure.value)));
+  console.log("Selected Schedule Length: ", props.selectedSchedule.length);
+  console.log(
+    "Form Structure Before:",
+    JSON.parse(JSON.stringify(formStructure.value))
+  );
 
   if (!props.selectedSchedule.length) {
     formStructure.value[key].schedule = [];
     formStructure.value[key].class_id = undefined;
 
-    console.log('Form Structure After Clearing:', JSON.parse(JSON.stringify(formStructure.value)));
+    console.log(
+      "Form Structure After Clearing:",
+      JSON.parse(JSON.stringify(formStructure.value))
+    );
 
     if (
       formStructure.value.length === key + 2 &&
@@ -312,9 +347,11 @@ const onEmptyFirstSlot = (key: number) => {
     }
   }
 
-  console.log('Form Structure Final:', JSON.parse(JSON.stringify(formStructure.value)));
+  console.log(
+    "Form Structure Final:",
+    JSON.parse(JSON.stringify(formStructure.value))
+  );
 };
-
 
 const onAddFirstSlot = (key: number) => {
   formStructure.value[key].schedule = [
@@ -380,6 +417,20 @@ const checkIsDateFallInBetween = (data: string) => {
 
 function notsametime(node: any) {
   const target_time = timeToDateTime(node.value);
+  if (
+    selectedTime.value.filter(
+      (item) => item === dayjs(target_time).format("hh:mm A")
+    ).length == 1
+  ) {
+    return true;
+  } else {
+    let today = dayjs();
+    const date = dayjs(`${props.selectedDate}T${node.value}`);
+    const isBefore = date.isBefore(today);
+    if (isBefore) {
+      return false;
+    }
+  }
   let repeated = 0;
   for (let i = 0; i < selectedSlot.value.length; i++) {
     const start_time = selectedSlot.value[i].start_time;
@@ -397,69 +448,38 @@ function notsametime(node: any) {
   return !(repeated > 1);
 }
 
-function generateAvailableTimeArray() {
-  const availableTime = [];
-  const now = new Date();
-  now.setSeconds(0, 0); // Normalize current time to remove seconds and milliseconds
-
-  // console.log("Current normalized time (now):", now);
-
-  for (let h = 0; h < 24; h++) {
-    for (let m = 0; m < 60; m += 30) {
-      const hour = h === 0 ? "12" : (h > 12 ? h - 12 : h).toString().padStart(2, "0");
-      const period = h < 12 ? "AM" : "PM";
-      const minute = m === 0 ? "00" : m.toString().padStart(2, "0");
-      const timeValue = `${hour}:${minute} ${period}`;
-
-      const timeSlotDate = new Date(now.toDateString());
-      let adjustedHour = h;
-      if (hour === "12" && period === "AM") {
-        adjustedHour = 0;
-      } else if (period === "PM" && hour !== "12") {
-        adjustedHour = h + 12;
-      }
-      timeSlotDate.setHours(adjustedHour, m, 0, 0);
-
-      const isPast = timeSlotDate < now;
-      // console.log(`Comparing: [Slot: ${timeSlotDate} < Now: ${now}] - Result: ${isPast}`);
-
-      const isDisabled = checkIsDateFallInBetween(timeValue) || isPast;
-
-      availableTime.push({
-        label: timeValue,
-        value: timeValue,
-        disabled: isDisabled
-      });
-    }
-  }
-
-  return availableTime;
-}
-
-
-
-const availableTime = computed(() => {
-  return generateAvailableTimeArray();
-});
-
-
 // function generateAvailableTimeArray() {
 //   const availableTime = [];
+//   const now = new Date();
+//   now.setSeconds(0, 0); // Normalize current time to remove seconds and milliseconds
+
+//   // console.log("Current normalized time (now):", now);
+
 //   for (let h = 0; h < 24; h++) {
 //     for (let m = 0; m < 60; m += 30) {
-//       const hour =
-//         h === 0
-//           ? "12"
-//           : h > 12
-//           ? (h - 12).toString().padStart(2, "0")
-//           : h.toString().padStart(2, "0");
+//       const hour = h === 0 ? "12" : (h > 12 ? h - 12 : h).toString().padStart(2, "0");
 //       const period = h < 12 ? "AM" : "PM";
 //       const minute = m === 0 ? "00" : m.toString().padStart(2, "0");
 //       const timeValue = `${hour}:${minute} ${period}`;
+
+//       const timeSlotDate = new Date(now.toDateString());
+//       let adjustedHour = h;
+//       if (hour === "12" && period === "AM") {
+//         adjustedHour = 0;
+//       } else if (period === "PM" && hour !== "12") {
+//         adjustedHour = h + 12;
+//       }
+//       timeSlotDate.setHours(adjustedHour, m, 0, 0);
+
+//       const isPast = timeSlotDate < now;
+//       // console.log(`Comparing: [Slot: ${timeSlotDate} < Now: ${now}] - Result: ${isPast}`);
+
+//       const isDisabled = checkIsDateFallInBetween(timeValue) || isPast;
+
 //       availableTime.push({
 //         label: timeValue,
 //         value: timeValue,
-//         disabled: checkIsDateFallInBetween(timeValue),
+//         disabled: isDisabled
 //       });
 //     }
 //   }
@@ -467,10 +487,39 @@ const availableTime = computed(() => {
 //   return availableTime;
 // }
 
-// // Example usage:
 // const availableTime = computed(() => {
 //   return generateAvailableTimeArray();
 // });
+
+function generateAvailableTimeArray() {
+  const availableTime = [];
+  for (let h = 0; h < 24; h++) {
+    for (let m = 0; m < 60; m += 30) {
+      const hour =
+        h === 0
+          ? "12"
+          : h > 12
+          ? (h - 12).toString().padStart(2, "0")
+          : h.toString().padStart(2, "0");
+      const period = h < 12 ? "AM" : "PM";
+      const minute = m === 0 ? "00" : m.toString().padStart(2, "0");
+      const timeValue = `${hour}:${minute} ${period}`;
+
+      availableTime.push({
+        label: timeValue,
+        value: timeValue,
+        disabled: checkIsDateFallInBetween(timeValue),
+      });
+    }
+  }
+
+  return availableTime;
+}
+
+// Example usage:
+const availableTime = computed(() => {
+  return generateAvailableTimeArray();
+});
 
 const computedQueryCoach = computed(() => {
   return { facility_id: currentUserType?.id, date: props.selectedDate };
@@ -514,7 +563,7 @@ const computedCoachData = computed(() => {
   if (coachData.value && coachData.value.coaches.length)
     return coachData.value.coaches.map((item: any) => {
       return {
-        label: formatName(item.firstname), 
+        label: formatName(item.firstname),
         value: item.id,
       };
     });
@@ -536,11 +585,11 @@ const addSchedule = async (data: any) => {
           schedule: [],
         },
       ];
-      $toast("Schedule added successfully!");
+      $toast("Schedule added successfully");
       emit("on-class-add");
     }
   } catch {
-    $toast.error("Schedule is not added!");
+    $toast.error("Schedule is not added");
   }
 };
 const updateSchedule = async (data: any) => {
@@ -562,7 +611,7 @@ const updateSchedule = async (data: any) => {
           schedule: [],
         },
       ];
-      $toast("Schedule updated successfully!");
+      $toast("Schedule updated successfully");
       emit("on-class-add");
     }
   } catch {
@@ -598,40 +647,39 @@ const submitHandler = async () => {
   }
 };
 
-const convertTo24Hour =(timeStr:string)=>  {
-    const [time, modifier] = timeStr.split(' ');
-    let [hours, minutes] = time.split(':');
+const convertTo24Hour = (timeStr: string) => {
+  const [time, modifier] = timeStr.split(" ");
+  let [hours, minutes] = time.split(":");
 
-    if (hours === '12') {
-        hours = '00';
-    }
+  if (hours === "12") {
+    hours = "00";
+  }
 
-    if (modifier === 'PM') {
-        hours = parseInt(hours, 10) + 12;
-    }
+  if (modifier === "PM") {
+    hours = parseInt(hours, 10) + 12;
+  }
 
-    return `${hours}:${minutes}`;
-}
-
+  return `${hours}:${minutes}`;
+};
 
 const endTime = (start_time: string, offetInMinute: number = 0) => {
-   let time24hours = convertTo24Hour(start_time)
+  let time24hours = convertTo24Hour(start_time);
   const originalDateTime = dayjs(`2024-01-01 ${time24hours}`);
   const newDateTime = originalDateTime.add(offetInMinute, "minute");
   return newDateTime.format("hh:mm A");
 };
 
 const formatTime = (time: string) => {
-  let time24hours = convertTo24Hour(time)
+  let time24hours = convertTo24Hour(time);
   return dayjs(`2024-01-01 ${time24hours}`).format("hh:mm A");
 };
 function formatName(string) {
-  if (!string) return '';
-  const words = string.split(' ');
-  const capitalizedWords = words.map(word => 
-    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  if (!string) return "";
+  const words = string.split(" ");
+  const capitalizedWords = words.map(
+    (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   );
-  return capitalizedWords.join(' ');
+  return capitalizedWords.join(" ");
 }
 watch(
   formStructure,
@@ -676,6 +724,8 @@ const timeToDateTime = (time: string) => {
   return dayjs(`2024-01-01 ${time}`);
 };
 
+const selectedTime = ref([]);
+
 watch(
   props,
   (val) => {
@@ -683,6 +733,7 @@ watch(
       formStructure.value = [];
       const dataPreprocess: any = {};
       val.selectedSchedule.forEach((item: any) => {
+        selectedTime.value.push(item.start_time);
         selectedSlot.value.push({
           start_time: timeToDateTime(item.start_time).subtract(
             item.duration,
@@ -757,7 +808,6 @@ const onClassSelect = (key: number, class_id: number) => {
 //   // Rest of your logic here...
 // };
 
-
 onMounted(() => {
   onAddNewClass();
 });
@@ -773,28 +823,35 @@ const checkBetween = (beginTime: any, endTime: any, time: any) => {
 const getAvailableTime = (availableTime: [any], schedule: any) => {
   const startTime = schedule.start_time;
   const duration = schedule.duration;
+  const now = new Date();
+  let date1 = dayjs(now);
   const beginTime = timeToDateTime(startTime).subtract(duration, "minute");
   const endTime = timeToDateTime(startTime).add(duration, "minute");
   return availableTime.map((item) => {
+    let time24 = convertTo24Hour(item.value);
+    const date2 = dayjs(`${props.selectedDate}T${time24}`);
+    const isBefore = date2.isBefore(date1);
     return {
       ...item,
       disabled:
-        item.disabled &&
-        !checkBetween(beginTime, endTime, timeToDateTime(item.value)),
+        (item.disabled &&
+          !checkBetween(beginTime, endTime, timeToDateTime(item.value))) ||
+        isBefore,
     };
   });
 };
 
-
-
-watch(() => formStructure.value.map(item => item.discipline_id), (newValues, oldValues) => {
-  newValues.forEach((newValue, index) => {
-    if (newValue !== oldValues[index]) {
-      formStructure.value[index].class_id = undefined; // Reset the class_id
-    }
-  });
-}, { deep: true });
-
+watch(
+  () => formStructure.value.map((item) => item.discipline_id),
+  (newValues, oldValues) => {
+    newValues.forEach((newValue, index) => {
+      if (newValue !== oldValues[index]) {
+        formStructure.value[index].class_id = undefined; // Reset the class_id
+      }
+    });
+  },
+  { deep: true }
+);
 </script>
 
 <style scoped lang="scss">
@@ -813,7 +870,8 @@ watch(() => formStructure.value.map(item => item.discipline_id), (newValues, old
   }
 }
 
-th{}
+th {
+}
 td {
   padding: 2px 7px;
 }
@@ -862,7 +920,6 @@ td {
     left: 2px;
   }
 }
-
 </style>
 <style lang="scss">
 .scheduler-week-class-form {

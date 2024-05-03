@@ -279,7 +279,7 @@ const submitHandler = async () => {
       body: cleanObjectL1(payload),
     });
     facilityData.value = data.value.facility;
-    $toast("Facility General Updated");
+    $toast("Facility's General information updated successfully");
   } catch (err) {
     console.error("Error fetching facility data:", err);
   } finally {

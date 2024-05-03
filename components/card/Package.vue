@@ -14,13 +14,14 @@
       </div>
        
         <div class="name-card-right">
-          <div> <a href="/" target="_blank"       
-        >
+          <div> 
+            <!-- <a href="/" target="_blank"       
+        > -->
           <img style="position: relative; left: 0px;"
             src="~assets/images/svg/link-icon.svg?timestamp=1701243704100"
             alt="Link to package"
           />
-        </a>
+        <!-- </a> -->
       </div>
       <div style=" font-size: 10px; width:40px;" > {{ isPublic ? 'Public' : 'Private' }}</div>
           <div  style="position: relative; top: 5px;">

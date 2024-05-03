@@ -149,12 +149,13 @@ const computedSelectedRole = computed(() => {
       await execute();
   
       if (data.value && data.value.return) {
-        $toast("Roles added successfully!");
+        $toast("Roles added successfully");
         emit("reload");
         // emit("close-canvas");
       } else {
         const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";
-        $toast.error(errorMessage);
+        // $toast.error(errorMessage);
+        $toast.error("Role already exists in the system");
       }
     } catch (err) {
       console.error("Error:/api/store/add", err);
@@ -181,7 +182,7 @@ const computedSelectedRole = computed(() => {
       await execute();
   
       if (data.value && data.value.return) {
-        $toast("Roles edited successfully!");
+        $toast("Roles updated  successfully");
         emit("reload");
         // emit("close-canvas");
       } else {

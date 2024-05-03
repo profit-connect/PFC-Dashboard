@@ -81,7 +81,7 @@
       </div>
       <div v-if="selectedCategory"
         class="mt-4 d-flex justify-content-center flex-column"
-        style="position: relative; width: 830px; text-align: center; bottom: -40px;"
+        style="position: relative; width: 830px; text-align: center; bottom: -220px;"
       >
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
@@ -152,10 +152,11 @@ const createCategory = async (categoryData) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Category added successfully!");
+      $toast("Category added successfully");
       // emit("close-canvas");
     } else if (data.value) {
-      $toast.error(data.value.message);
+      // $toast.error(data.value.message);
+      $toast.error("Category already exists");
     } else if (error.value) {
       $toast.error("An error occurred while adding the category.");
       console.error("Error:/api/category/add", error.value);
@@ -184,7 +185,7 @@ const editCategory = async (categoryData) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Category edited successfully!");
+      $toast("Category updated successfully");
       // emit("close-canvas");
     } else if (data.value) {
       $toast.error(data.value.message);

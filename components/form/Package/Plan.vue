@@ -31,7 +31,7 @@
         name="name"
         placeholder="Please enter plan name. Recommended character count: 26"
         validation="required"
-      
+        :maxlength="26"
         :validation-messages="{
                   required: 'Plan name is required',
                 }"
@@ -43,7 +43,7 @@
         name="description"
         label="Description"
         placeholder="Please enter short plan description.  Recommended character count: 26"
-   
+        :maxlength="26"
         validation="required"
         :validation-messages="{
                   required: 'Plan description is required',
@@ -183,7 +183,7 @@
                 v-if="paymentCategoryData === 'Recurring'"
               >
                 <span class="mb-3"> every </span>
-                <div   style="width: 60px;">
+                <div   style="width: 50px;">
                 <FormKit
                   type="number"
                   name="payment_duration"
@@ -196,10 +196,10 @@
                 }"
                 />
               </div>
-              <div   style="width: 240px;">
+              <div   style="width: 180px;">
                 <FormKit
                   type="multiselect"
-                  placeholder=" Select time period."
+                  placeholder=" Select time."
                   name="payment_period"
                   mode="single"
                   :classes="{
@@ -215,19 +215,20 @@
                 />
               </div>
                 <span class="mb-3"> for </span>
-                <div   style="width: 60px;">
+                <div   style="width: 50px;">
                 <FormKit
                   type="number"
                   name="payment_cycle"
                   :validation="
                     paymentCategoryData === 'Recurring' ? 'required' : ''
                   "
-                  placeholder="Cycle"
+                  placeholder="No."
                   :validation-messages="{
                   required: 'Cycle required',
                 }"
                 />
               </div>
+              <span class="mb-3"> cycles </span>
               </div>
             </div>
           </MixInputBox>
@@ -275,7 +276,8 @@
                 outer-class="m-0"
                 label="Start date"
                 name="promotion_start"
-                :min="effectiveMinDate"
+                :max="maxDate"
+                :min="startDatePackage ||effectiveMinDate"
                 v-model="promotionStartDate"
                 :validation="isPromotionPriceActive ? 'required' : ''"
                 :validation-messages="{
@@ -602,12 +604,13 @@ const createPlan = async (planData) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast.success("Plan added successfully!");
+      $toast("Plan added successfully");
       // emit("close-canvas");
     } else {
       // Enhanced error handling to prevent TypeError when data.value is null
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";
-      $toast.error(errorMessage);
+      // $toast.error(errorMessage);
+      $toast.error("Plan already exists");
     }
   } catch (err) {
     console.error("Error:/api/package/addplan", err);
@@ -636,7 +639,7 @@ const editPlan = async (planData) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast.success("Plan edited successfully!");
+      $toast("Plan updated successfully");
       // emit("close-canvas");
     } else {
       // Handling potential null data.value more gracefully
@@ -789,9 +792,12 @@ const availableTags = computed(() => {
 });
 
 const maxDate = ref('');
+const startDatePackage = ref('');
+
 watchEffect(() => {
     // Use updateDates.endDate if it's not null/undefined; otherwise, use createDates.startDate.
     maxDate.value = props.updateDates?.endDate ?? props.createDates?.endDate ?? '';
+    startDatePackage.value = props.updateDates?.startDate ?? props.createDates?.startDate ?? '';
 });
 
 
