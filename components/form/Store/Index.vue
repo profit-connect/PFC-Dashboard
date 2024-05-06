@@ -392,7 +392,7 @@ const updateStore = async (storeData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Store item updated edited successfully!");
+      $toast("Store item updated successfully");
       // emit("close-canvas");
     } else {
       const errorMessage = data.value ? data.value.message : "Unexpected error occurred. Please try again.";

@@ -53,6 +53,7 @@
 <script lang="ts" setup>
 import { useDayjs } from "#dayjs";
 const dayjs = useDayjs();
+const { $toast } = useNuxtApp();
 const props = defineProps({
 
   hideSchedulerBar: Boolean,
@@ -131,6 +132,10 @@ const onAddClass = (selectedDateNew: string) => {
   selectedDate.value = selectedDateNew;
 };
 const handleModalToggle = () => {
+  // if (!props.selectedRoomId || props.selectedRoomId === "undefined") {
+  //   $toast.error("Please select the room");
+  //   return;
+  // }
   showWeekForm.value = !showWeekForm.value;
 };
 

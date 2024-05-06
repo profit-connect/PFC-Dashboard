@@ -1,5 +1,5 @@
 <template>
-  <div class="schedule-day" v-if="schedule">
+  <div class="schedule-day" v-if="schedule"> 
     <div class="header d-flex align-items-center gap-4 py-2 mb-2">
       <div
         style="
@@ -70,7 +70,8 @@
           First Timer
         </li>
         <li>
-          <p>{{ schedule.cancelled }}</p>
+          <p>{{cancelledMembersCount}}</p>
+          <!-- <p>{{ schedule.cancelled }}</p> -->
           Canceled
         </li>
         <li class="flex-column" style="margin-right: 20px; margin-bottom: 10px">
@@ -336,19 +337,21 @@
         />
       </div>
       <template #footer>
-        <div class="d-flex justify-content-center">
-          <MixButton
-            label="Save"
-            style="
-              background-color: #ffd500;
-              width: 300px;
-              margin-bottom: 30px;
-              font-size: 22px;
-            "
-            :disableIcon="true"
-            @click="bookMember"
-          />
-        </div>
+        <div class="d-flex flex-column align-items-center justify-content-center" style="width: 910px; height: 100%; margin: auto;">
+    <MixButton
+        label="Save"
+        style="
+            background-color: #ffd500;
+            width: 300px;
+            margin-bottom: 0px;
+            font-size: 22px;
+        "
+        :disableIcon="true"
+        @click="bookMember"
+    />
+    <button @click="showMember=false" class="btn">Cancel</button>
+</div>
+
       </template>
     </ModalExpandableSchedule>
     <ModalExpandableSchedule v-model="showCoach" id="day-coach-modal">
@@ -371,7 +374,7 @@
         <FormKit type="text" v-model="coachText" placeholder="Search coach" />
       </template>
       <div v-if="coachData && coachData.coaches">
-        <SchedulerMemberCard
+        <SchedulerCoachCard
           v-for="coach in coachData?.coaches
             .filter((item) => item && item.status === 'Available')
             .filter((item) => {
@@ -391,18 +394,19 @@
 
       </div>
       <template #footer>
-        <div class="d-flex justify-content-center" style="position: relative">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="width: 910px; height: 100%; margin: auto;">
           <MixButton
             label="Save"
             style="
               background-color: #ffd500;
               width: 300px;
-              margin-bottom: 30px;
+              margin-bottom: 0px;
               font-size: 22px;
             "
             :disableIcon="true"
             @click="assignCoach"
           />
+          <button @click="showCoach=false" class="btn">Cancel</button>
         </div>
       </template>
     </ModalExpandableSchedule>
@@ -572,6 +576,15 @@ const { data: coachData } = await useCustomFetch<any>("/adminapp/get/coaches", {
   body: computedQueryCoach,
 });
 
+const cancelledMembersCount = computed(() => {
+  // Check if schedule is defined and members is neither null nor undefined
+  if (props.schedule && Array.isArray(props.schedule.members)) {
+    // Filter members with status 'Cancelled' and return the count
+    return props.schedule.members.filter(member => member.status === 'Cancelled').length;
+  }
+  return 0; // Return 0 if members are undefined or null
+});
+
 const bookMember = async () => {
   // Calculate the total expected member count after booking the selected members
   // const totalExpectedMemberCount = props.schedule.nonNullMemberCount -selectedMember.value.length;
@@ -612,7 +625,7 @@ const bookMember = async () => {
       }
     } catch (error) {
       console.error("Error booking member:", error);
-      $toast("Member is not added!");
+      $toast.error("Member is not added!");
     }
   } else {
     // This error message will now also cover the case where adding the selected members would exceed capacity

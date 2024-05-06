@@ -15,7 +15,7 @@
             :targetWidth="250"
             name="image"
             :hideUploadButton="true"
-            help="Max image upload: 250x250px, 500KB png with transparency"
+            help="Max image upload: 250x250px, 1MB png with transparency"
           />
         </div>
         <div class="col-9">

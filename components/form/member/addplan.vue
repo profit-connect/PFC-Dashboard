@@ -23,7 +23,7 @@
           <img v-if="getMemberInfo.image && !memberImageError" class="member-avatar" :src="getImageUrl(getMemberInfo.image)" @error="memberImageError = true" alt="Member Avatar">
           <div v-else class="member-avatar avatar-initials">
             <!-- Display initials if the image fails to load or if there is no image -->
-            {{ formatName(getMemberInfo.firstname.charAt(0) )}}{{ formatName(getMemberInfo.lastname.charAt(0) )}}
+            {{ formatName(getMemberInfo.firstname)?.charAt(0) }}{{ formatName(getMemberInfo.lastname)?.charAt(0) }}
           </div>
       </div>
         <div style="position: relative; left: 20px" class="d-flex">
@@ -238,7 +238,7 @@ const submitHandler = async (purchaseData: any) => {
     });
     if (data.value.return) {
       emit("reload");
-      $toast("Plan added successfully!");
+      $toast("Plan added successfully");
       emit("close-canvas");
       // location.reload();
     } else {

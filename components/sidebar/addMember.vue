@@ -10,10 +10,10 @@
         type="uppy"
         label="Upload Image"
         name="image"
-        :targetHeight="100"
-        :targetWidth="100"
+        :targetHeight="500"
+        :targetWidth="500"
         :hideUploadButton="true"
-        help="Max image size: 960x540px, 1MB. Format: .jpg or .png"
+        help="Max image size: 500x500px, 1MB. Format: .jpg or .png"
       />
       <div style="height: 74px">
         <FormKit

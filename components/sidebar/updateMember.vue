@@ -139,10 +139,10 @@
             type="uppy"
             label="Upload Image"
             name="image"
-           :targetHeight="100"
-           :targetWidth="100"
+           :targetHeight="500"
+           :targetWidth="500"
             :hideUploadButton="true"
-            help="Max image upload: 960x540px, 1MB, in .jpg and .png."
+            help="Max image size: 500x500px, 1MB. Format: .jpg or .png"
           />
           <div class="custom-multiselect-gender">
             <FormKit type="multiselect"  
@@ -684,7 +684,6 @@ const getMemberInfo = computed(() => {
     const memberData = memberInfoData.value.member.data[0];
     const socialData = memberInfoData.value.member.social || {};
     const aboutData = memberInfoData.value.member.about || {};
-    const imageUrl = `${memberData.img_src}?timestamp=${new Date().getTime()}`;
     const emergencyContactData =
       memberInfoData.value.member.emergency_contact || {};
     const tags = memberInfoData.value.member?.tags || [];

@@ -923,8 +923,11 @@ td {
 </style>
 <style lang="scss">
 .scheduler-week-class-form {
-  .formkit-messages {
+  .formkit-message {
     display: none;
+  }
+  [data-message-type="ui"] {
+    display: block;
   }
 }
 </style>

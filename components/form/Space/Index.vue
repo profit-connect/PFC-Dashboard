@@ -51,13 +51,18 @@
           <div class="">
             <p>Space Capacity</p>
           </div>
-          <div style="width: 50px">
+          <div style="width: 50px; height: 60px">
             <FormKit
               style="height: 40px"
-              type="text"
+              type="number"
               placeholder="No."
+              :min="1"
               name="capacity"
               label="Capacity"
+              :validation="isUrlactive ? '' : 'required'"
+              :validation-messages="{
+                  required: 'Capacity  required',
+                }"
             />
           </div>
         </div>

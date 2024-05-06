@@ -85,7 +85,7 @@ const sortedTimeSlots = computed(() => {
   });
 });
 
-import { watch } from 'vue';
+
 
 watch(() => props.hideSchedulerBar, (newValue) => {
   console.log('SchedulerTab hideSchedulerBar changed:', newValue);
