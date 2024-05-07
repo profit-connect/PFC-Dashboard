@@ -575,12 +575,11 @@ const { data: coachData } = await useCustomFetch<any>("/adminapp/get/coaches", {
   method: "POST",
   body: computedQueryCoach,
 });
-
 const cancelledMembersCount = computed(() => {
   // Check if schedule is defined and members is neither null nor undefined
   if (props.schedule && Array.isArray(props.schedule.members)) {
     // Filter members with status 'Cancelled' and return the count
-    return props.schedule.members.filter(member => member.status === 'Cancelled').length;
+    return props.schedule.members.filter(member => member && member.status === 'Cancelled').length;
   }
   return 0; // Return 0 if members are undefined or null
 });

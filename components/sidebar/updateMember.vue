@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar-box">
+  <div class="sidebar-box ">
     <div class="image-box" @mouseover="isHovering = true" @mouseleave="isHovering = false">
       <div class="hover-wrapper">
         <div
@@ -68,6 +68,7 @@
         :modelValue="getMemberInfo"
         @submit="editMember"
         :actions="false"
+        incomplete-message="-"
       >
         <div
           v-show="!toggleStates.isPersonalEditMode.value"
@@ -450,7 +451,7 @@
             />
           </div>
         </div>
-        <FormKit type="submit" label="Save" v-show="isAnyEditModeActive" @click="getMember"/>
+        <FormKit type="submit" label="Save" v-show="isAnyEditModeActive" />
       </FormKit>
     </div>
   </div>
@@ -978,6 +979,13 @@ watch(() => getMemberImage.value.image, (newImage) => {
   visibility: visible;
   opacity: 1;
 }
-
+.scheduler-week-class-form {
+  .formkit-message {
+    display: none;
+  }
+  [data-message-type="ui"] {
+    display: block;
+  }
+}
 
 </style>

@@ -5,6 +5,7 @@
       @toggle-modal="handleModalToggle"
       :timeSlot="computedTimeSlots"
       :dates="dates"
+      :currentRoom="currentRoom"
       @onTimeSlotSelect="onTimeSlotSelect"
       :indexSelected="indexForTimeSlot[selectedClass]"
     />
@@ -16,7 +17,7 @@
         style="background-color: #00609f"
       />
       </div>
-      
+   
       <div class="scheduler-list disable-scorllbar" v-if="computedSchedule" style="margin-top: 2px;">  
         <SchedulerDay
           :schedule="computedSchedule"
@@ -99,7 +100,7 @@ const emit = defineEmits(["onRoomSelect", "on-class-add"]);
 const indexForTimeSlot = ref(
   [...Array(props.availableRoom.length).keys()].map((i) => 0)
 );
-const selectedClass = ref(props.selectedClass);
+const selectedClass = ref(props.selectedClass === -1 ? 0 : props.selectedClass);
 const showWeekForm = ref(false);
 const selectedDate = ref("");
 const computedTimeSlots = computed(() => {

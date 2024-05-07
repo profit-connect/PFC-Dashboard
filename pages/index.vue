@@ -1,6 +1,6 @@
 <template>
   <!-- style="margin-left: 355px; cursor: pointer; z-index: 40; position: relative;" -->
- <div class="top-bar-bg"> 
+ <div class="top-bar-bg">
    <div
      class="text-white fs-2" 
      @click="hideScheduler"
@@ -48,7 +48,7 @@
      @dateChanged="dateChanged"
      @weekChanged="weekChanged"
    />
- <div class="d-flex h-100 content"> 
+ <div class="d-flex h-100 content">
    <!-- <SchedulerFilterSideBar
      style="min-width: 400px; transition: 100ms ease-in all"
      :class="{ 'hide-scheduler': hideSchedulerBar }"
@@ -110,9 +110,7 @@
      />
      Chats
    </div>
-   
  </div>
- 
 </template>
 
 <script lang="ts" setup>
@@ -182,7 +180,7 @@ const computedQueryCoach = computed(() => {
    date: currentScheduledTime.value?.start,
  };
 });
-const { data: coachData } =  useCustomFetch<any>("/adminapp/get/coaches", {
+const { data: coachData } = await useCustomFetch<any>("/adminapp/get/coaches", {
  method: "POST",
  body: computedQueryCoach,
 });
@@ -462,14 +460,14 @@ bus.on((val) => {
  refresh();
 });
 
+
 onMounted(() => {
   // if (computedRoom.value.length > 0 && selectedRoomId.value === "undefined") {
-    if (computedRoom.value?.length > 0) {
+    if (computedRoom.value?.length === 1) {
     selectedRoomId.value = computedRoom.value[0].id;
   }
   // }
 });
-
 
 </script>
 <style lang="scss">

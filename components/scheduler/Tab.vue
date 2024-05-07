@@ -14,10 +14,13 @@
         </div>
       </div>
       <div class="tab-ite">
-        <div  class="tab-content1" @click="emit('toggle-modal')">
-          <span class="rotated-text" 
-            >{{ sortedTimeSlots.length ? "Update" : "Add" }} &nbsp;
-            <img
+        <!-- <div  class="tab-content1" @click="emit('toggle-modal')"> -->
+          <div  class="tab-content1">
+          <span class="rotated-text"  
+          :class="{ 'disabled-span': isRoomEmpty }"
+           @click="isRoomEmpty ? null : emit('toggle-modal')"
+            >{{ sortedTimeSlots.length ? "Update" : "Add" }} &nbsp; 
+            <img 
              style="width: 22px; height: 22px;"
               v-if="!sortedTimeSlots.length"
               src="@/assets/images/svg/add-icon.svg"
@@ -52,6 +55,10 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
+  currentRoom: {
+    type: Object,
+    default: () => {},
+  },
   timeSlot: {
     type: Array as PropType<String[]>,
     default: () => [],
@@ -61,7 +68,7 @@ const props = defineProps({
     default: 0,
   },
 });
-
+const isRoomEmpty = computed(() => Object.keys(props.currentRoom).length === 0);
 const currentDay = dayjs();
 const startDate = computed(() => dayjs(props.dates.start));
 console.log(currentDay,startDate);
@@ -181,5 +188,10 @@ watch(() => props.hideSchedulerBar, (newValue) => {
   transform: rotate(270deg);
   transform-origin: center center;
   margin-top: 10px;
+}
+.disabled-span {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none; /* Prevents clicking */
 }
 </style>

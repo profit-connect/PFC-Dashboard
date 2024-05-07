@@ -792,16 +792,28 @@ watch(
   },
   { immediate: true }
 );
+// const onClassSelect = (key: number, class_id: number) => {
+//   if (class_id) {
+//     if (!formStructure.value[key].schedule.length) {
+//       onAddFirstSlot(key);
+//     }
+//     if (formStructure.value.length - 1 === key) {
+//       onAddNewClass();
+//     }
+//   }
+// };
+
 const onClassSelect = (key: number, class_id: number) => {
   if (class_id) {
-    if (!formStructure.value[key].schedule.length) {
-      onAddFirstSlot(key);
-    }
+    onAddFirstSlot(key);
     if (formStructure.value.length - 1 === key) {
       onAddNewClass();
     }
   }
 };
+
+
+ 
 
 // const onClassSelect = (key, class_id) => {
 //   console.log(`Updating class for key ${key} to ${class_id}`);
