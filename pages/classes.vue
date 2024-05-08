@@ -1,6 +1,6 @@
 <template>
-  <div class="container bg-white h-full">
-    <div class="p-2 pt-3">
+  <div class="container bg-white" style="height: 100%;" >
+    <div class="p-2 pt-4">
       <div v-if="data && data.categories && data.categories.some(category => category != null)" class="d-flex align-items-center gap-3">
         <h1 style="font-size: 22px; margin-bottom: 0px" >Classes</h1>
         <MixButton
@@ -265,7 +265,7 @@ watch(showCatrgoryForm, (val) => {
 .search {
   width: 200px;
   position: relative;
-  bottom: 43px;
+  bottom: 45px;
   left: 85%;
 }
 .case {

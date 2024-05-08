@@ -1,16 +1,15 @@
 <template>
-  <div style="background-color: #036095">
-    <!-- <div :class="{'tab-bg-color': props.hideSchedulerBar}" class="vertical-tab" v-show="startDate.isSame(currentDay, 'day') || startDate.isAfter(currentDay, 'day')">  -->
+  <div style="background-color: #036095"> 
       <div class="vertical-tab" :style="{ 'background-color': hideSchedulerBar ? '#f2faff' : '#002e4b' }" v-show="startDate.isSame(currentDay, 'day') || startDate.isAfter(currentDay, 'day')">
       <div
         v-for="(tab, index) in sortedTimeSlots"
         :key="index"
         @click="selectTab(index)"
-        :class="{ active: indexSelected === index }"
+        :class="{ active: indexSelected === index, 'past-time': isPastTime(tab.start_time) }"
         class="tab-item"
       >
         <div class="tab-content">
-          <span class="rotated-text">{{ tab.start_time }} </span>
+          <span class="rotated-text">{{ tab.start_time }}</span>
         </div>
       </div>
       <div class="tab-ite">
@@ -68,7 +67,13 @@ const props = defineProps({
     default: 0,
   },
 });
-const isRoomEmpty = computed(() => Object.keys(props.currentRoom).length === 0);
+const isRoomEmpty = computed(() => {
+  if (props.currentRoom) {
+    return Object.keys(props.currentRoom).length === 0;
+  }
+  return true; // Consider the room empty if `currentRoom` is null or undefined
+});
+
 const currentDay = dayjs();
 const startDate = computed(() => dayjs(props.dates.start));
 console.log(currentDay,startDate);
@@ -91,6 +96,16 @@ const sortedTimeSlots = computed(() => {
     return convertTo24Hour(a.start_time) - convertTo24Hour(b.start_time);
   });
 });
+
+function isPastTime(startTime) {
+  console.log("startTime", startTime);
+  // Use dayjs() to get today's date and combine it with the start time.
+  const today = dayjs().format('YYYY-MM-DD'); // Get today's date in YYYY-MM-DD format
+  const fullStartTime = `${today} ${startTime}`; // Combine today's date with the start time
+  const startTimeDate = dayjs(fullStartTime, 'YYYY-MM-DD hh:mm A'); // Parse it as a datetime object
+
+  return startTimeDate.isBefore(dayjs()); // Check if it's before the current datetime
+}
 
 
 
@@ -157,12 +172,14 @@ watch(() => props.hideSchedulerBar, (newValue) => {
 .vertical-tab div:hover {
   background-color: #fff;
   border-color: #fff;
+  color: black;
 }
 .vertical-tab div.active {
   background-color: #fff;
   border-color: #fff;
   z-index: 1000;
   font-weight: bold;
+  color:#002E4B;
 }
 .tab-content {
   width: 100%;
@@ -193,5 +210,9 @@ watch(() => props.hideSchedulerBar, (newValue) => {
   cursor: not-allowed;
   opacity: 0.5;
   pointer-events: none; /* Prevents clicking */
+}
+.tab-item.past-time {
+  background-color: #CCCCCC; 
+  color: #FFFFFF;
 }
 </style>

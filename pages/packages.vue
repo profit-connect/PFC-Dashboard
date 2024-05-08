@@ -46,7 +46,7 @@
     <Modal v-model="showPlanForm" id="plan-modal">
       <template #title>
         {{ selectedPlan ? "Update / Create" : "Create" }} a Plan
-        <h5 class="text-center mt-5 mb-5">
+        <h5 class="text-center mt-5 mb-5 small-title-medium" style="font-size: 21px;">
           {{ selectedPackageForPlan?.package_name }}
         </h5>
       </template>

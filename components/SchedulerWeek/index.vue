@@ -1,6 +1,6 @@
 <template>
   <div class="scheduler-week"> 
-    <MixTab 
+    <MixTabSchedule
       v-model="selectedClass"
       :items="availableRoom.map((item) => item.name)"
       style="background-color: #00609f; color: #fff"

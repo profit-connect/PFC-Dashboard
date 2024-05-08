@@ -777,7 +777,7 @@ watch(
   background-color: white;
   color: black;
   font-size: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   text-align: center;
   border-radius: 20px;
   padding: 5px 8px; /* Adjust padding as needed, adding some space on the sides */

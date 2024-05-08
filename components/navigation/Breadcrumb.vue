@@ -1,6 +1,6 @@
 <template>
   <div class="breadcrumb" v-if="breadcrumb">
-    <div
+    <div style="box-shadow: none;"
       class="container h-100 row align-items-center justify-content-between mx-auto"
     >
       <div class="col-2" :style="styles">

@@ -252,7 +252,7 @@ const defaultDOB = ref(
 .sidebar-box {
   max-width: 400px;
   padding: 20px;
-  margin-left: 40px
+  // margin-left: 40px
   // min-height: calc(100vh - 129px);
   // background: #fff;
   // box-shadow: 0 10px 20px rgba(0, 0, 0, 0.0784313725);

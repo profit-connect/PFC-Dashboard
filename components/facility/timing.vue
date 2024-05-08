@@ -18,13 +18,16 @@
 
      </div>
      <div class="schedule-container px-4" >
+      <div class="d-flex align-items-center gap-2" >
       <FormKit
          type="checkbox"
          name="always_open"
-         outer-class="m-10"
-         label="Always Open"
+         outer-class="m-10 custom-checkbox"
+         label=""
          v-model="form.always_open"
        />
+       <div class="mb-3">Always Open</div>
+      </div>
        <div
          v-if="!form.always_open"
          v-for="(day, index) in form.generalTiming"
@@ -54,7 +57,7 @@
            v-model="day.end_time"
            class="time-input"
          />
-         <div style="position: relative;">
+         <div style="position: relative; right: 10px; line-height: 9px">
            <p style="position: absolute;"
              ref="error"
              v-if="day.start_time >= day.end_time"
@@ -220,7 +223,10 @@ const submitHandler = async () => {
  grid-template-columns: repeat(2, 1fr);
  gap: 5px;
  max-height: 214px;
+ font-size: 14px;
+ 
 }
+
 
 .day-schedule {
  display: flex;
@@ -271,5 +277,8 @@ const submitHandler = async () => {
  margin: unset;
  height: fit-content;
  min-height: calc(100vh - 110px);
+}
+.custom-checkbox label {
+  font-size: 16px; /* Adjust font size as needed */
 }
 </style>

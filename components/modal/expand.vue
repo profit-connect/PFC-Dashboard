@@ -7,14 +7,14 @@
           :id="`offcanvasModal-${id}`"
           :aria-labelledby="`offcanvasModalLabel-${id}`"
         >
-          <div class="d-flex gap-2">
-            <div style="width: 10%;"  @click="subModalEnable ? (show = false) : ''"></div>
-            <div style="width: 30%;" @click="!subModalEnable ? (show = false) : ''">
+          <div class="row">
+            <div class="col-1"  @click="subModalEnable ? (show = false) : ''"></div>
+            <div class="col-4" @click="!subModalEnable ? (show = false) : ''">
               <div class="sub-modal" v-show="subModalEnable">
                 <slot name="sub-modal"></slot>
               </div>
             </div>
-            <div class="main">
+            <div class="main col-7">
               <div class="p-2 pt-5" ref="header" v-if="$slots.title">
                 <h4 class="text-center">
                   <slot name="title"></slot>
@@ -83,10 +83,8 @@
     .main {
       background: #ffffff;
       max-height: 100vh;
-
-      padding-left: 10px;
-      padding-right: 10px;
-      width: 950px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
       
     }
     .body {
@@ -134,10 +132,5 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
-  // .body-modal {
-  //  width: 80% !important;
-  //  background: white;
-  //  border-top-left-radius: 10px;
-  //  border-bottom-left-radius: 10px;
-  // }
+  
   </style>

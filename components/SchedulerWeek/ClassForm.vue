@@ -15,7 +15,7 @@
             />
           </div>
           <div class="col-5">
-            <!-- <FormKit
+            <FormKit
               placeholder="Class"
               type="multiselect"
               mode="single"
@@ -36,8 +36,8 @@
               @update:model-value="
                 onClassSelect(key, formStructure[key].class_id)
               "
-            /> -->
-            <FormKit
+            />
+            <!-- <FormKit
               placeholder="Class"
               type="multiselect"
               mode="single"
@@ -58,7 +58,7 @@
               @update:model-value="
                 onClassSelect(key, formStructure[key].class_id)
               "
-            />
+            /> -->
           </div>
         </div>
         <table
@@ -792,33 +792,17 @@ watch(
   },
   { immediate: true }
 );
-// const onClassSelect = (key: number, class_id: number) => {
-//   if (class_id) {
-//     if (!formStructure.value[key].schedule.length) {
-//       onAddFirstSlot(key);
-//     }
-//     if (formStructure.value.length - 1 === key) {
-//       onAddNewClass();
-//     }
-//   }
-// };
-
 const onClassSelect = (key: number, class_id: number) => {
   if (class_id) {
-    onAddFirstSlot(key);
+    if (!formStructure.value[key].schedule.length) {
+      onAddFirstSlot(key);
+    }
     if (formStructure.value.length - 1 === key) {
       onAddNewClass();
     }
   }
 };
 
-
- 
-
-// const onClassSelect = (key, class_id) => {
-//   console.log(`Updating class for key ${key} to ${class_id}`);
-//   // Rest of your logic here...
-// };
 
 onMounted(() => {
   onAddNewClass();
@@ -853,17 +837,17 @@ const getAvailableTime = (availableTime: [any], schedule: any) => {
   });
 };
 
-watch(
-  () => formStructure.value.map((item) => item.discipline_id),
-  (newValues, oldValues) => {
-    newValues.forEach((newValue, index) => {
-      if (newValue !== oldValues[index]) {
-        formStructure.value[index].class_id = undefined; // Reset the class_id
-      }
-    });
-  },
-  { deep: true }
-);
+// watch(
+//   () => formStructure.value.map((item) => item.discipline_id),
+//   (newValues, oldValues) => {
+//     newValues.forEach((newValue, index) => {
+//       if (newValue !== oldValues[index]) {
+//         formStructure.value[index].class_id = undefined; // Reset the class_id
+//       }
+//     });
+//   },
+//   { deep: true }
+// );
 </script>
 
 <style scoped lang="scss">
@@ -935,7 +919,7 @@ td {
 </style>
 <style lang="scss">
 .scheduler-week-class-form {
-  .formkit-message {
+   .formkit-message {
     display: none;
   }
   [data-message-type="ui"] {

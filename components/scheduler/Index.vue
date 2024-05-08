@@ -11,7 +11,7 @@
     />
     <div class="w-100 scheduler-main">
       <div style="height: 39px;">
-        <MixTab
+        <MixTabSchedule
         v-model="selectedClass"
         :items="availableRoom.map((item) => item.name)"
         style="background-color: #00609f"
