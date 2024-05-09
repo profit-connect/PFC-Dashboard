@@ -78,7 +78,7 @@
           </tr>
           <tr
             v-for="(schedule, key_2) in item.schedule"
-            :key="key_2"
+            :key="`${formStructure[key].class_id}-${key_2}`"
             style="position: relative; bottom: 30px"
           >
             <td>
@@ -111,8 +111,8 @@
                           formStructure[key].schedule[key_2]
                         )
                       "
-                      validation="required|notsametime"
-                      :validation-rules="{ notsametime }"
+                      validation="required"
+                      :key="formStructure[key].schedule[key_2].start_time"
                       v-model="formStructure[key].schedule[key_2].start_time"
                     />
                   </div>
@@ -136,7 +136,9 @@
                     v-model="formStructure[key].schedule[key_2].start_time"
                     v-if="formStructure[key].schedule[key_2].isCustomTiming"
                     validation="required|notsametime"
-                    :validation-rules="{ notsametime }"
+                    :validation-rules="{
+                      notsametime,
+                    }"
                   />
                   <button
                     style="height: 40px"
@@ -255,19 +257,19 @@
           </tr>
         </table>
       </div>
-      <div
-        class="mt-5 d-flex justify-content-center"
-        style="position: relative; width: 920px; top: 300px"
-      >
-        <FormKit type="submit">Save</FormKit>
+      <div 
+        class="mt-4 d-flex justify-content-center flex-column button-save-schedule">
+        <div><FormKit type="submit">Save</FormKit></div>
+        <div>
+          <button
+            class="btn-cancel"
+            @click="$emit('close-canvas')"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </FormKit>
-    <div
-      class="d-flex justify-content-center"
-      style="position: relative; width: 920px; top: 300px"
-    >
-      <button @click="$emit('close-canvas')" class="btn">Cancel</button>
-    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -310,34 +312,10 @@ const formStructure = ref([
   },
 ]);
 
-// const onEmptyFirstSlot = (key: number) => {
-//   if (!props.selectedSchedule.length) {
-//     formStructure.value[key].schedule = [];
-//     formStructure.value[key].class_id = undefined;
-
-//     if (
-//       formStructure.value.length === key + 2 &&
-//       !(formStructure.value[key + 1] && formStructure.value[key + 1].class_id)
-//     ) {
-//       formStructure.value.splice(key + 1, 1);
-//     }
-//   }
-// };
 const onEmptyFirstSlot = (key: number) => {
-  console.log("Selected Schedule Length: ", props.selectedSchedule.length);
-  console.log(
-    "Form Structure Before:",
-    JSON.parse(JSON.stringify(formStructure.value))
-  );
-
   if (!props.selectedSchedule.length) {
     formStructure.value[key].schedule = [];
     formStructure.value[key].class_id = undefined;
-
-    console.log(
-      "Form Structure After Clearing:",
-      JSON.parse(JSON.stringify(formStructure.value))
-    );
 
     if (
       formStructure.value.length === key + 2 &&
@@ -345,12 +323,9 @@ const onEmptyFirstSlot = (key: number) => {
     ) {
       formStructure.value.splice(key + 1, 1);
     }
+  } else {
+    formStructure.value[key].class_id = undefined;
   }
-
-  console.log(
-    "Form Structure Final:",
-    JSON.parse(JSON.stringify(formStructure.value))
-  );
 };
 
 const onAddFirstSlot = (key: number) => {
@@ -792,8 +767,47 @@ watch(
   },
   { immediate: true }
 );
+
+const removeDuplicateStartTime = async () => {
+  await useTimeout(200);
+  let tempData: any = [];
+  formStructure.value.forEach((item, index1) => {
+    if (item.schedule) {
+      item.schedule.forEach((sch: any, index2) => {
+        tempData.push({
+          start: sch.start_time,
+          end: sch.end_time,
+          x: index1,
+          y: index2,
+        });
+      });
+    }
+  });
+  tempData = tempData.reverse();
+  for (let i = 0; i < tempData.length; i++) {
+    const current = tempData[i];
+    const start_time = timeToDateTime(current.start);
+    for (let j = i + 1; j < tempData.length; j++) {
+      const comparing_time = tempData[j];
+      const comparing_start_time = timeToDateTime(comparing_time.start);
+      const comparing_end_time = timeToDateTime(comparing_time.end);
+      if (
+        (start_time.isSame(start_time) ||
+          start_time.isAfter(comparing_start_time)) &&
+        (start_time.isSame(comparing_end_time) ||
+          start_time.isBefore(comparing_end_time))
+      ) {
+        formStructure.value[current.x].schedule[current.y].start_time =
+          undefined;
+      }
+    }
+  }
+};
+
 const onClassSelect = (key: number, class_id: number) => {
   if (class_id) {
+    generateAvailableTimeArray();
+    removeDuplicateStartTime();
     if (!formStructure.value[key].schedule.length) {
       onAddFirstSlot(key);
     }
@@ -802,7 +816,6 @@ const onClassSelect = (key: number, class_id: number) => {
     }
   }
 };
-
 
 onMounted(() => {
   onAddNewClass();
@@ -916,14 +929,17 @@ td {
     left: 2px;
   }
 }
+
 </style>
 <style lang="scss">
 .scheduler-week-class-form {
-   .formkit-message {
+  .formkit-message {
     display: none;
   }
   [data-message-type="ui"] {
     display: block;
   }
 }
+
 </style>
+<!-- style="position: fixed; width: 953px; text-align: center; bottom: 0px;" -->

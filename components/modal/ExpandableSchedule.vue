@@ -87,7 +87,8 @@
       padding-left: 10px;
       padding-right: 10px;
       width: 950px;
-      
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
     }
     .body {
       overflow: scroll;
@@ -123,6 +124,7 @@
     height: 100vh;
     width: 100%;
     overflow: scroll;
+    border-radius: 10px;
     
   
     /* Hide scrollbar for Chrome, Safari, and newer versions of Opera*/

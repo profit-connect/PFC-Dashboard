@@ -3,7 +3,7 @@
    <!-- <FacilityUpdate /> -->
    <!-- <div class="content-box"> -->
  <p class="title small-title-medium" >Facility Timing</p>
- <div style="position: relative; bottom: 160px; left: 87%;">
+ <div style="position: relative; bottom: 60px; left: 87%;">
        <FormKit 
         style="width:122px; height: 40px; font: 14px 'Poppins Medium', sans-serif, Arial; background-color: #FFD500; position:absolute;" 
        type="submit"   @click="submitHandler">Save</FormKit>

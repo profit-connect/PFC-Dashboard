@@ -75,17 +75,34 @@ function formatName(string) {
   return capitalizedWords.join(' ');
 }
 
-const getDaysLeft = (endDate) => {
-    const today = new Date();
-    const end = new Date(endDate);
+// const getDaysLeft = (endDate) => {
+//     const today = new Date();
+//     const end = new Date(endDate);
 
-    if (end > today) {
-      const diffTime = end - today;
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      return `${diffDays} days left`;
-    }
-  return '';
+//     if (end > today) {
+//       const diffTime = end - today;
+//       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+//       return `${diffDays} days left`;
+//     }
+//   return '';
+// };
+
+const getDaysLeft = (endDate) => {
+  const today = new Date();
+  const end = new Date(endDate);
+
+  if (isNaN(end)) {
+    return "Invalid end date"; // Check if the end date is valid
+  }
+
+  if (end > today) {
+    const diffTime = end - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return `${diffDays} days left`;
+  }
+  return 'Last day'; // Provide a message if the date is not in the future
 };
+
 const onImageError = (event, item) => {
   // Log error or perform additional actions
   console.error(`Failed to load image for member ${item.id}`);

@@ -157,7 +157,7 @@
           </div>
         </div>
       </div>
-      <div v-if="computedSelectedSpace.follow_facility_timing === true"
+      <!-- <div v-if="computedSelectedSpace.follow_facility_timing === true"
         class="mt-4 d-flex justify-content-center flex-column"
         style="position: relative; width: 830px; text-align: center; bottom: -90px;"
       >
@@ -170,16 +170,14 @@
             Cancel
           </button>
         </div>
-      </div>
+      </div> -->
 
-      <div v-else
-        class="mt-4 d-flex justify-content-center flex-column"
-        style="position: fixed; width: 830px; text-align: center; bottom: 0px;"
-      >
+      <div 
+        class="mt-4 d-flex justify-content-center flex-column button-save">
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
           <button
-            class="btn"
+            class="btn-cancel"
             @click="$emit('close-canvas')"
           >
             Cancel

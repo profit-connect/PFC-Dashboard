@@ -58,16 +58,31 @@ const { getUrl: getImageUrl } = useBoImage();
 const daysLeft = computed(() => {
   if (props.member) return getDaysLeft(props.member.end_date);
 });
-const getDaysLeft = (endDate: string) => {
+// const getDaysLeft = (endDate: string) => {
+//   const today = new Date();
+//   const end = new Date(endDate);
+
+//   if (end > today) {
+//     const diffTime = end - today;
+//     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+//     return `${diffDays} days left`;
+//   }
+//   return "";
+// };
+const getDaysLeft = (endDate) => {
   const today = new Date();
   const end = new Date(endDate);
+
+  if (isNaN(end)) {
+    return "Invalid end date"; // Check if the end date is valid
+  }
 
   if (end > today) {
     const diffTime = end - today;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return `${diffDays} days left`;
   }
-  return "";
+  return 'Last day'; // Provide a message if the date is not in the future
 };
 
 function formatName(string) {

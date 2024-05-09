@@ -57,50 +57,19 @@
           </div>
         </div>
       </div>
-      <div v-if="selectedCategory"
-        class="mt-4 d-flex justify-content-center flex-column"
-        style="position: relative; width: 830px; text-align: center; bottom: -90px;"
-      >
+      <div 
+        class="mt-4 d-flex justify-content-center flex-column button-save">
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
           <button
-            class="btn"
+            class="btn-cancel"
             @click="$emit('close-canvas')"
           >
             Cancel
           </button>
         </div>
       </div>
-
-      <div v-else
-        class="mt-4 d-flex justify-content-center flex-column"
-        style="position: fixed; width: 830px; text-align: center; bottom: 0px;"
-      >
-        <div><FormKit type="submit">Save</FormKit></div>
-        <div>
-          <button
-            class="btn"
-            @click="$emit('close-canvas')"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-      <!-- <div
-        class="d-flex justify-content-center flex-column"
-        style="position: fixed; bottom: 0; right: 17%; margin-top: 0px"
-      >
-        <div><FormKit type="submit">Save</FormKit></div>
-        <div>
-          <button
-            class="btn"
-            style="margin-left: 140px; margin-bottom: 20px"
-            @click="$emit('close-canvas')"
-          >
-            Cancel
-          </button>
-        </div>
-      </div> -->
+     
     </FormKit>
   </div>
 </template>
@@ -144,7 +113,7 @@ const createCategory = async (categoryData: any) => {
 
     if (data.value && data.value.return) {
       emit("reload");
-      $toast("Category updated successfully");
+      $toast("Category added successfully");
       // emit("close-canvas");
     } else if (data.value) {
       // $toast.error(data.value.message); // Using alert for error feedback as per your code

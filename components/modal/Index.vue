@@ -65,9 +65,34 @@ onMounted(() => {
   @media (max-width: 1200px) {
     width: 90% !important;
   }
+  
 }
 .offcanvas-header {
   // padding: 24px var(--bs-offcanvas-padding-x);
   padding-top: 16px;
 }
+.offcanvas-body {
+  margin-bottom: 140px;
+  overflow-y: scroll; /* Enables scrolling for vertical overflow */
+  overflow-x: hidden;  /* Hides horizontal scrollbar */
+
+  /* Custom vertical scrollbar styles: */
+  &::-webkit-scrollbar {
+    width: 5px; /* Reduced width for a thinner scrollbar */
+    background-color: #f2faff;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #84CEFF;
+    border-radius: 10px; /* Rounded for a smoother look */
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #F2FAFF;
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(159, 109, 109, 0.3); /* Optional styling */
+  }
+}
+
 </style>

@@ -58,7 +58,7 @@
         v-else-if="promotion_price !== '0' && display_original_price === 'Yes'"
       >
         <div class="discount">
-          <div class="price-only" style="font-size:22px; position:relative;  left:-8px;">AED <b>{{formatPrice(promotion_price) }}</b></div>
+          <div class="price-only" style="font-size:22px; position:relative;  left:-8px;">AED <b>{{formatPrice(promotion_price) }}</b></div> 
           <div class="gap-1 d-flex align-items-center justify-content-end">
             <div class="custom-badge" :class="{ 'custom-badge-inactive': status === 'Inactive' }">
               {{ `${discountInPercent}% off ` }}

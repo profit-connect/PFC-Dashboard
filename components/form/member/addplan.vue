@@ -163,14 +163,14 @@
       </div>
       <div 
         class="mt-4 d-flex justify-content-center flex-column"
-        style="position: fixed; width: 830px; text-align: center; bottom: 30px;"
+        style="position: fixed; width: 940px; text-align: center; bottom: 30px;"
       >
         <div><FormKit type="submit">Save</FormKit></div>
       </div>
     </FormKit>
     <div 
         class="mt-4 d-flex justify-content-center flex-column"
-        style="position: fixed; width: 830px; text-align: center; bottom: 0px;"
+        style="position: fixed; width: 940px; text-align: center; bottom: 0px;"
       >
     <div>
           <button

@@ -417,13 +417,13 @@
       </div>
 
       <div 
-        class="mt-4 d-flex justify-content-center flex-column"
-        style="position: relative; width: 830px; text-align: center; bottom: 0px;"
+        class="mt-4 d-flex justify-content-center flex-column button-save"
+      
       >
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
           <button
-            class="btn"
+            class="btn-cancel"
             @click="$emit('close-canvas')"
           >
             Cancel

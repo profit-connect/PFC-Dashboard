@@ -129,7 +129,7 @@
           }"
         />
       </div>
-      <h3 class="small-title-bold">Social</h3>
+      <h3 class="small-title-bold mt-2">Social</h3>
       <FormKit
         type="text"
         placeholder="Facebook"
@@ -176,7 +176,7 @@
         />
       </div>
       <div class="d-flex flex-column justify-content-center">
-        <FormKit type="submit" label="Save" class="EditSave" />
+        <FormKit style="width: 300px;" type="submit" label="Save" class="EditSave" />
         <button class="btn" @click="$emit('close-sidebar')">Cancel</button>
       </div>
     </FormKit>
@@ -251,7 +251,7 @@ const defaultDOB = ref(
 <style lang="scss" scoped>
 .sidebar-box {
   max-width: 400px;
-  padding: 20px;
+  padding: 0px 20px 0px 20px;
   // margin-left: 40px
   // min-height: calc(100vh - 129px);
   // background: #fff;

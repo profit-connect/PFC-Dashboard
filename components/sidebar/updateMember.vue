@@ -1,67 +1,102 @@
 <template>
-  <div class="sidebar-box ">
-    <div class="image-box" @mouseover="isHovering = true" @mouseleave="isHovering = false">
+  <div class="sidebar-box">
+    <div
+      class="image-box"
+      @mouseover="isHovering = true"
+      @mouseleave="isHovering = false"
+    >
       <div class="hover-wrapper">
-        <div
-          class="hover-info">
-        <a class="hover-info__link tooltips" @click=" router.push({
-            path: '/members/details/membership-overview',
-            query: { id: getMemberInfo.id },
-          })">
-        <img src="~/assets/images/svg/schedule-profile-white-outline.svg" alt="Profile icon" class="img-normal"/>
-        <img src="~/assets/images/svg/schedule-profile-blue.svg" alt="Profile icon" class="img-hover" />
-        <span class="tooltiptext">Profile</span>
-    </a>
-      <a  class="hover-info__link-1 tooltips">
-        <img src="~/assets/images/svg/schedule-chat-white-outline.svg" alt="Chat icon" class="img-normal"/>
-        <img src="~/assets/images/svg/schedule-chat-blue.svg" alt="Chat icon" class="img-hover" />
-        <span class="tooltiptext">Chat</span>
-      </a>
-      <div href="" class="hover-info__link-1 tooltips">
-        <img src="~/assets/images/svg/schedule-cancel-white-outline.svg" alt="Cancel icon" class="img-normal"/>
-        <!-- <img src="~/assets/images/svg/schedule-cancel-blue.svg" alt="Cancel icon" class="img-hover" /> -->
-        <span class="tooltiptext">Cancel</span>
-      </div>
-    </div>
-      <a
-        @click="
-          router.push({
-            path: '/members/details/membership-overview',
-            query: { id: getMemberInfo.id },
-          })
-        "
-        class="sidebar-box__title text-center"
-        title="View membership"
-      >
-      <div v-if="memberInfoData">
-        <img v-if="!imageError && getMemberImage.image"
-          
-            :src="getImageUrl( getMemberImage.image)"
-            @error="imageError = true"
-            v-show="!imageError" />
-
-        <div style="position: relative; left: 35%;" v-else class="avatar-initials content-title-bold ">
-          {{formatName( getMemberInfo.firstname.charAt(0)) }}{{ formatName( getMemberInfo.lastname.charAt(0)) }} 
+        <div class="hover-info">
+          <a
+            class="hover-info__link tooltips"
+            @click="
+              router.push({
+                path: '/members/details/membership-overview',
+                query: { id: getMemberInfo.id },
+              })
+            "
+          >
+            <img
+              src="~/assets/images/svg/schedule-profile-white-outline.svg"
+              alt="Profile icon"
+              class="img-normal"
+            />
+            <img
+              src="~/assets/images/svg/schedule-profile-blue.svg"
+              alt="Profile icon"
+              class="img-hover"
+            />
+            <span class="tooltiptext">Profile</span>
+          </a>
+          <a class="hover-info__link-1 tooltips">
+            <img
+              src="~/assets/images/svg/schedule-chat-white-outline.svg"
+              alt="Chat icon"
+              class="img-normal"
+            />
+            <img
+              src="~/assets/images/svg/schedule-chat-blue.svg"
+              alt="Chat icon"
+              class="img-hover"
+            />
+            <span class="tooltiptext">Chat</span>
+          </a>
+          <div href="" class="hover-info__link-1 tooltips">
+            <img
+              src="~/assets/images/svg/schedule-cancel-white-outline.svg"
+              alt="Cancel icon"
+              class="img-normal"
+            />
+            <!-- <img src="~/assets/images/svg/schedule-cancel-blue.svg" alt="Cancel icon" class="img-hover" /> -->
+            <span class="tooltiptext">Cancel</span>
+          </div>
         </div>
+        <a
+          @click="
+            router.push({
+              path: '/members/details/membership-overview',
+              query: { id: getMemberInfo.id },
+            })
+          "
+          class="sidebar-box__title text-center"
+          title="View membership"
+        >
+          <div v-if="memberInfoData">
+            <img
+              v-if="!imageError && getMemberImage.image"
+              :src="getImageUrl(getMemberImage.image)"
+              @error="imageError = true"
+              v-show="!imageError"
+            />
+
+            <div
+              style="position: relative; left: 35%"
+              v-else
+              class="avatar-initials content-title-bold"
+            >
+              {{ formatName(getMemberInfo.firstname.charAt(0))
+              }}{{ formatName(getMemberInfo.lastname.charAt(0)) }}
+            </div>
+          </div>
+          <h2 class="content-title-bold editUserName">
+            {{ formatName(getMemberInfo.firstname) }}
+            {{ formatName(getMemberInfo.lastname) }}
+          </h2>
+        </a>
+        <p
+          style="
+            font-size: 14px;
+            text-align: center;
+            position: relative;
+            bottom: 25px;
+            margin-bottom: 10px;
+          "
+        >
+          Reset Fitness
+        </p>
       </div>
-        <h2 class="content-title-bold editUserName">
-          {{ formatName(getMemberInfo.firstname) }} {{ formatName(getMemberInfo.lastname) }} 
-        </h2>
-      </a>
-      <p
-        style="
-          font-size: 14px;
-          text-align: center;
-          position: relative;
-          bottom: 25px;
-          margin-bottom: 10px;
-        "
-      >
-        Reset Fitness
-      </p>
     </div>
-    </div>
-    <div class="update-member" style="margin-top: 50px;">
+    <div class="update-member" style="margin-top: 50px">
       <FormKit
         class="formEditMember"
         type="form"
@@ -140,20 +175,21 @@
             type="uppy"
             label="Upload Image"
             name="image"
-           :targetHeight="500"
-           :targetWidth="500"
+            :targetHeight="500"
+            :targetWidth="500"
             :hideUploadButton="true"
             help="Max image size: 500x500px, 1MB. Format: .jpg or .png"
           />
           <div class="custom-multiselect-gender">
-            <FormKit type="multiselect"  
-           mode="single"
-           placeholder="Please select a gender"
-            name="gender" 
-            :options="['Female', 'Male', 'Prefer not to say']"
-             />
-        </div>
-          
+            <FormKit
+              type="multiselect"
+              mode="single"
+              placeholder="Please select a gender"
+              name="gender"
+              :options="['Female', 'Male', 'Prefer not to say']"
+            />
+          </div>
+
           <FormKit
             type="date"
             name="dob"
@@ -162,7 +198,7 @@
             validation-visibility="live"
           />
 
-          <div class="row g-2"  style="height: 94px;">
+          <div class="row g-2" style="height: 94px">
             <div class="col-6">
               <FormKit
                 type="multiselect"
@@ -219,7 +255,11 @@
           </h3>
 
           <div class="social-show__icons">
-            <a :href="getMemberInfo.facebook" target="_blank" rel="noopener noreferrer">
+            <a
+              :href="getMemberInfo.facebook"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <div class="icon-text">
                 <img
                   src="~assets/images/svg/social/facebook.svg"
@@ -228,7 +268,11 @@
                 Facebook
               </div>
             </a>
-            <a :href="getMemberInfo.instagram" target="_blank" rel="noopener noreferrer">
+            <a
+              :href="getMemberInfo.instagram"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <div class="icon-text">
                 <img
                   src="~assets/images/svg/social/instagram.svg"
@@ -237,7 +281,11 @@
                 Instagram
               </div>
             </a>
-            <a :href="getMemberInfo.linkedin" target="_blank" rel="noopener noreferrer">
+            <a
+              :href="getMemberInfo.linkedin"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <div class="icon-text">
                 <img
                   src="~assets/images/svg/social/linkedin.svg"
@@ -263,9 +311,30 @@
               Cancel
             </div>
           </h3>
-          <FormKit type="text" placeholder="Facebook" name="facebook"   v-tooltip="'Please enter Facebook handle. This is not a mandatory field.'" />
-      <FormKit type="text" placeholder="Instagram" name="instagram"  v-tooltip="'Please enter Instagram handle. This is not a mandatory field.'" />
-      <FormKit type="text" placeholder="Linkedin" name="linkedin"    v-tooltip="'Please enter Linkedin handle. This is not a mandatory field.'"/>
+          <FormKit
+            type="text"
+            placeholder="Facebook"
+            name="facebook"
+            v-tooltip="
+              'Please enter Facebook handle. This is not a mandatory field.'
+            "
+          />
+          <FormKit
+            type="text"
+            placeholder="Instagram"
+            name="instagram"
+            v-tooltip="
+              'Please enter Instagram handle. This is not a mandatory field.'
+            "
+          />
+          <FormKit
+            type="text"
+            placeholder="Linkedin"
+            name="linkedin"
+            v-tooltip="
+              'Please enter Linkedin handle. This is not a mandatory field.'
+            "
+          />
         </div>
 
         <div
@@ -346,20 +415,20 @@
               Cancel
             </div>
           </h3>
-          <div style="height: 77px;" >
-          <FormKit
-            type="text"
-            placeholder="Emergency contact name"
-            name="emergency_contact_name"
-            v-model="emergencyContactName"
-            :validation="
-              emergencyCountryCode || emergencyContactNo ? 'required' : ''
-            "
-            :validation-messages="{
-              required: 'Emergency contact name is required',
-            }"
-          />
-        </div>
+          <div style="height: 77px">
+            <FormKit
+              type="text"
+              placeholder="Emergency contact name"
+              name="emergency_contact_name"
+              v-model="emergencyContactName"
+              :validation="
+                emergencyCountryCode || emergencyContactNo ? 'required' : ''
+              "
+              :validation-messages="{
+                required: 'Emergency contact name is required',
+              }"
+            />
+          </div>
           <div class="row g-2">
             <div class="col-6">
               <FormKit
@@ -396,7 +465,7 @@
           v-show="!toggleStates.isTagsEditMode.value"
           class="tags-show data-block-show"
         >
-          <h3 class="small-title-bold mt-4" >
+          <h3 class="small-title-bold mt-4">
             Tags
             <img
               @click="() => startEdit('isTagsEditMode')"
@@ -566,12 +635,12 @@ const toggleStates: ToggleStates = {
 };
 
 function formatName(string) {
-  if (!string) return '';
-  const words = string.split(' ');
-  const capitalizedWords = words.map(word => 
-    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  if (!string) return "";
+  const words = string.split(" ");
+  const capitalizedWords = words.map(
+    (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   );
-  return capitalizedWords.join(' ');
+  return capitalizedWords.join(" ");
 }
 const isAnyEditModeActive = computed(() => {
   const isActive = Object.values(toggleStates).some((state) => state.value);
@@ -588,7 +657,7 @@ const cancelEdit = (toggleKey: keyof ToggleStates) => {
 };
 
 const editMember = async (getMemberInfo: any) => {
-  console.log(getMemberInfo)
+  console.log(getMemberInfo);
   try {
     const { id, ...memberInfoWithoutId } = getMemberInfo;
 
@@ -617,7 +686,6 @@ const editMember = async (getMemberInfo: any) => {
   }
 };
 
-
 const computedTags = computed(() => {
   return tags.value
     ? tags.value.map((item: any) => ({ label: item.name, value: item.id }))
@@ -626,7 +694,7 @@ const computedTags = computed(() => {
 const tagObjects = (tagIds: any) => {
   return tagIds
     ? tagIds
-        .map((tagId : any) => {
+        .map((tagId: any) => {
           const foundTag = computedTags.value.find(
             (tag: any) => tag.value === String(tagId)
           );
@@ -635,8 +703,6 @@ const tagObjects = (tagIds: any) => {
         .filter((tag: any) => tag !== null) // Filter out any null entries
     : [];
 };
-
-
 
 const getMember = async () => {
   try {
@@ -654,9 +720,6 @@ const getMember = async () => {
   }
 };
 
-
-
-
 const getMemberImage = computed(() => {
   if (
     memberInfoData.value &&
@@ -669,7 +732,7 @@ const getMemberImage = computed(() => {
 
     return {
       id: memberData.id,
-       image: imageUrl,
+      image: imageUrl,
     };
   }
 
@@ -718,18 +781,19 @@ watch(
   memberId,
   async () => {
     if (memberId.value) {
-      await getMember();  
+      await getMember();
     }
   },
   { immediate: true }
 );
 
-watch(() => getMemberImage.value.image, (newImage) => {
-  imageError.value = false;  // Reset error on any new image set
-}, { immediate: true });
-
-
-
+watch(
+  () => getMemberImage.value.image,
+  (newImage) => {
+    imageError.value = false; // Reset error on any new image set
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="scss" scoped>
@@ -880,66 +944,64 @@ watch(() => getMemberImage.value.image, (newImage) => {
   margin-bottom: 10px;
 }
 .hover-info {
-    position: relative;
-    display: flex;
-    top: 210px;
-    gap: 15px;
-    left: 107px;
-    visibility: visible; /* Initially hidden */
-    // opacity: 0; /* Start fully transparent */
-    transition: visibility 0s, opacity 0.3s linear; /* Smooth transition for opacity */
+  position: relative;
+  display: flex;
+  top: 210px;
+  gap: 15px;
+  left: 107px;
+  visibility: visible; /* Initially hidden */
+  // opacity: 0; /* Start fully transparent */
+  transition: visibility 0s, opacity 0.3s linear; /* Smooth transition for opacity */
 }
 
 .hover-wrapper:hover .hover-info {
-    visibility: visible;
-    opacity: 1;
+  visibility: visible;
+  opacity: 1;
 }
 
 .hover-info__link {
-    display: block;
-    width: 35px;
-    height: 35px;
-    // box-shadow: 0 10px 20px rgba(0,0,0,.16);
-    background-color: #fff;
-    border-radius: 50%;
-    transition: .35s;
-    position: relative;
-    cursor: pointer;
+  display: block;
+  width: 35px;
+  height: 35px;
+  // box-shadow: 0 10px 20px rgba(0,0,0,.16);
+  background-color: #fff;
+  border-radius: 50%;
+  transition: 0.35s;
+  position: relative;
+  cursor: pointer;
 }
 .hover-info__link-1 {
-    display: block;
-    width: 35px;
-    height: 35px;
-    // box-shadow: 0 10px 20px rgba(0,0,0,.16);
-    // background-color: #fff;
-    border-radius: 50%;
-    // transition: .35s;
-    position: relative;
-    cursor: pointer;
+  display: block;
+  width: 35px;
+  height: 35px;
+  // box-shadow: 0 10px 20px rgba(0,0,0,.16);
+  // background-color: #fff;
+  border-radius: 50%;
+  // transition: .35s;
+  position: relative;
+  cursor: pointer;
 }
 
-
-
 .img-normal {
-    width: 100%;
-    transition: transform 0.3s ease;
+  width: 100%;
+  transition: transform 0.3s ease;
 }
 
 .img-hover {
-    display: none; /* Hide blue images initially */
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    // transition: transform 0.3s ease;
+  display: none; /* Hide blue images initially */
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  // transition: transform 0.3s ease;
 }
 
 .hover-info__link:hover .img-normal {
-    display: none; /* Hide white images on hover */
+  display: none; /* Hide white images on hover */
 }
 
 .hover-info__link:hover .img-hover {
-    display: block; /* Show blue images on hover */
+  display: block; /* Show blue images on hover */
 }
 .tooltips .tooltiptext {
   visibility: hidden;
@@ -957,11 +1019,11 @@ watch(() => getMemberImage.value.image, (newImage) => {
   bottom: 110%; /* Adjust this to change the vertical position of the tooltip */
   left: 50%;
   transform: translateX(-50%); /* Centers the tooltip */
-  
+
   /* Fade in tooltip - Transition for smooth appearance */
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
-  
+
   /* Tooltip arrow */
   &:after {
     content: "";
@@ -987,5 +1049,4 @@ watch(() => getMemberImage.value.image, (newImage) => {
     display: block;
   }
 }
-
 </style>

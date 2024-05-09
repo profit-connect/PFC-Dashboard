@@ -74,6 +74,32 @@ body {
   }
 }
 
+.button-save-schedule {
+  position: fixed;
+  width: 953px;
+  text-align: center; 
+  bottom: 0px;
+  // background-color: pink;
+  .btn-cancel {
+    background-color: transparent;
+    border: none;
+    margin-bottom: 20px;
+  }
+}
+.button-save {
+  position: fixed;
+  width: 830px;
+  // height: 150px;
+  text-align: center; 
+  bottom: 0px;
+  // background-color: pink;
+  .btn-cancel {
+    background-color: transparent;
+    border: none;
+    margin-bottom: 20px;
+  }
+}
+
 img {
   max-width: 100%;
 }

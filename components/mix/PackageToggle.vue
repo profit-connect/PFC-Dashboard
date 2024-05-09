@@ -67,6 +67,7 @@ const computedStyle = computed(() => {
         align-items: center;
         height: 40px;
         width: 82px;
+        padding: 4px 16px;
         color: #ffffff;
         text-decoration: none;
         border-radius: 10px;
