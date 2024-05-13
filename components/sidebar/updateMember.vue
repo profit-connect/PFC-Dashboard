@@ -519,8 +519,8 @@
               :options="computedTags"
             />
           </div>
-        </div>
-        <FormKit type="submit" label="Save" v-show="isAnyEditModeActive" />
+        </div >
+        <FormKit style="margin-top: 140px;" type="submit" label="Save" v-show="isAnyEditModeActive" />
       </FormKit>
     </div>
   </div>

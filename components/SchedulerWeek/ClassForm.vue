@@ -31,34 +31,12 @@
                   (item) => item.value == formStructure[key].discipline_id
                 )?.class
               "
-              :key="selectedClassType"
+              :key="formStructure[key].class_id"
               v-model="formStructure[key].class_id"
               @update:model-value="
                 onClassSelect(key, formStructure[key].class_id)
               "
             />
-            <!-- <FormKit
-              placeholder="Class"
-              type="multiselect"
-              mode="single"
-              validation="required"
-              v-if="
-                formStructure[key].discipline_id &&
-                computedClassType.find(
-                  (item) => item.value == formStructure[key].discipline_id
-                )?.class.length
-              "
-              :options="
-                computedClassType.find(
-                  (item) => item.value == formStructure[key].discipline_id
-                )?.class
-              "
-              :key="`${formStructure[key].discipline_id}-${formStructure[key].class_id}`"
-              v-model="formStructure[key].class_id"
-              @update:model-value="
-                onClassSelect(key, formStructure[key].class_id)
-              "
-            /> -->
           </div>
         </div>
         <table
@@ -108,11 +86,15 @@
                       :options="
                         getAvailableTime(
                           availableTime,
-                          formStructure[key].schedule[key_2]
+                          formStructure[key].schedule[key_2].start_time,
+                          formStructure[key].schedule[key_2].duration
                         )
                       "
-                      validation="required"
-                      :key="formStructure[key].schedule[key_2].start_time"
+                      validation="required|notsametime"
+                      :validation-rules="{
+                        notsametime,
+                      }"
+                      :key="`${randomNumber}-${formStructure[key].schedule[key_2].start_time}-${formStructure[key].class_id}`"
                       v-model="formStructure[key].schedule[key_2].start_time"
                     />
                   </div>
@@ -136,6 +118,7 @@
                     v-model="formStructure[key].schedule[key_2].start_time"
                     v-if="formStructure[key].schedule[key_2].isCustomTiming"
                     validation="required|notsametime"
+                    :key="`${randomNumber}`"
                     :validation-rules="{
                       notsametime,
                     }"
@@ -218,9 +201,10 @@
                   :options="computedCoachData"
                   :model-value="formStructure[key].schedule[key_2].coach"
                   validation="required"
-                  @update:model-value="(val:any)=>{
-                    formStructure[key].schedule[key_2]?
-                    formStructure[key].schedule[key_2].coach = val:''}"
+                  @update:model-value="(val: any) => {
+                    formStructure[key].schedule[key_2] ?
+                      formStructure[key].schedule[key_2].coach = val : ''
+                  }"
                 />
               </div>
             </td>
@@ -257,19 +241,19 @@
           </tr>
         </table>
       </div>
-      <div 
-        class="mt-4 d-flex justify-content-center flex-column button-save-schedule">
-        <div><FormKit type="submit">Save</FormKit></div>
-        <div>
-          <button
-            class="btn-cancel"
-            @click="$emit('close-canvas')"
-          >
-            Cancel
-          </button>
-        </div>
+      <div
+        class="mt-5 d-flex justify-content-center"
+        style="position: relative; width: 920px; top: 300px"
+      >
+        <FormKit type="submit">Save</FormKit>
       </div>
     </FormKit>
+    <div
+      class="d-flex justify-content-center"
+      style="position: relative; width: 920px; top: 300px"
+    >
+      <button @click="$emit('close-canvas')" class="btn">Cancel</button>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -303,8 +287,13 @@ const selectedSlot: any = ref([]);
 const { currentUserType } = useAuthStore();
 const dayjs = useDayjs();
 const emit = defineEmits(["on-class-add", "close-canvas"]);
+const randomNumber = ref(dayjs());
 
-const formStructure = ref([
+function generateRandomDate() {
+  randomNumber.value = dayjs();
+}
+
+const formStructure: any = ref([
   {
     discipline_id: undefined,
     class_id: undefined,
@@ -359,6 +348,7 @@ const onDeleteSlot = (key: number, key_2: number) => {
   formStructure.value[key].schedule.splice(key_2, 1);
 };
 
+
 const onDuplicateSlot = (key: number, key_2: number) => {
   formStructure.value[key].schedule.push({
     ...useCloneDeep(formStructure.value[key].schedule[key_2]),
@@ -375,44 +365,79 @@ const onAddNewClass = () => {
   });
 };
 
-const checkIsDateFallInBetween = (data: string) => {
+const checkIsPrevDate = (data: string) => {
   const target_time = timeToDateTime(data);
-  for (let i = 0; i < selectedSlot.value.length; i++) {
-    const start_time = selectedSlot.value[i].start_time;
-    const end_time = selectedSlot.value[i].end_time;
-    if (
-      (target_time.isSame(start_time) || target_time.isAfter(start_time)) &&
-      (target_time.isSame(end_time) || target_time.isBefore(end_time))
-    ) {
+  const dateToCheck = dayjs(props.selectedDate);
+  const today = dayjs();
+  if (dateToCheck.isSame(today, "day")) {
+    const today_time = timeToDateTime(getCurrentTime());
+    const isBefore = target_time.isBefore(today_time);
+    if (isBefore) {
       return true;
     }
   }
   return false;
 };
+function convertTo24HourNew(timeStr: string) {
+  if (timeStr.slice(-2) === "AM" || timeStr.slice(-2) === "PM") {
+    let time = timeStr.slice(0, -2).split(":");
+    let hours = parseInt(time[0]);
+    let minutes = parseInt(time[1]);
+
+    if (timeStr.slice(-2) === "AM") {
+      if (hours === 12) {
+        hours = 0;
+      }
+    } else {
+      // PM
+      if (hours !== 12) {
+        hours += 12;
+      }
+    }
+
+    return (
+      (hours < 10 ? "0" : "") +
+      hours +
+      ":" +
+      (minutes < 10 ? "0" : "") +
+      minutes
+    );
+  } else {
+    return timeStr;
+  }
+}
+
+function getCurrentTime() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
+}
 
 function notsametime(node: any) {
-  const target_time = timeToDateTime(node.value);
-  if (
-    selectedTime.value.filter(
-      (item) => item === dayjs(target_time).format("hh:mm A")
-    ).length == 1
-  ) {
-    return true;
-  } else {
-    let today = dayjs();
-    const date = dayjs(`${props.selectedDate}T${node.value}`);
-    const isBefore = date.isBefore(today);
+  const target_time = timeToDateTime(convertTo24HourNew(node.value));
+  const dateToCheck = dayjs(props.selectedDate);
+  const today = dayjs();
+  if (dateToCheck.isSame(today, "day")) {
+    const today_time = timeToDateTime(getCurrentTime());
+    const isBefore = target_time.isBefore(today_time);
     if (isBefore) {
+      const start_time = props.selectedSchedule.map(
+        (item: any) => item.start_time
+      );
+      if (start_time.includes(target_time.format("hh:mm A"))) return true;
       return false;
     }
   }
+
   let repeated = 0;
   for (let i = 0; i < selectedSlot.value.length; i++) {
     const start_time = selectedSlot.value[i].start_time;
     const end_time = selectedSlot.value[i].end_time;
+
     if (
       (target_time.isSame(start_time) || target_time.isAfter(start_time)) &&
-      (target_time.isSame(end_time) || target_time.isBefore(end_time))
+      target_time.isBefore(end_time)
     ) {
       repeated = repeated + 1;
       if (repeated > 1) {
@@ -420,52 +445,9 @@ function notsametime(node: any) {
       }
     }
   }
+  generateRandomDate();
   return !(repeated > 1);
 }
-
-// function generateAvailableTimeArray() {
-//   const availableTime = [];
-//   const now = new Date();
-//   now.setSeconds(0, 0); // Normalize current time to remove seconds and milliseconds
-
-//   // console.log("Current normalized time (now):", now);
-
-//   for (let h = 0; h < 24; h++) {
-//     for (let m = 0; m < 60; m += 30) {
-//       const hour = h === 0 ? "12" : (h > 12 ? h - 12 : h).toString().padStart(2, "0");
-//       const period = h < 12 ? "AM" : "PM";
-//       const minute = m === 0 ? "00" : m.toString().padStart(2, "0");
-//       const timeValue = `${hour}:${minute} ${period}`;
-
-//       const timeSlotDate = new Date(now.toDateString());
-//       let adjustedHour = h;
-//       if (hour === "12" && period === "AM") {
-//         adjustedHour = 0;
-//       } else if (period === "PM" && hour !== "12") {
-//         adjustedHour = h + 12;
-//       }
-//       timeSlotDate.setHours(adjustedHour, m, 0, 0);
-
-//       const isPast = timeSlotDate < now;
-//       // console.log(`Comparing: [Slot: ${timeSlotDate} < Now: ${now}] - Result: ${isPast}`);
-
-//       const isDisabled = checkIsDateFallInBetween(timeValue) || isPast;
-
-//       availableTime.push({
-//         label: timeValue,
-//         value: timeValue,
-//         disabled: isDisabled
-//       });
-//     }
-//   }
-
-//   return availableTime;
-// }
-
-// const availableTime = computed(() => {
-//   return generateAvailableTimeArray();
-// });
-
 function generateAvailableTimeArray() {
   const availableTime = [];
   for (let h = 0; h < 24; h++) {
@@ -483,7 +465,7 @@ function generateAvailableTimeArray() {
       availableTime.push({
         label: timeValue,
         value: timeValue,
-        disabled: checkIsDateFallInBetween(timeValue),
+        disabled: checkIsPrevDate(timeValue),
       });
     }
   }
@@ -495,6 +477,87 @@ function generateAvailableTimeArray() {
 const availableTime = computed(() => {
   return generateAvailableTimeArray();
 });
+
+const checkIsTimeBetween = (
+  startTime: any,
+  endTime: any,
+  duration: any,
+  availableTime: any
+) => {
+  return availableTime.map((item: any) => {
+    const currentItem = timeToDateTime(item.value);
+    const currentItemWithOffset = timeToDateTime(item.value).add(
+      duration,
+      "minute"
+    );
+    let isBetween = false;
+    for (let i = 0; i < selectedSlot.value.length; i++) {
+      const start_time = selectedSlot.value[i].start_time;
+      const end_time = selectedSlot.value[i].end_time;
+      if (
+        (currentItem.isSame(start_time) || currentItem.isAfter(start_time)) &&
+        currentItem.isBefore(end_time)
+      ) {
+        isBetween = true;
+      }
+
+      if (
+        (currentItem.add(duration, "minute").isSame(start_time) ||
+          currentItem.add(duration, "minute").isAfter(start_time)) &&
+        currentItem.add(duration, "minute").isBefore(end_time)
+      ) {
+        isBetween = true;
+      }
+    }
+
+    if (
+      currentItem.add(duration, "minute").isAfter(startTime) &&
+      currentItemWithOffset.isBefore(endTime)
+    ) {
+      isBetween = false;
+    }
+
+    return {
+      ...item,
+      disabled: item.disabled ? item.disabled : isBetween,
+    };
+  });
+};
+
+const comparator = (a: any, b: any) =>
+  a.isBefore(b) ? -1 : a.isAfter(b) ? 1 : 0;
+
+function indexOfSmallestPositiveNonZeroNumber(arr: any) {
+  let smallestPositiveNumber = Infinity;
+  let smallestPositiveIndex = -1;
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > 0 && arr[i] < smallestPositiveNumber) {
+      smallestPositiveNumber = arr[i];
+      smallestPositiveIndex = i;
+    }
+  }
+
+  return smallestPositiveIndex;
+}
+const getAvailableTime = (
+  availableTime: any,
+  start_time: any,
+  duration: any
+) => {
+  const startTime = timeToDateTime(start_time);
+  const selectedSlotStartTimes = selectedSlot.value.map(
+    (item: any) => item.start_time
+  );
+  const sortedStartDates = selectedSlotStartTimes.sort(comparator);
+  const difference = sortedStartDates.map((item: any) =>
+    item.diff(startTime, "minute")
+  );
+  const nearestTime =
+    sortedStartDates[indexOfSmallestPositiveNonZeroNumber(difference)] ??
+    timeToDateTime("11:50 PM");
+  return checkIsTimeBetween(startTime, nearestTime, duration, availableTime);
+};
 
 const computedQueryCoach = computed(() => {
   return { facility_id: currentUserType?.id, date: props.selectedDate };
@@ -638,14 +701,16 @@ const convertTo24Hour = (timeStr: string) => {
 };
 
 const endTime = (start_time: string, offetInMinute: number = 0) => {
-  let time24hours = convertTo24Hour(start_time);
+  console.log("start_time", start_time)
+  let time24hours = convertTo24HourNew(start_time);
+  console.log(time24hours)
   const originalDateTime = dayjs(`2024-01-01 ${time24hours}`);
   const newDateTime = originalDateTime.add(offetInMinute, "minute");
   return newDateTime.format("hh:mm A");
 };
 
-const formatTime = (time: string) => {
-  let time24hours = convertTo24Hour(time);
+const formatTime = (time: string) => {0
+  let time24hours = convertTo24HourNew(time);
   return dayjs(`2024-01-01 ${time24hours}`).format("hh:mm A");
 };
 function formatName(string) {
@@ -676,18 +741,15 @@ watch(
             ? currentClass?.duration
             : currentClass?.duration * 60;
 
-          selectedSlot.value.push({
-            start_time: timeToDateTime(val[i].schedule[j].start_time).subtract(
-              val[i].schedule[j].duration,
-              "minute"
-            ),
-            end_time: timeToDateTime(val[i].schedule[j].end_time),
-          });
           if (val[i].schedule[j].start_time) {
             val[i].schedule[j].end_time = endTime(
               val[i].schedule[j].start_time,
               val[i].schedule[j].duration
             );
+            selectedSlot.value.push({
+              start_time: timeToDateTime(val[i].schedule[j].start_time),
+              end_time: timeToDateTime(val[i].schedule[j].end_time),
+            });
           }
         }
       }
@@ -768,46 +830,8 @@ watch(
   { immediate: true }
 );
 
-const removeDuplicateStartTime = async () => {
-  await useTimeout(200);
-  let tempData: any = [];
-  formStructure.value.forEach((item, index1) => {
-    if (item.schedule) {
-      item.schedule.forEach((sch: any, index2) => {
-        tempData.push({
-          start: sch.start_time,
-          end: sch.end_time,
-          x: index1,
-          y: index2,
-        });
-      });
-    }
-  });
-  tempData = tempData.reverse();
-  for (let i = 0; i < tempData.length; i++) {
-    const current = tempData[i];
-    const start_time = timeToDateTime(current.start);
-    for (let j = i + 1; j < tempData.length; j++) {
-      const comparing_time = tempData[j];
-      const comparing_start_time = timeToDateTime(comparing_time.start);
-      const comparing_end_time = timeToDateTime(comparing_time.end);
-      if (
-        (start_time.isSame(start_time) ||
-          start_time.isAfter(comparing_start_time)) &&
-        (start_time.isSame(comparing_end_time) ||
-          start_time.isBefore(comparing_end_time))
-      ) {
-        formStructure.value[current.x].schedule[current.y].start_time =
-          undefined;
-      }
-    }
-  }
-};
-
 const onClassSelect = (key: number, class_id: number) => {
   if (class_id) {
-    generateAvailableTimeArray();
-    removeDuplicateStartTime();
     if (!formStructure.value[key].schedule.length) {
       onAddFirstSlot(key);
     }
@@ -820,47 +844,6 @@ const onClassSelect = (key: number, class_id: number) => {
 onMounted(() => {
   onAddNewClass();
 });
-const checkBetween = (beginTime: any, endTime: any, time: any) => {
-  if (
-    (time.isSame(beginTime) || time.isAfter(beginTime)) &&
-    (time.isSame(endTime) || time.isBefore(endTime))
-  ) {
-    return true;
-  }
-};
-
-const getAvailableTime = (availableTime: [any], schedule: any) => {
-  const startTime = schedule.start_time;
-  const duration = schedule.duration;
-  const now = new Date();
-  let date1 = dayjs(now);
-  const beginTime = timeToDateTime(startTime).subtract(duration, "minute");
-  const endTime = timeToDateTime(startTime).add(duration, "minute");
-  return availableTime.map((item) => {
-    let time24 = convertTo24Hour(item.value);
-    const date2 = dayjs(`${props.selectedDate}T${time24}`);
-    const isBefore = date2.isBefore(date1);
-    return {
-      ...item,
-      disabled:
-        (item.disabled &&
-          !checkBetween(beginTime, endTime, timeToDateTime(item.value))) ||
-        isBefore,
-    };
-  });
-};
-
-// watch(
-//   () => formStructure.value.map((item) => item.discipline_id),
-//   (newValues, oldValues) => {
-//     newValues.forEach((newValue, index) => {
-//       if (newValue !== oldValues[index]) {
-//         formStructure.value[index].class_id = undefined; // Reset the class_id
-//       }
-//     });
-//   },
-//   { deep: true }
-// );
 </script>
 
 <style scoped lang="scss">
@@ -881,6 +864,7 @@ const getAvailableTime = (availableTime: [any], schedule: any) => {
 
 th {
 }
+
 td {
   padding: 2px 7px;
 }
@@ -929,17 +913,15 @@ td {
     left: 2px;
   }
 }
-
 </style>
 <style lang="scss">
 .scheduler-week-class-form {
   .formkit-message {
     display: none;
   }
+
   [data-message-type="ui"] {
     display: block;
   }
 }
-
 </style>
-<!-- style="position: fixed; width: 953px; text-align: center; bottom: 0px;" -->

@@ -1,5 +1,5 @@
-<template>
-  <div class="px-5">
+<template> 
+  <div class="px-5"> 
     <FormKit
       type="form"
       @submit="submitHandler"
@@ -90,7 +90,7 @@
           name="description"
           label="Description"
           placeholder="Please enter class/event description"
-          validation="required"
+
           :validation-messages="{
                   required: 'Class/event description is required',
                 }"
@@ -425,7 +425,10 @@ const updateClass = async (classData: any) => {
   }
 };
 
-const submitHandler = async (classData) => {
+const submitHandler = async (classData: any) => {
+  if (classData.description === undefined) {
+    classData.description = "";
+  }
   let tempData = removeObjectKeys(classData, [
     "img_src",
     "img_video",

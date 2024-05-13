@@ -1,4 +1,4 @@
-Membership-overview without chart  
+Membership-overview without chart
 <template> 
   <SidebarUpdateMember v-model:member-id="props.memberId" />
   <div
@@ -21,10 +21,35 @@ Membership-overview without chart
         {{ formatDate(membersData.member.data[0].start_date) }}
       </div>
 
-   
-      <ChartSubscribedPackage :plans="actualPlans"  />
+      <!-- <ChartSubscribedPackage :plans="actualPlans"  /> -->
+      <div class="row">
+        <div class="col-4">
+          <p class="small-title-medium text-center">Active</p>
+          <div class="d-flex flex-column justify-content-center"
+          v-for="plan in (actualPlans || []).filter(plan => plan?.plan_status == 'Active' && plan !== null)" 
+           :key="plan.id">
+            <CardMember  v-bind="plan" />
+          </div>
+        </div>
+        <div class="col-4">
+          <p class="small-title-medium text-center">Paused</p>
+          <div class="d-flex flex-column justify-content-center"
+          v-for="plan in (actualPlans || []).filter(plan => plan?.plan_status == 'Paused' && plan !== null)" 
+           :key="plan.id">
+            <CardMember  v-bind="plan" />
+          </div>
+        </div>
+        <div class="col-4">
+          <p class="small-title-medium text-center">Old</p>
+          <div class="d-flex flex-column justify-content-center"
+          v-for="plan in (actualPlans || []).filter(plan => plan?.plan_status == 'Expired' && plan !== null)" 
+           :key="plan.id">
+            <CardMember  v-bind="plan" />
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="content-box1" style="border-radius: 10px;">
+    <div class="content-box1" style="border-radius: 10px">
       <div class="content__title-box">
         <h1 class="content-title">Membership Packages</h1>
         <div class="filter-box packagesByStatus">
@@ -104,7 +129,6 @@ const props = defineProps({
 const { memberId } = toRefs(props);
 const route = useRoute();
 const { setBreadcrumb, setBreadcrumbTab } = useBreadcrumb();
-
 
 const breadcrumbStore = useBreadcrumbStore();
 breadcrumbStore.setBreadcrumb({
@@ -221,12 +245,10 @@ const computedPlanDetails = computed(() => {
   // Check if `ComputedPackage.value` is truthy and is an array before calling reduce
   if (Array.isArray(ComputedPackage.value)) {
     return ComputedPackage.value.reduce((acc, plan) => {
-
       if (
         plan !== null &&
-        (selectedFilter.value === "All" ||
-          plan.type === selectedFilter.value) 
-      ){
+        (selectedFilter.value === "All" || plan.type === selectedFilter.value)
+      ) {
         acc.push({
           id: plan.id,
           name: plan.name,
@@ -266,8 +288,6 @@ const computedPlanDetails = computed(() => {
     return [];
   }
 });
-
-
 
 const selectFilter = (filterType) => {
   selectedFilter.value = filterType;
@@ -524,8 +544,7 @@ const formattedDate = `${day} ${monthNames[monthIndex]} ${year}`;
   width: 65vw;
   max-width: 950px;
   max-height: 660px;
-  // overflow-x: auto;
-
+  overflow-y: auto;
 }
 
 .content-box1 {

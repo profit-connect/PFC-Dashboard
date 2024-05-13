@@ -175,11 +175,17 @@
           v-tooltip="'Please select tags. This is not a mandatory field.'"
         />
       </div>
-      <div class="d-flex flex-column justify-content-center">
-        <FormKit style="width: 300px;" type="submit" label="Save" class="EditSave" />
-        <button class="btn" @click="$emit('close-sidebar')">Cancel</button>
+      <div 
+        class="mt-5 d-flex justify-content-center"
+      >
+        <FormKit  style="margin-top: 140px;" type="submit">Save</FormKit>
       </div>
     </FormKit>
+    <div
+      class="d-flex justify-content-center"
+    >
+      <button @click="$emit('close-sidebar')" class="btn">Cancel</button>
+    </div>
   </div>
 </template>
 

@@ -2,7 +2,7 @@
   <div class="px-5 pt-0">
     <FormKit
       type="form"
-      :modelValue="selectedCategory"
+      :modelValue="categoryDataWithDefaults"
       @submit="submitHandler"
       :actions="false"
     >
@@ -37,7 +37,6 @@
             name="description"
             label="Description"
             placeholder="Please enter category description"
-            validation="required"
             :validation-messages="{
                   required: 'Category description is required',
                 }"
@@ -149,7 +148,15 @@ const props = defineProps({
 const { currentUserType } = useAuthStore();
 const selectedCategory = useVModel(props, "categoryData", emit);
 
-const createCategory = async (categoryData) => {
+const categoryDataWithDefaults = computed(() => {
+  return {
+    ...props.categoryData,
+    description: props.categoryData?.description || ''  // Ensure default empty string
+  };
+});
+
+const createCategory = async (categoryData: any) => {
+  console.log(categoryData)
   const { data, error, execute } = useCustomFetch<any>("/category/add/category", {
     method: "POST",
     body: JSON.stringify({

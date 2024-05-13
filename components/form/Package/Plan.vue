@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5">
+  <div class="px-5"> {{ promotion_price }}
     <FormKit
       type="form"
       :modelValue="selectedPlan"
@@ -296,6 +296,7 @@
                 name="promotion_end"
                 :max="maxDate"
                 :min="promotionStartDate || minDate "
+                v-model="promotionEndDate"
                 :validation="`${
                   isPromotionPriceActive ? 'required|' : ''
                 }date_after_or_equal:${promotionStartDate}`"
@@ -475,6 +476,7 @@ const { $toast } = useNuxtApp();
 const { currentUserType } = useAuthStore();
 const selectedPlan = useVModel(props, "planData", emit);
 const promotionStartDate = ref(selectedPlan.value?.promotion_start);
+const promotionEndDate = ref(selectedPlan.value?.promotion_end);
 const isPromotionPriceActive = ref(!!selectedPlan.value?.promotion_price);
 // const OriginalPrice = ref(selectedPlan.value?.price -1)
 const OriginalPrice = computed(() => {
@@ -495,30 +497,7 @@ const minDate = computed(() => {
 });
 
 
-const minDateMinusOne = computed(() => {
-  const today = new Date();
-  today.setDate(today.getDate() - 1); // Subtract one day from today
 
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
-  const day = String(today.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`; // Yesterday's date in YYYY-MM-DD format
-});
-
-const promotionStartDateMinusOne = computed(() => {
-    if (!promotionStartDate.value) {
-        return null; // or some default value if needed
-    }
-    const date = new Date(promotionStartDate.value);
-    date.setDate(date.getDate() - 1); // Subtract one day
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed in JavaScript Date
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`; // Returns the date in YYYY-MM-DD format
-});
 
 
 
@@ -547,10 +526,13 @@ const effectiveMinDate = computed(() => {
     return minDate.value; // Otherwise, use today's date
 });
 
-watchEffect(() => {
-    promotionStartDate.value = selectedPlan.value?.promotion_start;
-    isPromotionPriceActive.value = !!selectedPlan.value?.promotion_price;
+watch(() => selectedPlan.value?.promotion_start, (newStart) => {
+    promotionStartDate.value = newStart;
 });
+
+watch(() => selectedPlan.value?.promotion_price, (newPrice) => {
+    isPromotionPriceActive.value = !!newPrice;
+}, { immediate: true });
 
 // Watch for changes in planTypeData
 watch(planTypeData, (newValue) => {
@@ -583,6 +565,8 @@ watch(isPromotionPriceActive, (newVal) => {
   console.log('isPromotionPriceActive changed:', newVal);
   if (!newVal) {
     promotion_price.value = "";
+    promotionEndDate.value  = "";
+    promotionStartDate.value  = "";
   }
 }, { immediate: true, flush: 'post' });
 
