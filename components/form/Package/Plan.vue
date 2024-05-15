@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5"> {{ promotion_price }}
+  <div class="px-5">
     <FormKit
       type="form"
       :modelValue="selectedPlan"
@@ -235,7 +235,7 @@
           <div
             class="d-flex justify-content-between align-items-center mb-4 my-2"
           >
-            <div class="d-flex gap-2 align-items-center mt-3">
+            <div class="d-flex gap-2 align-items-center mt-3" >
               <FormKit
                 type="checkbox"
                 outer-class="m-0"
@@ -530,9 +530,9 @@ watch(() => selectedPlan.value?.promotion_start, (newStart) => {
     promotionStartDate.value = newStart;
 });
 
-watch(() => selectedPlan.value?.promotion_price, (newPrice) => {
-    isPromotionPriceActive.value = !!newPrice;
-}, { immediate: true });
+// watch(() => selectedPlan.value?.promotion_price, (newPrice) => {
+//     isPromotionPriceActive.value = !!newPrice;
+// }, { immediate: true });
 
 // Watch for changes in planTypeData
 watch(planTypeData, (newValue) => {
@@ -569,6 +569,7 @@ watch(isPromotionPriceActive, (newVal) => {
     promotionStartDate.value  = "";
   }
 }, { immediate: true, flush: 'post' });
+
 
 const createPlan = async (planData) => {
   const { data, error, execute } = useCustomFetch<any>("/packages/add/plan", {

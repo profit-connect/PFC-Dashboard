@@ -1,5 +1,5 @@
 <template>
-  <SidebarUpdateMember v-model:member-id="props.memberId" />
+  <SidebarUpdateMember v-model:member-id="props.memberId" /> 
   <div class="content-main-box">
     <div class="content-box mb-3 pt-1">
       <div class="d-flex align-items-center justify-content-between gap-3">
@@ -75,7 +75,7 @@
             margin-left: 150px;
           "
         >
-          No notes available. Click the button below to add a new note.
+        No notes exist. To create a note, click 'New Note' above.
         </p>
       </div>
 
@@ -83,7 +83,7 @@
         <FormKit
           type="form"
           :modelValue="selectedPackage"
-          @submit="submitHandler"
+          @submit="handleEdit"
           :actions="false"
           #default="{ value }"
         >
@@ -151,13 +151,27 @@
               </div>
               <div v-show="isEditingNote(note.id)">
                 <div class="d-flex justify-content-end gap-2 mb-2">
-                  <div
+                  <!-- <div
                     class="goBackShowMode"
                     data-show="personal-show"
                     @click="handleEdit"
                   >
                     Update
-                  </div>
+                  </div> -->
+                  
+                <FormKit type="submit" 
+                 style="  font: 14px 'Poppins Regular', sans-serif, Arial;
+                  cursor: pointer;
+                  padding: 5px 12px;
+                  border: 1.5px solid #84ceff;
+                  border-radius: 5px;
+                  background: 0 0;
+                  transition: 0.35s;
+                  width: 80px;
+                  height: 35px
+                  " >
+                 Update
+                </FormKit>
                   <div
                     class="goBackShowMode"
                     data-show="personal-show"
@@ -166,22 +180,36 @@
                     Cancel
                   </div>
                 </div>
-
+                <div style="height: 75px;">
                 <FormKit
                   type="text"
                   placeholder="Edit a note title "
                   v-model="editingState.heading"
+                  validation="required"
+                  :validation-messages="{
+                  required: 'Note title is required',
+                }"
                   class="custom-input"
                   style="background-color: white; padding-right: 80px"
                 />
+              </div>
+              <div style="height: 75px;">
                 <FormKit
                   type="text"
                   placeholder="Edit a note description "
+                  validation="required"
+                  :validation-messages="{
+                  required: 'Description is required',
+                }"
                   v-model="editingState.description"
                   class="custom-input"
                   style="background-color: white; padding-right: 80px"
                 />
               </div>
+              </div>
+   
+
+
               <div v-if="note.reply && note.reply.length">
                 <div
                   v-show="!isEditingReply(note.id, response?.id)"
@@ -598,6 +626,8 @@ const selectFilter = (filterType) => {
   background: 0 0;
   transition: 0.35s;
   width: 80px;
+  height: 35px
+  
 }
 
 .reply-container {

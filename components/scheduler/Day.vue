@@ -1,6 +1,6 @@
 <template>
   <div class="schedule-day" v-if="schedule"> 
-    <div class="header d-flex align-items-center gap-4 py-2 mb-2">
+    <div class="header d-flex align-items-center justify-content-between gap-4 py-2 mb-2">
       <div
         style="
           min-width: 400px;
@@ -28,7 +28,7 @@
           {{ getLabelById(schedule.discipline_id) }} | {{ schedule.class_name }}
         </p>
       </div>
-      <div class="coaches d-flex align-items-center w-full">
+      <div class="coaches d-flex align-items-center">
         <div
           class="d-flex align-items-center gap-4"
           v-if="schedule.coach.length === 1"
@@ -704,7 +704,6 @@ watch(
   .info {
     list-style: none;
     display: flex;
-    gap: 8px;
     align-items: center;
     gap: 58px;
     li {

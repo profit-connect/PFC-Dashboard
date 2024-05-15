@@ -1,5 +1,5 @@
 <template>
-  <!-- style="margin-left: 355px; cursor: pointer; z-index: 40; position: relative;" -->
+  <!-- style="margin-left: 355px; cursor: pointer; z-index: 40; position: relative;" --> 
  <div class="top-bar-bg">
    <div
      class="text-white fs-2" 
@@ -118,12 +118,14 @@ import { useDayjs } from "#dayjs";
 import { useAuthStore } from "~/store/auth";
 import { useEventBus } from "@vueuse/core";
 import { useStorage } from "@vueuse/core";
+const { currentUserType } = useAuthStore();
 
 const bus = useEventBus<boolean>("reload-days");
 const hideSchedulerBar = ref(false);
 const hideSchedulerBarChat = ref(false);
 const weekSchedule = ref();
 const selectedClass = useStorage("SELECTED_ROOM_INDEX", -1);
+const selectedRoomId = useStorage("SELECTED_ROOM_ID", undefined);
 
 const dayjs = useDayjs();
 const currentScheduledTime = ref({
@@ -158,8 +160,7 @@ const sortScheduleTime = (data) => {
 };
 
 
-const selectedRoomId = useStorage("SELECTED_ROOM_ID", undefined);
-const { currentUserType } = useAuthStore();
+
 
 const { data: categoryData } = await useCustomFetch<any>(
  "/category/get/categories",

@@ -1,5 +1,5 @@
 <template>
-  <div class="scheduler-week-class-form">
+  <div class="scheduler-week-class-form"> 
     <FormKit type="form" @submit="submitHandler" :actions="false">
       <div v-for="(item, key) in formStructure" :key="key">
         <div class="row mx-5">
@@ -211,14 +211,16 @@
             <td>
               <div class="action-btn">
                 <div class="btn">
-                  <button @click="onDeleteSlot(key, key_2)" type="button">
+                  <button @click="onDeleteSlot(key, key_2)"
+                   type="button" :disabled="key_2 < selectedSchedule.length" >
                     <NuxtImg
                       src="/images/svg/delete-icon.svg"
                       provider="none"
                       style="height: 16px; width: 16px"
                     />
                   </button>
-                  <p style="position: relative; bottom: 5px; font-size: 13.5px">
+                  <p :class="{'text-disabled': key_2 < selectedSchedule.length}"
+                  style="position: relative; bottom: 5px; font-size: 13.5px">
                     Delete
                   </p>
                 </div>
@@ -241,19 +243,22 @@
           </tr>
         </table>
       </div>
-      <div
-        class="mt-5 d-flex justify-content-center"
-        style="position: relative; width: 920px; top: 300px"
+      <div 
+        class="mt-4 d-flex justify-content-center flex-column button-save-schedule"
+      
       >
-        <FormKit type="submit">Save</FormKit>
+        <div><FormKit type="submit">Save</FormKit></div>
+        <div>
+          <button
+            class="btn-cancel"
+            @click="$emit('close-canvas')"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </FormKit>
-    <div
-      class="d-flex justify-content-center"
-      style="position: relative; width: 920px; top: 300px"
-    >
-      <button @click="$emit('close-canvas')" class="btn">Cancel</button>
-    </div>
+
   </div>
 </template>
 <script lang="ts" setup>
@@ -331,6 +336,7 @@ const onAddFirstSlot = (key: number) => {
     },
   ];
 };
+
 
 const onAddSlot = (key: number) => {
   formStructure.value[key].schedule.push({
@@ -701,9 +707,9 @@ const convertTo24Hour = (timeStr: string) => {
 };
 
 const endTime = (start_time: string, offetInMinute: number = 0) => {
-  console.log("start_time", start_time)
+  // console.log("start_time", start_time)
   let time24hours = convertTo24HourNew(start_time);
-  console.log(time24hours)
+  // console.log(time24hours)
   const originalDateTime = dayjs(`2024-01-01 ${time24hours}`);
   const newDateTime = originalDateTime.add(offetInMinute, "minute");
   return newDateTime.format("hh:mm A");
@@ -913,6 +919,14 @@ td {
     left: 2px;
   }
 }
+button:disabled {
+ color: red;
+opacity: 0.2;
+}
+.text-disabled {
+    color: #ccc; /* Light gray color */
+    opacity: 0.5; /* Half opacity for a faded look */
+}
 </style>
 <style lang="scss">
 .scheduler-week-class-form {
@@ -924,4 +938,5 @@ td {
     display: block;
   }
 }
+
 </style>

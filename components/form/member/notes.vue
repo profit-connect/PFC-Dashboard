@@ -1,6 +1,7 @@
 <template>
   <div class="px-5">
     <FormKit type="form" @submit="submitHandler" :actions="false">
+      <div style="height: 75px;">
       <FormKit
         type="text"
         name="heading"
@@ -10,20 +11,27 @@
                   required: 'Note title is required',
                 }"
       />
-      <FormKit type="textarea" name="description" placeholder="Please enter note" />
+    </div>
+        <FormKit type="textarea" 
+         name="description"
+         validation="required"
+         placeholder="Please enter note" />
+    
+   
 
-      <div
-        class="mt-4 d-flex justify-content-center flex-column"
-        style="position: relative; left: 250px; top: 420px; margin-bottom: 0px"
+      <div 
+        class="mt-4 d-flex justify-content-center flex-column button-save"
+      
       >
-        <FormKit type="submit">Save</FormKit>
-        <button
-          class="btn"
-          style="position: relative; right: 230px"
-          @click="$emit('close-canvas')"
-        >
-          Cancel
-        </button>
+        <div><FormKit type="submit">Save</FormKit></div>
+        <div>
+          <button
+            class="btn-cancel"
+            @click="$emit('close-canvas')"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </FormKit>
   </div>

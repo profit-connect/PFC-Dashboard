@@ -125,6 +125,7 @@
     width: 100%;
     overflow: scroll;
     border-radius: 10px;
+    padding: 15px;
     
   
     /* Hide scrollbar for Chrome, Safari, and newer versions of Opera*/

@@ -22,63 +22,63 @@ export const useMenuStore = defineStore("menu", () => {
           id: 1,
           label: "Profiles",
           description:
-            "Manage Clients, Leads & Staff Profiles including schedule and availability.",
+            "Create and manage lead and member profiles.  ",
           link: "/members",
         },
         {
           id: 2,
           label: "Schedule",
           description:
-            "Schedule and manage classes, workshops, and events with an interactive calendar view.",
+            "Plan and manage classes and events, including timings, capacity and staff allocation.  ",
           link: "/",
         },
         {
           id: 3,
           label: "Classes",
           description:
-            "Manage various class types, including descriptions, and prerequisites.",
+            "Create and manage class and event categories and types, including descriptions and timings.  ",
           link: "/classes",
         },
         {
           id: 4,
           label: "Memberships",
           description:
-            "Create and manage various membership plans, including pricing, duration, and access levels.",
+            "Create and manage membership packages and plans, including pricing, duration and promotions.",
           link: "/packages",
         },
         {
           id: 5,
           label: "Roles",
           description:
-            "Create and Manage staff roles and assign access level to roles.",
+            "Create and manage staff roles and their access levels within ProFit Connect.",
           link: "/roles",
         },
         {
           id: 6,
           label: "Spaces",
           description:
-            "Manage various spaces, including it's capacity, and attributes.",
+            "Create and manage spaces, including categories, capacity and availability.",
           link: "/spaces",
         },
         {
           id: 7,
           label: "Store",
           description:
-            "Create and manage store items. Also process in-store purchases.",
+            "Create and manage store items such as merchandise and F&B, including pricing, promotions and in-house sales processing.  ",
           link: "/store",
         },
         {
           id: 8,
           label: "Facility",
           description:
-            "Manage facility specific features and settings including timing, forms, payments and taxes.",
+            "Create and manage facility features, including timings, location, staff, forms and tags.",
           link: "/facility",
         },
         {
           id: 9,
           label: "Access Levels",
           description:
-            "Manage access level for specified features and dashboard pages.",
+            "Manage role access levels to ProFit Connect features in the dashboard and Admin App.",
           link: "/access-level",
         },
       ],

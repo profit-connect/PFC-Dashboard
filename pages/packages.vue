@@ -86,7 +86,7 @@ const { $toast } = useNuxtApp();
 const breadcrumbStore = useBreadcrumbStore();
 breadcrumbStore.setBreadcrumb({
   items: [
-    { label: "Control", link: "" },
+    { label: "Control Panel", link: "" },
     { label: "Membership ", link: "" },
   ],
 });

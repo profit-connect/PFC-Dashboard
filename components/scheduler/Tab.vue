@@ -76,7 +76,7 @@ const isRoomEmpty = computed(() => {
 
 const currentDay = dayjs();
 const startDate = computed(() => dayjs(props.dates.start));
-console.log(currentDay,startDate);
+// console.log(currentDay,startDate);
 const sortedTimeSlots = computed(() => {
   return props.timeSlot.slice().sort((a, b) => {
     const convertTo24Hour = (time: string): number => {
@@ -98,7 +98,7 @@ const sortedTimeSlots = computed(() => {
 });
 
 function isPastTime(startTime) {
-  console.log("startTime", startTime);
+  // console.log("startTime", startTime);
   // Use dayjs() to get today's date and combine it with the start time.
   const today = dayjs().format('YYYY-MM-DD'); // Get today's date in YYYY-MM-DD format
   const fullStartTime = `${today} ${startTime}`; // Combine today's date with the start time
@@ -110,7 +110,7 @@ function isPastTime(startTime) {
 
 
 watch(() => props.hideSchedulerBar, (newValue) => {
-  console.log('SchedulerTab hideSchedulerBar changed:', newValue);
+  // console.log('SchedulerTab hideSchedulerBar changed:', newValue);
 });
 
 </script>

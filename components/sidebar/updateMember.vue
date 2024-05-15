@@ -47,7 +47,6 @@
               alt="Cancel icon"
               class="img-normal"
             />
-            <!-- <img src="~/assets/images/svg/schedule-cancel-blue.svg" alt="Cancel icon" class="img-hover" /> -->
             <span class="tooltiptext">Cancel</span>
           </div>
         </div>
@@ -68,7 +67,6 @@
               @error="imageError = true"
               v-show="!imageError"
             />
-
             <div
               style="position: relative; left: 35%"
               v-else
@@ -98,13 +96,14 @@
     </div>
     <div class="update-member" style="margin-top: 50px">
       <FormKit
+        ref="mainFormRef"
         class="formEditMember"
         type="form"
-        :modelValue="getMemberInfo"
+        :modelValue="editableMemberInfo"
         @submit="editMember"
         :actions="false"
-        incomplete-message="-"
       >
+        <!-- Personal Information Section -->
         <div
           v-show="!toggleStates.isPersonalEditMode.value"
           class="personal-show data-block-show"
@@ -112,7 +111,7 @@
           <h3 class="small-title-bold">
             Personal
             <img
-              @click="() => startEdit('isPersonalEditMode')"
+              @click="startEdit('isPersonalEditMode')"
               class="editgetMemberInfo"
               data-edit="personal-edit"
               src="~assets/images/svg/edit-icon-grey.svg"
@@ -125,7 +124,7 @@
                 src="~assets/images/svg/members-info/female.svg"
                 alt="Female icon"
               />
-              <span class="showUserGender">{{ getMemberInfo.gender }} </span>
+              <span class="showUserGender">{{ editableMemberInfo.gender }} </span>
             </div>
 
             <div class="icon-text">
@@ -133,7 +132,7 @@
                 src="~assets/images/svg/members-info/birthday.svg"
                 alt="Birthday icon"
               />
-              <span class="showUserBirthday">{{ getMemberInfo.dob }}</span>
+              <span class="showUserBirthday">{{ editableMemberInfo.dob }}</span>
             </div>
 
             <div class="icon-text">
@@ -142,8 +141,8 @@
                 alt="Phone icon"
               />
               <span class="showPhoneNumber"
-                >{{ getMemberInfo.country_code }}
-                {{ getMemberInfo.contactno }}</span
+                >{{ editableMemberInfo.country_code }}
+                {{ editableMemberInfo.contactno }}</span
               >
             </div>
 
@@ -152,7 +151,7 @@
                 src="~assets/images/svg/members-info/email.svg"
                 alt="Email icon"
               />
-              <span class="showUserEmail">{{ getMemberInfo.email }}</span>
+              <span class="showUserEmail">{{ editableMemberInfo.email }}</span>
             </div>
           </div>
         </div>
@@ -166,12 +165,13 @@
             <div
               class="goBackShowMode"
               data-show="personal-show"
-              @click="() => cancelEdit('isPersonalEditMode')"
+              @click="cancelEdit('isPersonalEditMode')"
             >
               Cancel
             </div>
           </h3>
           <FormKit
+            ref="personalFormRef"
             type="uppy"
             label="Upload Image"
             name="image"
@@ -230,15 +230,9 @@
             validation-visibility="live"
             placeholder="Email"
           />
-          <!-- <div class="input-label-box d-none">
-            <input
-              type="password"
-              class="passwordInput"
-              placeholder="Password"
-            />
-          </div> -->
         </div>
 
+        <!-- Social Information Section -->
         <div
           v-show="!toggleStates.isSocialEditMode.value"
           class="social-show data-block-show"
@@ -246,30 +240,29 @@
           <h3 class="small-title-bold">
             Social
             <img
-              @click="() => startEdit('isSocialEditMode')"
+              @click="startEdit('isSocialEditMode')"
               class="editgetMemberInfo"
               data-edit="social-edit"
               src="~assets/images/svg/edit-icon-grey.svg"
               alt="Edit icon"
             />
           </h3>
-
           <div class="social-show__icons">
             <a
-              :href="getMemberInfo.facebook"
+              :href="editableMemberInfo.facebook"
               target="_blank"
               rel="noopener noreferrer"
             >
               <div class="icon-text">
                 <img
                   src="~assets/images/svg/social/facebook.svg"
-                  alt="Phone icon"
+                  alt="Facebook icon"
                 />
                 Facebook
               </div>
             </a>
             <a
-              :href="getMemberInfo.instagram"
+              :href="editableMemberInfo.instagram"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -282,16 +275,16 @@
               </div>
             </a>
             <a
-              :href="getMemberInfo.linkedin"
+              :href="editableMemberInfo.linkedin"
               target="_blank"
               rel="noopener noreferrer"
             >
               <div class="icon-text">
                 <img
                   src="~assets/images/svg/social/linkedin.svg"
-                  alt="Linkedin icon"
+                  alt="LinkedIn icon"
                 />
-                Linkedin
+                LinkedIn
               </div>
             </a>
           </div>
@@ -306,37 +299,35 @@
             <div
               class="goBackShowMode"
               data-show="social-show"
-              @click="() => cancelEdit('isSocialEditMode')"
+              @click="cancelEdit('isSocialEditMode')"
             >
               Cancel
             </div>
           </h3>
           <FormKit
+            ref="socialFormRef"
             type="text"
             placeholder="Facebook"
             name="facebook"
-            v-tooltip="
-              'Please enter Facebook handle. This is not a mandatory field.'
-            "
+            v-tooltip="'Please enter Facebook handle. This is not a mandatory field.'"
           />
           <FormKit
+            ref="socialFormRef"
             type="text"
             placeholder="Instagram"
             name="instagram"
-            v-tooltip="
-              'Please enter Instagram handle. This is not a mandatory field.'
-            "
+            v-tooltip="'Please enter Instagram handle. This is not a mandatory field.'"
           />
           <FormKit
+            ref="socialFormRef"
             type="text"
-            placeholder="Linkedin"
+            placeholder="LinkedIn"
             name="linkedin"
-            v-tooltip="
-              'Please enter Linkedin handle. This is not a mandatory field.'
-            "
+            v-tooltip="'Please enter LinkedIn handle. This is not a mandatory field.'"
           />
         </div>
 
+        <!-- About Section -->
         <div
           v-show="!toggleStates.isAboutEditMode.value"
           class="about-show data-block-show"
@@ -344,14 +335,14 @@
           <h3 class="small-title-bold">
             About
             <img
-              @click="() => startEdit('isAboutEditMode')"
+              @click="startEdit('isAboutEditMode')"
               class="editgetMemberInfo"
               data-edit="about-edit"
               src="~assets/images/svg/edit-icon-grey.svg"
               alt="Edit icon"
             />
           </h3>
-          {{ getMemberInfo.about }}
+          {{ editableMemberInfo.about }}
           <div class="icon-text showMemberAbout"></div>
         </div>
 
@@ -364,15 +355,20 @@
             <div
               class="goBackShowMode"
               data-show="about-show"
-              @click="() => cancelEdit('isAboutEditMode')"
+              @click="cancelEdit('isAboutEditMode')"
             >
               Cancel
             </div>
           </h3>
-
-          <FormKit type="text" placeholder="About" name="about" />
+          <FormKit
+            ref="aboutFormRef"
+            type="text"
+            placeholder="About"
+            name="about"
+          />
         </div>
 
+        <!-- Emergency Contact Section -->
         <div
           v-show="!toggleStates.isEmergencyEditMode.value"
           class="emergency-show data-block-show"
@@ -380,7 +376,7 @@
           <h3 class="small-title-bold">
             Emergency
             <img
-              @click="() => startEdit('isEmergencyEditMode')"
+              @click="startEdit('isEmergencyEditMode')"
               class="editgetMemberInfo"
               data-edit="emergency-edit"
               src="~assets/images/svg/edit-icon-grey.svg"
@@ -389,13 +385,13 @@
           </h3>
           <div class="d-flex items-align-center justify-content-between">
             <div style="width: 150px">
-              {{ getMemberInfo.emergency_contact_name }}
+              {{ editableMemberInfo.emergency_contact_name }}
             </div>
             <div>
-              <span style="">
-                {{ getMemberInfo.emergency_country_code }}
-                {{ getMemberInfo.emergency_contact_no }}</span
-              >
+              <span>
+                {{ editableMemberInfo.emergency_country_code }}
+                {{ editableMemberInfo.emergency_contact_no }}
+              </span>
             </div>
           </div>
           <div class="icon-text showMemberemergeny"></div>
@@ -410,13 +406,14 @@
             <div
               class="goBackShowMode"
               data-show="emergency-show"
-              @click="() => cancelEdit('isEmergencyEditMode')"
+              @click="cancelEdit('isEmergencyEditMode')"
             >
               Cancel
             </div>
           </h3>
           <div style="height: 77px">
             <FormKit
+              ref="emergencyFormRef"
               type="text"
               placeholder="Emergency contact name"
               name="emergency_contact_name"
@@ -432,6 +429,7 @@
           <div class="row g-2">
             <div class="col-6">
               <FormKit
+                ref="emergencyFormRef"
                 type="multiselect"
                 name="emergency_country_code"
                 :options="CountryCodes"
@@ -446,6 +444,7 @@
             </div>
             <div class="col-6">
               <FormKit
+                ref="emergencyFormRef"
                 type="tel"
                 placeholder="Contact Number"
                 name="emergency_contact_no"
@@ -461,6 +460,7 @@
           </div>
         </div>
 
+        <!-- Tags Section -->
         <div
           v-show="!toggleStates.isTagsEditMode.value"
           class="tags-show data-block-show"
@@ -468,7 +468,7 @@
           <h3 class="small-title-bold mt-4">
             Tags
             <img
-              @click="() => startEdit('isTagsEditMode')"
+              @click="startEdit('isTagsEditMode')"
               class="editgetMemberInfo"
               data-edit="tags-edit"
               src="~assets/images/svg/edit-icon-grey.svg"
@@ -477,7 +477,7 @@
           </h3>
           <div>
             <span
-              v-for="tag in tagObjects(getMemberInfo.tags)"
+              v-for="tag in tagObjects(editableMemberInfo.tags)"
               :key="tag.value"
               class="tags"
             >
@@ -495,7 +495,7 @@
             <div
               class="goBackShowMode"
               data-show="tags-show"
-              @click="() => cancelEdit('isTagsEditMode')"
+              @click="cancelEdit('isTagsEditMode')"
             >
               Cancel
             </div>
@@ -512,6 +512,7 @@
               >Add Tags</span
             >
             <FormKit
+              ref="tagsFormRef"
               type="multiselect"
               name="tags"
               mode="tags"
@@ -519,15 +520,21 @@
               :options="computedTags"
             />
           </div>
-        </div >
-        <FormKit style="margin-top: 140px;" type="submit" label="Save" v-show="isAnyEditModeActive" />
+        </div>
+
+        <FormKit
+          style="margin-top: 140px;"
+          type="submit"
+          label="Save"
+          v-show="isAnyEditModeActive"
+        />
       </FormKit>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, toRefs, computed, watch } from "vue";
 import { useAuthStore } from "@/store/auth";
 import { useTagStore } from "@/store/tag";
 import { useCountryStore } from "@/store/countrycode";
@@ -548,6 +555,7 @@ const { setBreadcrumb, setBreadcrumbTab } = useBreadcrumb();
 
 const { memberId } = toRefs(props);
 const memberInfoData = ref(null);
+const initialMemberInfoData = ref(null);
 const memberInfoPending = ref(false);
 const { tags } = storeToRefs(useTagStore());
 const { currentUserType } = useAuthStore();
@@ -559,7 +567,8 @@ const imageError = ref(false);
 const emergencyContactName = ref();
 const emergencyCountryCode = ref();
 const emergencyContactNo = ref();
-// const countryCodes = ref([{ label: "Select a country", value: "" }]);
+
+const editableMemberInfo = ref({});
 
 watch(
   route,
@@ -634,6 +643,12 @@ const toggleStates: ToggleStates = {
   isTagsEditMode: ref(false),
 };
 
+const personalFormRef = ref(null);
+const socialFormRef = ref(null);
+const aboutFormRef = ref(null);
+const emergencyFormRef = ref(null);
+const tagsFormRef = ref(null);
+
 function formatName(string) {
   if (!string) return "";
   const words = string.split(" ");
@@ -642,29 +657,30 @@ function formatName(string) {
   );
   return capitalizedWords.join(" ");
 }
+
 const isAnyEditModeActive = computed(() => {
   const isActive = Object.values(toggleStates).some((state) => state.value);
-  console.log("Edit Mode Active:", isActive);
   return isActive;
 });
 
 const startEdit = (toggleKey: keyof ToggleStates) => {
   toggleStates[toggleKey].value = true;
+  initialMemberInfoData.value = { ...editableMemberInfo.value };
 };
 
 const cancelEdit = (toggleKey: keyof ToggleStates) => {
   toggleStates[toggleKey].value = false;
+  editableMemberInfo.value = { ...initialMemberInfoData.value };
 };
 
-const editMember = async (getMemberInfo: any) => {
-  console.log(getMemberInfo);
+const editMember = async (editableMemberInfo: any) => {
   try {
-    const { id, ...memberInfoWithoutId } = getMemberInfo;
+    const { id, ...memberInfoWithoutId } = editableMemberInfo;
 
     const { data } = await useCustomFetch<any>("/members/update/member", {
       method: "POST",
       body: {
-        member_id: getMemberInfo.id,
+        member_id: editableMemberInfo.id,
         facility_id: currentUserType?.id,
         ...memberInfoWithoutId,
       },
@@ -674,7 +690,6 @@ const editMember = async (getMemberInfo: any) => {
       emit("reload");
       $toast("Member profile updated successfully");
       getMember();
-      // emit("close-sidebar");
       Object.keys(toggleStates).forEach((key) => {
         toggleStates[key].value = false;
       });
@@ -691,6 +706,7 @@ const computedTags = computed(() => {
     ? tags.value.map((item: any) => ({ label: item.name, value: item.id }))
     : [];
 });
+
 const tagObjects = (tagIds: any) => {
   return tagIds
     ? tagIds
@@ -698,9 +714,9 @@ const tagObjects = (tagIds: any) => {
           const foundTag = computedTags.value.find(
             (tag: any) => tag.value === String(tagId)
           );
-          return foundTag || null; // Return the entire object or null if not found
+          return foundTag || null;
         })
-        .filter((tag: any) => tag !== null) // Filter out any null entries
+        .filter((tag: any) => tag !== null)
     : [];
 };
 
@@ -712,6 +728,8 @@ const getMember = async () => {
     });
     if (response.data && response.data.value) {
       memberInfoData.value = response.data.value;
+      initialMemberInfoData.value = { ...getMemberInfo.value };
+      editableMemberInfo.value = { ...getMemberInfo.value };
     } else {
       console.error("No data returned from fetch");
     }
@@ -738,6 +756,7 @@ const getMemberImage = computed(() => {
 
   return {};
 });
+
 const getMemberInfo = computed(() => {
   if (
     memberInfoData.value &&
@@ -761,8 +780,6 @@ const getMemberInfo = computed(() => {
       country_code: memberData.country_code,
       contactno: memberData.contactno,
       email: memberData.email,
-      // image: imageUrl,
-      // membership_status: memberData.membership_status,
       facebook: socialData.facebook,
       instagram: socialData.instagram,
       linkedin: socialData.linkedin,
@@ -790,7 +807,7 @@ watch(
 watch(
   () => getMemberImage.value.image,
   (newImage) => {
-    imageError.value = false; // Reset error on any new image set
+    imageError.value = false;
   },
   { immediate: true }
 );
@@ -803,9 +820,7 @@ watch(
   margin-right: 20px;
   margin-left: 20px;
   padding: 20px;
-
   min-height: calc(100vh - 129px);
-  // height: 100vh;
   background: #fff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.0784313725);
   border-radius: 0px 0px 10px 10px;
@@ -817,19 +832,18 @@ watch(
   border-radius: 50%;
 }
 .sidebar-box {
-  //   display: none;
-
   &__title {
     display: block;
     text-decoration: none;
-    transition: $transitionSpeed;
+    transition: 0.35s;
+    margin-bottom: 25px;
 
     .editUserOccupation {
       color: #323a45;
     }
 
     .editUserName {
-      transition: $transitionSpeed;
+      transition: 0.35s;
     }
 
     &:hover {
@@ -919,9 +933,8 @@ watch(
 }
 .tags {
   display: inline-block;
-  /* background-color: #f2faff; / */
   border: 1px solid #84ceff;
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 5px;
   padding: 5px 15px;
   font-size: 14px;
   text-align: center;
@@ -932,15 +945,15 @@ watch(
 }
 .avatar-initials {
   display: flex;
-  align-items: center; /* Centers the initials vertically */
-  justify-content: center; /* Centers the initials horizontally */
+  align-items: center;
+  justify-content: center;
   width: 100px;
   height: 100px;
-  border-radius: 50%; /* Makes the div circular */
+  border-radius: 50%;
   background-color: #84ceff;
-  color: white; /* Example text color, change as needed */
-  font-size: 22px; /* Adjust based on your design */
-  font-weight: bold; /* Makes the letters a bit thicker */
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
   margin-bottom: 10px;
 }
 .hover-info {
@@ -949,9 +962,8 @@ watch(
   top: 210px;
   gap: 15px;
   left: 107px;
-  visibility: visible; /* Initially hidden */
-  // opacity: 0; /* Start fully transparent */
-  transition: visibility 0s, opacity 0.3s linear; /* Smooth transition for opacity */
+  visibility: visible;
+  transition: visibility 0s, opacity 0.3s linear;
 }
 
 .hover-wrapper:hover .hover-info {
@@ -963,7 +975,6 @@ watch(
   display: block;
   width: 35px;
   height: 35px;
-  // box-shadow: 0 10px 20px rgba(0,0,0,.16);
   background-color: #fff;
   border-radius: 50%;
   transition: 0.35s;
@@ -974,10 +985,7 @@ watch(
   display: block;
   width: 35px;
   height: 35px;
-  // box-shadow: 0 10px 20px rgba(0,0,0,.16);
-  // background-color: #fff;
   border-radius: 50%;
-  // transition: .35s;
   position: relative;
   cursor: pointer;
 }
@@ -988,43 +996,38 @@ watch(
 }
 
 .img-hover {
-  display: none; /* Hide blue images initially */
+  display: none;
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  // transition: transform 0.3s ease;
 }
 
 .hover-info__link:hover .img-normal {
-  display: none; /* Hide white images on hover */
+  display: none;
 }
 
 .hover-info__link:hover .img-hover {
-  display: block; /* Show blue images on hover */
+  display: block;
 }
 .tooltips .tooltiptext {
   visibility: hidden;
-  width: auto; /* Adjust width as needed */
+  width: auto;
   background-color: white;
   color: black;
   font-size: 10px;
   text-align: center;
   border-radius: 20px;
-  padding: 5px 8px; /* Adjust padding as needed, adding some space on the sides */
+  padding: 5px 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  /* Position the tooltip */
   position: absolute;
   z-index: 1;
-  bottom: 110%; /* Adjust this to change the vertical position of the tooltip */
+  bottom: 110%;
   left: 50%;
-  transform: translateX(-50%); /* Centers the tooltip */
-
-  /* Fade in tooltip - Transition for smooth appearance */
+  transform: translateX(-50%);
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 
-  /* Tooltip arrow */
   &:after {
     content: "";
     position: absolute;
@@ -1033,7 +1036,7 @@ watch(
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: #fff transparent transparent transparent; /* Arrow color matches tooltip background */
+    border-color: #fff transparent transparent transparent;
   }
 }
 .hover-info__link:hover .tooltiptext,
