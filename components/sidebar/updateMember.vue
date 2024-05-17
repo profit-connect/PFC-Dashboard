@@ -1,5 +1,6 @@
 <template>
   <div class="sidebar-box">
+    <!-- Sidebar Box Content -->
     <div
       class="image-box"
       @mouseover="isHovering = true"
@@ -51,12 +52,7 @@
           </div>
         </div>
         <a
-          @click="
-            router.push({
-              path: '/members/details/membership-overview',
-              query: { id: getMemberInfo.id },
-            })
-          "
+          @click="goToMemberProfile"
           class="sidebar-box__title text-center"
           title="View membership"
         >
@@ -124,9 +120,10 @@
                 src="~assets/images/svg/members-info/female.svg"
                 alt="Female icon"
               />
-              <span class="showUserGender">{{ editableMemberInfo.gender }} </span>
+              <span class="showUserGender"
+                >{{ editableMemberInfo.gender }}
+              </span>
             </div>
-
             <div class="icon-text">
               <img
                 src="~assets/images/svg/members-info/birthday.svg"
@@ -134,7 +131,6 @@
               />
               <span class="showUserBirthday">{{ editableMemberInfo.dob }}</span>
             </div>
-
             <div class="icon-text">
               <img
                 src="~assets/images/svg/members-info/phone.svg"
@@ -145,7 +141,6 @@
                 {{ editableMemberInfo.contactno }}</span
               >
             </div>
-
             <div class="icon-text">
               <img
                 src="~assets/images/svg/members-info/email.svg"
@@ -155,7 +150,6 @@
             </div>
           </div>
         </div>
-
         <div
           v-show="toggleStates.isPersonalEditMode.value"
           class="personal-edit data-block-edit"
@@ -189,7 +183,6 @@
               :options="['Female', 'Male', 'Prefer not to say']"
             />
           </div>
-
           <FormKit
             type="date"
             name="dob"
@@ -197,7 +190,6 @@
             validation="required"
             validation-visibility="live"
           />
-
           <div class="row g-2" style="height: 94px">
             <div class="col-6">
               <FormKit
@@ -205,9 +197,7 @@
                 name="country_code"
                 :options="CountryCodes"
                 validation="required"
-                :validation-messages="{
-                  required: 'Country code is required',
-                }"
+                :validation-messages="{ required: 'Country code is required' }"
               />
             </div>
             <div class="col-6">
@@ -289,7 +279,6 @@
             </a>
           </div>
         </div>
-
         <div
           v-show="toggleStates.isSocialEditMode.value"
           class="social-edit data-block-edit"
@@ -309,21 +298,27 @@
             type="text"
             placeholder="Facebook"
             name="facebook"
-            v-tooltip="'Please enter Facebook handle. This is not a mandatory field.'"
+            v-tooltip="
+              'Please enter Facebook handle. This is not a mandatory field.'
+            "
           />
           <FormKit
             ref="socialFormRef"
             type="text"
             placeholder="Instagram"
             name="instagram"
-            v-tooltip="'Please enter Instagram handle. This is not a mandatory field.'"
+            v-tooltip="
+              'Please enter Instagram handle. This is not a mandatory field.'
+            "
           />
           <FormKit
             ref="socialFormRef"
             type="text"
             placeholder="LinkedIn"
             name="linkedin"
-            v-tooltip="'Please enter LinkedIn handle. This is not a mandatory field.'"
+            v-tooltip="
+              'Please enter LinkedIn handle. This is not a mandatory field.'
+            "
           />
         </div>
 
@@ -345,7 +340,6 @@
           {{ editableMemberInfo.about }}
           <div class="icon-text showMemberAbout"></div>
         </div>
-
         <div
           v-show="toggleStates.isAboutEditMode.value"
           class="about-edit member-edit-box data-block-edit"
@@ -388,15 +382,14 @@
               {{ editableMemberInfo.emergency_contact_name }}
             </div>
             <div>
-              <span>
-                {{ editableMemberInfo.emergency_country_code }}
-                {{ editableMemberInfo.emergency_contact_no }}
-              </span>
+              <span
+                >{{ editableMemberInfo.emergency_country_code }}
+                {{ editableMemberInfo.emergency_contact_no }}</span
+              >
             </div>
           </div>
           <div class="icon-text showMemberemergeny"></div>
         </div>
-
         <div
           v-show="toggleStates.isEmergencyEditMode.value"
           class="emergency-edit member-edit-box data-block-edit"
@@ -413,7 +406,7 @@
           </h3>
           <div style="height: 77px">
             <FormKit
-              ref="emergencyFormRef"
+              ref="emergencyNameRef"
               type="text"
               placeholder="Emergency contact name"
               name="emergency_contact_name"
@@ -429,7 +422,7 @@
           <div class="row g-2">
             <div class="col-6">
               <FormKit
-                ref="emergencyFormRef"
+                ref="emergencyCountryCodeRef"
                 type="multiselect"
                 name="emergency_country_code"
                 :options="CountryCodes"
@@ -444,7 +437,7 @@
             </div>
             <div class="col-6">
               <FormKit
-                ref="emergencyFormRef"
+                ref="emergencyContactNoRef"
                 type="tel"
                 placeholder="Contact Number"
                 name="emergency_contact_no"
@@ -480,12 +473,10 @@
               v-for="tag in tagObjects(editableMemberInfo.tags)"
               :key="tag.value"
               class="tags"
+              >{{ tag.label }}</span
             >
-              {{ tag.label }}
-            </span>
           </div>
         </div>
-
         <div
           v-show="toggleStates.isTagsEditMode.value"
           class="tags-edit data-block-edit"
@@ -521,9 +512,8 @@
             />
           </div>
         </div>
-
         <FormKit
-          style="margin-top: 140px;"
+          style="margin-top: 140px"
           type="submit"
           label="Save"
           v-show="isAnyEditModeActive"
@@ -534,11 +524,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRefs, computed, watch } from "vue";
+import { ref, toRefs, computed, watch, nextTick } from "vue";
 import { useAuthStore } from "@/store/auth";
 import { useTagStore } from "@/store/tag";
 import { useCountryStore } from "@/store/countrycode";
 import { storeToRefs } from "pinia";
+import { getNode } from "@formkit/core";
+
 const { $toast } = useNuxtApp();
 const router = useRouter();
 const emit = defineEmits(["reload", "update:categoryData", "close-sidebar"]);
@@ -564,9 +556,9 @@ const { CountryCodes } = useCountryStore();
 const imageError = ref(false);
 
 // New Variables
-const emergencyContactName = ref();
-const emergencyCountryCode = ref();
-const emergencyContactNo = ref();
+const emergencyContactName = ref(null);
+const emergencyCountryCode = ref(null);
+const emergencyContactNo = ref(null);
 
 const editableMemberInfo = ref({});
 
@@ -646,7 +638,9 @@ const toggleStates: ToggleStates = {
 const personalFormRef = ref(null);
 const socialFormRef = ref(null);
 const aboutFormRef = ref(null);
-const emergencyFormRef = ref(null);
+const emergencyNameRef = ref(null);
+const emergencyCountryCodeRef = ref(null);
+const emergencyContactNoRef = ref(null);
 const tagsFormRef = ref(null);
 
 function formatName(string) {
@@ -799,6 +793,11 @@ watch(
   async () => {
     if (memberId.value) {
       await getMember();
+      Object.keys(toggleStates).forEach((key) => {
+        toggleStates[key].value = false;
+      });
+
+
     }
   },
   { immediate: true }
@@ -811,6 +810,7 @@ watch(
   },
   { immediate: true }
 );
+
 </script>
 
 <style lang="scss" scoped>

@@ -6,7 +6,7 @@
       style="background-color: #00609f; color: #fff"
     />
     <div class="m-4">
-      <div class="header d-flex justify-content-between mb-4">
+      <div class="header d-flex justify-content-between mb-4" :style="headerStyle">
         <div class="title">
           {{ dayjs(date.start).format("MMMM DD") }} -
           {{ dayjs(date.end).format("MMMM DD") }}
@@ -514,6 +514,28 @@ const onSchedulerDateSelect = (date: number, data: any, type: string) => {
     onEditClass(getDate(date), data);
   }
 };
+
+const screenWidth = ref(window.innerWidth);
+
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', updateScreenWidth);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateScreenWidth);
+});
+
+const isSmallScreen = computed(() => screenWidth.value < 1712);
+
+const headerStyle = computed(() => ({
+  width: isSmallScreen.value ? '1290px' : 'auto',
+}));
+
+
 </script>
 
 <style lang="scss" scoped>

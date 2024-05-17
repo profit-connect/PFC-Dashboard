@@ -184,7 +184,7 @@
     <div
       class="d-flex justify-content-center"
     >
-      <button @click="$emit('close-sidebar')" class="btn">Cancel</button>
+      <button @click="$emit('close-sub-modal')" class="btn">Cancel</button>
     </div>
   </div>
 </template>
@@ -210,7 +210,7 @@ const handleIconClick = (node: { props: NodeProps }, e: Event) => {
 
 const { currentUserType } = useAuthStore();
 const { tags } = storeToRefs(useTagStore());
-const emit = defineEmits(["reload", "close-sidebar"]);
+const emit = defineEmits(["reload", "close-sub-modal"]);
 const { CountryCodes } = useCountryStore();
 
 const passwordValidation = ({ value }) => {

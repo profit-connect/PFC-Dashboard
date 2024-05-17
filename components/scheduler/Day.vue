@@ -1,6 +1,7 @@
 <template>
   <div class="schedule-day" v-if="schedule"> 
-    <div class="header d-flex align-items-center justify-content-between gap-4 py-2 mb-2">
+    <!-- <div class="header d-flex align-items-center justify-content-between gap-4 py-2 mb-2" > -->
+      <div :class="headerClass" :style="headerStyle">
       <div
         style="
           min-width: 400px;
@@ -28,7 +29,7 @@
           {{ getLabelById(schedule.discipline_id) }} | {{ schedule.class_name }}
         </p>
       </div>
-      <div class="coaches d-flex align-items-center">
+      <div v-if="!isSmallScreen" class="coaches d-flex align-items-center">
         <div
           class="d-flex align-items-center gap-4"
           v-if="schedule.coach.length === 1"
@@ -86,7 +87,7 @@
         </li>
       </ul>
     </div>
-    <div class="many-coaches" v-if="schedule.coach.length > 1">
+    <div class="many-coaches"  v-if="schedule.coach.length > 1 && !isSmallScreen">
       <div class="d-flex align-items-center gap-5" style="margin-bottom: 25px">
         <div
           class="d-flex align-items-center gap-4"
@@ -109,6 +110,37 @@
         </div>
         <!-- <MixButton label="Add Coach" @click="showCoach = true"  size="lg"
     :disabled="isBookingDisabled(schedule.start_time)" /> -->
+        <MixButton
+          class="small-title-medium"
+          v-if="!isBookingDisabled(schedule.start_time)"
+          label="Add Coach"
+          @click="showCoach = true"
+          size="lg"
+        />
+      </div>
+    </div>
+   
+     <div class="many-coaches"  v-if="schedule.coach && isSmallScreen">
+      <div class="d-flex align-items-center gap-5" style="margin-bottom: 25px">
+        <div
+          class="d-flex align-items-center gap-4"
+          v-for="coach in schedule.coach"
+          :key="coach.id"
+        >
+          <img
+            :src="getImageUrl(coach.img_src)"
+            style="height: 60px; width: 60px"
+          />
+          <div style="line-height: 16px">
+            <strong style="font-size: 22px" class="fw-bold">
+              {{ formatName(coach.firstname) }}</strong
+            >
+            <br />
+            <div style="font-size: 14px; margin-top: 2px">
+              {{ formatName(coach.lastname) }}
+            </div>
+          </div>
+        </div>
         <MixButton
           class="small-title-medium"
           v-if="!isBookingDisabled(schedule.start_time)"
@@ -257,7 +289,7 @@
       v-model:showSubModal="isAddNewMember"
     >
       <template #sub-modal>
-        <SchedulerAddMember @close-sidebar="isAddNewMember = false" />
+        <!-- <SchedulerAddMember @close-sub-modal="isAddNewMember = false" /> -->
       </template>
       <template #title>
         <div class="d-flex justify-content-between">
@@ -667,6 +699,37 @@ function getLabelById(id) {
   return discipline ? discipline.label : "Unknown Discipline";
 }
 
+
+const screenWidth = ref(window.innerWidth);
+
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', updateScreenWidth);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateScreenWidth);
+});
+
+const isSmallScreen = computed(() => screenWidth.value < 1712);
+
+const headerClass = computed(() => ({
+  'header': true,
+  'd-flex': true,
+  'align-items-center': true,
+  'justify-content-between': true,
+  'flex-wrap': true,
+  'py-2': true,
+  'mb-2': true,
+}));
+
+const headerStyle = computed(() => ({
+  width: isSmallScreen.value ? '1300px' : 'auto',
+}));
+
 watch(showMember, (val) => {
   isAddNewMember.value = false;
 });
@@ -768,27 +831,23 @@ watch(
   }
 
   .hover-info__link:hover .img-hover {
-    display: block; /* Show blue images on hover */
+    display: block; 
   }
   .tooltips .tooltiptext {
   visibility: hidden;
-  width: auto; /* Adjust width as needed */
+  width: auto;
   background-color: white;
   color: black;
   font-size: 10px;
   // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   text-align: center;
   border-radius: 20px;
-  padding: 5px 8px; /* Adjust padding as needed, adding some space on the sides */
-  
-  /* Position the tooltip */
+  padding: 5px 8px;
   position: absolute;
   z-index: 1;
-  bottom: 110%; /* Adjust this to change the vertical position of the tooltip */
+  bottom: 110%;
   left: 50%;
-  transform: translateX(-50%); /* Centers the tooltip */
-  
-  /* Fade in tooltip - Transition for smooth appearance */
+  transform: translateX(-50%);
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   
@@ -817,6 +876,8 @@ watch(
   border-radius: 10px !important;
   // width: 398px;
 }
+
+
 </style>
 
 <style lang="scss">

@@ -234,11 +234,12 @@
                 :actions="false"
                 #default="{ value }"
               >
-                <div style="position: relative">
+                <div style="position: relative; height: 75px;" >
                   <FormKit
                     type="text"
                     name="reply"
                     placeholder="Write a reply "
+                    validation="required"
                     class="custom-input"
                     :value="userReply"
                     style="background-color: white; padding-right: 80px"
@@ -255,8 +256,8 @@
                       border: none;
                       background: none;
                       position: absolute;
-                      right: 10px;
-                      top: 50%;
+                      right: 0px;
+                      top: 35%;
                       transform: translateY(-50%);
                       z-index: 2;
                     "

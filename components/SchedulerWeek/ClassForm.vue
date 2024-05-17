@@ -1,5 +1,5 @@
 <template>
-  <div class="scheduler-week-class-form"> 
+  <div class="scheduler-week-class-form">
     <FormKit type="form" @submit="submitHandler" :actions="false">
       <div v-for="(item, key) in formStructure" :key="key">
         <div class="row mx-5">
@@ -212,14 +212,14 @@
               <div class="action-btn">
                 <div class="btn">
                   <button @click="onDeleteSlot(key, key_2)"
-                   type="button" :disabled="key_2 < selectedSchedule.length" >
+                  type="button" :disabled="key_2 < initialScheduleLengths[key]" >
                     <NuxtImg
                       src="/images/svg/delete-icon.svg"
                       provider="none"
                       style="height: 16px; width: 16px"
                     />
                   </button>
-                  <p :class="{'text-disabled': key_2 < selectedSchedule.length}"
+                  <p :class="{'text-disabled': key_2 < initialScheduleLengths[key]}"
                   style="position: relative; bottom: 5px; font-size: 13.5px">
                     Delete
                   </p>
@@ -244,8 +244,7 @@
         </table>
       </div>
       <div 
-        class="mt-4 d-flex justify-content-center flex-column button-save-schedule"
-      
+        class="mt-4 d-flex justify-content-center flex-column button-save-schedule"  
       >
         <div><FormKit type="submit">Save</FormKit></div>
         <div>
@@ -293,6 +292,7 @@ const { currentUserType } = useAuthStore();
 const dayjs = useDayjs();
 const emit = defineEmits(["on-class-add", "close-canvas"]);
 const randomNumber = ref(dayjs());
+const initialScheduleLengths = ref([]);
 
 function generateRandomDate() {
   randomNumber.value = dayjs();
@@ -337,7 +337,6 @@ const onAddFirstSlot = (key: number) => {
   ];
 };
 
-
 const onAddSlot = (key: number) => {
   formStructure.value[key].schedule.push({
     id: undefined,
@@ -353,7 +352,6 @@ const onAddSlot = (key: number) => {
 const onDeleteSlot = (key: number, key_2: number) => {
   formStructure.value[key].schedule.splice(key_2, 1);
 };
-
 
 const onDuplicateSlot = (key: number, key_2: number) => {
   formStructure.value[key].schedule.push({
@@ -707,15 +705,13 @@ const convertTo24Hour = (timeStr: string) => {
 };
 
 const endTime = (start_time: string, offetInMinute: number = 0) => {
-  // console.log("start_time", start_time)
   let time24hours = convertTo24HourNew(start_time);
-  // console.log(time24hours)
   const originalDateTime = dayjs(`2024-01-01 ${time24hours}`);
   const newDateTime = originalDateTime.add(offetInMinute, "minute");
   return newDateTime.format("hh:mm A");
 };
 
-const formatTime = (time: string) => {0
+const formatTime = (time: string) => {
   let time24hours = convertTo24HourNew(time);
   return dayjs(`2024-01-01 ${time24hours}`).format("hh:mm A");
 };
@@ -829,6 +825,7 @@ watch(
               };
             }),
           });
+          initialScheduleLengths.value.push(entries.length);
         });
       });
     }
@@ -938,5 +935,4 @@ opacity: 0.2;
     display: block;
   }
 }
-
 </style>

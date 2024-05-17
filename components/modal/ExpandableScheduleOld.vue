@@ -8,12 +8,10 @@
           :aria-labelledby="`offcanvasModalLabel-${id}`"
         >
           <div class="d-flex gap-2">
-            <div style="width: 10%;" @click="subModalEnable ? '' : (show = false)"></div>
-            <div style="width: 30%;" >
+            <div style="width: 10%;"  @click="subModalEnable ? (show = false) : ''"></div>
+            <div style="width: 30%;" @click="!subModalEnable ? (show = false) : ''">
               <div class="sub-modal" v-show="subModalEnable">
-                <slot name="sub-modal">
-                  <SchedulerAddMember @close-sub-modal="subModalEnable ? (subModalEnable = false) : (show = false)" />
-                </slot>
+                <slot name="sub-modal"></slot>
               </div>
             </div>
             <div class="main">
@@ -74,14 +72,9 @@
   
     const offcanvas = document.getElementById(`offcanvasModal-${props.id}`);
     if (offcanvas)
-      offcanvas.addEventListener("hidden.bs.offcanvas", () => {
+      offcanvas.addEventListener("hidden.bs.offcanvas", (event) => {
         show.value = false;
       });
-  
-    // Listen for the custom event to close the sub-modal
-    offcanvas?.addEventListener('close-sub-modal', () => {
-      subModalEnable.value = false;
-    });
   });
   </script>
   
@@ -90,6 +83,7 @@
     .main {
       background: #ffffff;
       max-height: 100vh;
+
       padding-left: 10px;
       padding-right: 10px;
       width: 950px;
@@ -101,7 +95,11 @@
       &::-webkit-scrollbar {
         display: none;
       }
+  
+      // Hide scrollbar for Firefox
       scrollbar-width: none;
+  
+      // Hide scrollbar for IE and Edge
       -ms-overflow-style: none;
     }
   }
@@ -116,7 +114,10 @@
     .offcanvas {
       background: none;
       border: none;
+      
+      
     }
+    
   }
   .sub-modal {
     background: #ffffff;
@@ -125,11 +126,21 @@
     overflow: scroll;
     border-radius: 10px;
     padding: 15px;
+    
+  
+    /* Hide scrollbar for Chrome, Safari, and newer versions of Opera*/
     &::-webkit-scrollbar {
       display: none;
     }
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  </style>
   
+    /* Hide scrollbar for IE, Edge, and Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  // .body-modal {
+  //  width: 80% !important;
+  //  background: white;
+  //  border-top-left-radius: 10px;
+  //  border-bottom-left-radius: 10px;
+  // }
+  </style>
