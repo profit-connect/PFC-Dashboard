@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g id="Group_2432" data-name="Group 2432" transform="translate(-1148 -162)">
+    <g id="Icon_feather-calendar" data-name="Icon feather-calendar" transform="translate(1155.437 169.041)">
+      <path id="Path_2021" data-name="Path 2021" d="M6.292,6H18.834a1.792,1.792,0,0,1,1.792,1.792V20.334a1.792,1.792,0,0,1-1.792,1.792H6.292A1.792,1.792,0,0,1,4.5,20.334V7.792A1.792,1.792,0,0,1,6.292,6Z" transform="translate(0 -1.208)" fill="none" stroke="#84ceff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Path_2022" data-name="Path 2022" d="M24,3V6.583" transform="translate(-7.854 0)" fill="none" stroke="#84ceff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Path_2023" data-name="Path 2023" d="M12,3V6.583" transform="translate(-3.021 0)" fill="none" stroke="#84ceff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Path_2024" data-name="Path 2024" d="M4.5,15H20.626" transform="translate(0 -4.833)" fill="none" stroke="#84ceff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    </g>
+    <g id="Ellipse_419" data-name="Ellipse 419" transform="translate(1148 162)" fill="none" stroke="#84ceff" stroke-width="1.5">
+      <circle cx="20" cy="20" r="20" stroke="none"/>
+      <circle cx="20" cy="20" r="19.25" fill="none"/>
+    </g>
+  </g>
+</svg>

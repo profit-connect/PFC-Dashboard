@@ -276,6 +276,7 @@ setBreadcrumbTab({
       },
       { label: "Timing", link: `/facility/timing` },
       { label: "Staff", link: `/facility/staff` },
+      { label: "Roster", link: `/facility/roster` },
       { label: "Forms", link: `/facility/forms` },
       { label: "Tags", link: `/facility/tags` },
       // { label: "Payments", link: `/facility/payments` },

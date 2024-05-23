@@ -12,7 +12,7 @@
         </div>
       </div>
       <div>
-        <SearchBar @on-search="onSearch" />
+        <SearchBar placeholder="&nbsp;Search....." @on-search="onSearch" />
       </div>
     </div>
     <div class="content-filters">

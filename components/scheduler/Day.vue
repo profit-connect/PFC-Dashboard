@@ -4,7 +4,7 @@
       <div :class="headerClass" :style="headerStyle">
       <div
         style="
-          min-width: 400px;
+          max-width: 400px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;

@@ -18,7 +18,7 @@
           @mouseover="isHovering = true"
           @mouseleave="isHovering = false"
         >
-      <a>
+      <a class="hover-info__link">
         <img src="~/assets/images/svg/schedule-profile-white.svg" alt="Profile icon" class="img-normal"/>
         <img src="~/assets/images/svg/schedule-profile-blue.svg" alt="Profile icon" class="img-hover" />
       </a>

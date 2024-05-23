@@ -5,7 +5,7 @@
       type="search"
       label="FormKit Input"
       prefix-icon="search"
-      placeholder="Search..."
+      :placeholder="placeholder"
       @input="onSearch"
     />
   </div>
@@ -13,6 +13,11 @@
 
 <script lang="ts" setup>
 import { useDebounceFn } from "@vueuse/core";
+const props = defineProps({
+  placeholder: {
+    default: "",
+  },
+});
 const emit = defineEmits(["on-search"]);
 
 const onSearch = useDebounceFn((data) => {

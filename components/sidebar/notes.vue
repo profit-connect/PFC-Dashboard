@@ -13,7 +13,7 @@
           />
         </div>
         <div class="search">
-          <SearchBar @on-search="onSearch" />
+          <SearchBar placeholder="&nbsp;&nbsp;&nbsp;Search....." @on-search="onSearch" />
         </div>
       </div>
       <div class="filter-box packagesByStatus">

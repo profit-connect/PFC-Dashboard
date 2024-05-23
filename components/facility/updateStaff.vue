@@ -7,15 +7,7 @@
     >
       <div class="hover-wrapper">
         <div class="hover-info">
-          <a
-            class="hover-info__link"
-            @click="
-              router.push({
-                path: '/members/details/membership-overview',
-                query: { id: getMemberImage.id },
-              })
-            "
-          >
+          <a class="hover-info__link-1">
             <img
               src="~/assets/images/svg/schedule-profile-white-outline.svg"
               alt="Profile icon"
@@ -51,9 +43,6 @@
 
         <a class="sidebar-box__title text-center" title="View membership">
           <div class="d-flex justify-content-center">
-            <!-- <img v-if=" getStaffInfo.image"
-           :src="getImageUrl(getStaffInfo.image )"
-           /> -->
             <div v-if="staffInfoData">
               <img
                 v-if="!imageError && getStaffImage.image"
@@ -61,7 +50,6 @@
                 @error="imageError = true"
                 v-show="!imageError"
               />
-
               <div v-else class="avatar-initials content-title-bold">
                 {{ formatName(getStaffInfo?.firstname?.charAt(0))
                 }}{{ formatName(getStaffInfo?.lastname?.charAt(0)) }}
@@ -89,15 +77,16 @@
 
     <div class="update-member" style="margin-top: 50px">
       <FormKit
+        ref="mainFormRef"
         class="formEditMember"
         type="form"
-        :modelValue="getStaffInfo"
+        :modelValue="editableStaffInfo"
         @submit="editStaff"
         :actions="false"
       >
         <div class="row">
           <div class="col-2 small-title-bold" style="margin-top: -10px">
-            <B>Role</B>
+            <b>Role</b>
           </div>
           <div
             @click="() => startEdit('isSelectEditMode')"
@@ -122,7 +111,7 @@
           <h3 class="small-title-bold">
             Personal
             <img
-              @click="() => startEdit('isPersonalEditMode')"
+              @click="startEdit('isPersonalEditMode')"
               class="editgetMemberInfo"
               data-edit="personal-edit"
               src="~assets/images/svg/edit-icon-black.svg"
@@ -135,7 +124,9 @@
                 src="~assets/images/svg/members-info/female.svg"
                 alt="Female icon"
               />
-              <span class="showUserGender">{{ getStaffInfo.gender }} </span>
+              <span class="showUserGender"
+                >{{ editableStaffInfo.gender }}
+              </span>
             </div>
 
             <div class="icon-text">
@@ -143,7 +134,7 @@
                 src="~assets/images/svg/members-info/birthday.svg"
                 alt="Birthday icon"
               />
-              <span class="showUserBirthday">{{ getStaffInfo.dob }}</span>
+              <span class="showUserBirthday">{{ editableStaffInfo.dob }}</span>
             </div>
 
             <div class="icon-text">
@@ -152,8 +143,8 @@
                 alt="Phone icon"
               />
               <span class="showPhoneNumber"
-                >{{ getStaffInfo.country_code }}
-                {{ getStaffInfo.contactno }}</span
+                >{{ editableStaffInfo.country_code }}
+                {{ editableStaffInfo.contactno }}</span
               >
             </div>
 
@@ -162,7 +153,7 @@
                 src="~assets/images/svg/members-info/email.svg"
                 alt="Email icon"
               />
-              <span class="showUserEmail">{{ getStaffInfo.email }}</span>
+              <span class="showUserEmail">{{ editableStaffInfo.email }}</span>
             </div>
           </div>
         </div>
@@ -176,7 +167,7 @@
             <div
               class="goBackShowMode"
               data-show="personal-show"
-              @click="() => cancelEdit('isPersonalEditMode')"
+              @click="cancelEdit('isPersonalEditMode')"
             >
               Cancel
             </div>
@@ -194,13 +185,11 @@
             <FormKit
               type="multiselect"
               mode="single"
-              placeholder="Please select  gender"
+              placeholder="Please select gender"
               name="gender"
               :options="['Female', 'Male', 'Prefer not to say']"
               validation="required"
-              :validation-messages="{
-                required: 'Gender is required',
-              }"
+              :validation-messages="{ required: 'Gender is required' }"
             />
           </div>
 
@@ -210,9 +199,7 @@
             label="Birthday"
             validation="required"
             validation-visibility="live"
-            :validation-messages="{
-              required: 'Date of Birth is required',
-            }"
+            :validation-messages="{ required: 'Date of Birth is required' }"
           />
 
           <div class="row g-2" style="height: 94px">
@@ -223,9 +210,7 @@
                 :options="CountryCodes"
                 placeholder="Country code"
                 validation="required"
-                :validation-messages="{
-                  required: 'Country code is required',
-                }"
+                :validation-messages="{ required: 'Country code is required' }"
               />
             </div>
             <div class="col-6">
@@ -233,7 +218,7 @@
                 type="tel"
                 name="contactno"
                 placeholder="Phone number"
-                validation="required|number|"
+                validation="required|number"
                 :validation-messages="{
                   required: 'Phone number is required.',
                   number: 'Phone number must be numeric.',
@@ -245,12 +230,10 @@
             <FormKit
               type="email"
               name="email"
-              validation="required|email|"
+              validation="required|email"
               validation-visibility="live"
               placeholder="Email"
-              :validation-messages="{
-                required: 'Email is required',
-              }"
+              :validation-messages="{ required: 'Email is required' }"
             />
           </div>
         </div>
@@ -262,7 +245,7 @@
           <h3 class="small-title-bold mt-2">
             Social
             <img
-              @click="() => startEdit('isSocialEditMode')"
+              @click="startEdit('isSocialEditMode')"
               class="editgetMemberInfo"
               data-edit="social-edit"
               src="~assets/images/svg/edit-icon-black.svg"
@@ -271,16 +254,16 @@
           </h3>
 
           <div class="social-show__icons">
-            <a :href="getStaffInfo.facebook">
+            <a :href="editableStaffInfo.facebook">
               <div class="icon-text">
                 <img
                   src="~assets/images/svg/social/facebook.svg"
-                  alt="Phone icon"
+                  alt="Facebook icon"
                 />
                 Facebook
               </div>
             </a>
-            <a :href="getStaffInfo.instagram">
+            <a :href="editableStaffInfo.instagram">
               <div class="icon-text">
                 <img
                   src="~assets/images/svg/social/instagram.svg"
@@ -289,13 +272,13 @@
                 Instagram
               </div>
             </a>
-            <a :href="getStaffInfo.linkedin">
+            <a :href="editableStaffInfo.linkedin">
               <div class="icon-text">
                 <img
                   src="~assets/images/svg/social/linkedin.svg"
-                  alt="Linkedin icon"
+                  alt="LinkedIn icon"
                 />
-                Linkedin
+                LinkedIn
               </div>
             </a>
           </div>
@@ -310,14 +293,14 @@
             <div
               class="goBackShowMode"
               data-show="social-show"
-              @click="() => cancelEdit('isSocialEditMode')"
+              @click="cancelEdit('isSocialEditMode')"
             >
               Cancel
             </div>
           </h3>
           <FormKit type="text" placeholder="Facebook" name="facebook" />
-          <FormKit type="text" placeholder="instagram" name="instagram" />
-          <FormKit type="text" placeholder="Linkedin" name="linkedin" />
+          <FormKit type="text" placeholder="Instagram" name="instagram" />
+          <FormKit type="text" placeholder="LinkedIn" name="linkedin" />
         </div>
 
         <div
@@ -327,14 +310,14 @@
           <h3 class="small-title-bold">
             About
             <img
-              @click="() => startEdit('isAboutEditMode')"
+              @click="startEdit('isAboutEditMode')"
               class="editgetMemberInfo"
               data-edit="about-edit"
               src="~assets/images/svg/edit-icon-black.svg"
               alt="Edit icon"
             />
           </h3>
-          {{ getStaffInfo.about }}
+          {{ editableStaffInfo.about }}
           <div class="icon-text showMemberAbout"></div>
         </div>
 
@@ -347,7 +330,7 @@
             <div
               class="goBackShowMode"
               data-show="about-show"
-              @click="() => cancelEdit('isAboutEditMode')"
+              @click="cancelEdit('isAboutEditMode')"
             >
               Cancel
             </div>
@@ -363,7 +346,7 @@
           <h3 class="small-title-bold">
             Emergency
             <img
-              @click="() => startEdit('isEmergencyEditMode')"
+              @click="startEdit('isEmergencyEditMode')"
               class="editgetMemberInfo"
               data-edit="emergency-edit"
               src="~assets/images/svg/edit-icon-black.svg"
@@ -372,12 +355,12 @@
           </h3>
           <div class="d-flex items-align-center justify-content-between">
             <div style="width: 150px">
-              {{ getStaffInfo.emergency_contact_name }}
+              {{ editableStaffInfo.emergency_contact_name }}
             </div>
             <div>
               <span style="">
-                {{ getStaffInfo.emergency_country_code }}
-                {{ getStaffInfo.emergency_contact_no }}</span
+                {{ editableStaffInfo.emergency_country_code }}
+                {{ editableStaffInfo.emergency_contact_no }}</span
               >
             </div>
           </div>
@@ -393,7 +376,7 @@
             <div
               class="goBackShowMode"
               data-show="emergency-show"
-              @click="() => cancelEdit('isEmergencyEditMode')"
+              @click="cancelEdit('isEmergencyEditMode')"
             >
               Cancel
             </div>
@@ -402,15 +385,11 @@
             type="text"
             placeholder="Emergency contact name"
             name="emergency_contact_name"
-            v-model="emergencyContactName"
-              :validation="
-                emergencyCountryCode || emergencyContactNo ? 'required' : ''
-              "
-              :validation-messages="{
-                required: 'Emergency contact name is required',
-              }"
+            v-model="editableStaffInfo.emergency_contact_name"
+            :validation-messages="{
+              required: 'Emergency contact name is required.',
+            }"
           />
-
           <div class="row g-2">
             <div class="col-6">
               <FormKit
@@ -418,12 +397,9 @@
                 name="emergency_country_code"
                 :options="CountryCodes"
                 placeholder="Country code"
-                v-model="emergencyCountryCode"
-                :validation="
-                  emergencyContactName || emergencyContactNo ? 'required' : ''
-                "
+                v-model="editableStaffInfo.emergency_country_code"
                 :validation-messages="{
-                  required: 'Emergency country code is required',
+                  required: 'Emergency country code is required.',
                 }"
               />
             </div>
@@ -432,12 +408,9 @@
                 type="tel"
                 placeholder="Contact Number"
                 name="emergency_contact_no"
-                v-model="emergencyContactNo"
-                :validation="
-                  emergencyContactName || emergencyCountryCode ? 'required' : ''
-                "
+                v-model="editableStaffInfo.emergency_contact_no"
                 :validation-messages="{
-                  required: 'Emergency contact number is required',
+                  required: 'Emergency contact number is required.',
                 }"
               />
             </div>
@@ -477,11 +450,8 @@ const { getUrl: getImageUrl } = useBoImage();
 const { CountryCodes } = useCountryStore();
 const { staffRoles } = useRoleStore();
 const imageError = ref(false);
-
-// New Variables
-const emergencyContactName = ref();
-const emergencyCountryCode = ref();
-const emergencyContactNo = ref();
+const initialStaffInfoData = ref(null);
+const editableStaffInfo = ref({});
 
 type ToggleStates = {
   isSelectEditMode: Ref<boolean>;
@@ -503,30 +473,13 @@ const toggleStates: ToggleStates = {
   isTagsEditMode: ref(false),
 };
 
-onMounted(async () => {
-  await getStaff();
-});
-
-// async function fetchStaffInfo() {
-//   const effectiveStaffId = staffId.value || StaffId.value; // Use staffId if it exists, otherwise fallback to StaffId
-//   console.log("Fetching data for staff ID:", effectiveStaffId); // To check which ID is being used
-
-//   try {
-//     const { data, pending } = await useCustomFetch('/staff/get/staffinfo', {
-//       method: 'POST',
-//       body: JSON.stringify({
-//         facility_id: currentUserType?.id,
-//         staff_id: effectiveStaffId, // Pass the effectiveStaffId here
-//       }),
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-//     staffInfoData.value = data.value;
-//   } catch (error) {
-//     console.error('Error fetching staff information:', error);
-//   }
-// }
+const personalFormRef = ref(null);
+const socialFormRef = ref(null);
+const aboutFormRef = ref(null);
+const emergencyNameRef = ref(null);
+const emergencyCountryCodeRef = ref(null);
+const emergencyContactNoRef = ref(null);
+const tagsFormRef = ref(null);
 
 function formatName(string) {
   if (!string) return "";
@@ -544,10 +497,12 @@ const isAnyEditModeActive = computed(() => {
 
 const startEdit = (toggleKey: keyof ToggleStates) => {
   toggleStates[toggleKey].value = true;
+  initialStaffInfoData.value = { ...editableStaffInfo.value };
 };
 
 const cancelEdit = (toggleKey: keyof ToggleStates) => {
   toggleStates[toggleKey].value = false;
+  editableStaffInfo.value = { ...initialStaffInfoData.value };
 };
 
 const editStaff = async (getStaffInfo: any) => {
@@ -565,8 +520,8 @@ const editStaff = async (getStaffInfo: any) => {
 
     if (data.value.return) {
       emit("reload");
-      getStaff();
       $toast.success("Staff  edited successfully!");
+      fetchStaffInfo();
       emit("close-sidebar");
       Object.keys(toggleStates).forEach((key) => {
         toggleStates[key].value = false;
@@ -579,22 +534,53 @@ const editStaff = async (getStaffInfo: any) => {
   }
 };
 
-const getStaff = async () => {
-  const effectiveStaffId = staffId.value || StaffId.value;
+onMounted(async () => {
+  await fetchStaffInfo();
+});
+
+async function fetchStaffInfo() {
+  const effectiveStaffId = staffId.value || StaffId.value; // Use staffId if it exists, otherwise fallback to StaffId
+  console.log("Fetching data for staff ID:", effectiveStaffId); // To check which ID is being used
+
   try {
-    const response = await useCustomFetch(`/staff/get/staffinfo`, {
+    const { data, pending } = await useCustomFetch("/staff/get/staffinfo", {
       method: "POST",
-      body: { facility_id: currentUserType?.id, staff_id: effectiveStaffId },
+      body: JSON.stringify({
+        facility_id: currentUserType?.id,
+        staff_id: effectiveStaffId, // Pass the effectiveStaffId here
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-    if (response.data && response.data.value) {
-      staffInfoData.value = response.data.value;
+    if (data && data.value) {
+      staffInfoData.value = data.value;
+      initialStaffInfoData.value = { ...getStaffInfo.value };
+      editableStaffInfo.value = { ...getStaffInfo.value };
     } else {
       console.error("No data returned from fetch");
     }
   } catch (error) {
-    console.error("Error refreshing member data:", error);
+    console.error("Error fetching staff information:", error);
   }
-};
+}
+
+const isEmergencyContactInfoFilled = computed(() => {
+  // Check if any of the fields have a non-empty value.
+  return (
+    (getStaffInfo.value.emergency_contact_name &&
+      getStaffInfo.value.emergency_contact_name.trim() !== "") ||
+    (getStaffInfo.value.emergency_country_code &&
+      getStaffInfo.value.emergency_country_code.trim() !== "") ||
+    (getStaffInfo.value.emergency_contact_no &&
+      getStaffInfo.value.emergency_contact_no.trim() !== "")
+  );
+});
+
+const isEmergencyContactFieldRequired = computed(() => {
+  // Fields are required if any emergency contact information field is filled.
+  return isEmergencyContactInfoFilled.value ? "required" : null;
+});
 
 const getStaffImage = computed(() => {
   if (
@@ -613,6 +599,7 @@ const getStaffImage = computed(() => {
 
   return {};
 });
+
 const getStaffInfo = computed(() => {
   // Ensure staffInfoData.value exists and has the 'staff' and 'data' properties.
   const staffData = staffInfoData.value?.staff?.data;
@@ -653,32 +640,19 @@ const getStaffInfo = computed(() => {
   };
 });
 
-// watch(
-// staffId,
-//   async () => {
-//     if (staffId.value) {
-//       const { data, pending } = await useCustomFetch<any>(
-//         `/staff/get/staffinfo`,
-//         {
-//           method: "POST",
-//           body: { facility_id: currentUserType?.id, staff_id: staffId.value },
-//         }
-//       );
-//       staffInfoData.value = data.value;
-//       staffInfoPending.value = pending.value;
-//     }
-//   },
-//   { immediate: true }
-// );
 watch(
   staffId,
   async () => {
     if (staffId.value) {
-      await getStaff();
+      await fetchStaffInfo();
+      Object.keys(toggleStates).forEach((key) => {
+        toggleStates[key].value = false;
+      });
     }
   },
   { immediate: true }
 );
+
 watch(
   () => getStaffImage.value.image,
   (newImage) => {

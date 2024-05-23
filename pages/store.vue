@@ -12,7 +12,7 @@
           />
         </div>
         <div class="search">
-          <SearchBar @on-search="onSearch" />
+          <SearchBar placeholder="&nbsp;Search....." @on-search="onSearch" />
         </div>
       </div>
       <div class="d-flex align-items-baseline mt-5 ">

@@ -11,7 +11,7 @@
           />
         </div>
       </div>
-      <SearchBar @on-search="onSearch" />
+      <SearchBar placeholder="&nbsp;Search....." @on-search="onSearch" />
       <div class="addNewMember" @click="handleAddSidebar()">
         <img
           

@@ -1,7 +1,7 @@
 <template>
   <section class="content-section">
     <div class="content-box">
-      <AccessLevelsAdmin 
+      <AccessLevelsDashboard
       :levels="data"
       />
     </div>
@@ -13,7 +13,9 @@ import { useAuthStore } from "~/store/auth";
 const { currentUserType } = useAuthStore();
 import { useBreadcrumbStore } from "~/store/breadcrumb";
 const { setBreadcrumb, setBreadcrumbTab } = useBreadcrumb();
-setBreadcrumbTab({
+const breadcrumbStore = useBreadcrumbStore();
+
+breadcrumbStore.setBreadcrumbTab({
     items: [
       { label: "Web Dashboard", link: `/access-level` },
       { label: "Admin App", link: `/access-level/admin-app` },
@@ -21,17 +23,17 @@ setBreadcrumbTab({
     ],
   });
 
-const breadcrumbStore = useBreadcrumbStore();
+
 breadcrumbStore.setBreadcrumb({
   items: [
-    // { label: "Facility", link: "" },
-    // { label: "Tags", link: "" }, 
+    { label: "Control Panel", link: "" },
+    { label: "Access Level", link: "" }, 
   ],
 });
 
 breadcrumbStore.setStyles({
   position: "relative",
-  right: "70px",
+  right: "-0px",
  
 });
 
@@ -104,4 +106,5 @@ const refreshData = () => {
   min-height: calc(100vh - 129px);
   margin-bottom: 50px;
 }
+
 </style>

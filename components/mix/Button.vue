@@ -9,8 +9,8 @@
       :height="iconSize.height"
       :width="iconSize.width"
       provider="none"
-    />
-    {{ label }}
+    /> 
+    <img v-if="svg" src="~assets/images/svg/magic-wand.svg" alt="Icon" /> {{ label }} <span v-if="time" class="small-title-bold">{{ time }}</span> 
   </button>
 </template>
 
@@ -42,6 +42,14 @@ const props = defineProps({
   size: {
     type: String as PropType<IButtonSize>,
     default: "sm",
+  },
+  time: {
+    type: String as PropType<IButtonSize>,
+    default: "",
+  },
+  svg: {
+    type: String as PropType<IButtonSize>,
+    default: "",
   },
 });
 

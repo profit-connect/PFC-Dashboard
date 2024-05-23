@@ -796,8 +796,6 @@ watch(
       Object.keys(toggleStates).forEach((key) => {
         toggleStates[key].value = false;
       });
-
-
     }
   },
   { immediate: true }
@@ -810,7 +808,6 @@ watch(
   },
   { immediate: true }
 );
-
 </script>
 
 <style lang="scss" scoped>

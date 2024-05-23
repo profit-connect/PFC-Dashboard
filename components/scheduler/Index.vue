@@ -193,6 +193,7 @@ watch(() => props.hideSchedulerBar, (newValue) => {
     height: calc(100vh - 84px);
     overflow: scroll;
     box-shadow: 0 0 13px #00000026;
+    box-sizing: border-box; 
   }
 }
 </style>

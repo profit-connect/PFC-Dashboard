@@ -401,6 +401,8 @@ function handleInput(value: any) {
     color: var(--ms-tag-color-disabled, #ffffff);
   }
 }
+
+
 .multiselect-tag-wrapper {
   white-space: nowrap;
   overflow: hidden;
@@ -1020,4 +1022,158 @@ function handleInput(value: any) {
     transform: rotate(360deg);
   }
 }
+.custom-roster-wrapper {
+  width: 120px;
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse; 
+  min-height: 100px;
+}
+
+.add-button {
+  position: relative;
+  top: -41px;
+  left: 52px;
+  z-index: 90;
+  font-size: 16px;
+}
+
+.custom-roster-wrapper .multiselect-wrapper {
+  height: auto !important;
+}
+
+.custom-roster-wrapper .multiselect-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  transform: translateY(100%);
+  margin-top: 5px; /* Adjust to provide space between the input and dropdown */
+  -webkit-overflow-scrolling: touch;
+  background: #fff; /* Adjust as necessary */
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  max-height: var(--ms-max-height, 10rem);
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: rgb(133, 128, 128) transparent;
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &.is-top {
+    transform: translateY(-100%);
+    top: var(--ms-border-width, 1px);
+    bottom: auto;
+    border-radius: var(--ms-dropdown-radius, 4px) var(--ms-dropdown-radius, 4px) 0 0;
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &.is-hidden {
+    display: none;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar-track {
+    border-radius: var(--fk-border-radius);
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: var(--fk-border-radius);
+    background: rgb(133, 128, 128);
+  }
+}
+
+.custom-roster-wrapper .multiselect {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  background: #f2faff;
+  font-size: 1rem;
+}
+
+.custom-roster-wrapper .multiselect-caret {
+  transform: rotate(0deg);
+  background-image: url("~/assets/images/svg/add-icon.svg");
+  width: 1rem;
+  height: 1rem;
+  margin: 0 0.875rem 0 0;
+  position: relative;
+  right: 70px;
+  z-index: 10;
+  flex-shrink: 0;
+  flex-grow: 0;
+  pointer-events: none;
+}
+
+.custom-roster-wrapper .multiselect-wrapper {
+  padding: 0;
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  cursor: pointer;
+  outline: none;
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: rgb(133, 128, 128) transparent;
+  min-height: calc(
+    2 * var(--ms-border-width, 1px) + var(--ms-font-size, 1rem) *
+    var(--ms-line-height, 1.375) + 2 * var(--ms-py, 0.5rem)
+  );
+}
+
+.custom-roster-wrapper .multiselect-tags {
+  flex-grow: 1;
+  flex-shrink: 1;
+  display: flex;
+  flex-wrap: wrap-reverse; /* Ensure new tags appear at the top */
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 0; /* Adjust margin if needed */
+  padding-left: var(--ms-py, 0.5rem);
+  min-width: 0;
+}
+
+.custom-roster-wrapper .multiselect-tag {
+  position: relative;
+  color: var(--ms-tag-color, #323a45);
+  font-size: var(--ms-tag-font-size, 0.875rem);
+  line-height: var(--ms-tag-line-height, 1.25rem);
+  padding: var(--ms-tag-py, 0.125rem) 0 var(--ms-tag-py, 0.125rem) var(--ms-tag-px, 0.5rem);
+  margin-right: var(--ms-tag-mx, 0.25rem);
+  bottom: 60px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  white-space: nowrap;
+  min-width: 0;
+  // border: none;
+  background-color: transparent;
+
+  &.is-disabled {
+    padding-right: var(--ms-tag-px, 0.5rem);
+    background: var(--ms-tag-bg-disabled, #9ca3af);
+    color: var(--ms-tag-color-disabled, #ffffff);
+  }
+}
+
+.custom-roster-wrapper .multiselect-tag .multiselect-tag-remove {
+  margin-left: -2px;
+  margin-right: 5px;
+}
+
 </style>

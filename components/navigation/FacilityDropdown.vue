@@ -29,7 +29,7 @@
           right="Z-A"
         />
       </div>
-      <SearchBar @on-search="onSearch" />
+      <SearchBar placeholder="&nbsp;Search...." @on-search="onSearch" />
 
       <div v-for="facility in getFacilities" :key="facility.id">
         <div
